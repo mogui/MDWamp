@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		33B2BDFA160A1B5C00DAF4CB /* MDWampProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = 33DE07131609C60B0044BB6B /* MDWampProtocols.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		33B2BE04160A1FC600DAF4CB /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 33B2BE03160A1FC600DAF4CB /* JSONKit.h */; };
 		33DE06F81609C5B00044BB6B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 33DE06F61609C5B00044BB6B /* InfoPlist.strings */; };
 		33DE07081609C5F70044BB6B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 33DE07011609C5F70044BB6B /* base64.c */; };
 		33DE070B1609C5F70044BB6B /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DE07041609C5F70044BB6B /* NSData+SRB64Additions.m */; };
@@ -16,10 +17,10 @@
 		33DE07151609C60B0044BB6B /* MDWamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DE07101609C60B0044BB6B /* MDWamp.m */; };
 		33DE07171609C60B0044BB6B /* MDWampMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DE07121609C60B0044BB6B /* MDWampMessage.m */; };
 		33DE07251609C9350044BB6B /* MDJSONBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DE07231609C9350044BB6B /* MDJSONBridge.m */; };
-		33DE075F1609D6CD0044BB6B /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 33DE075E1609D6CD0044BB6B /* JSONKit.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		33B2BE03160A1FC600DAF4CB /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		33DE06F11609C5B00044BB6B /* MDWamp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDWamp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33DE06F51609C5B00044BB6B /* MDWamp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MDWamp-Info.plist"; sourceTree = "<group>"; };
 		33DE06F71609C5B00044BB6B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -38,7 +39,6 @@
 		33DE07131609C60B0044BB6B /* MDWampProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampProtocols.h; sourceTree = "<group>"; };
 		33DE07221609C9350044BB6B /* MDJSONBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDJSONBridge.h; sourceTree = "<group>"; };
 		33DE07231609C9350044BB6B /* MDJSONBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDJSONBridge.m; sourceTree = "<group>"; };
-		33DE075E1609D6CD0044BB6B /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = JSONKit/JSONKit.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +71,8 @@
 		33DE06F31609C5B00044BB6B /* MDWamp */ = {
 			isa = PBXGroup;
 			children = (
-				33DE075E1609D6CD0044BB6B /* JSONKit.h */,
+				33B2BE03160A1FC600DAF4CB /* JSONKit.h */,
+				33DE07001609C5F70044BB6B /* SocketRocket */,
 				33DE070F1609C60B0044BB6B /* MDWamp.h */,
 				33DE07101609C60B0044BB6B /* MDWamp.m */,
 				33DE07111609C60B0044BB6B /* MDWampMessage.h */,
@@ -79,7 +80,6 @@
 				33DE07131609C60B0044BB6B /* MDWampProtocols.h */,
 				33DE07221609C9350044BB6B /* MDJSONBridge.h */,
 				33DE07231609C9350044BB6B /* MDJSONBridge.m */,
-				33DE06FF1609C5DD0044BB6B /* lib */,
 				33DE06F41609C5B00044BB6B /* Supporting Files */,
 			);
 			path = MDWamp;
@@ -93,14 +93,6 @@
 				33DE06F91609C5B00044BB6B /* MDWamp-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		33DE06FF1609C5DD0044BB6B /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				33DE07001609C5F70044BB6B /* SocketRocket */,
-			);
-			name = lib;
 			sourceTree = "<group>";
 		};
 		33DE07001609C5F70044BB6B /* SocketRocket */ = {
@@ -126,7 +118,7 @@
 			files = (
 				33DE07141609C60B0044BB6B /* MDWamp.h in Headers */,
 				33B2BDFA160A1B5C00DAF4CB /* MDWampProtocols.h in Headers */,
-				33DE075F1609D6CD0044BB6B /* JSONKit.h in Headers */,
+				33B2BE04160A1FC600DAF4CB /* JSONKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
