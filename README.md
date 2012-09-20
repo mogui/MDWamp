@@ -104,7 +104,7 @@ The Header files of `MDWamp` class and of the Delegates are all well commented s
 
 
 ## Copyright
-Copyright © 2012 Niko Usai. See LICENSE for details.
+Copyright © 2012 Niko Usai. See LICENSE for details.   
 WAMP and is trademark of [Tavendo GmbH][tavendo].
 
 [wamp_link]: http://wamp.ws/
