@@ -31,7 +31,7 @@ But in order for this fallback to work you **must manually include JSONKit by yo
 
 ### pre-compiled framework
 
-1. Download a zip from [downloads page][downpage]
+1. Download latest zip from [here](https://dl.dropbox.com/u/143623815/MDWamp/MDWamp.framework-1.0.zip)
 2. Unzip it
 3. Drag the `MDWamp.framework` folder in your project
 4. Use it in your code by `#import <MDWamp/MDWamp.h>`
