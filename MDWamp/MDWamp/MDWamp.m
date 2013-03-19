@@ -22,6 +22,10 @@
 #import "MDWamp.h"
 #import "MDJSONBridge.h"
 #import "SRWebSocket.h"
+
+@interface MDWamp () <SRWebSocketDelegate>
+@end
+
 @implementation MDWamp
 
 @synthesize delegate;

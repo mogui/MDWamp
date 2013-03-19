@@ -34,7 +34,7 @@
 @protocol SRWebSocketDelegate;
 
 
-@interface MDWamp : NSObject<SRWebSocketDelegate>
+@interface MDWamp : NSObject
 
 {
 	NSURL *server;
