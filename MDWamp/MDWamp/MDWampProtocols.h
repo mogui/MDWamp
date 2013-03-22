@@ -43,6 +43,35 @@
  */
 - (void) onClose:(int)code reason:(NSString *)reason;
 
+/*
+ * Auth req finished
+ *
+ * @param answer		authreq answer
+ */
+- (void) onAuthReqWithAnswer:(NSString *)answer;
+
+/*
+ * Signed authentification challenge
+ *
+ * @param signature		HmacSHA256(challenge, secret)
+ */
+- (void) onAuthSignWithSignature:(NSString *)signature;
+
+/*
+ * Handshake finished
+ *
+ * @param answer		auth call answer
+ */
+- (void) onAuthWithAnswer:(NSString *)answer;
+
+/*
+ * Auth failed
+ *
+ * @param procCall		auth procedure that failed: authreq or auth
+ * @param error         the error returned by the failed call
+ */
+- (void) onAuthFailForCall:(NSString *)procCall withError:(NSString *)errorDetails;
+
 @end
 
 

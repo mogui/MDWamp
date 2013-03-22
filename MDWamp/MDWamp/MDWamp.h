@@ -84,7 +84,6 @@
  */
 - (id) initWithUrl:(NSString *)server delegate:(id<MDWampDelegate>)delegate;
 
-
 /*
  * Start the connection with the server
  */
@@ -104,6 +103,38 @@
  * Returns whether or not we are connected to the server
  */
 - (BOOL) isConnected;
+
+
+/*
+ * AUTH WAMP-CRA IMPLEMENTATION -----------------------------------
+ */
+
+/*
+ * Issues an authentication request
+ *
+ * @param appKey		Authentication key, i.e. user or application name
+ *                      If undefined, anonymous authentication is performed
+ * @param extra			Authentication extra information - optional
+ */
+- (void) authReqWithAppKey:(NSString *)appKey andExtra:(NSString *)extra;
+
+
+/*
+ * Signs an authentication challenge
+ *
+ * @param challenge		Authentication challenge as returned by the WAMP server upon a authentication request
+ * @param secret		Authentication secret
+ */
+- (void) authSignChallenge:(NSString *)challenge withSecret:(NSString *)secret;
+
+
+/*
+ * Authenticate, finishing the authentication handshake
+ *
+ * @param signature		A authentication signature
+ */
+- (void) authWithSignature:(NSString *)signature;
+
 
 /*
  * MESSAGES IMPLEMENTATIONS ---------------------------------------

@@ -18,6 +18,8 @@
 		33DE07171609C60B0044BB6B /* MDWampMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DE07121609C60B0044BB6B /* MDWampMessage.m */; };
 		33DE07251609C9350044BB6B /* MDJSONBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DE07231609C9350044BB6B /* MDJSONBridge.m */; };
 		5712DAAC1681435F009F823C /* MDWampMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 33DE07111609C60B0044BB6B /* MDWampMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C7A1CEE816FB035C00036722 /* MDCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = C7A1CEE616FB035C00036722 /* MDCrypto.h */; };
+		C7A1CEE916FB035C00036722 /* MDCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A1CEE716FB035C00036722 /* MDCrypto.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		33DE07131609C60B0044BB6B /* MDWampProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampProtocols.h; sourceTree = "<group>"; };
 		33DE07221609C9350044BB6B /* MDJSONBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDJSONBridge.h; sourceTree = "<group>"; };
 		33DE07231609C9350044BB6B /* MDJSONBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDJSONBridge.m; sourceTree = "<group>"; };
+		C7A1CEE616FB035C00036722 /* MDCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDCrypto.h; path = Crypto/MDCrypto.h; sourceTree = "<group>"; };
+		C7A1CEE716FB035C00036722 /* MDCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDCrypto.m; path = Crypto/MDCrypto.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,7 @@
 			children = (
 				33B2BE03160A1FC600DAF4CB /* JSONKit.h */,
 				33DE07001609C5F70044BB6B /* SocketRocket */,
+				C7A1CEEA16FB036100036722 /* Crypto */,
 				33DE070F1609C60B0044BB6B /* MDWamp.h */,
 				33DE07101609C60B0044BB6B /* MDWamp.m */,
 				33DE07111609C60B0044BB6B /* MDWampMessage.h */,
@@ -110,6 +115,15 @@
 			path = SocketRocket;
 			sourceTree = "<group>";
 		};
+		C7A1CEEA16FB036100036722 /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				C7A1CEE616FB035C00036722 /* MDCrypto.h */,
+				C7A1CEE716FB035C00036722 /* MDCrypto.m */,
+			);
+			name = Crypto;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -121,6 +135,7 @@
 				33B2BDFA160A1B5C00DAF4CB /* MDWampProtocols.h in Headers */,
 				5712DAAC1681435F009F823C /* MDWampMessage.h in Headers */,
 				33B2BE04160A1FC600DAF4CB /* JSONKit.h in Headers */,
+				C7A1CEE816FB035C00036722 /* MDCrypto.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +253,7 @@
 				33DE07151609C60B0044BB6B /* MDWamp.m in Sources */,
 				33DE07171609C60B0044BB6B /* MDWampMessage.m in Sources */,
 				33DE07251609C9350044BB6B /* MDJSONBridge.m in Sources */,
+				C7A1CEE916FB035C00036722 /* MDCrypto.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
