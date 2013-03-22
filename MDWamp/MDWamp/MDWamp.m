@@ -22,6 +22,11 @@
 #import "MDWamp.h"
 #import "MDJSONBridge.h"
 #import "SRWebSocket.h"
+#import "MDCrypto.h"
+
+@interface MDWamp () <SRWebSocketDelegate, NSURLConnectionDelegate>
+@end
+
 @implementation MDWamp
 
 @synthesize delegate;
@@ -89,22 +94,46 @@
 	} else if(receivedMessage.type == MDWampMessageTypeCallResult || receivedMessage.type == MDWampMessageTypeCallError){
 		
 		NSString *callID = [receivedMessage shiftStackAsString];
-		id<MDWampRpcDelegate>rpcDelegate = [rpcDelegateMap objectForKey:callID];
 		NSString *callUri = [rpcUriMap objectForKey:callID];
 		
 		if (receivedMessage.type == MDWampMessageTypeCallResult) {
 			NSString *callResult = [receivedMessage shiftStackAsString];
 			
 			// call return method on delegate
-			[rpcDelegate onResult:callResult forCalledUri:callUri];
+            if ([callUri isEqualToString:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"]]) {
+                // if it's an auth answer
+                if ([delegate respondsToSelector:@selector(onAuthReqWithAnswer:)]) {
+                    [delegate onAuthReqWithAnswer:callResult];
+                }
+            } else if ([callUri isEqualToString:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"]]) {
+                if ([delegate respondsToSelector:@selector(onAuthWithAnswer:)]) {
+                    [delegate onAuthWithAnswer:callResult];
+                }
+            } else {
+                // it's a normal message
+                id<MDWampRpcDelegate>rpcDelegate = [rpcDelegateMap objectForKey:callID];
+                [rpcDelegate onResult:callResult forCalledUri:callUri];
+                [rpcDelegateMap removeObjectForKey:callID];
+            }
 		} else {
 			NSString *errorUri = [receivedMessage shiftStackAsString];
 			NSString *errorDetail = [receivedMessage shiftStackAsString];
 			
-			[rpcDelegate onError:errorUri description:errorDetail forCalledUri:callUri];
+            if ([callUri isEqualToString:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"]]) {
+                if ([delegate respondsToSelector:@selector(onAuthFailForCall:)]) {
+                    [delegate onAuthFailForCall:@"authreq" withError:errorDetail];
+                }
+            } else if ([callUri isEqualToString:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"]]) {
+                if ([delegate respondsToSelector:@selector(onAuthFailForCall:)]) {
+                    [delegate onAuthFailForCall:@"auth" withError:errorDetail];
+                }
+            } else {
+                id<MDWampRpcDelegate>rpcDelegate = [rpcDelegateMap objectForKey:callID];
+                [rpcDelegate onError:errorUri description:errorDetail forCalledUri:callUri];
+                [rpcDelegateMap removeObjectForKey:callID];
+            }
 		}
 		
-		[rpcDelegateMap removeObjectForKey:callID];
 		[rpcUriMap removeObjectForKey:callID];
 	} else if (receivedMessage.type == MDWampMessageTypeEvent) {
 		NSString *topicUri = [receivedMessage shiftStackAsString];
@@ -159,6 +188,29 @@
 }
 
 
+#pragma mark - ARC authentication
+
+static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
+
+- (void) authReqWithAppKey:(NSString *)appKey andExtra:(NSString *)extra
+{
+    NSString* url = [NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"];
+    [self call:url withDelegate:nil args:appKey, extra, nil];
+}
+
+- (void) authSignChallenge:(NSString *)challenge withSecret:(NSString *)secret
+{
+    NSString *signature = [MDCrypto hmacSHA256Data:challenge withKey:secret];
+    if ([delegate respondsToSelector:@selector(onAuthSignWithSignature:)]) {
+		[delegate onAuthSignWithSignature:signature];
+	}
+}
+
+- (void) authWithSignature:(NSString *)signature
+{
+    NSString* url = [NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"];
+    [self call:url withDelegate:nil args:signature, nil];
+}
 
 #pragma mark - public interface
 
@@ -227,7 +279,9 @@
 	NSMutableArray *argArray = [[NSMutableArray alloc] init];
 	NSString *callID = [self getRandomId];
 	
-	[rpcDelegateMap setObject:rpcDelegate forKey:callID];
+    if (rpcDelegate) {
+        [rpcDelegateMap setObject:rpcDelegate forKey:callID];
+    }
 	[rpcUriMap setObject:procUri forKey:callID];
 	
 	[argArray addObject:[NSNumber numberWithInt:MDWampMessageTypeCall]];
@@ -244,7 +298,8 @@
     va_end(args);
 	
 	NSString *packedJson = [self packArgumentsWithArray:argArray];
-	
+    NSLog(@"%@", packedJson);
+    
 	[socket send:packedJson];
 	
 	return callID;
@@ -294,6 +349,7 @@
 	NSString *packedData = [self packArguments:[NSNumber numberWithInt:MDWampMessageTypePublish], topicUri, event,[NSNumber numberWithBool:excludeMe], nil];
 	[socket send:packedData];
 }
+
 - (void)publish:(id)event toTopic:(NSString *)topicUri
 {
 	[self publish:event toTopic:topicUri excludeMe:NO];
