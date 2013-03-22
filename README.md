@@ -102,6 +102,27 @@ The Header files of `MDWamp` class and of the Delegates are all well commented s
 	
 	- (void) onEvent:(NSString *)topicUri eventObject:(id)object;
 
+*Authenticate using WAMP-CRA:*
+
+	- (void) onOpen
+	{
+	    [wamp authReqWithAppKey:appKey andExtra:nil];
+	}
+
+	- (void) onAuthReqWithAnswer:(NSString *)answer
+	{	    
+	    [wamp authSignChallenge:answer withSecret:appSecret];
+	}
+
+	- (void) onAuthSignWithSignature:(NSString *)signature
+	{
+	    [wamp authWithSignature:signature];
+	}
+
+	// then you have these callbakcs
+	- (void) onAuthWithAnswer:(NSString *)answer;
+	- (void) onAuthFailForCall:(NSString *)procCall withError:(NSError *)error;
+
 
 ## Copyright
 Copyright © 2012 Niko Usai. See LICENSE for details.   
