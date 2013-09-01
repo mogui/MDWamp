@@ -37,7 +37,7 @@
 @interface MDWamp : NSObject
 
 {
-	NSURL *server;
+	NSURLRequest *server;
 	SRWebSocket *socket;
 	NSString *sessionId;
 	NSString *serverIdent;
@@ -76,6 +76,18 @@
 @property (nonatomic, assign) int autoreconnectMaxRetries;
 
 /*
+ * Returns a new istance with connection configured with given server
+ * it does not automatically connect to the ws server
+ *
+ * @param serverRequest	 url request with full protocol es. ws://websocket.com
+ * @param delegate		The delegate for this instance
+ */
+
+- (id) initWithURLRequest:(NSURLRequest *)server delegate:(id<MDWampDelegate>)delegate;
+
+/*
+ * Convienience method for initWithURLRequest:delegate:
+ *
  * Returns a new istance with connection configured with given server
  * it does not automatically connect to th ws server
  * 
