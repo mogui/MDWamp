@@ -216,14 +216,20 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 
 - (id)initWithUrl:(NSString *)_server delegate:(id<MDWampDelegate>)_delegate
 {
-	self = [super init];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:_server]];
+    self = [self initWithURLRequest:request delegate:_delegate];
+    return self;
+}
+
+- (id)initWithURLRequest:(NSURLRequest *)_server delegate:(id<MDWampDelegate>)_delegate{
+    self = [super init];
 	if (self) {
 		shouldAutoreconnect = YES;
 		autoreconnectRetries = 0;
 		autoreconnectDelay = 3;
 		autoreconnectMaxRetries = 10;
 		
-		server = [[NSURL alloc] initWithString:_server];
+		server = _server;
 		self.delegate = _delegate;
 		
 		rpcDelegateMap = [[NSMutableDictionary alloc] init];
@@ -243,7 +249,7 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 
 - (void) connect
 {
-	socket = [[SRWebSocket alloc] initWithURL:server protocols:[NSArray arrayWithObjects:@"wamp", nil]];
+	socket = [[SRWebSocket alloc] initWithURLRequest:server protocols:[NSArray arrayWithObjects:@"wamp", nil]];
 	[socket setDelegate:self];
 	[socket open];
 
