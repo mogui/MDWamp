@@ -23,6 +23,7 @@
 #import "MDJSONBridge.h"
 #import "SRWebSocket.h"
 #import "MDCrypto.h"
+#import "MDRPCResponse.h"
 
 @interface MDWamp () <SRWebSocketDelegate, NSURLConnectionDelegate>
 @end
@@ -98,40 +99,33 @@
 		
 		if (receivedMessage.type == MDWampMessageTypeCallResult) {
 			NSString *callResult = [receivedMessage shiftStackAsString];
-			
-			// call return method on delegate
-            if ([callUri isEqualToString:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"]]) {
-                // if it's an auth answer
-                if ([delegate respondsToSelector:@selector(onAuthReqWithAnswer:)]) {
-                    [delegate onAuthReqWithAnswer:callResult];
-                }
-            } else if ([callUri isEqualToString:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"]]) {
-                if ([delegate respondsToSelector:@selector(onAuthWithAnswer:)]) {
-                    [delegate onAuthWithAnswer:callResult];
-                }
-            } else {
-                // it's a normal message
-                id<MDWampRpcDelegate>rpcDelegate = [rpcDelegateMap objectForKey:callID];
-                [rpcDelegate onResult:callResult forCalledUri:callUri];
-                [rpcDelegateMap removeObjectForKey:callID];
+            id handler = [rpcDelegateMap objectForKey:callID];
+            
+            //Handle with delegate or block
+            if ([handler isKindOfClass:[MDRPCResponse class]]) {
+                MDRPCResponse* res = (MDRPCResponse*)handler;
+                res.resultBlock(callUri,callResult);
             }
+            else{
+                id<MDWampRpcDelegate>rpcDelegate = handler;
+                [rpcDelegate onResult:callResult forCalledUri:callUri];
+            }
+            [rpcDelegateMap removeObjectForKey:callID];
 		} else {
 			NSString *errorUri = [receivedMessage shiftStackAsString];
 			NSString *errorDetail = [receivedMessage shiftStackAsString];
-			
-            if ([callUri isEqualToString:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"]]) {
-                if ([delegate respondsToSelector:@selector(onAuthFailForCall:)]) {
-                    [delegate onAuthFailForCall:@"authreq" withError:errorDetail];
-                }
-            } else if ([callUri isEqualToString:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"]]) {
-                if ([delegate respondsToSelector:@selector(onAuthFailForCall:)]) {
-                    [delegate onAuthFailForCall:@"auth" withError:errorDetail];
-                }
-            } else {
+            id handler = [rpcDelegateMap objectForKey:callID];
+            
+            //Handle with delegate or block
+            if ([handler isKindOfClass:[MDRPCResponse class]]) {
+                MDRPCResponse* res = (MDRPCResponse*)handler;
+                res.errorBlock(callUri,errorUri,errorDetail);
+            }
+            else{
                 id<MDWampRpcDelegate>rpcDelegate = [rpcDelegateMap objectForKey:callID];
                 [rpcDelegate onError:errorUri description:errorDetail forCalledUri:callUri];
-                [rpcDelegateMap removeObjectForKey:callID];
             }
+            [rpcDelegateMap removeObjectForKey:callID];
 		}
 		
 		[rpcUriMap removeObjectForKey:callID];
@@ -194,8 +188,17 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 
 - (void) authReqWithAppKey:(NSString *)appKey andExtra:(NSString *)extra
 {
-    NSString* url = [NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"];
-    [self call:url withDelegate:nil args:appKey, extra, nil];
+    [self call:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"]
+       success:^(NSString *callURI, id result) {
+           if ([delegate respondsToSelector:@selector(onAuthReqWithAnswer:)]) {
+               [delegate onAuthReqWithAnswer:result];
+           }
+       } error:^(NSString *callURI, NSString *errorURI, NSString *errorDescription) {
+           if ([delegate respondsToSelector:@selector(onAuthFailForCall:)]) {
+               [delegate onAuthFailForCall:@"authreq" withError:errorDescription];
+           }
+       } args:appKey,extra,nil
+     ];
 }
 
 - (void) authSignChallenge:(NSString *)challenge withSecret:(NSString *)secret
@@ -208,8 +211,39 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 
 - (void) authWithSignature:(NSString *)signature
 {
-    NSString* url = [NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"];
-    [self call:url withDelegate:nil args:signature, nil];
+    [self call:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"]
+       success:^(NSString *callURI, id result) {
+            if ([delegate respondsToSelector:@selector(onAuthWithAnswer:)]) {
+                [delegate onAuthWithAnswer:result];
+            }
+       } error:^(NSString *callURI, NSString *errorURI, NSString *errorDescription) {
+           if ([delegate respondsToSelector:@selector(onAuthFailForCall:)]) {
+               [delegate onAuthFailForCall:@"auth" withError:errorDescription];
+           }
+       } args:signature,nil
+     ];
+}
+
+-(void) authWithKey:(NSString*)authKey Secret:(NSString*)authSecret Extra:(NSString*)authExtra
+            Success:(void(^)(NSString* answer)) successBlock
+              Error:(void(^)(NSString* procCall, NSString* errorURI, NSString* errorDetails)) errorBlock
+{
+    [self call:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"]
+       success:^(NSString *callURI, id result) {
+           //Respond with signature
+           NSString *signature = [MDCrypto hmacSHA256Data:result withKey:authSecret];
+           [self call:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"]
+              success:^(NSString *callURI, id result) {
+                  successBlock(result);
+              } error:^(NSString *callURI, NSString *errorURI, NSString *errorDescription) {
+                  errorBlock(@"auth",errorURI,errorDescription);
+              } args:signature, nil];
+
+       }
+         error:^(NSString *callURI, NSString *errorURI, NSString *errorDescription) {
+             errorBlock(@"authreq",errorURI,errorDescription);
+         }
+          args:authKey,authExtra, nil];
 }
 
 #pragma mark - public interface
@@ -287,6 +321,39 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 	
     if (rpcDelegate) {
         [rpcDelegateMap setObject:rpcDelegate forKey:callID];
+    }
+	[rpcUriMap setObject:procUri forKey:callID];
+	
+	[argArray addObject:[NSNumber numberWithInt:MDWampMessageTypeCall]];
+	[argArray addObject:callID];
+	[argArray addObject:procUri];
+	
+	va_list args;
+    va_start(args, firstArg);
+	
+    for (id arg = firstArg; arg != nil; arg = va_arg(args, id)) {
+		[argArray addObject:arg];
+    }
+	
+    va_end(args);
+	
+	NSString *packedJson = [self packArgumentsWithArray:argArray];
+    NSLog(@"%@", packedJson);
+    
+	[socket send:packedJson];
+	
+	return callID;
+}
+- (NSString*) call:(NSString*)procUri
+           success:(void(^)(NSString* callURI, id result))success
+             error:(void(^)(NSString* callURI, NSString* errorURI, NSString* errorDescription))error
+              args:(id)firstArg, ... NS_REQUIRES_NIL_TERMINATION{
+    NSMutableArray *argArray = [[NSMutableArray alloc] init];
+	NSString *callID = [self getRandomId];
+	
+    if (success != nil || error != nil) {
+        MDRPCResponse *response = [MDRPCResponse responseWithResult:success Error:error];
+        [rpcDelegateMap setObject:response forKey:callID];
     }
 	[rpcUriMap setObject:procUri forKey:callID];
 	
