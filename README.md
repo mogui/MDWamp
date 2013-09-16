@@ -28,6 +28,7 @@ But in order for this fallback to work you **must manually include JSONKit by yo
 4. Select your framework under "Products", then show in Finder.
 5. Drag the `MDWamp.framework` folder in your project
 6. Use it in your code by `#import <MDWamp/MDWamp.h>`
+7. Include all dependencies of [SocketRocket](https://github.com/square/SocketRocket)
 
 ### pre-compiled framework
 
@@ -35,6 +36,7 @@ But in order for this fallback to work you **must manually include JSONKit by yo
 2. Unzip it
 3. Drag the `MDWamp.framework` folder in your project
 4. Use it in your code by `#import <MDWamp/MDWamp.h>`
+5. Include all dependencies of [SocketRocket](https://github.com/square/SocketRocket)
 
 ## Getting Started
 
@@ -122,7 +124,18 @@ The Header files of `MDWamp` class and of the Delegates are all well commented s
 	// then you have these callbakcs
 	- (void) onAuthWithAnswer:(NSString *)answer;
 	- (void) onAuthFailForCall:(NSString *)procCall withError:(NSError *)error;
+*Authenticate using WAMP-CRA (Block-based):*
 
+	- (void) onOpen
+	{
+		[wamp authWithKey:key Secret:secret Extra:nil 
+			Success:^(NSString *answer) {
+				NSLog(@"Authenticated");
+    		} Error:^(NSString *procCall, NSString *errorURI, NSString *errorDetails) {
+        		NSLog(@"Auth Fail:%@:%@",errorURI,errorDetails);
+    		}
+	   	];
+	}
 
 ## Copyright
 Copyright © 2012 Niko Usai. See LICENSE for details.   
