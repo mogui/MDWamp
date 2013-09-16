@@ -149,6 +149,20 @@
 
 
 /*
+ * Authenticate websocket with wamp-cra; same protocol as above methods but in single call
+ *
+ * @param authKey		Authentication key, i.e. user or application name
+ *                      If undefined, anonymous authentication is performed
+ * @param authExtra			Authentication extra information - optional
+ * @param secret		Authentication secret (ie password)
+ * @param successBlock  Block to be executed upon sucessful authentication
+ * @param errorBlock    Block to be executed upon error during authentication
+ */
+-(void) authWithKey:(NSString*)authKey Secret:(NSString*)authSecret Extra:(NSString*)authExtra
+            Success:(void(^)(NSString* answer)) successBlock
+              Error:(void(^)(NSString* procCall, NSString* errorURI, NSString* errorDetails)) errorBlock;
+
+/*
  * MESSAGES IMPLEMENTATIONS ---------------------------------------
  */
 
@@ -172,6 +186,20 @@
  * @param args			zero or more call arguments
  */
 - (NSString*) call:(NSString*)procUri withDelegate:(id<MDWampRpcDelegate>)rpcDelegate args:(id)firstArg, ... NS_REQUIRES_NIL_TERMINATION;
+
+/*
+ * Call a Remote Procedure on the server
+ * returns the string callID (unique identifier of the call)
+ *
+ * @param procUri		the URI of the remote procedure to be called
+ * @param success		block to be executed on succcess
+ * @param error         block to be executed on failure
+ * @param args			zero or more call arguments
+ */
+- (NSString*) call:(NSString*)procUri
+                success:(void(^)(NSString* callURI, id result))success
+                    error:(void(^)(NSString* callURI, NSString* errorURI, NSString* errorDescription))error
+                        args:(id)firstArg, ... NS_REQUIRES_NIL_TERMINATION;
 
 /*
  * Subscribe for a given topic
