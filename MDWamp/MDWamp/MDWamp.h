@@ -39,43 +39,43 @@
 {
 	NSURLRequest *server;
 	SRWebSocket *socket;
-	NSString *sessionId;
 	NSString *serverIdent;
-	__unsafe_unretained id<MDWampDelegate> delegate;
-	
+
 	NSMutableDictionary *rpcDelegateMap;
 	NSMutableDictionary *rpcUriMap;
 	NSMutableDictionary *subscribersDelegateMap;
 	
-	BOOL shouldAutoreconnect;
-	int autoreconnectMaxRetries;
-	int autoreconnectDelay;
 	int autoreconnectRetries;
 
 }
 
-/*
+/**
+ * The server generated sessionId
+ */
+@property (nonatomic, copy, readonly) NSString *sessionId;
+
+/**
  * The delegate must implement the MDWampDelegate
  * it is not retained
  */
 @property (nonatomic, unsafe_unretained) id<MDWampDelegate> delegate;
 
-/*
+/**
  * Indicates whether or not MDWamp tries to reconnect after a non implicit disconnection
  */
 @property (nonatomic, assign) BOOL shouldAutoreconnect;
 
-/*
+/**
  * The seconds between each reconnection try
  */
-@property (nonatomic, assign) int autoreconnectDelay;
+@property (nonatomic, assign) NSInteger autoreconnectDelay;
 
-/*
+/**
  * The maximum times MDWamp will try to reconnect
  */
-@property (nonatomic, assign) int autoreconnectMaxRetries;
+@property (nonatomic, assign) NSInteger autoreconnectMaxRetries;
 
-/*
+/**
  * Returns a new istance with connection configured with given server
  * it does not automatically connect to the ws server
  *
@@ -85,7 +85,7 @@
 
 - (id) initWithURLRequest:(NSURLRequest *)server delegate:(id<MDWampDelegate>)delegate;
 
-/*
+/**
  * Convienience method for initWithURLRequest:delegate:
  *
  * Returns a new istance with connection configured with given server
@@ -96,32 +96,32 @@
  */
 - (id) initWithUrl:(NSString *)server delegate:(id<MDWampDelegate>)delegate;
 
-/*
+/**
  * Start the connection with the server
  */
 - (void) connect;
 
-/*
+/**
  * Disconnect from the server
  */
 - (void) disconnect;
 
-/*
+/**
  * Handles clean disconnection e reconnection
  */
 - (void) reconnect;
 
-/*
+/**
  * Returns whether or not we are connected to the server
  */
 - (BOOL) isConnected;
 
 
-/*
+/**
  * AUTH WAMP-CRA IMPLEMENTATION -----------------------------------
  */
 
-/*
+/**
  * Issues an authentication request
  *
  * @param appKey		Authentication key, i.e. user or application name
@@ -131,7 +131,7 @@
 - (void) authReqWithAppKey:(NSString *)appKey andExtra:(NSString *)extra;
 
 
-/*
+/**
  * Signs an authentication challenge
  *
  * @param challenge		Authentication challenge as returned by the WAMP server upon a authentication request
@@ -140,7 +140,7 @@
 - (void) authSignChallenge:(NSString *)challenge withSecret:(NSString *)secret;
 
 
-/*
+/**
  * Authenticate, finishing the authentication handshake
  *
  * @param signature		A authentication signature
@@ -148,7 +148,7 @@
 - (void) authWithSignature:(NSString *)signature;
 
 
-/*
+/**
  * Authenticate websocket with wamp-cra; same protocol as above methods but in single call
  *
  * @param authKey		Authentication key, i.e. user or application name
@@ -166,7 +166,7 @@
  * MESSAGES IMPLEMENTATIONS ---------------------------------------
  */
 
-/*
+/**
  * Sets the prefix Uri to share with the server
  * so we can in future calls of other methods use CURIEs instead of full URIs
  * see http://wamp.ws/spec#uris_and_curies for details
@@ -177,7 +177,7 @@
 - (void) prefix:(NSString*)prefix uri:(NSString*)uri;
 
 
-/*
+/**
  * Call a Remote Procedure on the server
  * returns the string callID (unique identifier of the call)
  *
@@ -187,7 +187,7 @@
  */
 - (NSString*) call:(NSString*)procUri withDelegate:(id<MDWampRpcDelegate>)rpcDelegate args:(id)firstArg, ... NS_REQUIRES_NIL_TERMINATION;
 
-/*
+/**
  * Call a Remote Procedure on the server
  * returns the string callID (unique identifier of the call)
  *
@@ -201,7 +201,7 @@
                     error:(void(^)(NSString* callURI, NSString* errorURI, NSString* errorDescription))error
                         args:(id)firstArg, ... NS_REQUIRES_NIL_TERMINATION;
 
-/*
+/**
  * Subscribe for a given topic
  *
  * @param topicUri		the URI of the topic to which subscribe
@@ -209,19 +209,19 @@
  */
 - (void) subscribeTopic:(NSString *)topicUri withDelegate:(id<MDWampEventDelegate>)delegate;
 
-/*
+/**
  * Unsubscribe for a given topic
  *
  * @param topicUri		the URI of the topic to which unsubscribe
  */
 - (void) unsubscribeTopic:(NSString *)topicUri;
 
-/*
+/**
  * Unubscribe from all subscribed topic
  */
 - (void) unsubscribeAll;
 
-/*
+/**
  * Publish something to the given topic
  *
  * @param topicUri		the URI of the topic to which publish
@@ -230,14 +230,14 @@
 - (void)publish:(id)event toTopic:(NSString *)topicUri excludeMe:(BOOL)excludeMe;
 
 
-/*
+/**
  * Shortand for publish not excluding caller from event's receiver
  *
  * @param topicUri		the URI of the topic to which publish
  */
 - (void)publish:(id)event toTopic:(NSString *)topicUri;
 
-/*
+/**
  * Set if debug LOG are activeted or not
  *
  */
