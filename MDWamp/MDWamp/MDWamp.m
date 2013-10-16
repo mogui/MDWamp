@@ -30,11 +30,6 @@
 
 @implementation MDWamp
 
-@synthesize delegate;
-@synthesize shouldAutoreconnect;
-@synthesize autoreconnectDelay;
-@synthesize autoreconnectMaxRetries;
-
 #pragma mark - inner methods
 
 - (NSString*)getRandomId
@@ -85,11 +80,11 @@
 	
 	if (receivedMessage.type == MDWampMessageTypeWelcome) {
 		MDWampDebugLog(@"WELCOMMMME");
-		sessionId = [[NSString alloc] initWithString:[receivedMessage shiftStackAsString]];
+		_sessionId = [[NSString alloc] initWithString:[receivedMessage shiftStackAsString]];
 		int serverProtocolVersion = [receivedMessage shiftStackAsInt];
 		if (serverProtocolVersion != kMDWampProtocolVersion) {
 			[socket close];
-			[delegate onClose:0 reason:@"Protocol Version used by client and server don't match!"];
+			[_delegate onClose:0 reason:@"Protocol Version used by client and server don't match!"];
 		}
 		serverIdent = [[NSString alloc] initWithString:[receivedMessage shiftStackAsString]];
 	} else if(receivedMessage.type == MDWampMessageTypeCallResult || receivedMessage.type == MDWampMessageTypeCallError){
@@ -137,8 +132,8 @@
 		NSArray *subscribers = [subscribersDelegateMap objectForKey:topicUri];
 
 		if (subscribers != nil){
-			for (id<MDWampEventDelegate>_delegate in subscribers){
-				[_delegate onEvent:topicUri eventObject:eventPayload];
+			for (id<MDWampEventDelegate>subscriber in subscribers){
+				[subscriber onEvent:topicUri eventObject:eventPayload];
 			}
 		}
 	}
@@ -149,15 +144,15 @@
 {
 	MDWampDebugLog(@"open");
 	autoreconnectRetries = 0;
-	if ([delegate respondsToSelector:@selector(onOpen)]) {
-		[delegate onOpen];
+	if ([_delegate respondsToSelector:@selector(onOpen)]) {
+		[_delegate onOpen];
 	}
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
 	MDWampDebugLog(@"DID FAIL error %@", error);
-	if ([delegate respondsToSelector:@selector(onClose:reason:)]) {
+	if ([_delegate respondsToSelector:@selector(onClose:reason:)]) {
 		[self webSocket:webSocket didCloseWithCode:error.code reason:error.localizedFailureReason wasClean:NO];
 	}
 }
@@ -166,8 +161,8 @@
 {
 	MDWampDebugLog(@"DID CLOSE reason %@ %d", reason, code);
 	
-	if (code != 54 && shouldAutoreconnect && autoreconnectRetries < autoreconnectMaxRetries) {
-		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, autoreconnectDelay * NSEC_PER_SEC);
+	if (code != 54 && _shouldAutoreconnect && autoreconnectRetries < _autoreconnectMaxRetries) {
+		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, _autoreconnectDelay * NSEC_PER_SEC);
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 			MDWampDebugLog(@"trying to reconnect...");
 			autoreconnectRetries +=1;
@@ -176,8 +171,8 @@
 	}
 	
 	
-	if ([delegate respondsToSelector:@selector(onClose:reason:)]) {
-		[delegate onClose:code reason:reason];
+	if ([_delegate respondsToSelector:@selector(onClose:reason:)]) {
+		[_delegate onClose:code reason:reason];
 	}
 }
 
@@ -190,12 +185,12 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 {
     [self call:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"]
        success:^(NSString *callURI, id result) {
-           if ([delegate respondsToSelector:@selector(onAuthReqWithAnswer:)]) {
-               [delegate onAuthReqWithAnswer:result];
+           if ([_delegate respondsToSelector:@selector(onAuthReqWithAnswer:)]) {
+               [_delegate onAuthReqWithAnswer:result];
            }
        } error:^(NSString *callURI, NSString *errorURI, NSString *errorDescription) {
-           if ([delegate respondsToSelector:@selector(onAuthFailForCall:)]) {
-               [delegate onAuthFailForCall:@"authreq" withError:errorDescription];
+           if ([_delegate respondsToSelector:@selector(onAuthFailForCall:)]) {
+               [_delegate onAuthFailForCall:@"authreq" withError:errorDescription];
            }
        } args:appKey,extra,nil
      ];
@@ -204,8 +199,8 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 - (void) authSignChallenge:(NSString *)challenge withSecret:(NSString *)secret
 {
     NSString *signature = [MDCrypto hmacSHA256Data:challenge withKey:secret];
-    if ([delegate respondsToSelector:@selector(onAuthSignWithSignature:)]) {
-		[delegate onAuthSignWithSignature:signature];
+    if ([_delegate respondsToSelector:@selector(onAuthSignWithSignature:)]) {
+		[_delegate onAuthSignWithSignature:signature];
 	}
 }
 
@@ -213,12 +208,12 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 {
     [self call:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"]
        success:^(NSString *callURI, id result) {
-            if ([delegate respondsToSelector:@selector(onAuthWithAnswer:)]) {
-                [delegate onAuthWithAnswer:result];
+            if ([_delegate respondsToSelector:@selector(onAuthWithAnswer:)]) {
+                [_delegate onAuthWithAnswer:result];
             }
        } error:^(NSString *callURI, NSString *errorURI, NSString *errorDescription) {
-           if ([delegate respondsToSelector:@selector(onAuthFailForCall:)]) {
-               [delegate onAuthFailForCall:@"auth" withError:errorDescription];
+           if ([_delegate respondsToSelector:@selector(onAuthFailForCall:)]) {
+               [_delegate onAuthFailForCall:@"auth" withError:errorDescription];
            }
        } args:signature,nil
      ];
@@ -248,23 +243,23 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 
 #pragma mark - public interface
 
-- (id)initWithUrl:(NSString *)_server delegate:(id<MDWampDelegate>)_delegate
+- (id)initWithUrl:(NSString *)_server delegate:(id<MDWampDelegate>)delegate
 {
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:_server]];
-    self = [self initWithURLRequest:request delegate:_delegate];
+    self = [self initWithURLRequest:request delegate:delegate];
     return self;
 }
 
-- (id)initWithURLRequest:(NSURLRequest *)_server delegate:(id<MDWampDelegate>)_delegate{
+- (id)initWithURLRequest:(NSURLRequest *)aServer delegate:(id<MDWampDelegate>)delegate{
     self = [super init];
 	if (self) {
-		shouldAutoreconnect = YES;
+		_shouldAutoreconnect = YES;
 		autoreconnectRetries = 0;
-		autoreconnectDelay = 3;
-		autoreconnectMaxRetries = 10;
+		_autoreconnectDelay = 3;
+		_autoreconnectMaxRetries = 10;
 		
-		server = _server;
-		self.delegate = _delegate;
+		server = aServer;
+		self.delegate = delegate;
 		
 		rpcDelegateMap = [[NSMutableDictionary alloc] init];
 		rpcUriMap = [[NSMutableDictionary alloc] init];
@@ -383,7 +378,7 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
  *	Publish / Subscribe
  */
 
-- (void) subscribeTopic:(NSString *)topicUri withDelegate:(id<MDWampEventDelegate>)_delegate
+- (void) subscribeTopic:(NSString *)topicUri withDelegate:(id<MDWampEventDelegate>)delegate
 {
 	NSString *packedJson = [self packArguments:[NSNumber numberWithInt:MDWampMessageTypeSubscribe], topicUri, nil];
 	
@@ -395,7 +390,7 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 		subscribers = [subscribersDelegateMap objectForKey:topicUri];
 	}
 	
-	[subscribers addObject:_delegate];
+	[subscribers addObject:delegate];
 	[socket send:packedJson];
 
 }
