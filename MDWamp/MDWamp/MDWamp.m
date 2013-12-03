@@ -268,6 +268,12 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 	return self;
 }
 
+- (void)dealloc
+{
+    [socket setDelegate:nil];
+    socket = nil;
+}
+
 - (void) reconnect
 {
 	if (![self isConnected]) {
@@ -287,7 +293,6 @@ static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
 - (void) disconnect
 {
 	[socket close];
-	socket = nil;
 }
 
 - (BOOL) isConnected
