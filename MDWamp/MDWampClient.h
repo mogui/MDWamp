@@ -10,7 +10,7 @@
 #import "MDWampClientDelegate.h"
 
 #ifdef DEBUG
-#define MDWampDebugLog(fmt, ...) NSLog((@"[MDWampClient] %s " fmt), __PRETTY_FUNCTION__, ##__VA_ARGS__);
+#define MDWampDebugLog(fmt, ...) NSLog((@"%s " fmt), __PRETTY_FUNCTION__, ##__VA_ARGS__);
 #endif
 
 // supported protocol version

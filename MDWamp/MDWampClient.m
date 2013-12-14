@@ -9,7 +9,7 @@
 #import "MDWampClient.h"
 #import "SRWebSocket.h"
 
-@interface MDWampClient () <NSURLConnectionDelegate>
+@interface MDWampClient () <SRWebSocketDelegate, NSURLConnectionDelegate>
 {
 	int autoreconnectRetries;
 }
@@ -69,7 +69,7 @@
 - (void) connect
 {
 	self.socket = [[SRWebSocket alloc] initWithURLRequest:_server protocols:[NSArray arrayWithObjects:@"wamp", nil]];
-	//[self.socket setDelegate:self];
+	[self.socket setDelegate:self];
 	[self.socket open];
     
 }
@@ -92,5 +92,21 @@
 	return (_socket!=nil)? _socket.readyState == SR_OPEN : NO;
 }
 
+#pragma mark -
+#pragma mark SRWebSocketDelegate
+
+- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
+{
+	MDWampDebugLog(@"message %@", message);
+}
+
+- (void)webSocketDidOpen:(SRWebSocket *)webSocket
+{
+	MDWampDebugLog(@"open");
+	autoreconnectRetries = 0;
+	if ([_delegate respondsToSelector:@selector(onOpen)]) {
+		[_delegate onOpen];
+	}
+}
 
 @end
