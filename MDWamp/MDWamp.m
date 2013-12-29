@@ -18,7 +18,7 @@
 //  limitations under the License.
 //
 
-#import "MDWampClient.h"
+#import "MDWamp.h"
 #import "SRWebSocket.h"
 #import "MDRPCResponse.h"
 #import "MDWampMessage.h"
@@ -27,7 +27,7 @@
 
 #import "NSData+SRB64Additions.h"
 
-@interface MDWampClient () <SRWebSocketDelegate, NSURLConnectionDelegate>
+@interface MDWamp () <SRWebSocketDelegate, NSURLConnectionDelegate>
 {
 	int autoreconnectRetries;
 }
@@ -42,7 +42,7 @@
 @end
 
 
-@implementation MDWampClient
+@implementation MDWamp
 
 
 

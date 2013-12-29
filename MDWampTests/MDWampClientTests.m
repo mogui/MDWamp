@@ -9,10 +9,10 @@
 #import <XCTest/XCTest.h>
 #import "XCTAsyncTestCase.h"
 #import "MDWampTest.h"
-#import "MDWampClient.h"
+#import "MDWamp.h"
 
 @interface MDWampClientTests : XCTAsyncTestCase
-@property (strong, nonatomic) MDWampClient *wc;
+@property (strong, nonatomic) MDWamp *wc;
 @property (strong, nonatomic) MDWampClientDelegateMock *delegate;
 @end
 
@@ -33,7 +33,7 @@
 - (void)initClientWithServer:(NSString*)server delegate:(id<MDWampClientDelegate>)delegate
 {
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:server]];
-    _wc = [[MDWampClient alloc] initWithURLRequest:request delegate:delegate];
+    _wc = [[MDWamp alloc] initWithURLRequest:request delegate:delegate];
 }
 
 - (void)initClientAndDelegate
@@ -50,7 +50,7 @@
 - (void) testInitWithRequestAndDelegate
 {
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:kMDWampTestsServerURL]];
-    _wc = [[MDWampClient alloc] initWithURLRequest:request delegate:nil];
+    _wc = [[MDWamp alloc] initWithURLRequest:request delegate:nil];
     XCTAssertNotNil(_wc, @"Inited ws client must not be nil");
 }
 
@@ -74,7 +74,7 @@
     [self initClient];
     
     __weak MDWampClientTests *weakSelf = self;
-    [_wc setOnConnectionOpen:^(MDWampClient *client){
+    [_wc setOnConnectionOpen:^(MDWamp *client){
         XCTAssertTrue([weakSelf.wc isConnected], @"Client must be connected");
         [weakSelf notify:kXCTUnitWaitStatusSuccess];
     }];
@@ -90,10 +90,10 @@
     
     __weak MDWampClientTests *weakSelf = self;
     
-    [_wc setOnConnectionOpen:^(MDWampClient *client){
+    [_wc setOnConnectionOpen:^(MDWamp *client){
        [client disconnect];
     }];
-    [_wc setOnConnectionClose:^(MDWampClient *client, NSInteger code, NSString *reason) {
+    [_wc setOnConnectionClose:^(MDWamp *client, NSInteger code, NSString *reason) {
         XCTAssertEqual((int)code, 54, @"Must be clean closing");
         [weakSelf notify:kXCTUnitWaitStatusSuccess];
     }];
@@ -188,7 +188,7 @@
     static NSString *topic = @"http://example.com/simple";
     static NSString *payloadString = @"Foo";
     
-    [_wc setOnConnectionOpen:^(MDWampClient *client){
+    [_wc setOnConnectionOpen:^(MDWamp *client){
         [client subscribeTopic:topic onEvent:^(id payload) {
             NSLog(@"%@", payload);
             XCTAssertEqualObjects(payload, payloadString, @"Must received the sent payload");
@@ -196,8 +196,8 @@
         }];
     }];
     
-    MDWampClient *anotherClient = [[MDWampClient alloc] initWithURL:[NSURL URLWithString:kMDWampTestsServerURL]];
-    [anotherClient setOnConnectionOpen:^(MDWampClient *client){
+    MDWamp *anotherClient = [[MDWamp alloc] initWithURL:[NSURL URLWithString:kMDWampTestsServerURL]];
+    [anotherClient setOnConnectionOpen:^(MDWamp *client){
         [client publish:payloadString toTopic:topic];
     }];
     
