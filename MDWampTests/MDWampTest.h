@@ -23,27 +23,17 @@
  */
 #define kMDWampTestsNetworkWait 1
 
-/*
- *  Asyncronous Tests, blocks macro thanks to:
- *  http://dadabeatnik.wordpress.com/2013/09/12/xcode-and-asynchronous-unit-testing/
+/**
+ * Handler method to dispatch after some seconds
+ * in order to wait for a network reply
+ *
+ * @param blockToRun - the block of code to run
  */
+static inline void wait_for_network(void (^blockToRun)(void) ){
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kMDWampTestsNetworkWait * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), blockToRun);
+}
 
-// Set the flag for a block completion handler
-#define StartBlock() __block BOOL waitingForBlock = YES
-
-// Set the flag to stop the loop
-#define EndBlock() waitingForBlock = NO
-
-// Wait and loop until flag is set
-#define WaitUntilBlockCompletes() WaitWhile(waitingForBlock)
-
-// Macro - Wait for condition to be NO/false in blocks and asynchronous calls
-#define WaitWhile(condition) \
-do { \
-while(condition) { \
-[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]]; \
-} \
-} while(0)
 
 #include "MDWampClientDelegateMock.h"
 

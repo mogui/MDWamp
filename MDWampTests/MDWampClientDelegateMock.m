@@ -13,9 +13,12 @@
 - (void) onOpen
 {
     self.onOpenCalled = YES;
+    if(self.onOpenCallback){
+        self.onOpenCallback();
+    }
 }
 
-- (void) onClose:(int)code reason:(NSString *)reason
+- (void) onClose:(NSInteger)code reason:(NSString *)reason
 {
     self.onCloseCalled = YES;
 }

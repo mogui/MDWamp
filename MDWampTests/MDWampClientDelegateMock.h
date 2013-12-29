@@ -17,5 +17,6 @@
 @property (assign) BOOL onAuthSignWithSignatureCalled;
 @property (assign) BOOL onAuthWithAnswerCalled;
 @property (assign) BOOL onAuthFailForCallCalled;
+@property (nonatomic, copy) void (^onOpenCallback)(void);
 
 @end

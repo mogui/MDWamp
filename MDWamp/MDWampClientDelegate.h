@@ -36,7 +36,7 @@
  * @param code			error/reason code
  * @param reason		dicsconnection reason
  */
-- (void) onClose:(int)code reason:(NSString *)reason;
+- (void) onClose:(NSInteger)code reason:(NSString *)reason;
 
 /*
  * Auth req finished
