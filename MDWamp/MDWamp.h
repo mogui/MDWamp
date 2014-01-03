@@ -23,6 +23,8 @@
 
 #ifdef DEBUG
 #define MDWampDebugLog(fmt, ...) NSLog((@"%s " fmt), __PRETTY_FUNCTION__, ##__VA_ARGS__);
+#else 
+#define MDWampDebugLog(fmt, ...)
 #endif
 
 // supported protocol version

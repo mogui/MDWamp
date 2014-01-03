@@ -13,8 +13,11 @@ Pod::Spec.new do |s|
     :branch => 'podspec'
   }
 
-  s.source_files        = 'MDWamp/MDWamp/**/*.{h,m,c}'
+  s.source_files        = 'MDWamp/**/*.{h,m,c}'
   s.ios.deployment_target = '5.0'
   s.osx.frameworks      = %w{CFNetwork Security}
+  s.ios.frameworks      = %w{CoreServices CFNetwork Security}
   s.libraries           = "icucore"
+  s.requires_arc = true
+  s.compiler_flags = '-all_load'
 end
