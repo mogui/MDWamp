@@ -18,8 +18,6 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-
 typedef enum {
 	MDWampMessageTypeWelcome,
 	MDWampMessageTypePrefix,

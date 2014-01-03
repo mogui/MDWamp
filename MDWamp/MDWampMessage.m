@@ -19,11 +19,9 @@
 //
 
 #import "MDWampMessage.h"
-#import "MDJSONBridge.h"
+
 @implementation MDWampMessage
 @synthesize type;
-
-
 
 /*
  * return the first element from the messageStack and removes it from the stack

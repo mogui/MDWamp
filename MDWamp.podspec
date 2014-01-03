@@ -9,8 +9,9 @@ Pod::Spec.new do |s|
   }
   s.source = {
     :git => 'https://github.com/mogui/MDWamp.git',
-    :tag => '1.0.1'
+    :tag => '1.1.0'
   }
+  s.dependancy   = 'SocketRocket'
   s.source_files        = 'MDWamp/MDWamp/**/*.{h,m,c}'
   s.ios.deployment_target = '5.0'
   s.osx.frameworks      = %w{CFNetwork Security}

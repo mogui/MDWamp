@@ -5,46 +5,44 @@ It use [SocketRocket][socket_rocket] as WebSocket Protocol implementation.
 
 With this library and with a server [implementation of WAMP protocol][wamp_impl] you can bring Real-time notification not only for a web app (as WebSocket was created for) but also on your mobile App, just like an inner-app Apple Push Notifcation Service, avoiding the hassle of long polling request to the server for getting new things.
 
-It is distributed as a iOS Fake Framework, a hack to bundle a staic library as a Framework on iOS (courtesy of the [nice work of kstenerud][ios_fake_framework_link] ) which simplify how you have to integrate this code into your existing app.
-
-## Installation
-
-You have two main option to integrate the lib in your project:
-
-- Building it from source
-- Download a pre-compiled framework
-
-For both option notice that the library will use the native `NSJSONSerialization` to manage json objects, which is only available on iOS 5 and above, but the library is still compatible with iOS 4.x by switching to a runtime support to [JSONKit][jsonkit]. 
-
-But in order for this fallback to work you **must manually include JSONKit by yourself** within the project, otherwise the lib will Raise an Exception (trick thanks to viewing [Luke Redpath][luke]'s code).
-
-### Building from source
-
-*(from [iOS Universal Framework Mk 7](https://github.com/kstenerud/iOS-Universal-Framework#building-your-ios-framework))*
-
-1. Select your framework's scheme (any of its targets will do).
-2. (optional) Set the "Run" configuration in the scheme editor. It's set to Debug by default but you'll probably want to change it to "Release" when you're ready to distribute your framework.
-3. Build the framework (both "iOS device" and "Simulator" destinations will build the same universal binary, so it doesn't matter which you select).
-4. Select your framework under "Products", then show in Finder.
-5. Drag the `MDWamp.framework` folder in your project
-6. Use it in your code by `#import <MDWamp/MDWamp.h>`
-7. Include all dependencies of [SocketRocket](https://github.com/square/SocketRocket)
-
-### pre-compiled framework
-
-1. Download latest zip from [here](https://dl.dropbox.com/u/143623815/MDWamp/MDWamp.framework-1.0.zip)
-2. Unzip it
-3. Drag the `MDWamp.framework` folder in your project
-4. Use it in your code by `#import <MDWamp/MDWamp.h>`
-5. Include all dependencies of [SocketRocket](https://github.com/square/SocketRocket)
-
-## Getting Started
-
 WAMP in its creator words is:
 
 > an open WebSocket subprotocol that provides two asynchronous messaging patterns: RPC and PubSub.
 
 but what are RPC and PubSub? they give a [nice and neat explanation][faq] if you have doubts
+
+
+## Changes
+
+### 1.1.0
+
+- Added OSX framework target
+- dropped iOS 4 compatibility now iOS >= 5.0 is required
+- added block callback for connection, rpc and pub/sub messages
+- removed RPC and Event delegates (now they only works with blocks)
+- added unit test
+
+## Installation with CocoaPods
+
+[CocoaPods][cocoapods] is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries.
+Just add this to your Podfile
+	pod "MDwamp" 
+
+## Installation from source
+
+- clone the repository: `git clone git@github.com:mogui/MDWamp.git`
+- run a `git submodule init && git submodule update` inside the MDWamp directory to clone the SocketRocket dependancy
+- Add MDWamp.xcodeproj as a subproject of your project or in your workspace.
+- Use libMDwamp (iOS) or MDWamp.framework (OS X) target as a dependancy 
+- Add `-ObjC` to your **other linker flags** option
+- Link your app against these dependancies:
+	- libicucore.dylib
+	- CFNetwork.framework
+	- Security.framework
+	- Foundation.framework
+- Depending on how you configure your project you may need to `#import` either `<MDWamp/MDWamp.h>` or `"MDWamp.h"`
+
+## API
 
 MDWamp is made of a main class `MDWamp` that does all the work it makes connection to the server and expose methods to publish an receive events to and from a topic, and to call Rempte Procedure.
 
@@ -80,31 +78,34 @@ Called when client connect to the server
 - `- (void) onClose:(int)code reason:(NSString *)reason;`    
 Called when client disconnect from the server
 
-### usage examples
+You can also provide similar callback instead of using the delegate:
+
+	@property (nonatomic, copy) void (^onConnectionOpen)(MDWamp *client);
+	@property (nonatomic, copy) void (^onConnectionClose)(MDWamp *client, NSInteger code, NSString *reason);
+
 The Header files of `MDWamp` class and of the Delegates are all well commented so the API is trivial, anyway here are some usage examples
 
-*Call a remote procedure:*
+### Call a remote procedure:
 
-	[wamp call:@"http://example.com/calc#add" withDelegate:self args:[NSNumber numberWithInt:8],[NSNumber numberWithInt:8], nil];
+	[_wc call:@"http://example.com/simple/calc#add" complete:^(NSString *callURI, id result, NSError *error) {
+	    if (error== nil) {
+	        // do something with result
+	    } else {
+	        // handle the error
+	    }
+	} args:@2, @3, nil];
 
-*Receive the call result / error by implementing the delegates method:*
-
-	- (void) onResult:(id)result forCalledUri:(NSString *)callUri;
-	- (void) onError:(NSString *)errorUri description:(NSString*)errorDesc forCalledUri:(NSString *)callUri;
-
-*Publish to a topic a this json object `{"user" : ["foo", "bar"]}`:*
+### Publish to a topic a this json object `{"user" : ["foo", "bar"]}`:
 
 	[wamp publish:[NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"foo", @"bar", nil],@"user", nil] toTopic:@"http://example.com/simple" excludeMe:NO];
 
-*Subscribe to a Topic:*
+### Subscribe to a Topic and handle received events:
 
-	[wamp subscribeTopic:@"http://example.com/simple" withDelegate:self];
+	[client subscribeTopic:@"http://example.com/simple/simple" onEvent:^(id payload) {
+        // do something with the payload
+    }];
 
-*And receive Events from that topic implementing tis delegate metod:*
-	
-	- (void) onEvent:(NSString *)topicUri eventObject:(id)object;
-
-*Authenticate using WAMP-CRA:*
+### Authenticate using WAMP-CRA:
 
 	- (void) onOpen
 	{
@@ -124,7 +125,8 @@ The Header files of `MDWamp` class and of the Delegates are all well commented s
 	// then you have these callbakcs
 	- (void) onAuthWithAnswer:(NSString *)answer;
 	- (void) onAuthFailForCall:(NSString *)procCall withError:(NSError *)error;
-*Authenticate using WAMP-CRA (Block-based):*
+
+### Authenticate using WAMP-CRA (Block-based):
 
 	- (void) onOpen
 	{
@@ -137,13 +139,26 @@ The Header files of `MDWamp` class and of the Delegates are all well commented s
 	   	];
 	}
 
+
+## Test
+to run the unit test you have to install [autobahn test suite](http://autobahn.ws/testsuite/installation/) and run the test server this way:
+
+	wstest -d -m wampserver -w ws://localhost:9000
+
+then you can run the test target.
+
+## Authors
+- [mogui](https://github.com/mogui/)
+- [cvanderschuere](https://github.com/cvanderschuere)
+- [JohnFricker](https://github.com/JohnFricker)
+
 ## Copyright
 Copyright © 2012 Niko Usai. See LICENSE for details.   
-WAMP and is trademark of [Tavendo GmbH][tavendo].
+WAMP is trademark of [Tavendo GmbH][tavendo].
 
 [wamp_link]: http://wamp.ws/
 [wamp_impl]: http://wamp.ws/implementations
-[jsonkit]: https://github.com/johnezang/JSONKit
+[cocoapods]: http://cocoapods.org/
 [luke]: https://github.com/lukeredpath
 [ios_fake_framework_link]: https://github.com/kstenerud/iOS-Universal-Framework
 [lib_pusher]: https://github.com/lukeredpath/libPusher

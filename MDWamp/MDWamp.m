@@ -20,7 +20,6 @@
 
 #import "MDWamp.h"
 #import "SRWebSocket.h"
-#import "MDRPCResponse.h"
 #import "MDWampMessage.h"
 #include <CommonCrypto/CommonDigest.h>
 #include <CommonCrypto/CommonHMAC.h>
