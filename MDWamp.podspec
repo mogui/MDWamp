@@ -9,8 +9,8 @@ Pod::Spec.new do |s|
     'Niko Usai' => 'mogui83@gmail.com'
   }
   s.source = {
-    :git => 'https://github.com/mogui/MDWamp.git',
-    :tag => '1.1.0'
+    :git => 'file:///Users/niko.usai/localrepos/MDWamp.git',
+    :branch => 'podspec'
   }
 
   s.source_files        = 'MDWamp/MDWamp/**/*.{h,m,c}'
