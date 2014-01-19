@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   }
   s.source = {
     :git => 'https://github.com/mogui/MDWamp.git',
-    :branch => 'podspec'
+    :tag => '1.1.0'
   }
 
   s.source_files        = 'MDWamp/**/*.{h,m,c}'
