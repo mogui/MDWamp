@@ -9,7 +9,7 @@ WAMP in its creator words is:
 
 > an open WebSocket subprotocol that provides two asynchronous messaging patterns: RPC and PubSub.
 
-but what are RPC and PubSub? they give a [nice and neat explanation][faq] if you have doubts
+but what are RPC and PubSub? here's a [nice and neat explanation][faq] if you have doubts.
 
 
 ## Changes
@@ -22,25 +22,24 @@ but what are RPC and PubSub? they give a [nice and neat explanation][faq] if you
 - removed RPC and Event delegates (now they only works with blocks)
 - added unit test
 
-## Installation with CocoaPods
+## Installation
 
-[CocoaPods][cocoapods] is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries.
+### OSX
+- By using [CocoaPods][cocoapods], just add to your Podfile
+
+	pod 'MDWamp'
+
+- Use MDWamp.framework  
+Build the framework target of the project, just be sure to `git submodule init && git submodule update` to get the SocketRocket dependancy (see test part for more info)
+
+
+# iOS
+I'm [sick and tired of iOS shitting support for distributing libraries][staticlibpost] so just cocoapods support for ya:
 Just add this to your Podfile
+
 	pod "MDwamp" 
 
-## Installation from source
 
-- clone the repository: `git clone git@github.com:mogui/MDWamp.git`
-- run a `git submodule init && git submodule update` inside the MDWamp directory to clone the SocketRocket dependancy
-- Add MDWamp.xcodeproj as a subproject of your project or in your workspace.
-- Use libMDwamp (iOS) or MDWamp.framework (OS X) target as a dependancy 
-- Add `-ObjC` to your **other linker flags** option
-- Link your app against these dependancies:
-	- libicucore.dylib
-	- CFNetwork.framework
-	- Security.framework
-	- Foundation.framework
-- Depending on how you configure your project you may need to `#import` either `<MDWamp/MDWamp.h>` or `"MDWamp.h"`
 
 ## API
 
@@ -95,7 +94,7 @@ The Header files of `MDWamp` class and of the Delegates are all well commented s
 	    }
 	} args:@2, @3, nil];
 
-### Publish to a topic a this json object `{"user" : ["foo", "bar"]}`:
+### Publish to a topic] this json object `{"user" : ["foo", "bar"]}`:
 
 	[wamp publish:[NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"foo", @"bar", nil],@"user", nil] toTopic:@"http://example.com/simple" excludeMe:NO];
 
@@ -141,13 +140,30 @@ The Header files of `MDWamp` class and of the Delegates are all well commented s
 
 
 ## Test
-to run the unit test you have to install [autobahn test suite](http://autobahn.ws/testsuite/installation/) and run the test server this way:
+If you want to run the tests you have to add the SocketRockt dependancy this is handled by using submodules so:
+
+- clone the repository: `git clone git@github.com:mogui/MDWamp.git`
+- `cd MDWamp`
+- run a `git submodule init && git submodule update` inside the MDWamp cloned directory to init the SocketRocket dependancy. 
+
+Once everything compiles smoothly, you need a WAMP server to test against.  
+The creator of the specification also have a nice test suite tool [autobahn test suite](http://autobahn.ws/testsuite/installation/) (it's for WebSocket in general not only WAMP)   
+The WAMP part though is undere heavy development nowdays for the new specification (WAMP v2) and not everuyhting works as it should, so temporarily, and just for the sake of the test, I suggest you to install it from my fork [over here](https://github.com/mogui/AutobahnTestSuite)  
+As for everything python I suggest to make a `virtualenv`
+
+	git clone git://github.com/mogui/AutobahnTestSuite.git
+	cd AutobahnTestSuite
+	git checkout mdwamp
+	cd autobahntestsuite
+	python setup.py install
+
+Finally you can start the test server:
 
 	wstest -d -m wampserver -w ws://localhost:9000
 
-then you can run the test target.
+and run the test target from Xcode.
 
-## Authors
+##Authors
 - [mogui](https://github.com/mogui/)
 - [cvanderschuere](https://github.com/cvanderschuere)
 - [JohnFricker](https://github.com/JohnFricker)
@@ -166,3 +182,4 @@ WAMP is trademark of [Tavendo GmbH][tavendo].
 [downpage]: http://github.com/mogui/MDWamp/downloads]
 [faq]: http://wamp.ws/faq#rpc
 [tavendo]: http://www.tavendo.de/
+[staticlibpost]: http://blog.mogui.it
