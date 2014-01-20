@@ -37,7 +37,7 @@
  * The delegate must implement the MDWampClientDelegate
  * it is not retained
  */
-@property (nonatomic, weak) id<MDWampClientDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<MDWampClientDelegate> delegate;
 
 /**
  * If implemented gets called when client connects

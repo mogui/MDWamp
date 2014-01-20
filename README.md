@@ -182,4 +182,4 @@ WAMP is trademark of [Tavendo GmbH][tavendo].
 [downpage]: http://github.com/mogui/MDWamp/downloads]
 [faq]: http://wamp.ws/faq#rpc
 [tavendo]: http://www.tavendo.de/
-[staticlibpost]: http://blog.mogui.it
+[staticlibpost]: http://blog.mogui.it/iOS-3rd-packaging.html
