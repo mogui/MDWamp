@@ -32,7 +32,7 @@ typedef enum {
 
 
 
-@interface MDWampMessage : NSObject
+@interface MDWampMessage__ : NSObject
 {
 	NSMutableArray *messageStack;
 	MDWampMessageType type;
