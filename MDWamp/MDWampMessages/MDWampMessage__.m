@@ -18,9 +18,9 @@
 //  limitations under the License.
 //
 
-#import "MDWampMessage.h"
+#import "MDWampMessage__.h"
 
-@implementation MDWampMessage
+@implementation MDWampMessage__
 @synthesize type;
 
 /*
