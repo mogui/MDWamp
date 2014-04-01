@@ -18,12 +18,12 @@
 {
     self = [super init];
     if (self) {
-        NSMutableDictionary *roles = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *r = [[NSMutableDictionary alloc] init];
         for (NSString *role in roles) {
             // TODO: features of role???
-            [roles setObject:@{} forKey:role];
+            [r setObject:@{} forKey:role];
         }
-        self.details = @{@"roles": roles};
+        self.details = @{@"roles": r};
     }
     return self;
 }
@@ -33,6 +33,9 @@
     return 2;
 }
 
-
+- (NSDictionary*)roles
+{
+    return self.details[@"roles"];
+}
 
 @end

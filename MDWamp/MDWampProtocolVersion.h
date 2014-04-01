@@ -34,7 +34,7 @@
  *
  *  @return array of objects
  */
-- (NSArray *) makeMessage:(MDWampMessage*)message;
+- (NSArray *) marshallMessage:(MDWampMessage*)message;
 
 /**
  * return a valid message by parsing a raw list of params
@@ -43,6 +43,6 @@
  *
  *  @return a valid message
  */
-- (MDWampMessage *) parseMessage:(NSArray*)response;
+- (MDWampMessage *) unmarshallMessage:(NSArray*)response;
 
 @end

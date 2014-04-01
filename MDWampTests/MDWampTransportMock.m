@@ -8,7 +8,10 @@
 
 #import "MDWampTransportMock.h"
 #import "MDWamp.h"
+#import "MDWampMessages.h"
 #import "NSMutableArray+MDStack.h"
+
+
 
 @interface MDWampTransportMock ()
 @property (strong) NSArray *proto;
@@ -24,6 +27,7 @@
         self.proto = protocols;
         self.openWillFail = NO;
         self.connected = NO;
+        self.sendBuffer = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -35,7 +39,7 @@
         NSError *error = [NSError errorWithDomain:kMDWampErrorDomain code:-10 userInfo:@{NSLocalizedDescriptionKey: @"Opening the transport failed miserably"}];
         [self.delegate transportDidFailWithError:error];
     } else {
-        [self.delegate transportDidOpenWithProtocolVersion:self.transportChooseVersion andSerialization:self.transportChooseSerialization];
+        [self.delegate transportDidOpen];
         self.connected = YES;
     }
 }
@@ -51,9 +55,9 @@
     return self.connected;
 }
 
-- (void)send:(id)data
+- (void)send:(MDWampMessage *)msg
 {
-    [self.sendBuffer push:data];
+    [self.sendBuffer push:msg];
 }
 
 
