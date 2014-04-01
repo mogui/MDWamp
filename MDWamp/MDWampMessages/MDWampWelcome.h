@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "MDWampMessage.h"
 
-@interface MDWampWelcome : MDWampMessage
+@interface MDWampWelcome : NSObject<MDWampMessage>
 @property (nonatomic, strong) NSNumber *session;
 @property (nonatomic, strong) NSDictionary *details;
 @property (nonatomic, readonly) NSDictionary *roles;
+@property (nonatomic, strong) NSNumber *protocolVersion;
+@property (nonatomic, strong) NSString *serverIdent;
 @end

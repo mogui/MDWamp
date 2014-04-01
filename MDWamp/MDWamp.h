@@ -18,29 +18,10 @@
 //  limitations under the License.
 //
 
-
-#import "MDWampClientDelegate.h"
+#import "MDWampConstants.h"
 #import "MDWampTransport.h"
+#import "MDWampClientDelegate.h"
 #import "MDWampMessages.h"
-
-#ifdef DEBUG
-#define MDWampDebugLog(fmt, ...) NSLog((@"%s " fmt), __PRETTY_FUNCTION__, ##__VA_ARGS__);
-#else 
-#define MDWampDebugLog(fmt, ...)
-#endif
-
-// supported protocol version
-#define	kMDWampProtocolVersion 2
-
-// NSError domain
-#define kMDWampErrorDomain @"it.mogui.MDWamp"
-
-/**
- *  Wamp - Websocket Subprotocol
- */
-extern NSString * const kMDWampSubprotocolWamp;
-extern NSString * const kMDWampSubprotocolWamp2JSON;
-extern NSString * const kMDWampSubprotocolWamp2MsgPack;
 
 /**
  *  Wamp - Roles
@@ -52,6 +33,24 @@ extern NSString * const kMDWampRoleCallee      ;
 
 
 @interface MDWamp : NSObject
+
+
+/**
+ * The server generated sessionId
+ */
+@property (nonatomic, copy, readonly) NSString *sessionId;
+
+/**
+ * Protocol version choosed by the transport
+ */
+@property (nonatomic, readonly) MDWampVersion version;
+
+/**
+ * Serialization choosed by the transport
+ */
+@property (nonatomic, readonly) MDWampSerialization serialization;
+
+
 
 /**
  * The delegate must implement the MDWampClientDelegate
@@ -70,10 +69,17 @@ extern NSString * const kMDWampRoleCallee      ;
 @property (nonatomic, copy) void (^onConnectionClose)(MDWamp *client, NSInteger code, NSString *reason);
 
 
+
 /**
- * The server generated sessionId
+ *  An array of MDWampRoles the client will assume on connection
+ *  default is all roles TODO: what makes sense to do with feature of advanced protocol??
  */
-@property (nonatomic, copy, readonly) NSString *sessionId;
+@property (nonatomic, strong) NSArray *roles;
+
+/**
+ *  A map of Class name that immplements a given serialization (which is the key in the dict) it has a default map that can be changed
+ */
+@property (nonatomic, strong) NSDictionary *serializationInstanceMap;
 
 /**
  * Indicates whether or not MDWamp tries to reconnect after a non implicit disconnection
@@ -90,23 +96,6 @@ extern NSString * const kMDWampRoleCallee      ;
  */
 @property (nonatomic, assign) NSInteger autoreconnectMaxRetries;
 
-/**
- *  Subprotocols to use when connecting with Wamp server
- *  order matters, default is wamp.2.msgpack, wamp.2.json, wamp
- */
-@property (nonatomic, strong) NSArray *subprotocols;
-
-/**
- *  An array of MDWampRoles the client will assume on connection
- *  default is all roles TODO: what makes sense to do with feature of advanced protocol??
- */
-@property (nonatomic, strong) NSArray *roles;
-
-/**
- * Changes the underlying transport used, default is WebSocket (MDWampWebSocket)
- * You can also give a custum one if it conforms to MDWampTransportProtocol
- */
-@property (nonatomic, strong) id<MDWampTransport> transport;
 
 #pragma mark - 
 #pragma mark Init methods
@@ -122,38 +111,6 @@ extern NSString * const kMDWampRoleCallee      ;
  */
 - (id)initWithURL:(NSURL *)aServer realm:(NSString *)realm delegate:(id<MDWampClientDelegate>)delegate;
 
-/**
- *  Convinience method to quick init a client instance
- *
- *  @param aServer webserver url with full protocol es. ws://websocket.com
- *  @param realm   a WAMP routing and administrative domain
- *
- *  @return client instance
- */
-- (id)initWithServer:(NSString *)aServer realm:(NSString *)realm;
-
-/**
- * Maintained for back compatibility
- *
- * @param serverRequest	 url request with full protocol es. ws://websocket.com
- * @param delegate		The delegate for this instance
- */
-- (id) initWithURLRequest:(NSURLRequest *)server delegate:(id<MDWampClientDelegate>)delegate;
-
-/**
- * Convenience initializer maintained for back compatibility
- *
- * @param serverRequest	 url request with full protocol es. ws://websocket.com
- */
-- (id) initWithURLRequest:(NSURLRequest *)server;
-
-/**
- * Convienience initializer maintained for back compatibility
- *
- * @param server		webserver url with full protocol es. ws://websocket.com
- * @param delegate		The delegate for this instance
- */
-- (id) initWithURL:(NSURL *)serverURL;
 
 #pragma mark -
 #pragma mark Connection

@@ -14,23 +14,29 @@
 
 @implementation MDWampHello
 
-- (id)initWithRoles:(NSArray*)roles
+- (id)initWithPayload:(NSArray *)payload
 {
     self = [super init];
     if (self) {
-        NSMutableDictionary *r = [[NSMutableDictionary alloc] init];
-        for (NSString *role in roles) {
-            // TODO: features of role???
-            [r setObject:@{} forKey:role];
-        }
-        self.details = @{@"roles": r};
+        NSMutableArray *tmp = [payload mutableCopy];
+        self.realm = [tmp shift];
+        self.details = [tmp shift];
+
     }
     return self;
 }
 
-- (int)availableFromVersion
+- (NSArray *) marshallFor:(MDWampVersion)version
 {
-    return 2;
+    if (version < kMDWampVersion2) {
+        [NSException raise:NSInvalidArgumentException format:@"Message not supported"];
+    }
+    return @[
+             [NSNumber numberWithInt:1],
+                 self.realm,
+                 self.details
+                 ];
+    
 }
 
 - (NSDictionary*)roles
