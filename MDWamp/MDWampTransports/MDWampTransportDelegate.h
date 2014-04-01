@@ -7,19 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-@class MDWampMessage;
+#import "MDWampConstants.h"
 
 @protocol MDWampTransportDelegate <NSObject>
 
 
 // message will either be an NSString or NSData
-- (void)transportDidReceiveMessage:(MDWampMessage *)message;
+- (void)transportDidReceiveMessage:(NSData *)message;
 
 @optional
 /**
  *  Transport has correctly opened a connection
  */
-- (void)transportDidOpen;
+- (void)transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerialization)serialization;
 
 /**
  *  Transport Failed connection

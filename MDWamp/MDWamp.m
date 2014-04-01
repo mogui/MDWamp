@@ -20,14 +20,12 @@
 
 #import "MDWamp.h"
 #import "NSString+MDString.h"
-
+#import "NSMutableArray+MDStack.h"
 #import "MDWampTransports.h"
-
+#import "MDWampSerializations.h"
+#import "MDWampMessageFactory.h"
 
 #pragma Constants
-NSString * const kMDWampSubprotocolWamp         = @"wamp";
-NSString * const kMDWampSubprotocolWamp2JSON    = @"wamp.2.json";
-NSString * const kMDWampSubprotocolWamp2MsgPack = @"wamp.2.msgpack";
 
 NSString * const kMDWampRolePublisher   = @"publisher";
 NSString * const kMDWampRoleSubscriber  = @"subscriber";
@@ -40,7 +38,8 @@ NSString * const kMDWampRoleCallee      = @"callee";
 	int autoreconnectRetries;
 }
 
-@property (nonatomic, strong) NSURL *server;
+@property (nonatomic, strong) id<MDWampTransport> transport;
+@property (nonatomic, strong) id<MDWampSerialization> serializator;
 @property (nonatomic, strong) NSString *realm;
 @property (nonatomic, strong) NSString *serverIdent;
 @property (nonatomic, strong) NSMutableDictionary *rpcCallbackMap;
@@ -56,73 +55,58 @@ NSString * const kMDWampRoleCallee      = @"callee";
 #pragma mark Init methods
 
 
-- (id)initWithURL:(NSURL *)aServer realm:(NSString *)realm delegate:(id<MDWampClientDelegate>)delegate
+- (id)initWithTransport:(id<MDWampTransport>)transport realm:(NSString *)realm delegate:(id<MDWampClientDelegate>)delegate
 {
     self = [super init];
 	if (self) {
-		_shouldAutoreconnect = YES;
+		
+        // Setting  defaults value
+        self.serializationInstanceMap = @{
+                                          [NSNumber numberWithInt:kMDWampSerializationJSON]: [MDWampSerializationJSON class],
+                                          [NSNumber numberWithInt:kMDWampSerializationMsgPack]: [MDWampSerializationJSON class]
+                                          };
+#warning MSGPACK is missing
+        
+        self.roles = @[kMDWampRolePublisher, kMDWampRoleSubscriber, kMDWampRoleCaller, kMDWampRoleCallee];
+        _shouldAutoreconnect = YES;
 		_autoreconnectDelay = 3;
 		_autoreconnectMaxRetries = 10;
-		
         autoreconnectRetries = 0;
+        
         _sessionEstablished = NO;
         
-		self.server     = aServer;
         self.realm      = realm;
-		self.delegate   = delegate;
-		
+        self.delegate   = delegate;
+        self.transport  = transport;
+        [self.transport setDelegate:self];
+        
 		self.rpcCallbackMap = [[NSMutableDictionary alloc] init];
 		self.rpcUriMap      = [[NSMutableDictionary alloc] init];
 		self.subscribersCallbackMap = [[NSMutableDictionary alloc] init];
         
-        self.subprotocols = @[kMDWampSubprotocolWamp2MsgPack, kMDWampSubprotocolWamp2JSON, kMDWampSubprotocolWamp];
+//        self.subprotocols = @[kMDWampSubprotocolWamp2MsgPack, kMDWampSubprotocolWamp2JSON, kMDWampSubprotocolWamp];
         
         self.roles = @[kMDWampRolePublisher, kMDWampRoleSubscriber, kMDWampRoleCaller, kMDWampRoleCallee];
 	}
 	return self;
 }
 
-- (id)initWithServer:(NSString *)aServer realm:(NSString *)realm
-{
-    return [self initWithURL:[NSURL URLWithString:aServer] realm:realm delegate:nil];
-}
-
-/*
- * just for back compatibility
- */
-- (id)initWithURLRequest:(NSURLRequest *)aServer delegate:(id<MDWampClientDelegate>)delegate
-{
-    return [self initWithURL:aServer.URL realm:@"WAMP1" delegate:delegate];
-}
-
-- (id)initWithURLRequest:(NSURLRequest *)aServer
-{
-    return [self initWithURL:aServer.URL realm:@"WAMP1" delegate:nil];
-}
-
-- (id)initWithURL:(NSURL *)serverURL
-{
-    return [self initWithURL:serverURL realm:@"WAMP1" delegate:nil];
-}
-
-
 #pragma mark -
 #pragma mark Connection
 
 - (void) connect
 {
-    // Fallback on default transport
-    if (!self.transport) {
-        self.transport = [[MDWampTransportWebSocket alloc] initWithServer:self.server protocolVersions:self.subprotocols];
-    }
-    [self.transport setDelegate:self];
     [self.transport open];
-    
 }
 
 - (void) disconnect
 {
 	[self.transport close];
+}
+
+- (BOOL) isConnected
+{
+	return [self.transport isConnected];
 }
 
 - (void) reconnect
@@ -133,42 +117,58 @@ NSString * const kMDWampRoleCallee      = @"callee";
 	}
 }
 
-- (BOOL) isConnected
-{
-	return [self.transport isConnected];
-}
-
-
 #pragma mark -
 #pragma mark MDWampTransport Delegate
-- (void)transportDidReceiveMessage:(MDWampMessage *)message
-{
-    if ([message isKindOfClass:[MDWampWelcome class]]) {
-        MDWampWelcome *welcome = (MDWampWelcome *)message;
-        _sessionId = [welcome.session stringValue];
-    }
-}
 
-- (void)transportDidOpen
+- (void)transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerialization)serialization
 {
     MDWampDebugLog(@"websocket connection opened");
 	autoreconnectRetries = 0;
     
-    // Check if the choosen protocol needs to send an HELLO message
-    // to establish connection
-    if ([self.transport.protocol shouldSendHello]) {
+    _version = version;
+    _serialization = serialization;
+    
+    // Init the serializator
+    Class ser = self.serializationInstanceMap[[NSNumber numberWithInt:self.serialization]];
+    NSAssert(ser != nil, @"Serialization %@ doesn't exists", ser);
+    self.serializator = [[ser alloc] init];
+    
+    if (self.version >= kMDWampVersion2) {
+        // from version 2 of the protocol we have to send an hello message
         MDWampHello *hello = [[MDWampHello alloc] initWithRoles:self.roles];
         hello.realm = self.realm;
-        [self.transport send:hello];
+        [self sendMessage:hello];
     }
+
+//    
+//    //TODO: migrate those when WELCOME is received ;)
+//	if (_delegate && [_delegate respondsToSelector:@selector(onOpen)]) {
+//		[_delegate onOpen];
+//	}
+//    
+//    if (self.onConnectionOpen) {
+//        self.onConnectionOpen(self);
+//    }
+}
+
+- (void)transportDidReceiveMessage:(NSData *)message
+{
+    NSMutableArray *unpacked = [[self.serializator unpack:message] mutableCopy];
+    NSNumber *code = [unpacked shift];
     
-    //TODO: migrate those when WELCOME is received ;)
-	if (_delegate && [_delegate respondsToSelector:@selector(onOpen)]) {
-		[_delegate onOpen];
-	}
-    
-    if (self.onConnectionOpen) {
-        self.onConnectionOpen(self);
+    @try {
+        
+        Class messageClass = [MDWampMessageFactory messageClassFromCode:code forVersion:self.version];
+        id<MDWampMessage> msg = [(id<MDWampMessage>)[messageClass alloc] initWithPayload:unpacked];
+        [self receivedMessage:msg];
+        
+    }
+    @catch (NSException *exception) {
+#ifdef DEBUG
+        [exception raise];
+#else 
+        MDWampDebugLog(@"Invalid message code received !!");
+#endif
     }
 }
 
@@ -179,6 +179,26 @@ NSString * const kMDWampRoleCallee      = @"callee";
 - (void)transportDidCloseWithError:(NSError *)error {
     
 }
+
+#pragma mark -
+#pragma mark Message Management
+- (void) receivedMessage:(id<MDWampMessage>)message
+{
+    
+    if ([message isKindOfClass:[MDWampWelcome class]]) {
+        MDWampWelcome *welcome = (MDWampWelcome *)message;
+        _sessionId = [welcome.session stringValue];
+    }
+}
+
+- (void) sendMessage:(id<MDWampMessage>)message
+{
+    MDWampDebugLog(@"Sending %@", message);
+    NSArray *marshalled = [message marshallFor:self.version];
+    NSData *packed = [self.serializator pack:marshalled];
+    [self.transport send:packed];
+}
+
 
 
 #pragma mark -

@@ -7,16 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MDWampConstants.h"
 
-typedef enum {
-    MDWampVersion1,
-    MDWampVersion2
-} MDWampProtocolVersion;
+@protocol MDWampMessage <NSObject>
 
-@interface MDWampMessage : NSObject
-+ (Class) makeMessageFromCode:(NSNumber*)code forVersion:(MDWampProtocolVersion)version;
-
-- (int) availableFromVersion;
-- (NSArray *) marshall:(MDWampProtocolVersion)version;
 - (id) initWithPayload:(NSArray *)payload;
+- (NSArray *) marshallFor:(MDWampVersion)version;
 @end
+

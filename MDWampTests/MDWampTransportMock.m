@@ -10,7 +10,7 @@
 #import "MDWamp.h"
 #import "MDWampMessages.h"
 #import "NSMutableArray+MDStack.h"
-
+#import "MDWampConstants.h"
 
 
 @interface MDWampTransportMock ()
@@ -39,7 +39,7 @@
         NSError *error = [NSError errorWithDomain:kMDWampErrorDomain code:-10 userInfo:@{NSLocalizedDescriptionKey: @"Opening the transport failed miserably"}];
         [self.delegate transportDidFailWithError:error];
     } else {
-        [self.delegate transportDidOpen];
+        [self.delegate transportDidOpenWithVersion:kMDWampVersion1 andSerialization:kMDWampSerializationJSON];
         self.connected = YES;
     }
 }

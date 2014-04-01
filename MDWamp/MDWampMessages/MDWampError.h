@@ -10,7 +10,7 @@
 #import "MDWampMessage.h"
 #warning MErge with version 1 call error?? direi di si
 
-@interface MDWampError : MDWampMessage
+@interface MDWampError : NSObject<MDWampMessage>
 @property (nonatomic, strong) NSNumber *type;
 @property (nonatomic, strong) NSNumber *request;
 @property (nonatomic, strong) NSDictionary *details;

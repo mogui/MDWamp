@@ -10,10 +10,40 @@
 
 @implementation MDWampWelcome
 
-- (int)availableFromVersion
+- (id)initWithPayload:(NSArray *)payload
 {
-    return 2;
+    self = [super init];
+    if (self) {
+        NSMutableArray *tmp = [payload mutableCopy];
+        self.session = [tmp shift];
+        self.details = [tmp shift];
+        if ([tmp count] > 0) {
+            self.protocolVersion = [tmp shift];
+            self.serverIdent = [tmp shift];
+        }
+        
+    }
+    return self;
 }
+
+
+- (NSArray *)marshallFor:(MDWampVersion)version
+{
+    if (version == kMDWampVersion1) {
+        return @[
+                 @0,
+                 self.session,
+                 self.protocolVersion,
+                 self.serverIdent];
+    } else {
+        return @[
+                 @2,
+                 self.session,
+                 self.details
+                 ];
+    }
+}
+
 - (NSDictionary *)roles
 {
     return self.details[@"roles"];

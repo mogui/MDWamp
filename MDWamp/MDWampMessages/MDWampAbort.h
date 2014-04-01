@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MDWampMessage.h"
 
-@interface MDWampAbort : MDWampMessage
+@interface MDWampAbort : NSObject<MDWampMessage>
 @property (nonatomic, strong) NSDictionary *details;
 @property (nonatomic, strong) NSString *reason;
 @end

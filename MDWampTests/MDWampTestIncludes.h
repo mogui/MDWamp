@@ -40,6 +40,5 @@ static inline void wait_for_network(void (^blockToRun)(void) ){
 #import "MDWampClientDelegateMock.h"
 #import "MDWampTransportMock.h"
 #import "MDWampSerializationMock.h"
-#import "MDWampProtocolVersionMock.h"
 
 #endif
