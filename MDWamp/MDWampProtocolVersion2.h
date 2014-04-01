@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "MDWampProtocolVersion.h"
 
+
+
 @interface MDWampProtocolVersion2 : NSObject <MDWampProtocolVersion>
 
 @end

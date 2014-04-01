@@ -22,12 +22,12 @@ enum {
 
 @implementation MDWampProtocolVersion1
 
-- (NSArray *) makeMessage:(MDWampMessage*)message
+- (NSArray *) marshallMessage:(MDWampMessage*)message
 {
     return @[];
 }
 
-- (MDWampMessage *) parseMessage:(NSString*)response
+- (MDWampMessage *) unmarshallMessage:(NSString*)response
 {
     return nil;
 }

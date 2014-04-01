@@ -9,25 +9,22 @@
 #import "MDWampProtocolVersion2.h"
 #import "NSMutableArray+MDStack.h"
 
-#import "MDWampHello.h"
-#import "MDWampWelcome.h"
-#import "MDWampAbort.h"
-
-#import "MDWampGoodbye.h"
-#import "MDWampError.h"
+#import "MDWampMessages.h"
 #import "MDWamp.h"
+
 #define toS(S) @#S
 
 enum {
-    MDWampHelloCode         = 0,
-    MDWampWelcomeCode       = 1,
-    MDWampAbortCode         = 2,
-    MDWampChallangeCode     = 3,
-    MDWampAuthenticateCode  = 4,
-    MDWampGoodbyeCode       = 5,
-    MDWampHeartbitCode      = 6,
-    MDWampErrorCode         = 7,
+    MDWampHelloCode         = 1,
+    MDWampWelcomeCode          ,
+    MDWampAbortCode            ,
+    MDWampChallangeCode        ,
+    MDWampAuthenticateCode     ,
+    MDWampGoodbyeCode          ,
+    MDWampHeartbitCode         ,
+    MDWampErrorCode            ,
 };
+
 
 @implementation MDWampProtocolVersion2
 
@@ -38,10 +35,10 @@ enum {
 
 - (BOOL) shouldSendGoodbye
 {
-    return NO;
+    return YES;
 }
 
-- (NSArray *) makeMessage:(MDWampMessage*)message
+- (NSArray *) marshallMessage:(MDWampMessage*)message
 {
     NSString *msg = [NSStringFromClass([message class]) stringByAppendingString:@"Code"];
     
@@ -53,7 +50,6 @@ enum {
                  msg.realm,
                  msg.details
                  ];
-        
     } else if ([msg isEqualToString:toS(MDWampWelcomeCode)]) {
         // WELCOME
         MDWampWelcome *msg = (MDWampWelcome *) message;
@@ -62,33 +58,82 @@ enum {
                  msg.session,
                  msg.details
                  ];
-        
+    } else if ([msg isEqualToString:toS(MDWampAbortCode)]) {
+        // ABort
+        MDWampAbort *msg = (MDWampAbort *) message;
+        return @[
+                 [NSNumber numberWithInt:MDWampAbortCode],
+                 msg.details,
+                 msg.reason
+                 ];
+    } else if ([msg isEqualToString:toS(MDWampGoodbyeCode)]) {
+        // GOODBYE
+        MDWampGoodbye *msg = (MDWampGoodbye *) message;
+        return @[
+                 [NSNumber numberWithInt:MDWampGoodbyeCode],
+                 msg.details,
+                 msg.reason
+                 ];
+    } else if ([msg isEqualToString:toS(MDWampErrorCode)]) {
+        // ERROR
+        MDWampError *msg = (MDWampError *) message;
+        return @[
+                 [NSNumber numberWithInt:MDWampErrorCode],
+                 msg.type,
+                 msg.request,
+                 msg.details,
+                 msg.error,
+                 msg.arguments,
+                 msg.argumentsKw
+                 ];
     } else {
         // fail not available command
         return nil;
     }
 }
 
-- (MDWampMessage *) parseMessage:(NSMutableArray *)response
+- (MDWampMessage *) unmarshallMessage:(NSArray *)response
 {
     // switch sul primo parametro un int
     // per capire che messaggio è ed instanzio l'oggetto giusto
     // e lo setto per bene
-
-    int code = [[response shift] intValue];
+    NSMutableArray *tmpMessage = [response mutableCopy];
+    int code = [[tmpMessage shift] intValue];
     
     if (code == MDWampHelloCode) {
         MDWampHello *msg = [[MDWampHello alloc] init];
-        msg.realm = [response shift];
-        msg.details = [response shift];
+        msg.realm = [tmpMessage shift];
+        msg.details = [tmpMessage shift];
         return msg;
         
     } else if (code == MDWampWelcomeCode) {
         MDWampWelcome *msg = [[MDWampWelcome alloc] init];
-        msg.session = [response shift];
-        msg.details = [response shift];
+        msg.session = [tmpMessage shift];
+        msg.details = [tmpMessage shift];
         return msg;
         
+    } else if (code == MDWampAbortCode) {
+        MDWampAbort *msg = [[MDWampAbort alloc] init];
+        msg.details = [tmpMessage shift];
+        msg.reason = [tmpMessage shift];
+        return msg;
+        
+    } else if (code == MDWampGoodbyeCode) {
+        MDWampGoodbye *msg = [[MDWampGoodbye alloc] init];
+        msg.details = [tmpMessage shift];
+        msg.reason = [tmpMessage shift];
+        return msg;
+    
+    } else if (code == MDWampErrorCode) {
+        MDWampError *msg = [[MDWampError alloc] init];
+        msg.type = [tmpMessage shift];
+        msg.request = [tmpMessage shift];
+        msg.details = [tmpMessage shift];
+        msg.error = [tmpMessage shift];
+        msg.arguments = [tmpMessage shift];
+        msg.argumentsKw = [tmpMessage shift];
+        return msg;
+    
     } else {
             // fail not available command
         return nil;

@@ -11,8 +11,8 @@
 #warning MErge with version 1 call error?? direi di si
 
 @interface MDWampError : MDWampMessage
-@property (nonatomic, assign) NSNumber *type;
-@property (nonatomic, assign) NSNumber *request;
+@property (nonatomic, strong) NSNumber *type;
+@property (nonatomic, strong) NSNumber *request;
 @property (nonatomic, strong) NSDictionary *details;
 @property (nonatomic, strong) NSString *error;
 @property (nonatomic, strong) NSArray *arguments;

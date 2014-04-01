@@ -21,6 +21,7 @@
 
 #import "MDWampClientDelegate.h"
 #import "MDWampTransport.h"
+#import "MDWampMessages.h"
 
 #ifdef DEBUG
 #define MDWampDebugLog(fmt, ...) NSLog((@"%s " fmt), __PRETTY_FUNCTION__, ##__VA_ARGS__);

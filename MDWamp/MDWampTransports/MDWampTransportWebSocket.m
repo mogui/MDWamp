@@ -51,12 +51,14 @@
 #pragma mark SRWebSocket Delegate
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
+    
     [self.delegate transportDidReceiveMessage:message];
 }
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
-#warning TODO: gestire i sottoprotocolli per bene
+#warning TODO: gestire i sottoprotocolli per bene e inizializzare versione e serializzazione
+    
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error

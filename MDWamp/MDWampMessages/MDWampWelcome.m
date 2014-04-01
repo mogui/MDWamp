@@ -14,5 +14,8 @@
 {
     return 2;
 }
-
+- (NSDictionary *)roles
+{
+    return self.details[@"roles"];
+}
 @end

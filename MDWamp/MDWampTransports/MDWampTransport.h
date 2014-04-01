@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "MDWampTransportDelegate.h"
+#import "MDWampProtocolVersion.h"
+#import "MDWampSerialization.h"
 
+@class MDWampMessage;
 @protocol MDWampTransport <NSObject>
 
 /**
@@ -16,10 +19,14 @@
  */
 @property id<MDWampTransportDelegate>delegate;
 
+@property (nonatomic, strong) id<MDWampProtocolVersion>protocol;
+
+@property (nonatomic, strong) id<MDWampSerialization>serialization;
+
 /**
  *  Choosen subprotocol after connection
  */
-@property NSString *subprotocol;
+@property (nonatomic, readonly) NSString *subprotocol;
 
 /**
  *  Default initializer
@@ -52,6 +59,6 @@
 /**
  *  Method to send data on the transport
  */
-- (void)send:(id)data;
+- (void)send:(MDWampMessage *)data;
 
 @end

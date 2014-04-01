@@ -22,12 +22,7 @@
 #import "NSString+MDString.h"
 
 #import "MDWampTransports.h"
-#import "MDWampMessages.h"
-#import "MDWampSerializations.h"
 
-#import "MDWampProtocolVersion.h"
-#import "MDWampProtocolVersion1.h"
-#import "MDWampProtocolVersion2.h"
 
 #pragma Constants
 NSString * const kMDWampSubprotocolWamp         = @"wamp";
@@ -46,8 +41,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
 }
 
 @property (nonatomic, strong) NSURL *server;
-@property (nonatomic, strong) id<MDWampProtocolVersion> protocol;
-@property (nonatomic, strong) id<MDWampSerialization> serialization;
 @property (nonatomic, strong) NSString *realm;
 @property (nonatomic, strong) NSString *serverIdent;
 @property (nonatomic, strong) NSMutableDictionary *rpcCallbackMap;
@@ -118,6 +111,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
 
 - (void) connect
 {
+    // Fallback on default transport
     if (!self.transport) {
         self.transport = [[MDWampTransportWebSocket alloc] initWithServer:self.server protocolVersions:self.subprotocols];
     }
@@ -144,12 +138,48 @@ NSString * const kMDWampRoleCallee      = @"callee";
 	return [self.transport isConnected];
 }
 
-- (void) sendMessage:(MDWampMessage*)message
+
+#pragma mark -
+#pragma mark MDWampTransport Delegate
+- (void)transportDidReceiveMessage:(MDWampMessage *)message
 {
-    NSArray *arrayMessage = [self.protocol makeMessage:message];
-    NSData *serializedMessage = [self.serialization pack:arrayMessage];
-    [self.transport send:serializedMessage];
+    if ([message isKindOfClass:[MDWampWelcome class]]) {
+        MDWampWelcome *welcome = (MDWampWelcome *)message;
+        _sessionId = [welcome.session stringValue];
+    }
 }
+
+- (void)transportDidOpen
+{
+    MDWampDebugLog(@"websocket connection opened");
+	autoreconnectRetries = 0;
+    
+    // Check if the choosen protocol needs to send an HELLO message
+    // to establish connection
+    if ([self.transport.protocol shouldSendHello]) {
+        MDWampHello *hello = [[MDWampHello alloc] initWithRoles:self.roles];
+        hello.realm = self.realm;
+        [self.transport send:hello];
+    }
+    
+    //TODO: migrate those when WELCOME is received ;)
+	if (_delegate && [_delegate respondsToSelector:@selector(onOpen)]) {
+		[_delegate onOpen];
+	}
+    
+    if (self.onConnectionOpen) {
+        self.onConnectionOpen(self);
+    }
+}
+
+- (void)transportDidFailWithError:(NSError *)error {
+    
+}
+
+- (void)transportDidCloseWithError:(NSError *)error {
+    
+}
+
 
 #pragma mark -
 #pragma mark Commands
@@ -416,56 +446,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
 //        self.onConnectionClose(self, code, reason);
 //    }
 //}
-
-#pragma mark -
-#pragma mark MDWampTransport Delegate
-- (void)transportDidReceiveMessage:(id)message {
-    NSArray *arrayMessage = [self.serialization unpack:message];
-    MDWampMessage *msg = [self.protocol parseMessage:arrayMessage];
-    if ([msg isKindOfClass:[MDWampWelcome class]]) {
-        MDWampWelcome *welcome = (MDWampWelcome *)msg;
-        _sessionId = [welcome.session stringValue];
-    }
-}
-
-- (void)transportDidOpenWithProtocolVersion:(Class)protocolVersion andSerialization:(Class)serialization
-{
-    MDWampDebugLog(@"websocket connection opened");
-	autoreconnectRetries = 0;
-    
-    assert([protocolVersion conformsToProtocol:@protocol(MDWampProtocolVersion)]);
-    assert([serialization conformsToProtocol:@protocol(MDWampSerialization)]);
-    
-    MDWampDebugLog(@"server choose protocol %@ serialization %@", NSStringFromClass(protocolVersion), NSStringFromClass(serialization));
-    
-    self.protocol = [[protocolVersion alloc] init];
-    self.serialization = [[serialization alloc] init];
-    
-    // Check if the choosen protocol needs to send an HELLO message
-    // to establish connection
-    if ([self.protocol shouldSendHello]) {
-        MDWampHello *hello = [[MDWampHello alloc] initWithRoles:self.roles];
-        hello.realm = self.realm;
-        [self sendMessage:hello];
-    }
-    
-    //TODO: migrate those when WELCOME is received ;)
-	if (_delegate && [_delegate respondsToSelector:@selector(onOpen)]) {
-		[_delegate onOpen];
-	}
-    
-    if (self.onConnectionOpen) {
-        self.onConnectionOpen(self);
-    }
-}
-
-- (void)transportDidFailWithError:(NSError *)error {
-    
-}
-
-- (void)transportDidCloseWithError:(NSError *)error {
-    
-}
 
 
 

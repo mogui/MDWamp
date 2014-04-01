@@ -12,4 +12,5 @@
 @interface MDWampWelcome : MDWampMessage
 @property (nonatomic, strong) NSNumber *session;
 @property (nonatomic, strong) NSDictionary *details;
+@property (nonatomic, readonly) NSDictionary *roles;
 @end

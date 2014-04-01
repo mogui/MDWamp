@@ -9,7 +9,7 @@
 #import "XCTAsyncTestCase.h"
 #import "MDWampTestIncludes.h"
 #import "MDWamp.h"
-
+#import "NSString+MDString.h"
 
 @interface MDWampTests : XCTAsyncTestCase
 @property (strong, nonatomic) MDWamp *wamp;
@@ -27,12 +27,17 @@
     _wamp = [[MDWamp alloc] initWithServer:kMDWampTestsServerV2URL realm:@"realm1"];
     
     _transport = [[MDWampTransportMock alloc] initWithServer:[NSURL URLWithString:kMDWampTestsServerV2URL] protocolVersions:_wamp.subprotocols];
-    _transport.transportChooseSerialization = [MDWampSerializationMock class];
-    _transport.transportChooseVersion = [MDWampProtocolVersionMock class];
+    _transport.serialization = [[MDWampSerializationMock alloc] init];
+
+    MDWampProtocolVersionMock *verison = [[MDWampProtocolVersionMock alloc] init];
+    verison.sendHello = YES;
     
+    _transport.protocol = verison;
+
     _wamp.transport = _transport;
     _wamp.delegate = _delegate;
 }
+
 - (void)tearDown
 {
     [super tearDown];
@@ -53,8 +58,17 @@
 - (void) testSessionEstablished {
     [_wamp connect];
     wait_for_network(^{
-
+        id msg = _transport.sendBuffer[0];
+        XCTAssert([msg isKindOfClass:[MDWampHello class]], @"An Hello message must be in the buffer");
+        
+        NSDictionary *roles = [[(MDWampHello*)msg details] objectForKey:@"roles"];
+        XCTAssert([roles count] > 0, @"At least a role should be sent in hello message");
+        
+        MDWampWelcome *welcome = [[MDWampWelcome alloc] init];
+        welcome.session = [NSNumber numberWithInt:[[NSString stringWithRandomId] intValue]];
+        [_transport triggerDidReceiveMessage:welcome];
         XCTAssertNotNil(_wamp.sessionId , @"Must have session");
+        
         [self notify:kXCTUnitWaitStatusSuccess];
     });
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:2.0];
