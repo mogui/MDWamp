@@ -15,11 +15,14 @@
     self = [super init];
     if (self) {
         NSMutableArray *tmp = [payload mutableCopy];
-        self.session = [tmp shift];
-        self.details = [tmp shift];
-        if ([tmp count] > 0) {
+
+        if ([tmp count] > 2) {
+            self.session = [tmp shift];
             self.protocolVersion = [tmp shift];
             self.serverIdent = [tmp shift];
+        } else {
+            self.session = [tmp shift];
+            self.details = [tmp shift];
         }
         
     }

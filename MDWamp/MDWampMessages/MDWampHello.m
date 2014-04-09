@@ -30,6 +30,7 @@
 {
     if (version < kMDWampVersion2) {
         [NSException raise:NSInvalidArgumentException format:@"Message not supported"];
+        return nil;
     }
     return @[
              [NSNumber numberWithInt:1],
