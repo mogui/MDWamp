@@ -48,6 +48,6 @@
 /**
  *  Method to send data on the transport
  */
-- (void)send:(NSData *)data;
+- (void)send:(id)data;
 
 @end

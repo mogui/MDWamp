@@ -10,8 +10,8 @@
 
 @protocol MDWampSerialization <NSObject>
 
-- (NSData*) pack:(NSArray*)arguments;
-- (NSArray*) unpack:(NSData*)data;
-- (NSData*) packArguments:(id)firstObj, ... NS_REQUIRES_NIL_TERMINATION;
+- (id) pack:(NSArray*)arguments;
+- (NSArray*) unpack:(id)data;
+- (id) packArguments:(id)firstObj, ... NS_REQUIRES_NIL_TERMINATION;
 
 @end

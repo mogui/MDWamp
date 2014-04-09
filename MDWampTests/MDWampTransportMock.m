@@ -20,14 +20,15 @@
 
 
 @implementation MDWampTransportMock
-- (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols
+
+- (id)initWithServer:(NSURL *)request
 {
     self = [super init];
     if (self) {
-        self.proto = protocols;
         self.openWillFail = NO;
         self.connected = NO;
         self.sendBuffer = [[NSMutableArray alloc] init];
+        self.serializationClass = 0;
     }
     return self;
 }
@@ -39,7 +40,7 @@
         NSError *error = [NSError errorWithDomain:kMDWampErrorDomain code:-10 userInfo:@{NSLocalizedDescriptionKey: @"Opening the transport failed miserably"}];
         [self.delegate transportDidFailWithError:error];
     } else {
-        [self.delegate transportDidOpenWithVersion:kMDWampVersion1 andSerialization:kMDWampSerializationJSON];
+        [self.delegate transportDidOpenWithVersion:kMDWampVersion2 andSerialization:self.serializationClass];
         self.connected = YES;
     }
 }
@@ -55,9 +56,9 @@
     return self.connected;
 }
 
-- (void)send:(MDWampMessage *)msg
+- (void)send:(id)data
 {
-    [self.sendBuffer push:msg];
+    [self.sendBuffer push:data];
 }
 
 
@@ -66,4 +67,7 @@
 {
     [self.delegate transportDidReceiveMessage:msg];
 }
+
+
+
 @end
