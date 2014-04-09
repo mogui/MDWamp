@@ -10,9 +10,31 @@
 
 @implementation MDWampGoodbye
 
-- (int)availableFromVersion
+- (id)initWithPayload:(NSArray *)payload
 {
-    return 2;
+    self = [super init];
+    if (self) {
+        NSMutableArray *tmp = [payload mutableCopy];
+        self.details = [tmp shift];
+        self.reason = [tmp shift];
+    }
+    return self;
 }
+
+
+- (NSArray *)marshallFor:(MDWampVersion)version
+{
+    if (version == kMDWampVersion1) {
+        [NSException raise:NSInvalidArgumentException format:@"Message not supported"];
+        return nil;
+    } else {
+        return @[
+                 @6,
+                 self.details,
+                 self.reason
+                 ];
+    }
+}
+
 
 @end

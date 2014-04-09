@@ -80,9 +80,12 @@
     XCTAssertNotNil(msg, @"Message Must not be nil");
     XCTAssertNotNil([msg.roles objectForKey:@"broker"], @"Checking Message integrity");
     XCTAssertEqualObjects(msg.session, _payload[0], @"Checking Message integrity");
-    
-    [self checkMarshallingV1:msg code:@0];
     [self checkMarshallingV2:msg code:@2];
+    
+    self.payload = @[@21233872738, @1, @"Autobahn/0.5.1"];
+    MDWampWelcome *msg2 = [[MDWampWelcome alloc] initWithPayload:self.payload];
+    [self checkMarshallingV1:msg2 code:@0];
+    
 }
 
 - (void)testAbort
@@ -93,7 +96,7 @@
     
     XCTAssertNotNil(msg, @"Message Must not be nil");
     XCTAssertNotNil([msg.details objectForKey:@"message"], @"Checking Message integrity");
-    XCTAssertEqualObjects(msg.reason, _payload[2], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg.reason, _payload[1], @"Checking Message integrity");
     
     [self checkMarshallingV1:msg code:nil];
     [self checkMarshallingV2:msg code:@3];
@@ -117,7 +120,7 @@
     
     XCTAssertNotNil(msg, @"Message Must not be nil");
     XCTAssertNotNil([msg.details objectForKey:@"message"], @"Checking Message integrity");
-    XCTAssertEqualObjects(msg.reason, _payload[2], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg.reason, _payload[1], @"Checking Message integrity");
     
     [self checkMarshallingV1:msg code:nil];
     [self checkMarshallingV2:msg code:@6];}
@@ -129,20 +132,34 @@
 
 - (void)testError
 {
-    self.payload = @[@8, @123456789, @{}, @"com.myapp.error.object_write_protected", @[@"Object is write protected"], @{@"severity": @3}];
+    // call Error version 1
+    /*
+     
+     [4, "AStPd8RS60pfYP8c",
+     "http://example.com/error#invalid_numbers",
+     "one or more numbers are multiples of 3",
+     [0, 3]]
+     
+     */
+    self.payload = @[@"AStPd8RS60pfYP8c", @"http://example.com/error#invalid_numbers", @"one or more numbers are multiples of 3", @[@0, @3]];
     
     MDWampError *msg = [[MDWampError alloc] initWithPayload:_payload];
-    
     XCTAssertNotNil(msg, @"Message Must not be nil");
+    XCTAssertEqualObjects(msg.callID, _payload[0], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg.error, _payload[1], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg.errorDesc, _payload[2], @"Checking Message integrity");
+    [self checkMarshallingV1:msg code:@4];
     
-    XCTAssertEqualObjects(msg.error, _payload[4], @"Checking Message integrity");
-    XCTAssertEqualObjects(msg.type, _payload[1], @"Checking Message integrity");
-    XCTAssertEqualObjects(msg.request, _payload[2], @"Checking Message integrity");
-    XCTAssertEqualObjects(msg.arguments[0], _payload[5][0], @"Checking Message integrity");
-    XCTAssertEqualObjects(msg.argumentsKw[@"severity"], _payload[6][@"severity"], @"Checking Message integrity");
-#warning error on version 1 could be CALLERROR
-    [self checkMarshallingV1:msg code:nil];
-    [self checkMarshallingV2:msg code:@8];
+    // call error version 2
+    self.payload = @[@48, @123456789, @{}, @"com.myapp.error.object_write_protected", @[@"Object is write protected"], @{@"severity": @3}];
+    MDWampError *msg2 = [[MDWampError alloc] initWithPayload:self.payload];
+    XCTAssertEqualObjects(msg2.error, _payload[3], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg2.type, _payload[0], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg2.request, _payload[1], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg2.arguments[0], _payload[4][0], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg2.argumentsKw[@"severity"], _payload[5][@"severity"], @"Checking Message integrity");
+    
+    [self checkMarshallingV2:msg2 code:@8];
 
 }
 

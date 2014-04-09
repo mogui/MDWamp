@@ -157,7 +157,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     NSNumber *code = [unpacked shift];
     
     @try {
-        
+        	
         Class messageClass = [MDWampMessageFactory messageClassFromCode:code forVersion:self.version];
         id<MDWampMessage> msg = [(id<MDWampMessage>)[messageClass alloc] initWithPayload:unpacked];
         [self receivedMessage:msg];
