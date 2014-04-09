@@ -10,14 +10,14 @@
 
 @implementation MDWampSerializationMock
 
-- (NSData*) pack:(NSArray*)arguments;
+- (id) pack:(NSArray*)arguments;
 {
-    return [NSKeyedArchiver archivedDataWithRootObject:arguments];
+    return arguments;
 }
 
-- (NSArray*) unpack:(NSData*)data
+- (NSArray*) unpack:(id)data
 {
-    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    return data;
 }
 
 - (NSData*) packArguments:(id)firstObj, ... NS_REQUIRES_NIL_TERMINATION

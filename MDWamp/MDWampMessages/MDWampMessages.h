@@ -9,6 +9,7 @@
 #ifndef MDWamp_MDWampMessages_h
 #define MDWamp_MDWampMessages_h
 
+#import "MDWampMessageFactory.h"
 #import "MDWampMessage.h"
 #import "MDWampHello.h"
 #import "MDWampWelcome.h"

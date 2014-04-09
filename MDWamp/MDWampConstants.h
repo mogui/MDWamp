@@ -20,16 +20,16 @@
 
 
 // Supported Serialization
-typedef enum {
+typedef NS_ENUM(int, MDWampSerializationClass) {
     kMDWampSerializationJSON    = 1,
     kMDWampSerializationMsgPack
-} MDWampSerialization;
+};
 
 // Supported Versions
-typedef enum {
+typedef NS_ENUM(int, MDWampVersion) {
     kMDWampVersion1 = 1,
     kMDWampVersion2 = 2
-} MDWampVersion;
+};
 
 // latest version supported
 #define	kMDWampCurrentVersion MDWampVersion2

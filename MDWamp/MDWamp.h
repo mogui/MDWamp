@@ -48,7 +48,7 @@ extern NSString * const kMDWampRoleCallee      ;
 /**
  * Serialization choosed by the transport
  */
-@property (nonatomic, readonly) MDWampSerialization serialization;
+@property (nonatomic, readonly) MDWampSerializationClass serialization;
 
 
 
@@ -109,7 +109,7 @@ extern NSString * const kMDWampRoleCallee      ;
  *
  *  @return client instance
  */
-- (id)initWithURL:(NSURL *)aServer realm:(NSString *)realm delegate:(id<MDWampClientDelegate>)delegate;
+- (id)initWithTransport:(id<MDWampTransport>)transport realm:(NSString *)realm delegate:(id<MDWampClientDelegate>)delegate;
 
 
 #pragma mark -

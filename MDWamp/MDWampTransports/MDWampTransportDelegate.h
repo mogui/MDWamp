@@ -19,7 +19,7 @@
 /**
  *  Transport has correctly opened a connection
  */
-- (void)transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerialization)serialization;
+- (void)transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerializationClass)serialization;
 
 /**
  *  Transport Failed connection

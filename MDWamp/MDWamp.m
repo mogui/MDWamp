@@ -120,7 +120,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
 #pragma mark -
 #pragma mark MDWampTransport Delegate
 
-- (void)transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerialization)serialization
+- (void)transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerializationClass)serialization
 {
     MDWampDebugLog(@"websocket connection opened");
 	autoreconnectRetries = 0;
@@ -135,7 +135,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     
     if (self.version >= kMDWampVersion2) {
         // from version 2 of the protocol we have to send an hello message
-        MDWampHello *hello = [[MDWampHello alloc] initWithRoles:self.roles];
+        MDWampHello *hello = [[MDWampHello alloc] initWithPayload:@[self.realm, @{@"roles":self.roles}]];
         hello.realm = self.realm;
         [self sendMessage:hello];
     }
@@ -195,7 +195,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
 {
     MDWampDebugLog(@"Sending %@", message);
     NSArray *marshalled = [message marshallFor:self.version];
-    NSData *packed = [self.serializator pack:marshalled];
+    id packed = [self.serializator pack:marshalled];
     [self.transport send:packed];
 }
 

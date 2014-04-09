@@ -13,5 +13,4 @@
 @property (nonatomic, strong) NSString *realm;
 @property (nonatomic, strong) NSDictionary *details;
 @property (nonatomic, readonly) NSDictionary *roles;
-- (id) initWithRoles:(NSArray*)roles;
 @end

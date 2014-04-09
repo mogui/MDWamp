@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "MDWampTransport.h"
+
 @interface MDWampTransportMock : NSObject <MDWampTransport>
 @property id<MDWampTransportDelegate>delegate;
-@property (nonatomic, readonly) NSString *subprotocol;
 
 // test utility
 @property (assign) BOOL openWillFail;
+@property (assign) BOOL serializationClass;
 @property (nonatomic, strong) NSMutableArray *sendBuffer;
-- (void) triggerDidReceiveMessage:(MDWampMessage *)msg;
+- (void) triggerDidReceiveMessage:(id)msg;
 @end
