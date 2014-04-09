@@ -37,7 +37,7 @@ Build the framework target of the project, just be sure to `git submodule init &
 I'm [sick and tired of iOS shitting support for distributing libraries][staticlibpost] so just cocoapods support for ya:
 Just add this to your Podfile
 
-	pod "MDwamp" 
+	pod "MDWamp" 
 
 
 
