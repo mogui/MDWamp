@@ -18,7 +18,7 @@
     }
 }
 
-- (void) onClose:(NSInteger)code reason:(NSString *)reason
+- (void) onClose:(NSInteger)code reason:(NSString *)reason details:(NSDictionary*)details
 {
     self.onCloseCalled = YES;
 }

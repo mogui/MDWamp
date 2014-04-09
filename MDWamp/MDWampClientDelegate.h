@@ -33,8 +33,9 @@
  *
  * @param code			error/reason code
  * @param reason		dicsconnection reason
+ * @param details		Dictionary with details
  */
-- (void) onClose:(NSInteger)code reason:(NSString *)reason;
+- (void) onClose:(NSInteger)code reason:(NSString *)reason details:(NSDictionary*)details;
 
 /*
  * Auth req finished

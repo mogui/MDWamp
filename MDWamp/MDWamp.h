@@ -31,6 +31,9 @@ extern NSString * const kMDWampRoleSubscriber  ;
 extern NSString * const kMDWampRoleCaller      ;
 extern NSString * const kMDWampRoleCallee      ;
 
+typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
+    MDWampConnectionAborted
+};
 
 @interface MDWamp : NSObject
 
