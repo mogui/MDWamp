@@ -44,15 +44,27 @@
     return [_s pack:arr];
 }
 
+- (id<MDWampMessage>)msgFromPayload:(id)payload IsA:(Class)class
+{
+    NSArray *arr = [_s unpack:payload];
+    Class msgC = [MDWampMessageFactory messageClassFromCode:arr[0] forVersion:kMDWampVersion2];
+
+    if ( ![msgC isSubclassOfClass:[MDWampHello class]]) {
+        return nil;
+    }
+    
+    NSMutableArray *tmp = [arr mutableCopy];
+    [tmp shift];
+    
+    return [(id<MDWampMessage>)[msgC alloc] initWithPayload:tmp];
+}
 
 - (void) testSessionEstablished {
     [_wamp connect];
-    NSArray *arr = [_s unpack:_transport.sendBuffer[0]];
-    Class msgC = [MDWampMessageFactory messageClassFromCode:arr[0] forVersion:kMDWampVersion2];
-    XCTAssert([msgC isSubclassOfClass:[MDWampHello class]], @"An Hello message must be in the buffer");
-    NSMutableArray *tmp = [arr mutableCopy];
-    [tmp shift];
-    MDWampHello *hello = [[MDWampHello alloc] initWithPayload:tmp];
+    
+    MDWampHello *hello = [self msgFromPayload:_transport.sendBuffer[0] IsA:[MDWampHello class]];
+    XCTAssertNotNil(hello, @"An Hello message must be in the transport buffer");
+    
     NSDictionary *roles = [[hello details] objectForKey:@"roles"];
     XCTAssert([roles count] > 0, @"At least a role should be sent in hello message");
     
@@ -61,7 +73,18 @@
     welcome.details = @{};
     NSData *d = [self msgToData:welcome];
     [_transport triggerDidReceiveMessage:d];
+    
     XCTAssertNotNil(_wamp.sessionId , @"Must have session");
+}
+
+- (void)testSessionAbort {
+    [_wamp connect];
+    
+    MDWampAbort *abort = [[MDWampAbort alloc] initWithPayload:@[@{@"message": @"The realm does not exist."}, @"wamp.error.no_such_realm"]];
+
+    [_transport triggerDidReceiveMessage:[self msgToData:abort]];
+    
+    XCTAssert(_delegate.onCloseCalled , @"Session is Abortd onClose method must be called");
 }
 
 @end

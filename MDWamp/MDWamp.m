@@ -188,6 +188,10 @@ NSString * const kMDWampRoleCallee      = @"callee";
     if ([message isKindOfClass:[MDWampWelcome class]]) {
         MDWampWelcome *welcome = (MDWampWelcome *)message;
         _sessionId = [welcome.session stringValue];
+    } else if ([message isKindOfClass:[MDWampAbort class]]) {
+        MDWampAbort *abort = (MDWampAbort *)message;
+        [self.delegate onClose:MDWampConnectionAborted reason:abort.reason details:abort.details];
+        [self.transport close];
     }
 }
 
