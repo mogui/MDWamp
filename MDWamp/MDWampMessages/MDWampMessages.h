@@ -16,5 +16,7 @@
 #import "MDWampGoodbye.h"
 #import "MDWampAbort.h"
 #import "MDWampError.h"
+#import "MDWampSubscribe.h"
+#import "MDWampSubscribed.h"
 
 #endif

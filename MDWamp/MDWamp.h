@@ -32,7 +32,8 @@ extern NSString * const kMDWampRoleCaller      ;
 extern NSString * const kMDWampRoleCallee      ;
 
 typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
-    MDWampConnectionAborted
+    MDWampConnectionAborted,
+    MDWampConnectionClosed
 };
 
 @interface MDWamp : NSObject
@@ -53,8 +54,6 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  */
 @property (nonatomic, readonly) MDWampSerializationClass serialization;
 
-
-
 /**
  * The delegate must implement the MDWampClientDelegate
  * it is not retained
@@ -64,14 +63,12 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
 /**
  * If implemented gets called when client connects
  */
-@property (nonatomic, copy) void (^onConnectionOpen)(MDWamp *client);
+@property (nonatomic, copy) void (^onSessionEstablished)(MDWamp *client, NSDictionary *info);
 
 /**
  * If implemented gets called when client close the connection, or fails to connect
  */
-@property (nonatomic, copy) void (^onConnectionClose)(MDWamp *client, NSInteger code, NSString *reason);
-
-
+@property (nonatomic, copy) void (^onSessionClosed)(MDWamp *client, NSInteger code, NSString *reason, NSDictionary *details);
 
 /**
  *  An array of MDWampRoles the client will assume on connection
@@ -218,8 +215,17 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  *
  * @param topicUri		the URI of the topic to which subscribe
  * @param eventBlock    The Block invoked when an event on the topic is received
+ * @param onError       The Block invoked when an error occurs
  */
-- (void) subscribeTopic:(NSString *)topicUri onEvent:(void(^)(id payload))eventBlock;
+
+/**
+ *  <#Description#>
+ *
+ *  @param topic      the URI of the topic to which subscribe
+ *  @param onError    result of subscription (called only from version 2)
+ *  @param eventBlock The Block invoked when an event on the topic is received
+ */
+- (void) subscribe:(NSString *)topic result:(void(^)(NSString *error, NSDictionary *details))result onEvent:(void(^)(id payload))eventBlock;
 
 /**
  * Unsubscribe for a given topic
