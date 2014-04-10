@@ -10,7 +10,7 @@
 
 @implementation MDWampClientDelegateMock
 
-- (void) onOpen
+- (void) mdwamp:(MDWamp *)wamp sessionEstablished:(NSDictionary *)info
 {
     self.onOpenCalled = YES;
     if(self.onOpenCallback){
@@ -18,7 +18,7 @@
     }
 }
 
-- (void) onClose:(NSInteger)code reason:(NSString *)reason
+- (void) mdwamp:(MDWamp *)wamp closedSession:(NSInteger)code reason:(NSString*)reason details:(NSDictionary *)details
 {
     self.onCloseCalled = YES;
 }

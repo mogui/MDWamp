@@ -9,13 +9,16 @@
 #ifndef MDWamp_MDWampTest_h
 #define MDWamp_MDWampTest_h
 
-
 /*
  *  Wamp autobahn testsute server url,
  * launched by a simple wstest -d -m wampserver -w URL
  */
-#define kMDWampTestsServerURL @"ws://localhost:9000"
-
+#define kMDWampTestsServerV1URL @"ws://localhost:9000"
+/**
+ *  Wamp Crossbar server url
+ * launched with all defaults crossbar start
+ */
+#define kMDWampTestsServerV2URL @"ws://localhost:8080/ws"
 
 /*
  * Define the time a single tests wait for a network call to end
@@ -34,7 +37,8 @@ static inline void wait_for_network(void (^blockToRun)(void) ){
     dispatch_after(popTime, dispatch_get_main_queue(), blockToRun);
 }
 
-
-#include "MDWampClientDelegateMock.h"
+#import "MDWampClientDelegateMock.h"
+#import "MDWampTransportMock.h"
+#import "MDWampSerializationMock.h"
 
 #endif

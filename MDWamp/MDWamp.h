@@ -18,20 +18,41 @@
 //  limitations under the License.
 //
 
-
+#import "MDWampConstants.h"
+#import "MDWampTransport.h"
 #import "MDWampClientDelegate.h"
+#import "MDWampMessages.h"
 
-#ifdef DEBUG
-#define MDWampDebugLog(fmt, ...) NSLog((@"%s " fmt), __PRETTY_FUNCTION__, ##__VA_ARGS__);
-#else 
-#define MDWampDebugLog(fmt, ...)
-#endif
+/**
+ *  Wamp - Roles
+ */
+extern NSString * const kMDWampRolePublisher   ;
+extern NSString * const kMDWampRoleSubscriber  ;
+extern NSString * const kMDWampRoleCaller      ;
+extern NSString * const kMDWampRoleCallee      ;
 
-// supported protocol version
-#define	kMDWampProtocolVersion 1
-
+typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
+    MDWampConnectionAborted,
+    MDWampConnectionClosed
+};
 
 @interface MDWamp : NSObject
+
+
+/**
+ * The server generated sessionId
+ */
+@property (nonatomic, copy, readonly) NSString *sessionId;
+
+/**
+ * Protocol version choosed by the transport
+ */
+@property (nonatomic, readonly) MDWampVersion version;
+
+/**
+ * Serialization choosed by the transport
+ */
+@property (nonatomic, readonly) MDWampSerializationClass serialization;
 
 /**
  * The delegate must implement the MDWampClientDelegate
@@ -42,18 +63,23 @@
 /**
  * If implemented gets called when client connects
  */
-@property (nonatomic, copy) void (^onConnectionOpen)(MDWamp *client);
+@property (nonatomic, copy) void (^onSessionEstablished)(MDWamp *client, NSDictionary *info);
 
 /**
  * If implemented gets called when client close the connection, or fails to connect
  */
-@property (nonatomic, copy) void (^onConnectionClose)(MDWamp *client, NSInteger code, NSString *reason);
-
+@property (nonatomic, copy) void (^onSessionClosed)(MDWamp *client, NSInteger code, NSString *reason, NSDictionary *details);
 
 /**
- * The server generated sessionId
+ *  An array of MDWampRoles the client will assume on connection
+ *  default is all roles TODO: what makes sense to do with feature of advanced protocol??
  */
-@property (nonatomic, copy, readonly) NSString *sessionId;
+@property (nonatomic, strong) NSArray *roles;
+
+/**
+ *  A map of Class name that immplements a given serialization (which is the key in the dict) it has a default map that can be changed
+ */
+@property (nonatomic, strong) NSDictionary *serializationInstanceMap;
 
 /**
  * Indicates whether or not MDWamp tries to reconnect after a non implicit disconnection
@@ -70,35 +96,21 @@
  */
 @property (nonatomic, assign) NSInteger autoreconnectMaxRetries;
 
+
 #pragma mark - 
 #pragma mark Init methods
 /**
- * Returns a new istance with connection configured with given server
- * it does not automatically connect to the ws server
+ *  Returns a new istance with connection configured with given server
+ *  it does not automatically connect to the ws server
  *
- * @param serverRequest	 url request with full protocol es. ws://websocket.com
- * @param delegate		The delegate for this instance
+ *  @param aServer  an url request with full protocol
+ *  @param realm    a WAMP routing and administrative domain
+ *  @param delegate The connection delegate for this instance
+ *
+ *  @return client instance
  */
-- (id) initWithURLRequest:(NSURLRequest *)server delegate:(id<MDWampClientDelegate>)delegate;
+- (id)initWithTransport:(id<MDWampTransport>)transport realm:(NSString *)realm delegate:(id<MDWampClientDelegate>)delegate;
 
-/**
- * Convenience method for initWithURLRequest:delegate:
- * delegate can be nil
- *
- * @param serverRequest	 url request with full protocol es. ws://websocket.com
- */
-- (id) initWithURLRequest:(NSURLRequest *)server;
-
-/**
- * Convienience method for initWithURLRequest:delegate:
- *
- * Returns a new istance with connection configured with given server
- * it does not automatically connect to th ws server
- *
- * @param server		webserver url with full protocol es. ws://websocket.com
- * @param delegate		The delegate for this instance
- */
-- (id) initWithURL:(NSURL *)serverURL;
 
 #pragma mark -
 #pragma mark Connection
@@ -124,6 +136,8 @@
  */
 - (BOOL) isConnected;
 
+#pragma mark -
+#pragma mark Commands
 /**
  * Sets the prefix Uri to share with the server
  * so we can in future calls of other methods use CURIEs instead of full URIs
@@ -201,8 +215,17 @@
  *
  * @param topicUri		the URI of the topic to which subscribe
  * @param eventBlock    The Block invoked when an event on the topic is received
+ * @param onError       The Block invoked when an error occurs
  */
-- (void) subscribeTopic:(NSString *)topicUri onEvent:(void(^)(id payload))eventBlock;
+
+/**
+ *  <#Description#>
+ *
+ *  @param topic      the URI of the topic to which subscribe
+ *  @param onError    result of subscription (called only from version 2)
+ *  @param eventBlock The Block invoked when an event on the topic is received
+ */
+- (void) subscribe:(NSString *)topic result:(void(^)(NSString *error, NSDictionary *details))result onEvent:(void(^)(id payload))eventBlock;
 
 /**
  * Unsubscribe for a given topic
