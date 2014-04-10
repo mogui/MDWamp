@@ -18,25 +18,30 @@
 //  limitations under the License.
 //
 
+@class MDWamp;
+
 @protocol MDWampClientDelegate <NSObject>
 
 @optional
 
-/*
- * Called when client connect to the server
+/**
+ *  Called when client connect to the server
+ *
+ *  @param wamp wamp client
+ *  @param info dictionary with additional info
  */
-- (void) onOpen;
+- (void) mdwamp:(MDWamp*)wamp sessionEstablished:(NSDictionary*)info;
 
-/*
- * Called when client disconnect from the server
+/**
+ *  Called when client disconnect from the server
  * it gives code of the error / reason of disconnect and a description of the reason
  *
- * @param code			error/reason code
- * @param reason		dicsconnection reason
- * @param details		Dictionary with details
+ *  @param wamp    wamp client
+ *  @param code
+ *  @param reason
+ *  @param details 
  */
-- (void) onClose:(NSInteger)code reason:(NSString *)reason details:(NSDictionary*)details;
-
+- (void) mdwamp:(MDWamp *)wamp closedSession:(NSInteger)code reason:(NSString*)reason details:(NSDictionary *)details;
 /*
  * Auth req finished
  *

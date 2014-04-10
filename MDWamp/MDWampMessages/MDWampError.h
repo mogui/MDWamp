@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MDWampMessage.h"
-#warning MErge with version 1 call error?? direi di si
 
 @interface MDWampError : NSObject<MDWampMessage>
 @property (nonatomic, strong) NSNumber *type;

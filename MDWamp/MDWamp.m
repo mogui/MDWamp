@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+#include <stdlib.h>
+
 #import "MDWamp.h"
 #import "NSString+MDString.h"
 #import "NSMutableArray+MDStack.h"
@@ -42,10 +44,16 @@ NSString * const kMDWampRoleCallee      = @"callee";
 @property (nonatomic, strong) id<MDWampSerialization> serializator;
 @property (nonatomic, strong) NSString *realm;
 @property (nonatomic, strong) NSString *serverIdent;
+@property (nonatomic, assign) BOOL sessionEstablished;
+@property (nonatomic, assign) BOOL goodbyeSent;
+
+@property (nonatomic, strong) NSMutableDictionary *subscriptionRequests;
+@property (nonatomic, strong) NSMutableDictionary *subscribersCallbackMap;
 @property (nonatomic, strong) NSMutableDictionary *rpcCallbackMap;
 @property (nonatomic, strong) NSMutableDictionary *rpcUriMap;
-@property (nonatomic, strong) NSMutableDictionary *subscribersCallbackMap;
-@property (nonatomic, assign) BOOL sessionEstablished;
+
+
+
 @end
 
 
@@ -68,20 +76,22 @@ NSString * const kMDWampRoleCallee      = @"callee";
 #warning MSGPACK is missing
         
         self.roles = @[kMDWampRolePublisher, kMDWampRoleSubscriber, kMDWampRoleCaller, kMDWampRoleCallee];
-        _shouldAutoreconnect = YES;
-		_autoreconnectDelay = 3;
-		_autoreconnectMaxRetries = 10;
-        autoreconnectRetries = 0;
+        _shouldAutoreconnect        = YES;
+		_autoreconnectDelay         = 3;
+		_autoreconnectMaxRetries    = 10;
+        autoreconnectRetries        = 0;
         
         _sessionEstablished = NO;
+        _goodbyeSent        = NO;
         
         self.realm      = realm;
         self.delegate   = delegate;
         self.transport  = transport;
         [self.transport setDelegate:self];
-        
-		self.rpcCallbackMap = [[NSMutableDictionary alloc] init];
-		self.rpcUriMap      = [[NSMutableDictionary alloc] init];
+
+        self.subscriptionRequests   = [[NSMutableDictionary alloc] init];
+		self.rpcCallbackMap         = [[NSMutableDictionary alloc] init];
+		self.rpcUriMap              = [[NSMutableDictionary alloc] init];
 		self.subscribersCallbackMap = [[NSMutableDictionary alloc] init];
         
 //        self.subprotocols = @[kMDWampSubprotocolWamp2MsgPack, kMDWampSubprotocolWamp2JSON, kMDWampSubprotocolWamp];
@@ -89,6 +99,13 @@ NSString * const kMDWampRoleCallee      = @"callee";
         self.roles = @[kMDWampRolePublisher, kMDWampRoleSubscriber, kMDWampRoleCaller, kMDWampRoleCallee];
 	}
 	return self;
+}
+
+#pragma mark Utils
+- (NSNumber *) generateID
+{
+    int r = arc4random_uniform(4294967295);
+    return [NSNumber numberWithInt:r];
 }
 
 #pragma mark -
@@ -139,16 +156,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
         hello.realm = self.realm;
         [self sendMessage:hello];
     }
-
-//    
-//    //TODO: migrate those when WELCOME is received ;)
-//	if (_delegate && [_delegate respondsToSelector:@selector(onOpen)]) {
-//		[_delegate onOpen];
-//	}
-//    
-//    if (self.onConnectionOpen) {
-//        self.onConnectionOpen(self);
-//    }
 }
 
 - (void)transportDidReceiveMessage:(NSData *)message
@@ -188,16 +195,85 @@ NSString * const kMDWampRoleCallee      = @"callee";
     if ([message isKindOfClass:[MDWampWelcome class]]) {
         MDWampWelcome *welcome = (MDWampWelcome *)message;
         _sessionId = [welcome.session stringValue];
+    
+        NSDictionary *details;
+        if (welcome.details) {
+            details = welcome.details;
+        } else {
+            // version 1
+            details = @{@"protocolVersion": welcome.protocolVersion,
+                        @"serverIdent": welcome.serverIdent};
+        }
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:sessionEstablished:)]) {
+            [_delegate mdwamp:self sessionEstablished:details];
+        }
+        
+        if (self.onSessionEstablished) {
+            self.onSessionEstablished(self, details);
+        }
+        
     } else if ([message isKindOfClass:[MDWampAbort class]]) {
         MDWampAbort *abort = (MDWampAbort *)message;
-        [self.delegate onClose:MDWampConnectionAborted reason:abort.reason details:abort.details];
+        
         [self.transport close];
+  
+        if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:closedSession:reason:details:)]) {
+            [_delegate mdwamp:self closedSession:MDWampConnectionAborted reason:abort.reason details:abort.details];
+        }
+        
+        if (self.onSessionClosed) {
+            self.onSessionClosed(self, MDWampConnectionAborted, abort.reason, abort.details);
+        }
+        
+    } else if ([message isKindOfClass:[MDWampGoodbye class]]) {
+        // Received Goodbye message
+        MDWampGoodbye *goodbye = (MDWampGoodbye *)message;
+        
+        // if we initiated the disconnection we don't send the goddbye back
+        if (!self.goodbyeSent) {
+            MDWampGoodbye *goodbyeResponse = [[MDWampGoodbye alloc] initWithPayload:@[@{}, @"wamp.error.goodbye_and_out"]];
+            [self sendMessage:goodbyeResponse];
+        }
+        
+        // close either way
+        [self.transport close];
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:closedSession:reason:details:)]) {
+            [_delegate mdwamp:self closedSession:MDWampConnectionClosed reason:goodbye.reason details:goodbye.details];
+        }
+        
+        if (self.onSessionClosed) {
+            self.onSessionClosed(self, MDWampConnectionClosed, goodbye.reason, goodbye.details);
+        }
+    } else if ([message isKindOfClass:[MDWampError class]]) {
+        // gestire gli errori diversi in base al codice nonso se usare il message factory o quealcosa del genere
+        
+    } else if ([message isKindOfClass:[MDWampSubscribed class]]) {
+        // version 1 never arrives here
+        
+        MDWampSubscribed *subscribed = (MDWampSubscribed *)message;
+        NSArray *callbacks = self.subscriptionRequests[subscribed.request];
+        
+        // retrieve list of subscribers
+        NSMutableArray *subscribers = [self.subscribersCallbackMap objectForKey:subscribed.subscription];
+        if (subscribers == nil) {
+            subscribers = [[NSMutableArray alloc] init];
+            [self.subscribersCallbackMap setObject:subscribers forKey:subscribed.subscription];
+        }
+        [subscribers addObject:callbacks[1]];
+        
+        void(^resultCallback)(NSString *, NSDictionary *)  = callbacks[0];
+        resultCallback(nil, nil);
     }
 }
 
 - (void) sendMessage:(id<MDWampMessage>)message
 {
     MDWampDebugLog(@"Sending %@", message);
+    if ([message isKindOfClass:[MDWampGoodbye class]]) {
+        self.goodbyeSent = YES;
+    }
     NSArray *marshalled = [message marshallFor:self.version];
     id packed = [self.serializator pack:marshalled];
     [self.transport send:packed];
@@ -214,6 +290,74 @@ NSString * const kMDWampRoleCallee      = @"callee";
 //	MDWampDebugLog(@"sending prefix: %@", payload);
 //	[_socket send:payload];
 }
+
+#pragma mark Pub/Sub
+- (void) subscribe:(NSString *)topic result:(void(^)(NSString *error, NSDictionary *details))result onEvent:(void(^)(id payload))eventBlock
+{
+    NSNumber *request = [self generateID];
+    MDWampSubscribe *subscribe = [[MDWampSubscribe alloc] initWithPayload:@[request, @{}, topic]];
+    if (self.version >= kMDWampVersion2) {
+        
+        // we have to wait Subscribed message before add event
+        [self.subscriptionRequests setObject:@[result, eventBlock] forKey:request];
+        
+    } else {
+        
+        // for version 1 we just add the callback by topic key
+        NSMutableArray *subscribers = [self.subscribersCallbackMap objectForKey:topic];
+
+        if (subscribers == nil) {
+            NSMutableArray *subList = [[NSMutableArray alloc] init];
+            [self.subscribersCallbackMap setObject:subList forKey:topic];
+            subscribers = [self.subscribersCallbackMap objectForKey:topic];
+        }
+        [subscribers addObject:eventBlock];
+        
+    }
+    
+    [self sendMessage:subscribe];
+    
+    //	NSString *packedJson = [self packArguments:[NSNumber numberWithInt:MDWampMessageTypeSubscribe], topicUri, nil];
+    //	NSMutableArray *subscribers = [self.subscribersCallbackMap objectForKey:topicUri];
+    //
+    //	if (subscribers == nil) {
+    //		NSMutableArray *subList = [[NSMutableArray alloc] init];
+    //		[self.subscribersCallbackMap setObject:subList forKey:topicUri];
+    //		subscribers = [self.subscribersCallbackMap objectForKey:topicUri];
+    //	}
+    //
+
+    //	[_socket send:packedJson];
+}
+
+- (void)unsubscribeTopic:(NSString *)topicUri
+{
+    //	NSString *packedJson = [self packArguments:[NSNumber numberWithInt:MDWampMessageTypeUnsubscribe], topicUri, nil];
+    //	[_socket send:packedJson];
+    //
+    //	[self.subscribersCallbackMap removeObjectForKey:topicUri];
+}
+
+- (void)unsubscribeAll
+{
+    //	for (NSString *topicUri in [_subscribersCallbackMap allKeys]){
+    //		[self unsubscribeTopic:topicUri];
+    //	}
+    //
+    //	[_subscribersCallbackMap removeAllObjects];
+}
+
+- (void)publish:(id)event toTopic:(NSString *)topicUri excludeMe:(BOOL)excludeMe
+{
+    //	NSString *packedData = [self packArguments:[NSNumber numberWithInt:MDWampMessageTypePublish], topicUri, event,[NSNumber numberWithBool:excludeMe], nil];
+    //	[_socket send:packedData];
+}
+
+- (void)publish:(id)event toTopic:(NSString *)topicUri
+{
+    //	[self publish:event toTopic:topicUri excludeMe:NO];
+}
+
 
 
 #pragma mark Remote Procedure Call
@@ -247,50 +391,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
 //	
 //	return callID;
     return nil;
-}
-
-#pragma mark Pub/Sub
-- (void) subscribeTopic:(NSString *)topicUri onEvent:(void(^)(id payload))eventBlock
-{
-//	NSString *packedJson = [self packArguments:[NSNumber numberWithInt:MDWampMessageTypeSubscribe], topicUri, nil];
-//	NSMutableArray *subscribers = [self.subscribersCallbackMap objectForKey:topicUri];
-//    
-//	if (subscribers == nil) {
-//		NSMutableArray *subList = [[NSMutableArray alloc] init];
-//		[self.subscribersCallbackMap setObject:subList forKey:topicUri];
-//		subscribers = [self.subscribersCallbackMap objectForKey:topicUri];
-//	}
-//	
-//	[subscribers addObject:eventBlock];
-//	[_socket send:packedJson];
-}
-
-- (void)unsubscribeTopic:(NSString *)topicUri
-{
-//	NSString *packedJson = [self packArguments:[NSNumber numberWithInt:MDWampMessageTypeUnsubscribe], topicUri, nil];
-//	[_socket send:packedJson];
-//	
-//	[self.subscribersCallbackMap removeObjectForKey:topicUri];
-}
-
-- (void)unsubscribeAll
-{
-//	for (NSString *topicUri in [_subscribersCallbackMap allKeys]){
-//		[self unsubscribeTopic:topicUri];
-//	}
-//	
-//	[_subscribersCallbackMap removeAllObjects];
-}
-
-- (void)publish:(id)event toTopic:(NSString *)topicUri excludeMe:(BOOL)excludeMe
-{
-//	NSString *packedData = [self packArguments:[NSNumber numberWithInt:MDWampMessageTypePublish], topicUri, event,[NSNumber numberWithBool:excludeMe], nil];
-//	[_socket send:packedData];
-}
-
-- (void)publish:(id)event toTopic:(NSString *)topicUri
-{
-//	[self publish:event toTopic:topicUri excludeMe:NO];
 }
 
 

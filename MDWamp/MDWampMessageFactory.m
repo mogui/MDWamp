@@ -43,7 +43,7 @@
                 //return [MDWampChallange class];
         case 5:
             if (version == kMDWampVersion1)
-                return nil; //return [MDWampSubscribe class];
+                return [MDWampSubscribe class];
             else
                 //return [MDWampAuthenticate class];
         case 6:
@@ -64,8 +64,10 @@
         case 16:
             if (version == kMDWampVersion2)
                 return [MDWampError class];
-
-            
+        case 32:
+                return [MDWampSubscribe class];
+        case 33:
+            return [MDWampSubscribed class];
         
         default:
             [NSException raise:NSInvalidArgumentException format:@"Invalid code"];

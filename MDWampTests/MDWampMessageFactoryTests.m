@@ -41,6 +41,8 @@
 {
     
     XCTAssert([[self v1Class:@0] isSubclassOfClass:[MDWampWelcome class]], @"0 is Welcome");
+    
+    XCTAssert([[self v1Class:@5] isSubclassOfClass:[MDWampSubscribe class]], @"5 is Subscribe");
 }
 
 - (void)testVersion2Messages
@@ -57,6 +59,10 @@
     XCTAssert([[self v2Class:@6] isSubclassOfClass:[MDWampGoodbye class]], @"6 is Goodbye");
     
     XCTAssert([[self v2Class:@8] isSubclassOfClass:[MDWampError class]], @"8 is Error");
+    
+    XCTAssert([[self v2Class:@32] isSubclassOfClass:[MDWampSubscribe class]], @"32 is Subscribe");
+    
+    XCTAssert([[self v2Class:@33] isSubclassOfClass:[MDWampSubscribed class]], @"33 is Subscribed");
     
 }
 

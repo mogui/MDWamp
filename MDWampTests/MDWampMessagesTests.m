@@ -163,4 +163,34 @@
 
 }
 
+- (void) testSubscribe
+{
+    self.payload = @[@"http://example.com/simple"];
+    // [5, "http://example.com/simple"]
+    
+    MDWampSubscribe *msg = [[MDWampSubscribe alloc] initWithPayload:self.payload];
+    
+    XCTAssertNotNil(msg, @"Message Must not be nil");
+    XCTAssertEqualObjects(msg.topic, _payload[0], @"Checking Message integrity");
+    [self checkMarshallingV1:msg code:@5];
+    
+    self.payload = @[@713845233, @{}, @"com.myapp.mytopic1"];
+    // [32, 713845233, {}, "com.myapp.mytopic1"]
+    MDWampSubscribe *msg2 = [[MDWampSubscribe alloc] initWithPayload:self.payload];
+    XCTAssertNotNil(msg2, @"Message Must not be nil");
+    XCTAssertEqualObjects(msg2.topic, _payload[2], @"Checking Message integrity");
+    [self checkMarshallingV2:msg2 code:@32];
+}
+
+- (void) testSubscribed
+{
+    self.payload = @[@713845233, @5512315355];
+    // [33, 713845233, 5512315355]
+    MDWampSubscribed *msg2 = [[MDWampSubscribed alloc] initWithPayload:self.payload];
+    XCTAssertNotNil(msg2, @"Message Must not be nil");
+    XCTAssertEqualObjects(msg2.request, _payload[0], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg2.subscription, _payload[1], @"Checking Message integrity");
+    [self checkMarshallingV2:msg2 code:@33];
+}
+
 @end
