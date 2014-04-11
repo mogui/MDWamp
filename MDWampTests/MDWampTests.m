@@ -96,7 +96,7 @@
     XCTAssert(_delegate.onCloseCalled , @"Server sent goodbye onClose method must be called");
 }
 
-- (void)testSubscribe
+- (void)testSubscribeUnsubscribe
 {
     [_wamp connect];
     
@@ -135,17 +135,33 @@
     
     
     //
-    // test received event
+    // test succed unsubscription
     //
-    [self prepare]; 
-    [_wamp subscribe:@"com.topic.x" result:^(NSString *error, NSDictionary *details) {
-        
-    } onEvent:^(id payload) {
-        XCTAssertNotNil(payload, @"received event");
+    [self prepare];
+    [_wamp unsubscribe:@"com.topic.x" result:^(NSString *error, NSDictionary *details) {
+        XCTAssertNil(error, @"Must correctly unsubscribe");
         [self notify:kXCTUnitWaitStatusSuccess];
     }];
-    // serve il publish
+    
+    MDWampUnsubscribe *un = [self msgFromTransportAndCheckIsA:[MDWampUnsubscribe class]];
+    MDWampUnsubscribed *unsubscribed = [[MDWampUnsubscribed alloc] initWithPayload:@[un.request]];
+    [_transport triggerDidReceiveMessage:[unsubscribed marshallFor:kMDWampVersion2]];
+    
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+    
+    // fail unsubscription for inexistent topic
+    [self prepare];
+    [_wamp unsubscribe:@"com.topic.y" result:^(NSString *error, NSDictionary *details) {
+        XCTAssertNotNil(error, @"Must call error");
+        [self notify:kXCTUnitWaitStatusSuccess];
+    }];
+    MDWampUnsubscribe *un2 = [self msgFromTransportAndCheckIsA:[MDWampUnsubscribe class]];
+//    MDWampError *error2 = [[MDWampError alloc] initWithPayload:@[@34, un2.request, @{}, @"wamp.error.no_such_subscription"]];
+//    [_transport triggerDidReceiveMessage:[error2 marshallFor:kMDWampVersion2]];
+//    
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+    
 }
+
 
 @end

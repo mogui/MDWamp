@@ -231,8 +231,9 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  * Unsubscribe for a given topic
  *
  * @param topicUri		the URI of the topic to which unsubscribe
+ * @param result    result of subscription (called only from version 2)
  */
-- (void) unsubscribeTopic:(NSString *)topicUri;
+- (void)unsubscribe:(NSString *)topic result:(void(^)(NSString *error, NSDictionary *details))result;
 
 /**
  * Unubscribe from all subscribed topic
