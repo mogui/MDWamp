@@ -193,4 +193,32 @@
     [self checkMarshallingV2:msg2 code:@33];
 }
 
+- (void) testUnsubscribe
+{
+    self.payload = @[@713845233, @5512315355];
+    
+    MDWampUnsubscribe *msg = [[MDWampUnsubscribe alloc] initWithPayload:self.payload];
+    
+    XCTAssertNotNil(msg, @"Message Must not be nil");
+    XCTAssertEqualObjects(msg.request, _payload[0], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg.subscription, _payload[1], @"Checking Message integrity");
+    [self checkMarshallingV2:msg code:@34];
+    
+    self.payload = @[@"com.myapp.mytopic1"];
+    MDWampUnsubscribe *msg2 = [[MDWampUnsubscribe alloc] initWithPayload:self.payload];
+    XCTAssertNotNil(msg2, @"Message Must not be nil");
+    XCTAssertEqualObjects(msg2.topic, _payload[0], @"Checking Message integrity");
+    [self checkMarshallingV1:msg2 code:@6];
+
+}
+
+- (void) testUnsubscribed
+{
+    self.payload = @[@713845233];
+    MDWampUnsubscribed *msg2 = [[MDWampUnsubscribed alloc] initWithPayload:self.payload];
+    XCTAssertNotNil(msg2, @"Message Must not be nil");
+    XCTAssertEqualObjects(msg2.request, _payload[0], @"Checking Message integrity");
+    [self checkMarshallingV2:msg2 code:@35];
+}
+
 @end

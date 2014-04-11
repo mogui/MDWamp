@@ -18,5 +18,7 @@
 #import "MDWampError.h"
 #import "MDWampSubscribe.h"
 #import "MDWampSubscribed.h"
+#import "MDWampUnsubscribe.h"
+#import "MDWampUnsubscribed.h"
 
 #endif
