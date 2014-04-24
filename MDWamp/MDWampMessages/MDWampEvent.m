@@ -1,32 +1,33 @@
 //
-//  MDWampPublish.m
+//  MDWampEvent.m
 //  MDWamp
 //
-//  Created by Niko Usai on 10/04/14.
+//  Created by Niko Usai on 22/04/14.
 //  Copyright (c) 2014 mogui.it. All rights reserved.
 //
 
-#import "MDWampPublish.h"
+#import "MDWampEvent.h"
 
-@implementation MDWampPublish
+@implementation MDWampEvent
+
 
 - (id)initWithPayload:(NSArray *)payload
 {
     self = [super init];
     if (self) {
         NSMutableArray *tmp = [payload mutableCopy];
-
+        
         if ([tmp[0] isKindOfClass:[NSString class]]) {
             // version 1 PUBLISH
-            // [ TYPE_ID_PUBLISH , topicURI , event , exclude , eligible ]
-#warning exclude , eligible not implemented
+            // [ TYPE_ID_EVENT , topicURI , event ]
             self.topic = [tmp shift];
             self.argumentsKw = [tmp shift];
         } else {
-            // [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
-            self.request    = [tmp shift];
-            self.options    = [tmp shift];
-            self.topic      = [tmp shift];
+            // [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
+
+            self.subscription   = [tmp shift];
+            self.publication    = [tmp shift];
+            self.details        = [tmp shift];
             if ([tmp count] > 0) self.arguments     = [tmp shift];
             if ([tmp count] > 0) self.argumentsKw   = [tmp shift];
         }
@@ -37,17 +38,18 @@
 - (NSArray *)marshallFor:(MDWampVersion)version
 {
     if (version == kMDWampVersion1) {
-        return @[@7, self.topic, self.event];
+        return @[@8, self.topic, self.event];
     } else {
         if (self.arguments && self.argumentsKw) {
-            return @[@16, self.request, self.options, self.topic, self.arguments, self.argumentsKw ];
+            return @[@36, self.subscription, self.publication, self.details, self.arguments, self.argumentsKw ];
         } else if(self.arguments) {
-            return @[@16, self.request, self.options, self.topic, self.arguments ];
+            return @[@36, self.subscription, self.publication, self.details, self.arguments ];
         } else {
-            return @[@16, self.request, self.options, self.topic];
+            return @[@36,self.subscription, self.publication, self.details];
         }
     }
 }
+
 
 - (NSDictionary *)event {
     return self.argumentsKw;

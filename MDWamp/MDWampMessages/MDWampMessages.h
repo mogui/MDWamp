@@ -16,9 +16,24 @@
 #import "MDWampGoodbye.h"
 #import "MDWampAbort.h"
 #import "MDWampError.h"
+
+#import "MDWampPublish.h"
+#import "MDWampPublished.h"
+#import "MDWampEvent.h"
+
 #import "MDWampSubscribe.h"
 #import "MDWampSubscribed.h"
 #import "MDWampUnsubscribe.h"
 #import "MDWampUnsubscribed.h"
+
+#import "MDWampRegister.h"
+#import "MDWampRegistered.h"
+#import "MDWampUnregister.h"
+#import "MDWampUnregistered.h"
+
+#import "MDWampCall.h"
+#import "MDWampResult.h"
+#import "MDWampInvocation.h"
+#import "MDWampYield.h"
 
 #endif
