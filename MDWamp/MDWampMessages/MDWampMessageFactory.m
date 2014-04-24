@@ -13,57 +13,64 @@
 
 + (Class) messageClassFromCode:(NSNumber*)code forVersion:(MDWampVersion)version
 {
+    if (version < kMDWampVersion2 && [code intValue] > 8) {
+        [NSException raise:NSInvalidArgumentException format:@"Invalid code"];
+    }
+    
     switch ([code intValue]) {
-        
+
         case 0:
-            if (version == kMDWampVersion1)
+            if (version < kMDWampVersion2)
                 return [MDWampWelcome class];
             else
 [NSException raise:NSInvalidArgumentException format:@"From version 2 of the protocol 0 code isn't used"];        
         case 1:
-            if (version == kMDWampVersion1)
+            if (version < kMDWampVersion2)
                 return nil; //return [MDWampPrefix class];
             else
                 return [MDWampHello class];
         case 2:
-            if (version == kMDWampVersion1)
-                return nil; //return [MDWampCall class];
+            if (version < kMDWampVersion2)
+                return [MDWampCall class];
             else
                 return [MDWampWelcome class];
         case 3:
-            if (version == kMDWampVersion1)
-                return nil; //return [MDWampCallResult class];
+            if (version < kMDWampVersion2)
+                return [MDWampResult class];
             else
                 return [MDWampAbort class];
             
         case 4:
-            if (version == kMDWampVersion1)
-                return nil; //return [MDWampCallError class];
+            if (version < kMDWampVersion2)
+                return [MDWampError class];
             else
                 //return [MDWampChallange class];
         case 5:
-            if (version == kMDWampVersion1)
+            if (version < kMDWampVersion2)
                 return [MDWampSubscribe class];
             else
                 //return [MDWampAuthenticate class];
         case 6:
-            if (version == kMDWampVersion1)
+            if (version < kMDWampVersion2)
                 return [MDWampUnsubscribe class];
             else
                 return [MDWampGoodbye class];
         case 7:
-            if (version == kMDWampVersion1)
-                return nil; //return [MDWampPublish class];
+            if (version < kMDWampVersion2)
+                return [MDWampPublish class];
             else
 //                return [MDWampHeartbeat class];
         case 8:
-            if (version == kMDWampVersion1)
-                return nil; //return [MDWampEvent class];
+            if (version >= kMDWampVersion2)
+                return [MDWampError class];
             else
-                return [MDWampError class];
+                return [MDWampEvent class];
+
         case 16:
-            if (version == kMDWampVersion2)
-                return [MDWampError class];
+            return [MDWampPublish class];
+        case 17:
+            return [MDWampPublished class];
+            
         case 32:
                 return [MDWampSubscribe class];
         case 33:
@@ -72,6 +79,30 @@
             return [MDWampUnsubscribe class];
         case 35:
             return [MDWampUnsubscribed class];
+        case 36:
+            return [MDWampEvent class];
+
+        case 48:
+            return [MDWampCall class];
+        case 49:
+            // return [MDWampCancel class]; // Advanced Protocol
+        case 50:
+            return [MDWampResult class];
+            
+        case 64:
+            return [MDWampRegister class];
+        case 65:
+            return [MDWampRegistered class];
+        case 66:
+            return [MDWampUnregister class];
+        case 67:
+            return [MDWampUnregistered class];
+        case 68:
+            return [MDWampInvocation class];
+        case 69:
+            // return [MDWampInterrupt class]; // Advanced Protocol
+        case 70:
+            return [MDWampYield class];
         
         default:
             [NSException raise:NSInvalidArgumentException format:@"Invalid code"];

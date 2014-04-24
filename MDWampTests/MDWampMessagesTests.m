@@ -10,6 +10,21 @@
 #import "MDWampConstants.h"
 #import "MDWampMessages.h"
 
+
+#define makeMessage(mdclass, pay) self.payload = pay; \
+mdclass *msg = [[mdclass alloc] initWithPayload:self.payload];
+
+#define testMarshall1(cc) \
+XCTAssertNotNil(msg, @"Message Must not be nil"); \
+[self checkMarshallingV1:msg code:cc];
+
+#define testMarshall2(cc) \
+XCTAssertNotNil(msg, @"Message Must not be nil"); \
+[self checkMarshallingV2:msg code:cc];
+
+#define msgIntegrity(property, value) XCTAssertEqualObjects(property, self.payload[value], @"Checking Message integrity: %s must be %@", #property, self.payload[value]);
+
+
 @interface MDWampMessagesTests : XCTestCase
 @property (strong) NSArray *payload;
 @end
@@ -220,5 +235,115 @@
     XCTAssertEqualObjects(msg2.request, _payload[0], @"Checking Message integrity");
     [self checkMarshallingV2:msg2 code:@35];
 }
+
+- (void) testPublish {
+    // [16, 239714735, {}, "com.myapp.mytopic1", [], {"color": "orange", "sizes": [23, 42, 7]}]
+    self.payload = @[@713845233, @{}, @"com.myapp.mytopic1", @[], @{@"color":@"orange", @"sizes":@[@23, @42]} ];
+    
+    MDWampPublish *msg = [[MDWampPublish alloc] initWithPayload:self.payload];
+    XCTAssertNotNil(msg, @"Message Must not be nil");
+    XCTAssertEqualObjects(msg.request, _payload[0], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg.topic, _payload[2], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg.argumentsKw[@"color"], @"orange", @"Checking Message integrity");
+    [self checkMarshallingV2:msg code:@16];
+
+    
+    // [ TYPE_ID_PUBLISH , topicURI , event ]
+    self.payload = @[@"com.myapp.mytopic1", @{@"color":@"orange", @"sizes":@[@23, @42]}];
+    msg = [[MDWampPublish alloc] initWithPayload:self.payload];
+    XCTAssertNotNil(msg, @"Message Must not be nil");
+    XCTAssertEqualObjects(msg.topic, _payload[0], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg.event[@"color"], @"orange", @"Checking Message integrity");
+    
+    [self checkMarshallingV1:msg code:@7];
+}
+
+- (void) testPublished
+{
+    self.payload = @[@713845233, @34554];
+    MDWampPublished *msg = [[MDWampPublished alloc] initWithPayload:self.payload];
+    XCTAssertNotNil(msg, @"Message Must not be nil");
+    XCTAssertEqualObjects(msg.request, _payload[0], @"Checking Message integrity");
+    XCTAssertEqualObjects(msg.publication, _payload[1], @"Checking Message integrity");
+    [self checkMarshallingV2:msg code:@17];
+}
+
+- (void) testEvent {
+    // [36, 5512315355, 4429313566, {}, [], {"color": "orange", "sizes": [23, 42, 7]}]
+    makeMessage(MDWampEvent, ( @[@5512315355,@4429313566,@{},@[],@{@"color": @"orange",@"sizes": @[@23,@42,@7]}]));
+
+    testMarshall2(@36);
+    
+    msgIntegrity(msg.subscription , 0);
+    msgIntegrity(msg.publication  , 1);
+    msgIntegrity(msg.event        , 4);
+}
+
+- (void) testEventLegacy {
+    // [8, "http://example.com/simple", "Hello, I am a simple event."]
+    makeMessage(MDWampEvent, ( @[@"http://example.com/simple", @"Hello, I am a simple event."]));
+    
+    testMarshall1(@8);
+    
+    msgIntegrity(msg.topic , 0);
+    msgIntegrity(msg.event , 1);
+}
+
+- (void) testRegister {
+    //    [64, 25349185, {}, "com.myapp.myprocedure1"]
+    makeMessage(MDWampRegister, (@[@25349185, @{}, @"com.myapp.myprocedure1"]) );
+    testMarshall2(@64);
+    msgIntegrity(msg.request, 0)
+    msgIntegrity(msg.options, 1)
+    msgIntegrity(msg.procedure, 2)
+
+}
+
+- (void) testRegistered {
+    makeMessage(MDWampRegistered, (@[@25349185, @2103333224]) );
+    testMarshall2(@65);
+    msgIntegrity(msg.request, 0);
+    msgIntegrity(msg.registration, 1);
+}
+
+- (void) testUnregister {
+    makeMessage(MDWampUnregister, (@[@25349185, @2103333224]) );
+    testMarshall2(@66);
+    msgIntegrity(msg.request, 0);
+    msgIntegrity(msg.registration, 1);
+}
+
+- (void) testUnregistered {
+    makeMessage(MDWampUnregistered, (@[@25349185]) );
+    testMarshall2(@67);
+    msgIntegrity(msg.request, 0);
+}
+
+- (void) testCall {
+    
+}
+
+- (void) testCallLegacy {
+    
+}
+
+- (void) testResult {
+    
+}
+
+- (void) testResultLegacy {
+    
+}
+
+
+- (void) testInvocation {
+    
+}
+
+- (void) testYield {
+    
+}
+
+
 
 @end

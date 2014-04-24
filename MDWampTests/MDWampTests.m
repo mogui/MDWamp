@@ -153,12 +153,36 @@
     [self prepare];
     [_wamp unsubscribe:@"com.topic.y" result:^(NSString *error, NSDictionary *details) {
         XCTAssertNotNil(error, @"Must call error");
+        // Should fail instantly
         [self notify:kXCTUnitWaitStatusSuccess];
     }];
-    MDWampUnsubscribe *un2 = [self msgFromTransportAndCheckIsA:[MDWampUnsubscribe class]];
-//    MDWampError *error2 = [[MDWampError alloc] initWithPayload:@[@34, un2.request, @{}, @"wamp.error.no_such_subscription"]];
-//    [_transport triggerDidReceiveMessage:[error2 marshallFor:kMDWampVersion2]];
-//    
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+    
+    
+    [self prepare];
+    [_wamp subscribe:@"com.asder.x" result:^(NSString *error, NSDictionary *details) {
+        
+        // triggering an error server side
+        [_wamp unsubscribe:@"com.asder.x" result:^(NSString *error, NSDictionary *details) {
+            XCTAssertNotNil(error, @"Must call error");
+            // Should fail instantly
+            [self notify:kXCTUnitWaitStatusSuccess];
+        }];
+        
+        MDWampUnsubscribe *un2 = [self msgFromTransportAndCheckIsA:[MDWampUnsubscribe class]];
+        
+        MDWampError *error2 = [[MDWampError alloc] initWithPayload:@[@34, un2.request, @{}, @"wamp.error.no_such_subscription"]];
+        [_transport triggerDidReceiveMessage:[error2 marshallFor:kMDWampVersion2]];
+
+    } onEvent:^(id payload) {
+        // nothing
+    }];
+    
+    MDWampSubscribe *sub3 = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
+    MDWampSubscribed *subscribed2 = [[MDWampSubscribed alloc] initWithPayload:@[sub3.request, @12343234]];
+    [_transport triggerDidReceiveMessage:[subscribed2 marshallFor:kMDWampVersion2]];
+    
+    
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
     
 }
