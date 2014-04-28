@@ -15,5 +15,5 @@
 @property (nonatomic, strong) NSDictionary *details;
 @property (nonatomic, strong) NSArray *arguments;
 @property (nonatomic, strong) NSDictionary *argumentsKw;
-
+@property (nonatomic, strong) id result;
 @end

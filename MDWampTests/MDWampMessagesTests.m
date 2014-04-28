@@ -320,28 +320,56 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
 }
 
 - (void) testCall {
-    
+    makeMessage(MDWampCall, (@[@7814135, @{}, @"com.myapp.user.new", @[@"johnny"], @{@"firstname": @"John", @"surname": @"Doe"}]));
+    testMarshall2(@48);
+    msgIntegrity(msg.request, 0);
+    msgIntegrity(msg.procedure, 2);
+    msgIntegrity(msg.arguments, 3);
+    msgIntegrity(msg.argumentsKw, 4);
 }
 
 - (void) testCallLegacy {
-    
+    makeMessage(MDWampCall, (@[@"Yp9EFZt9DFkuKndg", @"api:add2", @23, @99]) );
+    testMarshall1(@2);
+    msgIntegrity(msg.callID, 0);
+    msgIntegrity(msg.procedure, 1);
+    msgIntegrity(msg.arguments[0], 2);
+    msgIntegrity(msg.arguments[1], 3);
 }
 
 - (void) testResult {
-    
+    makeMessage(MDWampResult, (@[@7814135, @{}, @[], @{@"userid": @123, @"karma": @10}]));
+    testMarshall2(@50);
+    msgIntegrity(msg.request, 0);
+    msgIntegrity(msg.details, 1);
+    msgIntegrity(msg.arguments, 2);
+    msgIntegrity(msg.argumentsKw, 3);
 }
 
 - (void) testResultLegacy {
-    
+    makeMessage(MDWampResult, (@[@"otZom9UsJhrnzvLa", @"Awesome result .."]));
+    testMarshall1(@3);
+    msgIntegrity(msg.callID, 0);
+    msgIntegrity(msg.result, 1);
 }
 
 
 - (void) testInvocation {
-    
+    makeMessage(MDWampInvocation, (@[ @6131533, @9823529, @{}, @[@"johnny"], @{@"firstname": @"John", @"surname": @"Doe"}]));
+    testMarshall2(@68);
+    msgIntegrity(msg.request, 0);
+    msgIntegrity(msg.registration, 1);
+    msgIntegrity(msg.arguments, 3);
+    msgIntegrity(msg.argumentsKw, 4);
 }
 
 - (void) testYield {
-    
+    makeMessage(MDWampYield, ( @[@6131533, @{}, @[], @{@"userid": @123, @"karma": @10}] ));
+    testMarshall2(@70);
+    msgIntegrity(msg.request, 0);
+    msgIntegrity(msg.options, 1);
+    msgIntegrity(msg.arguments, 2);
+    msgIntegrity(msg.argumentsKw, 3);
 }
 
 
