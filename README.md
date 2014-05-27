@@ -1,7 +1,7 @@
 # What is it MDWamp ?
 
 MDWamp is a client side objective-C implementation of the WebSocket subprotocol [WAMP][wamp_link].  
-It use [SocketRocket][socket_rocket] as WebSocket Protocol implementation.
+It uses [SocketRocket][socket_rocket] as WebSocket Protocol implementation.
 
 With this library and with a server [implementation of WAMP protocol][wamp_impl] you can bring Real-time notification not only for a web app (as WebSocket was created for) but also on your mobile App, just like an inner-app Apple Push Notifcation Service, avoiding the hassle of long polling request to the server for getting new things.
 
