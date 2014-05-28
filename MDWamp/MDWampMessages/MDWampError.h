@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "MDWampMessage.h"
 
+extern NSString * const MDWampErrorDomain   ;
+
 @interface MDWampError : NSObject<MDWampMessage>
 @property (nonatomic, strong) NSNumber *type;
 @property (nonatomic, strong) NSNumber *request;
@@ -18,4 +20,5 @@
 @property (nonatomic, strong) NSString *errorDesc;  // Used in vesion 1
 @property (nonatomic, strong) NSArray *arguments;
 @property (nonatomic, strong) NSDictionary *argumentsKw;
+- (NSError *) makeError;
 @end

@@ -8,6 +8,8 @@
 
 #import "MDWampError.h"
 
+NSString * const MDWampErrorDomain = @"com.mogui.MDWamp";
+
 @implementation MDWampError
 - (id)initWithPayload:(NSArray *)payload
 {
@@ -53,6 +55,18 @@
             return @[@8, self.type, self.request, self.details, self.error ];
         }
     }
+}
+
+- (NSError *) makeError
+{
+    NSDictionary *info;
+    if (self.details) {
+        info = [self.details mutableCopy];
+        [(NSMutableDictionary*)info setObject:self.error forKey:NSLocalizedDescriptionKey];
+    } else {
+        info = @{NSLocalizedDescriptionKey: self.error};
+    }
+    return [NSError errorWithDomain:MDWampErrorDomain code:[self.type integerValue] userInfo:info];
 }
 
 @end
