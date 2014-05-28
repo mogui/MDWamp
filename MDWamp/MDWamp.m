@@ -51,6 +51,8 @@ NSString * const kMDWampRoleCallee      = @"callee";
 @property (nonatomic, strong) NSMutableDictionary *subscriptionEvents;
 @property (nonatomic, strong) NSMutableDictionary *subscriptionID;
 
+@property (nonatomic, strong) NSMutableDictionary *publishRequests;
+
 @property (nonatomic, strong) NSMutableDictionary *rpcCallbackMap;
 @property (nonatomic, strong) NSMutableDictionary *rpcUriMap;
 
@@ -96,6 +98,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
 		self.rpcUriMap              = [[NSMutableDictionary alloc] init];
 		self.subscriptionEvents     = [[NSMutableDictionary alloc] init];
         self.subscriptionID         = [[NSMutableDictionary alloc] init];
+        self.publishRequests        = [[NSMutableDictionary alloc] init];
         
 //        self.subprotocols = @[kMDWampSubprotocolWamp2MsgPack, kMDWampSubprotocolWamp2JSON, kMDWampSubprotocolWamp];
         
@@ -277,8 +280,16 @@ NSString * const kMDWampRoleCallee      = @"callee";
             void(^resultCallback)(NSError *)  = callbacks[0];
             resultCallback([error makeError]);
             
-            // clean
+            // cleanup
             [self.subscriptionRequests removeObjectForKey:error.request];
+            
+        } else if ([errorType isSubclassOfClass:[MDWampPublish class]]) {
+            
+            void(^resultCallback)(NSError *) = [self.publishRequests objectForKey:error.request];
+            resultCallback([error makeError]);
+            
+            // cleanup
+            [self.publishRequests removeObjectForKey:error.request];
             
         }
         
@@ -296,8 +307,8 @@ NSString * const kMDWampRoleCallee      = @"callee";
         }
         [subscribers addObject:callbacks[1]];
         
-        void(^resultCallback)(NSString *, NSDictionary *)  = callbacks[0];
-        resultCallback(nil, nil);
+        void(^resultCallback)(NSError *)  = callbacks[0];
+        resultCallback(nil);
         
         // clean subscriptionRequest map once called the callback
         [self.subscriptionRequests removeObjectForKey:subscribed.request];
@@ -310,10 +321,19 @@ NSString * const kMDWampRoleCallee      = @"callee";
         [self.subscriptionEvents removeObjectForKey:subscription];
         [self.subscriptionID removeObjectForKey:infos[1]];
         
-        void(^resultCallback)(NSString *, NSDictionary *) = infos[0];
-        resultCallback(nil, nil);
+        void(^resultCallback)(NSError *) = infos[0];
+        resultCallback(nil);
         
         [self.subscriptionRequests removeObjectForKey:unsub.request];
+    } else if ([message isKindOfClass:[MDWampPublished class]]) {
+        MDWampPublished *pub = (MDWampPublished *)message;
+        
+        void(^resultCallback)(NSError *) = [self.publishRequests objectForKey:pub.request];
+        if (resultCallback) {
+            resultCallback(nil);
+            
+            [self.publishRequests removeObjectForKey:pub.request];
+        }
     }
 }
 
@@ -427,10 +447,9 @@ NSString * const kMDWampRoleCallee      = @"callee";
     if (argsKw)
         msg.argumentsKw = argsKw;
     
-    if (self.version >= kMDWampVersion2) {
-
-    } else {
-        
+    if (self.version >= kMDWampVersion2 && options[@"acknowledge"]) {
+        // store callback to later use if acknowledge is TRUE
+        [self.publishRequests setObject:result forKey:request];
     }
     
     [self sendMessage:msg];

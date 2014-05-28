@@ -196,23 +196,32 @@
 }
 
 
-- (void)testCompletePublish {
+- (void)testPublish {
     [_wamp publishTo:@"com.myapp.mytopic1"
                 args:self.arrayPayload
                   kw:self.dictionaryPayload
-             options:@{@"someoption":@"somevalue"}
+             options:@{@"acknowledge":@YES}
               result:^(NSError *error) {
                   // check if publishing is OK or not
                   XCTAssertNil(error, @"No error must be triggered");
                   
-                  MDWampPublish *msg = [self msgFromTransportAndCheckIsA:[MDWampPublish class]];
-                  
-                  XCTAssertEqualObjects(msg.argumentsKw, self.dictionaryPayload, @"Publish message sent to transport");
-                  XCTAssertEqualObjects(msg.arguments, self.arrayPayload, @"Publish message sent to transport");
-                  
                   [self notify:kXCTUnitWaitStatusSuccess];
               }];
+    MDWampPublish *msg = [self msgFromTransportAndCheckIsA:[MDWampPublish class]];
+    XCTAssertEqualObjects(msg.argumentsKw, self.dictionaryPayload, @"Publish message sent to transport");
+    XCTAssertEqualObjects(msg.arguments, self.arrayPayload, @"Publish message sent to transport");
+    MDWampPublished *pub = [[MDWampPublished alloc] initWithPayload:@[msg.request, @123123123]];
+    [_transport triggerDidReceiveMessage:[pub marshallFor:kMDWampVersion2]];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
+
+- (void)testPublishWithError {
+    
+}
+
+- (void)testPublishLegacy {
+    
+}
+
 
 @end
