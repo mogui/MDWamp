@@ -264,8 +264,8 @@ NSString * const kMDWampRoleCallee      = @"callee";
         if ([errorType isSubclassOfClass:[MDWampSubscribe class]]) {
             // It's a subscribe error
             NSArray *callbacks = self.subscriptionRequests[error.request];
-            void(^resultCallback)(NSString *, NSDictionary *)  = callbacks[0];
-            resultCallback(error.error, error.details);
+            void(^resultCallback)(NSError *)  = callbacks[0];
+            resultCallback([error makeError]);
 
             // clean subscriber structures
             [self.subscriptionRequests removeObjectForKey:error.request];
@@ -274,8 +274,8 @@ NSString * const kMDWampRoleCallee      = @"callee";
             
         } else if ([errorType isSubclassOfClass:[MDWampUnsubscribe class]]) {
             NSArray *callbacks = self.subscriptionRequests[error.request];
-            void(^resultCallback)(NSString *, NSDictionary *)  = callbacks[0];
-            resultCallback(error.error, error.details);
+            void(^resultCallback)(NSError *)  = callbacks[0];
+            resultCallback([error makeError]);
             
             // clean
             [self.subscriptionRequests removeObjectForKey:error.request];
@@ -343,7 +343,9 @@ NSString * const kMDWampRoleCallee      = @"callee";
 
 #pragma mark -
 #pragma mark Pub/Sub
-- (void) subscribe:(NSString *)topic result:(void(^)(NSString *error, NSDictionary *details))result onEvent:(void(^)(id payload))eventBlock
+- (void) subscribe:(NSString *)topic
+           onEvent:(void(^)(id payload))eventBlock
+            result:(void(^)(NSError *error))result
 {
     NSNumber *request = [self generateID];
     MDWampSubscribe *subscribe = [[MDWampSubscribe alloc] initWithPayload:@[request, @{}, topic]];
@@ -371,11 +373,12 @@ NSString * const kMDWampRoleCallee      = @"callee";
     [self sendMessage:subscribe];
 }
 
-- (void)unsubscribe:(NSString *)topic result:(void(^)(NSString *error, NSDictionary *details))result
+- (void)unsubscribe:(NSString *)topic result:(void(^)(NSError *error))result
 {
     if (!self.subscriptionID[topic] && !self.subscriptionEvents[topic]) {
         // inexistent sunscription we abort
-        result(@"mdwamp.error.no_such_subscription", nil);
+        MDWampError *error = [[MDWampError alloc] initWithPayload:@[@-12, @0, @{}, @"mdwamp.error.no_such_subscription"]];
+        result([error makeError]);
         return;
     }
     
@@ -410,15 +413,27 @@ NSString * const kMDWampRoleCallee      = @"callee";
     //	[_subscribersCallbackMap removeAllObjects];
 }
 
-- (void)publish:(id)event toTopic:(NSString *)topicUri excludeMe:(BOOL)excludeMe
+- (void) publishTo:(NSString *)topic
+              args:(NSArray*)args
+                kw:(NSDictionary *)argsKw
+           options:(NSDictionary *)options
+            result:(void(^)(NSError *error))result
 {
-    //	NSString *packedData = [self packArguments:[NSNumber numberWithInt:MDWampMessageTypePublish], topicUri, event,[NSNumber numberWithBool:excludeMe], nil];
-    //	[_socket send:packedData];
-}
+    NSNumber *request = [self generateID];
+    MDWampPublish *msg = [[MDWampPublish alloc] initWithPayload:@[request, options, topic]];
+    if (args)
+        msg.arguments = args;
+    
+    if (argsKw)
+        msg.argumentsKw = argsKw;
+    
+    if (self.version >= kMDWampVersion2) {
 
-- (void)publish:(id)event toTopic:(NSString *)topicUri
-{
-    //	[self publish:event toTopic:topicUri excludeMe:NO];
+    } else {
+        
+    }
+    
+    [self sendMessage:msg];
 }
 
 

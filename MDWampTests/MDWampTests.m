@@ -18,6 +18,8 @@
 @property (strong, nonatomic) MDWampClientDelegateMock *delegate;
 @property (strong, nonatomic) MDWampTransportMock *transport;
 @property (strong, nonatomic) MDWampSerializationMock *s;
+@property (strong, nonatomic) NSDictionary *dictionaryPayload;
+@property (strong, nonatomic) NSArray *arrayPayload;
 @end
 
 @implementation MDWampTests
@@ -31,6 +33,11 @@
     self.wamp = [[MDWamp alloc] initWithTransport:_transport realm:@"Realm1" delegate:_delegate];
     self.wamp.serializationInstanceMap = @{[NSNumber numberWithInt:kMDWampTestsFakeSerialization]: [MDWampSerializationMock class]};
     _s = [[MDWampSerializationMock alloc] init];
+
+    self.dictionaryPayload = @{@"color": @"orange", @"sizes": @[@23, @42, @7]};
+    self.arrayPayload = @[@1,@2, @34, @4545];
+    [_wamp connect];
+    [self prepare];
 }
 
 - (void)tearDown
@@ -38,11 +45,6 @@
     [super tearDown];
 }
 
-- (NSData *) msgToData:(id<MDWampMessage>)msg
-{
-    NSArray *arr = [msg marshallFor:kMDWampVersion2];
-    return [_s pack:arr];
-}
 
 - (id<MDWampMessage>)msgFromTransportAndCheckIsA:(Class)class
 {
@@ -56,14 +58,23 @@
     NSMutableArray *tmp = [arr mutableCopy];
     [tmp shift];
     
-    return [(id<MDWampMessage>)[msgC alloc] initWithPayload:tmp];
+    id<MDWampMessage> msg = [(id<MDWampMessage>)[msgC alloc] initWithPayload:tmp];
+    XCTAssertNotNil(msg, @"An %@ message must be in the transport buffer", NSStringFromClass(class));
+    
+    return msg;
+}
+
+- (void)triggerMsg:(id<MDWampMessage>)msg
+{
+    NSArray *arr = [msg marshallFor:kMDWampVersion2];
+    NSData *d = [_s pack:arr];
+    [_transport triggerDidReceiveMessage:d];
 }
 
 - (void) testSessionEstablished {
-    [_wamp connect];
+
     
     MDWampHello *hello = [self msgFromTransportAndCheckIsA:[MDWampHello class]];
-    XCTAssertNotNil(hello, @"An Hello message must be in the transport buffer");
     
     NSDictionary *roles = [[hello details] objectForKey:@"roles"];
     XCTAssert([roles count] > 0, @"At least a role should be sent in hello message");
@@ -71,44 +82,42 @@
     MDWampWelcome *welcome = [[MDWampWelcome alloc] init];
     welcome.session = [NSNumber numberWithInt:[[NSString stringWithRandomId] intValue]];
     welcome.details = @{};
-    NSData *d = [self msgToData:welcome];
-    [_transport triggerDidReceiveMessage:d];
+    
+    [self triggerMsg:welcome];
     
     XCTAssertNotNil(_wamp.sessionId , @"Must have session");
 }
 
 - (void)testSessionAbort {
-    [_wamp connect];
-    
     MDWampAbort *abort = [[MDWampAbort alloc] initWithPayload:@[@{@"message": @"The realm does not exist."}, @"wamp.error.no_such_realm"]];
 
-    [_transport triggerDidReceiveMessage:[self msgToData:abort]];
+    [self triggerMsg:abort];
     
     XCTAssert(_delegate.onCloseCalled , @"Session is Abortd onClose method must be called");
 }
 
 - (void)testGoodbye {
-    [_wamp connect];
+    
     MDWampGoodbye *goodbye = [[MDWampGoodbye alloc] initWithPayload:@[@{}, @"wamp.error.close_realm"]];
-    [_transport triggerDidReceiveMessage:[self msgToData:goodbye]];
-    MDWampGoodbye *goodbyeResp = [self msgFromTransportAndCheckIsA:[MDWampGoodbye class]];
-    XCTAssertNotNil(goodbyeResp, @"client must send goodbye response");
+    [self triggerMsg:goodbye];
+    
+    [self msgFromTransportAndCheckIsA:[MDWampGoodbye class]];
+    
     XCTAssert(_delegate.onCloseCalled , @"Server sent goodbye onClose method must be called");
 }
 
 - (void)testSubscribeUnsubscribe
 {
-    [_wamp connect];
     
     //
     // test fail subscription
     //
-    [self prepare];
-    [_wamp subscribe:@"com.topic.x" result:^(NSString *error, NSDictionary *details) {
-        XCTAssertEqualObjects(error, @"wamp.error.not_authorized", @"Must call error");
+
+    [_wamp subscribe:@"com.topic.x"  onEvent:^(id payload) {
+        // nothing to do
+    } result:^(NSError *error) {
+        XCTAssertEqualObjects(error.localizedDescription, @"wamp.error.not_authorized", @"Must call error");
         [self notify:kXCTUnitWaitStatusSuccess];
-    } onEvent:^(id payload) {
-        
     }];
     MDWampSubscribe *sub = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
     MDWampError *error = [[MDWampError alloc] initWithPayload:@[@32, sub.request, @{}, @"wamp.error.not_authorized"]];
@@ -121,11 +130,11 @@
     // test succed subscription
     //
     [self prepare];
-    [_wamp subscribe:@"com.topic.x" result:^(NSString *error, NSDictionary *details) {
+    [_wamp subscribe:@"com.topic.x" onEvent:^(id payload) {
+        // nothing to do
+    } result:^(NSError *error) {
         XCTAssertNil(error, @"error must be nil");
         [self notify:kXCTUnitWaitStatusSuccess];
-    } onEvent:^(id payload) {
-        
     }];
     MDWampSubscribe *sub2 = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
     MDWampSubscribed *subscribed = [[MDWampSubscribed alloc] initWithPayload:@[sub2.request, @12343234]];
@@ -138,7 +147,7 @@
     // test succed unsubscription
     //
     [self prepare];
-    [_wamp unsubscribe:@"com.topic.x" result:^(NSString *error, NSDictionary *details) {
+    [_wamp unsubscribe:@"com.topic.x" result:^(NSError *error) {
         XCTAssertNil(error, @"Must correctly unsubscribe");
         [self notify:kXCTUnitWaitStatusSuccess];
     }];
@@ -151,7 +160,7 @@
     
     // fail unsubscription for inexistent topic
     [self prepare];
-    [_wamp unsubscribe:@"com.topic.y" result:^(NSString *error, NSDictionary *details) {
+    [_wamp unsubscribe:@"com.topic.y" result:^(NSError *error) {
         XCTAssertNotNil(error, @"Must call error");
         // Should fail instantly
         [self notify:kXCTUnitWaitStatusSuccess];
@@ -160,10 +169,12 @@
     
     
     [self prepare];
-    [_wamp subscribe:@"com.asder.x" result:^(NSString *error, NSDictionary *details) {
+    [_wamp subscribe:@"com.asder.x" onEvent:^(id payload) {
+        // nothing
+    } result:^(NSError *error) {
         
         // triggering an error server side
-        [_wamp unsubscribe:@"com.asder.x" result:^(NSString *error, NSDictionary *details) {
+        [_wamp unsubscribe:@"com.asder.x" result:^(NSError *error) {
             XCTAssertNotNil(error, @"Must call error");
             // Should fail instantly
             [self notify:kXCTUnitWaitStatusSuccess];
@@ -174,9 +185,7 @@
         MDWampError *error2 = [[MDWampError alloc] initWithPayload:@[@34, un2.request, @{}, @"wamp.error.no_such_subscription"]];
         [_transport triggerDidReceiveMessage:[error2 marshallFor:kMDWampVersion2]];
 
-    } onEvent:^(id payload) {
-        // nothing
-    }];
+    } ];
     
     MDWampSubscribe *sub3 = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
     MDWampSubscribed *subscribed2 = [[MDWampSubscribed alloc] initWithPayload:@[sub3.request, @12343234]];
@@ -184,8 +193,26 @@
     
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
-    
 }
 
+
+- (void)testCompletePublish {
+    [_wamp publishTo:@"com.myapp.mytopic1"
+                args:self.arrayPayload
+                  kw:self.dictionaryPayload
+             options:@{@"someoption":@"somevalue"}
+              result:^(NSError *error) {
+                  // check if publishing is OK or not
+                  XCTAssertNil(error, @"No error must be triggered");
+                  
+                  MDWampPublish *msg = [self msgFromTransportAndCheckIsA:[MDWampPublish class]];
+                  
+                  XCTAssertEqualObjects(msg.argumentsKw, self.dictionaryPayload, @"Publish message sent to transport");
+                  XCTAssertEqualObjects(msg.arguments, self.arrayPayload, @"Publish message sent to transport");
+                  
+                  [self notify:kXCTUnitWaitStatusSuccess];
+              }];
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
 
 @end

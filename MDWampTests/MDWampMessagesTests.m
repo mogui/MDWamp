@@ -175,7 +175,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     XCTAssertEqualObjects(msg2.argumentsKw[@"severity"], _payload[5][@"severity"], @"Checking Message integrity");
     
     [self checkMarshallingV2:msg2 code:@8];
-
+#warning Split for the two version and add method makeError
 }
 
 - (void) testSubscribe

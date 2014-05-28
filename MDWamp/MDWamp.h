@@ -213,19 +213,14 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
 /**
  * Subscribe for a given topic
  *
- * @param topicUri		the URI of the topic to which subscribe
- * @param eventBlock    The Block invoked when an event on the topic is received
- * @param onError       The Block invoked when an error occurs
- */
-
-/**
- *  <#Description#>
- *
  *  @param topic      the URI of the topic to which subscribe
  *  @param onError    result of subscription (called only from version 2)
  *  @param eventBlock The Block invoked when an event on the topic is received
  */
-- (void) subscribe:(NSString *)topic result:(void(^)(NSString *error, NSDictionary *details))result onEvent:(void(^)(id payload))eventBlock;
+- (void) subscribe:(NSString *)topic
+           onEvent:(void(^)(id payload))eventBlock
+            result:(void(^)(NSError *error))result;
+
 
 /**
  * Unsubscribe for a given topic
@@ -233,27 +228,49 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  * @param topicUri		the URI of the topic to which unsubscribe
  * @param result    result of subscription (called only from version 2)
  */
-- (void)unsubscribe:(NSString *)topic result:(void(^)(NSString *error, NSDictionary *details))result;
+- (void)unsubscribe:(NSString *)topic
+             result:(void(^)(NSError *error))result;
 
 /**
  * Unubscribe from all subscribed topic
  */
 - (void) unsubscribeAll;
 
-/**
- * Publish something to the given topic
- *
- * @param topicUri		the URI of the topic to which publish
- * @param excludeMe		Whether or not exclude caller from the pushing of this event
- */
-- (void)publish:(id)payload toTopic:(NSString *)topicUri excludeMe:(BOOL)excludeMe;
-
 
 /**
- * Shortand for publish not excluding caller from event's receiver
+ *  Complete Publish
  *
- * @param topicUri		the URI of the topic to which publish
+ *  @param topic   is the topic published to.
+ *  @param args    is a list of application-level event payload elements.
+ *  @param argsKw  is a an optional dictionary containing application-level event payload
+ *  @param options is a dictionary that allows to provide additional publication request details in an extensible way
  */
-- (void)publish:(id)event toTopic:(NSString *)topicUri;
+- (void) publishTo:(NSString *)topic
+              args:(NSArray*)args
+                kw:(NSDictionary *)argsKw
+           options:(NSDictionary *)options
+            result:(void(^)(NSError *error))result;
+
+/**
+ *  Shortand for publishing a list of payload
+ *
+ *  @param topic   is the topic published to.
+ *  @param args    is a list of application-level event payload elements.
+ */
+- (void) publishTo:(NSString *)topic
+              args:(NSArray*)args
+            result:(void(^)(NSError *error))result;
+
+/**
+ *  Shortand for publishing a payload
+ *  it's the only publishing method suitable for Legacy protocol
+ *  NOTICE that from version 2 if payload isn't a dictionary it will complain!
+ *
+ *  @param topic   is the topic published to.
+ *  @param payload is a list of application-level event payload elements.
+ */
+- (void) publishTo:(NSString *)topic
+           payload:(id)payload
+            result:(void(^)(NSError *error))result;
 
 @end
