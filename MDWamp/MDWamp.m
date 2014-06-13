@@ -290,7 +290,11 @@ NSString * const kMDWampRoleCallee      = @"callee";
             
             // cleanup
             [self.publishRequests removeObjectForKey:error.request];
+        } else if ([errorType isSubclassOfClass:[MDWampCall class]]) {
+            void(^resultcallback)(MDWampResult *, NSError *) = self.rpcCallbackMap[error.request];
+            resultcallback(nil, [error makeError]);
             
+            [self.rpcCallbackMap removeObjectForKey:error.request];
         }
         
     } else if ([message isKindOfClass:[MDWampSubscribed class]]) {
@@ -334,6 +338,16 @@ NSString * const kMDWampRoleCallee      = @"callee";
             
             [self.publishRequests removeObjectForKey:pub.request];
         }
+    } else if ([message isKindOfClass:[MDWampResult class]]) {
+        MDWampResult *result = (MDWampResult *)message;
+        
+        void(^resultcallback)(MDWampResult *, NSError *) = self.rpcCallbackMap[result.request];
+        
+        if (resultcallback) {
+            resultcallback(result, nil);
+        }
+        
+        [self.rpcCallbackMap removeObjectForKey:result.request];
     }
 }
 
@@ -460,33 +474,24 @@ NSString * const kMDWampRoleCallee      = @"callee";
 #pragma mark Remote Procedure Call
 
 - (NSString*) call:(NSString*)procUri
-           complete:(void(^)(NSString* callURI, id result, NSError *error))completeBlock
-              args:(id)firstArg, ... NS_REQUIRES_NIL_TERMINATION
+              args:(NSArray*)args
+            kwArgs:(NSDictionary*)argsKw
+          complete:(void(^)(MDWampResult *result, NSError *error))completeBlock
 {
-//    NSMutableArray *argArray = [[NSMutableArray alloc] init];
-//	NSString *callID = [self getRandomId];
-//	
-//    if (completeBlock) {
-//        [self.rpcCallbackMap setObject:completeBlock forKey:callID];
-//    }
-//	[self.rpcUriMap setObject:procUri forKey:callID];
-//	
-//	[argArray addObject:[NSNumber numberWithInt:MDWampMessageTypeCall]];
-//	[argArray addObject:callID];
-//	[argArray addObject:procUri];
-//	
-//	va_list args;
-//    va_start(args, firstArg);
-//    for (id arg = firstArg; arg != nil; arg = va_arg(args, id)) {
-//		[argArray addObject:arg];
-//    }
-//    va_end(args);
-//	
-//	NSString *packedJson = [self packArgumentsWithArray:argArray];
-//    
-//	[_socket send:packedJson];
-//	
-//	return callID;
+    NSNumber *request = [self generateID];
+
+
+    MDWampCall *msg = [[MDWampCall alloc] initWithPayload:@[request, @{}, procUri]];
+    if (args)
+        msg.arguments = args;
+    
+    if (argsKw)
+        msg.argumentsKw = argsKw;
+    
+    [self.rpcCallbackMap setObject:completeBlock forKey:msg.request];
+    
+    [self sendMessage:msg];
+    
     return nil;
 }
 
