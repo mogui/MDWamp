@@ -10,9 +10,6 @@
 #include <CommonCrypto/CommonDigest.h>
 #include <CommonCrypto/CommonHMAC.h>
 
-// SocketRocket Dependancy
-#import "NSData+SRB64Additions.h"
-
 @implementation NSString (MDString)
 
 + (NSString*) stringWithRandomId
@@ -39,9 +36,8 @@
     NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC
                                           length:sizeof(cHMAC)];
     
-    NSString *hash = [HMAC SR_stringByBase64Encoding];
-    
-    return hash;
+
+    return [[NSData dataWithBytes:cHMAC length:CC_SHA1_DIGEST_LENGTH] base64Encoding];
 }
 
 

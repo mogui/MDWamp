@@ -216,12 +216,57 @@
 }
 
 - (void)testPublishWithError {
-    
+    [_wamp publishTo:@"com.myapp.mytopic1"
+                args:self.arrayPayload
+                  kw:self.dictionaryPayload
+             options:@{@"acknowledge":@YES}
+              result:^(NSError *error) {
+                  // check if publishing is OK or not
+                  XCTAssertNotNil(error, @"Error must be triggered");
+                  XCTAssertEqualObjects(error.localizedDescription, @"wamp.error.not_authorized", @"right error must be passed");
+                  [self notify:kXCTUnitWaitStatusSuccess];
+              }];
+    MDWampPublish *msg = [self msgFromTransportAndCheckIsA:[MDWampPublish class]];
+    XCTAssertEqualObjects(msg.argumentsKw, self.dictionaryPayload, @"Publish message sent to transport");
+    XCTAssertEqualObjects(msg.arguments, self.arrayPayload, @"Publish message sent to transport");
+    MDWampError *error = [[MDWampError alloc] initWithPayload:@[@16, msg.request,@{},@"wamp.error.not_authorized"]];
+    [_transport triggerDidReceiveMessage:[error marshallFor:kMDWampVersion2]];
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
 - (void)testPublishLegacy {
+#warning to implement
+}
+
+- (void)testCallProcedure {
+    [_wamp call:@"com.myapp.add2" args:@[@23, @7] kwArgs:nil complete:^(MDWampResult *result, NSError *error) {
+        XCTAssertEqualObjects(result.result, @30, @"MUST return correct result from the call");
+        [self notify:kXCTUnitWaitStatusSuccess];
+    }];
+    MDWampCall *msg = [self msgFromTransportAndCheckIsA:[MDWampCall class]];
+
+    MDWampResult *res = [[MDWampResult alloc] initWithPayload:@[msg.request, @{}, @[@30]]];
+    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
+
+- (void)testCallProcedureFails {
+    [_wamp call:@"com.myapp.wrong" args:nil kwArgs:nil complete:^(MDWampResult *result, NSError *error) {
+        XCTAssertNil(result, @"result must be nil");
+        XCTAssertEqualObjects(error.localizedDescription, @"wamp.error.no_such_procedure", @"right error returned");
+        [self notify:kXCTUnitWaitStatusSuccess];
+    }];
+    MDWampCall *msg = [self msgFromTransportAndCheckIsA:[MDWampCall class]];
+    
+    MDWampError *res = [[MDWampError alloc] initWithPayload:@[@48, msg.request, @{}, @"wamp.error.no_such_procedure"]];
+    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
+
+- (void)testCallProcedureLegacy {
     
 }
+
 
 
 @end

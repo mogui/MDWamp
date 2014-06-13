@@ -199,12 +199,15 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  * returns the string callID (unique identifier of the call)
  *
  * @param procUri		the URI of the remote procedure to be called
+ * @param args			arguments array to the procedure
+ * @param kwArgs		keyword arguments array to the procedure
  * @param completeBlock block to be executed on complete if success error is nil, if failure result is nil
- * @param args			zero or more call arguments
+
  */
 - (NSString*) call:(NSString*)procUri
-          complete:(void(^)(NSString* callURI, id result, NSError *error))completeBlock
-              args:(id)firstArg, ... NS_REQUIRES_NIL_TERMINATION;
+              args:(NSArray*)args
+            kwArgs:(NSDictionary*)argsKw
+          complete:(void(^)(MDWampResult *result, NSError *error))completeBlock;
 
 
 #pragma mark -
