@@ -36,6 +36,7 @@
 
     self.dictionaryPayload = @{@"color": @"orange", @"sizes": @[@23, @42, @7]};
     self.arrayPayload = @[@1,@2, @34, @4545];
+    
     [_wamp connect];
     [self prepare];
 }
@@ -72,7 +73,10 @@
 }
 
 - (void) testSessionEstablished {
-
+    [_wamp setOnSessionEstablished:^(MDWamp *wamp, NSDictionary *details) {
+        XCTAssertEqualObjects(details[@"serverIdent"], @"MDWampServer", @"must return details correctly");
+        [self notify:kXCTUnitWaitStatusSuccess];
+    }];
     
     MDWampHello *hello = [self msgFromTransportAndCheckIsA:[MDWampHello class]];
     
@@ -81,19 +85,26 @@
     
     MDWampWelcome *welcome = [[MDWampWelcome alloc] init];
     welcome.session = [NSNumber numberWithInt:[[NSString stringWithRandomId] intValue]];
-    welcome.details = @{};
+    welcome.details = @{@"serverIdent":@"MDWampServer"};
     
     [self triggerMsg:welcome];
-    
+    XCTAssertTrue([_wamp isConnected], @"must be connected");
     XCTAssertNotNil(_wamp.sessionId , @"Must have session");
+    XCTAssert(_delegate.onOpenCalled , @"Session  onOpen method must be called");
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
 - (void)testSessionAbort {
+    [_wamp setOnSessionClosed:^(MDWamp *w, NSInteger code, NSString *reason, NSDictionary *det) {
+        XCTAssertEqualObjects(reason, @"wamp.error.no_such_realm", @"must return abort reasons");
+        [self notify:kXCTUnitWaitStatusSuccess];
+    }];
     MDWampAbort *abort = [[MDWampAbort alloc] initWithPayload:@[@{@"message": @"The realm does not exist."}, @"wamp.error.no_such_realm"]];
 
     [self triggerMsg:abort];
     
     XCTAssert(_delegate.onCloseCalled , @"Session is Abortd onClose method must be called");
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
 - (void)testGoodbye {
@@ -104,6 +115,17 @@
     [self msgFromTransportAndCheckIsA:[MDWampGoodbye class]];
     
     XCTAssert(_delegate.onCloseCalled , @"Server sent goodbye onClose method must be called");
+}
+
+- (void)testDisconnect {
+    [_wamp setOnSessionClosed:^(MDWamp *w, NSInteger code, NSString *reason, NSDictionary *details) {
+        XCTAssert(code == MDWampConnectionClosed, @"explicit close");
+        [self notify:kXCTUnitWaitStatusSuccess];
+    }];
+    [_wamp disconnect];
+    XCTAssert(_delegate.onCloseCalled, @"On close must be called on delegate");
+    XCTAssertFalse([_wamp isConnected], @"Must not be connected");
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
 - (void)testSubscribeUnsubscribe
@@ -267,6 +289,120 @@
     
 }
 
+- (void)testRegister {
+    // register and receive registered message
+    [_wamp registerRPC:@"com.myapp.myprocedure1" procedure:^ id(NSDictionary *details, NSArray *arguments, NSDictionary *argumentsKW) {
+        // do nothing
+        return nil;
+    } result:^(NSError *error) {
+        XCTAssertNil(error, @"Error must be nil if register is all right");
+        [self notify:kXCTUnitWaitStatusSuccess];
+    }];
+    
+    MDWampRegister *msg = [self msgFromTransportAndCheckIsA:[MDWampRegister class]];
+    
+    MDWampRegistered *res = [[MDWampRegistered alloc] initWithPayload:@[msg.request, @12343565]];
+    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
 
+- (void)testRegisterFail {
+    // register and receive registered message
+    [_wamp registerRPC:@"com.myapp.myprocedure1" procedure:^id(NSDictionary *details, NSArray *arguments, NSDictionary *argumentsKW) {
+        // do nothing
+        return nil;
+    } result:^(NSError *error) {
+        XCTAssertNotNil(error, @"Error must be nil if register is all right");
+        XCTAssertEqualObjects(error.localizedDescription, @"wamp.error.procedure_already_exists", @"must return right error");
+        [self notify:kXCTUnitWaitStatusSuccess];
+    }];
+    MDWampRegister *msg = [self msgFromTransportAndCheckIsA:[MDWampRegister class]];
+    
+    MDWampError *res = [[MDWampError alloc] initWithPayload:@[@64, msg.request, @{}, @"wamp.error.procedure_already_exists"]];
+    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
+
+- (void)testUnregister {
+    
+    [_wamp registerRPC:@"com.myapp.myprocedure1" procedure:^id(NSDictionary *details, NSArray *arguments, NSDictionary *argumentsKW) {
+        return nil;
+    } result:^(NSError *error) {
+        XCTAssertNil(error, @"Error must be nil");
+        [_wamp unregisterRPC:@"com.myapp.myprocedure1" result:^(NSError *error) {
+            XCTAssertNil(error, @"Error must be nil if register is all right");
+            [self notify:kXCTUnitWaitStatusSuccess];
+        }];
+        
+        MDWampUnregister *msg = [self msgFromTransportAndCheckIsA:[MDWampUnregister class]];
+        
+        MDWampUnregistered *res = [[MDWampUnregistered alloc] initWithPayload:@[msg.request]];
+        [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    }];
+    
+    MDWampRegister *msg = [self msgFromTransportAndCheckIsA:[MDWampRegister class]];
+    
+    MDWampRegistered *res = [[MDWampRegistered alloc] initWithPayload:@[msg.request, @12343565]];
+    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
+
+- (void)testUnregisterFail {
+    [_wamp registerRPC:@"com.myapp.myprocedure1" procedure:^id(NSDictionary *details, NSArray *arguments, NSDictionary *argumentsKW) {
+        return nil;
+    } result:^(NSError *error) {
+        [_wamp unregisterRPC:@"com.myapp.myprocedure1" result:^(NSError *error) {
+            XCTAssertNotNil(error, @"Error must be nil if register is all right");
+            
+            XCTAssertEqualObjects(error.localizedDescription, @"wamp.error.no_such_registration", @"UNregistereing for a never registered procedure must be not ok");
+            [self notify:kXCTUnitWaitStatusSuccess];
+        }];
+        
+        MDWampUnregister *msg = [self msgFromTransportAndCheckIsA:[MDWampUnregister class]];
+        
+        MDWampError *res = [[MDWampError alloc] initWithPayload:@[@66, msg.request, @{}, @"wamp.error.no_such_registration"]];
+        [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    }];
+    
+    MDWampRegister *msg = [self msgFromTransportAndCheckIsA:[MDWampRegister class]];
+    
+    MDWampRegistered *res = [[MDWampRegistered alloc] initWithPayload:@[msg.request, @12343565]];
+    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
+
+- (void)testYield {
+//    trigger an invocation message and send a YIELD
+// tested with a register call with a register call we save the callback to call
+    NSNumber *registrationID = @12343565;
+    NSNumber *invokationRequestID = @343565878;
+    
+    [_wamp registerRPC:@"com.myapp.myprocedure1" procedure:^id(NSDictionary *details, NSArray *arguments, NSDictionary *argumentsKW) {
+        
+        return [NSNumber numberWithInt:[arguments[0] intValue] + [arguments[1] intValue]];
+    } result:^(NSError *error) {
+        // procedure is registered, forcing an invoke message
+        
+        XCTAssertNil(error, @"No error should be triggered");
+        MDWampInvocation *invoke = [[MDWampInvocation alloc] initWithPayload:@[invokationRequestID, registrationID, @{}, @[@23, @7]]];
+        [_transport triggerDidReceiveMessage:[invoke marshallFor:kMDWampVersion2]];
+        // retrieve the Yield message with the result
+        MDWampYield *yield = [self msgFromTransportAndCheckIsA:[MDWampYield class]];
+        XCTAssertEqualObjects(yield.arguments[0], @30, @"Yield must contain the result of the procedure registered");
+        [self notify:kXCTUnitWaitStatusSuccess];
+        
+    }];
+    
+    MDWampRegister *msg = [self msgFromTransportAndCheckIsA:[MDWampRegister class]];
+    MDWampRegistered *res = [[MDWampRegistered alloc] initWithPayload:@[msg.request, registrationID]];
+    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
+
+- (void)testYieldFails {
+    
+}
 
 @end

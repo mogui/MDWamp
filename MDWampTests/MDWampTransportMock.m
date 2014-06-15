@@ -48,6 +48,7 @@
 - (void) close
 {
     NSLog(@"Closing the transport");
+    self.connected = NO;
     [self.delegate transportDidCloseWithError:nil];
 }
 

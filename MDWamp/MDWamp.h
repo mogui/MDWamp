@@ -126,11 +126,6 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
 - (void) disconnect;
 
 /**
- * Handles clean disconnection e reconnection
- */
-- (void) reconnect;
-
-/**
  * Returns whether or not we are connected to the server
  * @return BOOL yes if connected
  */
@@ -147,68 +142,6 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  * @param uri			the URI which is subsequently to be abbreviated using the prefix.
  */
 - (void) prefix:(NSString*)prefix uri:(NSString*)uri;
-
-#pragma mark -
-#pragma mark AUTH WAMP-CRA
-
-/**
- * Issues an authentication request
- *
- * @param appKey		Authentication key, i.e. user or application name
- *                      If undefined, anonymous authentication is performed
- * @param extra			Authentication extra information - optional
- */
-- (void) authReqWithAppKey:(NSString *)appKey andExtra:(NSString *)extra;
-
-
-/**
- * Signs an authentication challenge
- *
- * @param challenge		Authentication challenge as returned by the WAMP server upon a authentication request
- * @param secret		Authentication secret
- */
-- (void) authSignChallenge:(NSString *)challenge withSecret:(NSString *)secret;
-
-
-/**
- * Authenticate, finishing the authentication handshake
- *
- * @param signature		A authentication signature
- */
-- (void) authWithSignature:(NSString *)signature;
-
-
-/**
- * Authenticate websocket with wamp-cra; same protocol as above methods but in single call
- *
- * @param authKey		Authentication key, i.e. user or application name
- *                      If undefined, anonymous authentication is performed
- * @param authExtra			Authentication extra information - optional
- * @param secret		Authentication secret (ie password)
- * @param successBlock  Block to be executed upon sucessful authentication
- * @param errorBlock    Block to be executed upon error during authentication
- */
--(void) authWithKey:(NSString*)authKey Secret:(NSString*)authSecret Extra:(NSString*)authExtra
-            Success:(void(^)(NSString* answer)) successBlock
-              Error:(void(^)(NSString* procCall, NSString* errorURI, NSString* errorDetails)) errorBlock;
-
-#pragma mark -
-#pragma mark RPC
-/**
- * Call a Remote Procedure on the server
- * returns the string callID (unique identifier of the call)
- *
- * @param procUri		the URI of the remote procedure to be called
- * @param args			arguments array to the procedure
- * @param kwArgs		keyword arguments array to the procedure
- * @param completeBlock block to be executed on complete if success error is nil, if failure result is nil
-
- */
-- (NSString*) call:(NSString*)procUri
-              args:(NSArray*)args
-            kwArgs:(NSDictionary*)argsKw
-          complete:(void(^)(MDWampResult *result, NSError *error))completeBlock;
-
 
 #pragma mark -
 #pragma mark Pub/Sub
@@ -275,5 +208,77 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
 - (void) publishTo:(NSString *)topic
            payload:(id)payload
             result:(void(^)(NSError *error))result;
+
+
+#pragma mark -
+#pragma mark RPC
+/**
+ * Call a Remote Procedure on the server
+ * returns the string callID (unique identifier of the call)
+ *
+ * @param procUri		the URI of the remote procedure to be called
+ * @param args			arguments array to the procedure
+ * @param kwArgs		keyword arguments array to the procedure
+ * @param completeBlock block to be executed on complete if success error is nil, if failure result is nil
+ 
+ */
+- (void) call:(NSString*)procUri
+         args:(NSArray*)args
+       kwArgs:(NSDictionary*)argsKw
+     complete:(void(^)(MDWampResult *result, NSError *error))completeBlock;
+
+
+- (void) registerRPC:(NSString *)procUri
+           procedure:(id (^)(NSDictionary* details, NSArray *arguments, NSDictionary *argumentsKW))procedureBlock
+              result:(void(^)(NSError *error))resultCallback;
+
+- (void) unregisterRPC:(NSString *)procUri
+                result:(void(^)(NSError *error))result;
+
+
+//#pragma mark -
+//#pragma mark AUTH WAMP-CRA
+//
+///**
+// * Issues an authentication request
+// *
+// * @param appKey		Authentication key, i.e. user or application name
+// *                      If undefined, anonymous authentication is performed
+// * @param extra			Authentication extra information - optional
+// */
+//- (void) authReqWithAppKey:(NSString *)appKey andExtra:(NSString *)extra;
+//
+//
+///**
+// * Signs an authentication challenge
+// *
+// * @param challenge		Authentication challenge as returned by the WAMP server upon a authentication request
+// * @param secret		Authentication secret
+// */
+//- (void) authSignChallenge:(NSString *)challenge withSecret:(NSString *)secret;
+//
+//
+///**
+// * Authenticate, finishing the authentication handshake
+// *
+// * @param signature		A authentication signature
+// */
+//- (void) authWithSignature:(NSString *)signature;
+//
+//
+///**
+// * Authenticate websocket with wamp-cra; same protocol as above methods but in single call
+// *
+// * @param authKey		Authentication key, i.e. user or application name
+// *                      If undefined, anonymous authentication is performed
+// * @param authExtra			Authentication extra information - optional
+// * @param secret		Authentication secret (ie password)
+// * @param successBlock  Block to be executed upon sucessful authentication
+// * @param errorBlock    Block to be executed upon error during authentication
+// */
+//-(void) authWithKey:(NSString*)authKey Secret:(NSString*)authSecret Extra:(NSString*)authExtra
+//            Success:(void(^)(NSString* answer)) successBlock
+//              Error:(void(^)(NSString* procCall, NSString* errorURI, NSString* errorDetails)) errorBlock;
+
 
 @end
