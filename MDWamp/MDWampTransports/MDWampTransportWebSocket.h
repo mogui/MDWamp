@@ -10,8 +10,5 @@
 #import "MDWampTransport.h"
 
 @interface MDWampTransportWebSocket : NSObject <MDWampTransport>
-
 @property id<MDWampTransportDelegate>delegate;
-@property NSString *subprotocol;
-
 @end

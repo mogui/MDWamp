@@ -26,13 +26,14 @@ typedef NS_ENUM(int, MDWampSerializationClass) {
 };
 
 // Supported Versions
-typedef NS_ENUM(int, MDWampVersion) {
-    kMDWampVersion1 = 1,
-    kMDWampVersion2 = 2
-};
+typedef NSNumber* MDWampVersion;
+#define  kMDWampVersion1  @1
+#define  kMDWampVersion2  @2
+
 
 // latest version supported
 #define	kMDWampCurrentVersion MDWampVersion2
+
 
 // NSError domain
 #define kMDWampErrorDomain @"it.mogui.MDWamp"

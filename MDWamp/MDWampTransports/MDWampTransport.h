@@ -27,7 +27,7 @@
  *
  *  @return intsance of the transport
  */
-- (id)initWithServer:(NSURL *)request;
+- (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols;
 
 /**
  *  Method used to open a connection to the transport

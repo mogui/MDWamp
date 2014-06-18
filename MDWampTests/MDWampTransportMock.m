@@ -21,7 +21,7 @@
 
 @implementation MDWampTransportMock
 
-- (id)initWithServer:(NSURL *)request
+- (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols
 {
     self = [super init];
     if (self) {

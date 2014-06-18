@@ -28,7 +28,7 @@
 
 - (NSArray *) marshallFor:(MDWampVersion)version
 {
-    if (version < kMDWampVersion2) {
+    if ([version intValue] < [kMDWampVersion2 intValue]) {
         [NSException raise:NSInvalidArgumentException format:@"Message not supported"];
         return nil;
     }

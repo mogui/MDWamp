@@ -37,7 +37,7 @@
 
 - (NSArray *)marshallFor:(MDWampVersion)version
 {
-    if (version == kMDWampVersion1) {
+    if ([version  isEqual: kMDWampVersion1]) {
         return @[@8, self.topic, self.event];
     } else {
         if (self.arguments && self.argumentsKw) {
