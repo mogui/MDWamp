@@ -176,7 +176,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     NSAssert(ser != nil, @"Serialization %@ doesn't exists", ser);
     self.serializator = [[ser alloc] init];
     
-    if (self.version >= kMDWampVersion2) {
+    if ([self.version intValue] >= [kMDWampVersion2 intValue]) {
         // from version 2 of the protocol we have to send an hello message
         MDWampHello *hello = [[MDWampHello alloc] initWithPayload:@[self.realm, @{@"roles":self.roles}]];
         hello.realm = self.realm;
@@ -550,7 +550,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     NSNumber *request = [self generateID];
     MDWampSubscribe *subscribe = [[MDWampSubscribe alloc] initWithPayload:@[request, @{}, topic]];
     
-    if (self.version >= kMDWampVersion2) {
+    if ([self.version intValue] >= [kMDWampVersion2 intValue]) {
         
         // we have to wait Subscribed message before add event
         [self.subscriptionRequests setObject:@[result, eventBlock] forKey:request];
@@ -584,7 +584,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     
     NSArray *payload;
     
-    if (self.version >= kMDWampVersion2) {
+    if ([self.version intValue] >= [kMDWampVersion2 intValue]) {
         NSNumber *request = [self generateID];
         NSNumber *subscription = self.subscriptionID[topic];
         payload = @[request, subscription];
@@ -597,7 +597,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     MDWampUnsubscribe *unsubscribe = [[MDWampUnsubscribe alloc] initWithPayload:payload];
     [self sendMessage:unsubscribe];
     
-    if (self.version < kMDWampVersion2) {
+    if ([self.version intValue] < [kMDWampVersion2 intValue]) {
         // remove subscription immediately in version 1
         [self.subscriptionEvents removeObjectForKey:topic];
         [self.subscriptionID removeObjectForKey:topic];
@@ -627,7 +627,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     if (argsKw)
         msg.argumentsKw = argsKw;
     
-    if (self.version >= kMDWampVersion2 && options[@"acknowledge"]) {
+    if ([self.version intValue] >= [kMDWampVersion2 intValue] && options[@"acknowledge"]) {
         // store callback to later use if acknowledge is TRUE
         [self.publishRequests setObject:result forKey:request];
     }

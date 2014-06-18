@@ -45,7 +45,7 @@
 
 - (NSArray *)marshallFor:(MDWampVersion)version
 {
-    if (version == kMDWampVersion1) {
+    if ([version  isEqual: kMDWampVersion1]) {
         if ([self.arguments count] > 0) {
             NSMutableArray *tmpCall = [[NSMutableArray alloc] initWithObjects:@2, self.callID, self.procedure, nil];
             for (int i=0; i < [self.arguments count]; i++) {

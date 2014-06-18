@@ -38,7 +38,7 @@ NSString * const MDWampErrorDomain = @"com.mogui.MDWamp";
 
 - (NSArray *)marshallFor:(MDWampVersion)version
 {
-    if (version == kMDWampVersion1) {
+    if ([version  isEqual: kMDWampVersion1]) {
         if (!self.arguments) {
             return @[@4, self.callID, self.error, self.errorDesc];
         } else {

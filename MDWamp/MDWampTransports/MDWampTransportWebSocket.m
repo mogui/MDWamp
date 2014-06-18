@@ -8,7 +8,7 @@
 
 #import "MDWampTransportWebSocket.h"
 #import "SRWebSocket.h"
-
+#import "NSMutableArray+MDStack.h"
 @interface MDWampTransportWebSocket () <SRWebSocketDelegate>
 
 @property (nonatomic, strong) SRWebSocket *socket;
@@ -21,7 +21,20 @@
 {
     self = [super init];
     if (self) {
-        _socket = [[SRWebSocket alloc] initWithURL:request protocols:protocols];
+        NSMutableArray *supportedProtocols = [[NSMutableArray alloc] init];
+        
+        if ([protocols containsObject:kMDWampVersion1]) {
+            [supportedProtocols unshift:@"wamp"];
+        }
+        
+        if ([protocols containsObject:kMDWampVersion2]) {
+            [supportedProtocols unshift:@"wamp.2.json"];
+            [supportedProtocols unshift:@"wamp.2.msgpack"];
+        }
+        
+        NSAssert([supportedProtocols count] > 0, @"Specify a valid WAMP version");
+        
+        self.socket = [[SRWebSocket alloc] initWithURL:request protocols:supportedProtocols];
         [_socket setDelegate:self];
     }
     return self;
@@ -57,25 +70,32 @@
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
-#warning TODO: gestire i sottoprotocolli per bene e inizializzare versione e serializzazione
-    
+    MDWampDebugLog(@"negotiated protocol is %@", webSocket.protocol);
+    NSArray *splittedProtocol = [webSocket.protocol componentsSeparatedByString:@"."];
+    if ([splittedProtocol count] == 1) {
+        [self.delegate transportDidOpenWithVersion:kMDWampVersion1 andSerialization:kMDWampSerializationJSON];
+    } else if ([splittedProtocol count] > 1 && [splittedProtocol[1] isEqual:@"2"] && [splittedProtocol[2] isEqual:@"msgpack"]){
+        [self.delegate transportDidOpenWithVersion:kMDWampVersion2 andSerialization:kMDWampSerializationMsgPack];
+    } else if ([splittedProtocol count] > 1 && [splittedProtocol[1] isEqual:@"2"] && [splittedProtocol[2] isEqual:@"json"]){
+        [self.delegate transportDidOpenWithVersion:kMDWampVersion2 andSerialization:kMDWampSerializationJSON];
+    }
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
-    [self.delegate transportDidFailWithError:error];
+    if (error.code==54) {
+        //  if error is "The operation couldn’t be completed. Connection reset by peer"
+        //  we call the close method
+        [self.delegate transportDidCloseWithError:error];
+    } else {
+        [self.delegate transportDidFailWithError:error];
+    }
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
-
-    if (wasClean) {
-        [self.delegate transportDidCloseWithError:nil];
-    } else {
-#warning TODO settare l'error correttamente
-        NSError *error = [NSError errorWithDomain:@"asd" code:code userInfo:@{}];
-        [self.delegate transportDidCloseWithError:error];
-    }
+    NSError *error = [NSError errorWithDomain:kMDWampErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey: reason}];
+     [self.delegate transportDidCloseWithError:error];
 }
 
 

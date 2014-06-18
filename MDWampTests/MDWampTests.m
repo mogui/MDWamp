@@ -28,7 +28,7 @@
 {
     [super setUp];
     _delegate = [[MDWampClientDelegateMock alloc] init];
-    _transport = [[MDWampTransportMock alloc] initWithServer:[NSURL URLWithString:@"http://fakeserver.com"]];
+    _transport = [[MDWampTransportMock alloc] initWithServer:[NSURL URLWithString:@"http://fakeserver.com"] protocolVersions:@[]];
     _transport.serializationClass = kMDWampTestsFakeSerialization;
     self.wamp = [[MDWamp alloc] initWithTransport:_transport realm:@"Realm1" delegate:_delegate];
     self.wamp.serializationInstanceMap = @{[NSNumber numberWithInt:kMDWampTestsFakeSerialization]: [MDWampSerializationMock class]};
@@ -119,7 +119,7 @@
 
 - (void)testDisconnect {
     [_wamp setOnSessionClosed:^(MDWamp *w, NSInteger code, NSString *reason, NSDictionary *details) {
-        XCTAssert(code == MDWampConnectionClosed, @"explicit close");
+        XCTAssert(code == MDWampConnectionClosed	, @"explicit close");
         [self notify:kXCTUnitWaitStatusSuccess];
     }];
     [_wamp disconnect];
