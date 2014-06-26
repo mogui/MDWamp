@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'MDWamp'
-  s.version      = '1.1.0'
+  s.version      = '2.0.0'
   s.license      = 'Apache 2.0'
   s.homepage     = 'http://github.com/mogui/MDWamp'
   s.summary      = 'A client side objective-C implementation of the WebSocket subprotocol WAMP'
