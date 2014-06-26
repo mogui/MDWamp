@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (MDString)
-+ (NSString*)stringWithRandomId;
++ (NSString*) stringWithRandomId;
 - (NSString *) hmacSHA256DataWithKey:(NSString *)key;
 @end

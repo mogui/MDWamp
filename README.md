@@ -1,6 +1,9 @@
-# What is it MDWamp ?
+# What is it?
 
-MDWamp is a client side objective-C implementation of the WebSocket subprotocol [WAMP][wamp_link].  
+MDWamp is a client side objective-C implementation of the WebSocket subprotocol [WAMP][wamp_link] (v2).  
+
+**Right now therw is NO backward support for WAMP v1**, but it is something that is already partially developed.
+
 It uses [SocketRocket][socket_rocket] as WebSocket Protocol implementation.
 
 With this library and with a server [implementation of WAMP protocol][wamp_impl] you can bring Real-time notification not only for a web app (as WebSocket was created for) but also on your mobile App, just like an inner-app Apple Push Notifcation Service, avoiding the hassle of long polling request to the server for getting new things.
@@ -14,20 +17,19 @@ Remote Procedure Calls + Publish & Subscribe.
 but what are RPC and PubSub? here's a [nice and neat explanation][faq] if you have doubts.
 
 
-
 ## Installation
 
 ### OSX
-- By using [CocoaPods][cocoapods], just add to your Podfile
-
-	pod 'MDWamp'
+- By using [CocoaPods][cocoapods], just add to your Podfile   
+	`pod 'MDWamp'`
 
 - Use MDWamp.framework  
-Build the framework target of the project, just be sure to `git submodule init && git submodule update` to get the SocketRocket dependancy (see test part for more info)
+Build the framework target of the project, just be sure to `git submodule init && git submodule update` to get the dependancies
 
 
-# iOS
-I'm [sick and tired of iOS shitting support for distributing libraries][staticlibpost] so just cocoapods support for ya:
+### iOS
+I'm [sick and tired of iOS shitting support for distributing libraries][staticlibpost] *(hopefully with Xcode 6 all will change !!)*   
+so just cocoapods support for ya:
 Just add this to your Podfile
 
 	pod "MDWamp" 
@@ -39,10 +41,12 @@ Just add this to your Podfile
 MDWamp is made of a main class `MDWamp` that does all the work, it makes connection to the server and expose methods to publish an receive events to and from a topic, and to call Rempte Procedure.
 
 To instantiate it you must specify a transport (since WAMP can support different transports) in accord to the server you're connecting to.   
-Now WebSocket is the only supported transport (raw socket is on the way).  
-Note that the object `MDWamp` must be a retained property or ARC will get rid of it ahead of time.
 
-You start a connection initing an MDWamp object, and by setting some features like auto reconnect:
+Now WebSocket is the only supported transport (raw socket is on the way).  
+
+*Note that the object `MDWamp` must be a retained property or ARC will get rid of it ahead of time.*
+
+You start a connection initiating an MDWamp object:
 	
 	// You can specify a particular protocol version to use like kMDWampVersion2JSON, kMDWampVersion2Msgpack or use default
 	MDWampTransportWebSocket *websocket = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080/ws"] protocolVersions:@[kMDWampVersion2]];   
@@ -106,7 +110,7 @@ The Header files of `MDWamp` class and of the Delegates are all well commented s
 
 ## Tests
 
-If you want to run the tests you have to installdependancies by using submodules so:
+If you want to run the tests you have to install dependancies by using submodules so:
 
 - clone the repository: `git clone git@github.com:mogui/MDWamp.git`
 - `cd MDWamp`
@@ -132,9 +136,9 @@ Enjoy :)
 ### 2.0
 
 - Addopted WAMP v2 [basic protocol](https://github.com/tavendo/WAMP/blob/master/spec/basic.md)
-- new library intreface, due to protocol changes
-- decoupled architecture to give flexibility over new transport and serialization
-- dropped iOS 5 compatibility now iOS >= 6.0 is required
+- new library interface, due to protocol changes
+- decoupled architecture to give flexibility over new transport and serializations
+- dropped iOS 5 compatibility now iOS >= 6.1 is required
 - not yet supported backword compatibility with WAMP v1
 
 ### 1.1.0
@@ -147,13 +151,10 @@ Enjoy :)
 
 ## Roadmap
 
-- make an iOS App Target in the prject to show all the features
+- make an iOS App Target in the project to show all the features
 - implement raw socket transport
 - implement the [advanced protocol](https://github.com/tavendo/WAMP/blob/master/spec/advanced.md) spec
 -  make the library also a Server Library integrating with GCDWebServer
-
-
-
 
 
 
