@@ -99,7 +99,7 @@
 
 - (void)testSendReceiveMessage
 {
-    transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080/ws"] protocolVersions:@[kMDWampVersion2]]; // crossbar fails when giving verison 1
+    transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080/ws"] protocolVersions:@[kMDWampVersion2JSON]]; // crossbar fails when giving verison 1
     transport.delegate = self;
     self.testMessage = YES;
     [transport open];

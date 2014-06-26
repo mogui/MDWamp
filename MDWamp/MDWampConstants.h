@@ -27,8 +27,10 @@ typedef NS_ENUM(int, MDWampSerializationClass) {
 
 // Supported Versions
 typedef NSNumber* MDWampVersion;
-#define  kMDWampVersion1  @1
-#define  kMDWampVersion2  @2
+#define  kMDWampVersion1         @10
+#define  kMDWampVersion2         @20
+#define  kMDWampVersion2JSON     @21
+#define  kMDWampVersion2Msgpack  @22
 
 
 // latest version supported

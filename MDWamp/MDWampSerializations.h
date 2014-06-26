@@ -10,5 +10,6 @@
 #define MDWamp_MDWampSerialization_h
 
 #import "MDWampSerializationJSON.h"
+#import "MDWampSerializationMsgpack.h"
 
 #endif

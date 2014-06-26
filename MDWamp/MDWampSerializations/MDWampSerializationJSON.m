@@ -10,26 +10,23 @@
 
 @implementation MDWampSerializationJSON
 
-- (NSString*) packArgumentsWithArray:(NSArray*)arguments
+- (id) pack:(NSArray*)arguments
 {
-    // TODO: check errors ?
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arguments options:0 error:nil];
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arguments options:0 error:&error];
+    if (error) {
+        return nil;
+    }
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
-- (NSString*) packArguments:(id)firstObj, ... NS_REQUIRES_NIL_TERMINATION
+- (NSArray*) unpack:(id)data
 {
-	NSMutableArray *argArray = [[NSMutableArray alloc] init];
-	va_list args;
-    va_start(args, firstObj);
-	
-    for (id arg = firstObj; arg != nil; arg = va_arg(args, id)) {
-		[argArray addObject:arg];
+    NSData *d = data;
+    if (![data isKindOfClass:[NSData class]]) {
+        d = [(NSString*)data dataUsingEncoding:NSUTF8StringEncoding];
     }
-	
-    va_end(args);
-	
-	return [self packArgumentsWithArray:argArray];
+	return [NSJSONSerialization JSONObjectWithData:d  options:NSJSONReadingAllowFragments error:nil];
 }
 
 

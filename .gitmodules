@@ -1,3 +1,6 @@
 [submodule "lib/SocketRocket"]
 	path = lib/SocketRocket
 	url = https://github.com/square/SocketRocket.git
+[submodule "lib/msgpack-objectivec"]
+	path = lib/msgpack-objectivec
+	url = https://github.com/msgpack/msgpack-objectivec.git
