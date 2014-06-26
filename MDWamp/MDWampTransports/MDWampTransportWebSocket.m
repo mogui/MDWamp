@@ -24,6 +24,7 @@
         NSMutableArray *supportedProtocols = [[NSMutableArray alloc] init];
         
         if ([protocols containsObject:kMDWampVersion1]) {
+            NSAssert(NO, @"WAMP 1 Legacy protocol not yet adopted fully");
             [supportedProtocols unshift:@"wamp"];
         }
         
