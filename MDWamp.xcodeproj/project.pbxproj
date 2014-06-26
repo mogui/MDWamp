@@ -277,6 +277,10 @@
 		7619E69918CF8E9F00B0209D /* MDWampTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTests.m; sourceTree = "<group>"; };
 		762A51DA195CADCE00A3B344 /* MDWamp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDWamp-Prefix.pch"; sourceTree = "<group>"; };
 		762A51DB195CADCE00A3B344 /* MDWamp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MDWamp-Info.plist"; sourceTree = "<group>"; };
+		762A51DE195CB2B000A3B344 /* READMEv1.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = READMEv1.md; sourceTree = "<group>"; };
+		762A51DF195CB2B000A3B344 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		762A51E0195CB2B000A3B344 /* MDWamp.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = MDWamp.podspec; sourceTree = "<group>"; };
+		762A51E1195CB2B000A3B344 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		763EEA6A18F8867F007329A6 /* MDWampUnsubscribed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDWampUnsubscribed.h; path = MDWampMessages/MDWampUnsubscribed.h; sourceTree = "<group>"; };
 		763EEA6B18F8867F007329A6 /* MDWampUnsubscribed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDWampUnsubscribed.m; path = MDWampMessages/MDWampUnsubscribed.m; sourceTree = "<group>"; };
 		76414F4F1950C86400788300 /* MDWampTransportWebSocketTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportWebSocketTests.m; sourceTree = "<group>"; };
@@ -456,6 +460,10 @@
 				7698B1C219522AF80045D400 /* testcrossbar */,
 				7604D709185B499D0087773E /* Frameworks */,
 				7604D708185B499D0087773E /* Products */,
+				762A51DE195CB2B000A3B344 /* READMEv1.md */,
+				762A51DF195CB2B000A3B344 /* README.md */,
+				762A51E0195CB2B000A3B344 /* MDWamp.podspec */,
+				762A51E1195CB2B000A3B344 /* LICENSE */,
 			);
 			sourceTree = "<group>";
 		};
