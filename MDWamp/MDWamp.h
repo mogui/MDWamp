@@ -200,7 +200,7 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
 #pragma mark RPC
 /**
  * Call a Remote Procedure on the server
- * returns the string callID (unique identifier of the call)
+ *
  *
  * @param procUri		the URI of the remote procedure to be called
  * @param args			arguments array to the procedure
@@ -213,11 +213,23 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
        kwArgs:(NSDictionary*)argsKw
      complete:(void(^)(MDWampResult *result, NSError *error))completeBlock;
 
-
+/**
+ * Register in the router a procedure defined by the procedure block
+ *
+ * @param procUri		the URI of the remote procedure to be registered
+ * @param procedureBlock the block that is called when the procedure is invoked from the router
+ * @param resultCallback a callback to give a result of the registration process OK if error is nil
+ */
 - (void) registerRPC:(NSString *)procUri
            procedure:(id (^)(NSDictionary* details, NSArray *arguments, NSDictionary *argumentsKW))procedureBlock
               result:(void(^)(NSError *error))resultCallback;
 
+/**
+ * Unregister a registered procedure
+ *
+ * @param procUri		the URI of the remote procedure to be registered
+ * @param resultCallback a callback to give a result of the registration process OK if error is nil
+ */
 - (void) unregisterRPC:(NSString *)procUri
                 result:(void(^)(NSError *error))result;
 

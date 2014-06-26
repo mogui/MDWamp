@@ -7,20 +7,13 @@ With this library and with a server [implementation of WAMP protocol][wamp_impl]
 
 WAMP in its creator words is:
 
-> an open WebSocket subprotocol that provides two asynchronous messaging patterns: RPC and PubSub.
+> WAMP is an open WebSocket subprotocol that provides two application messaging patterns in one unified protocol:
+Remote Procedure Calls + Publish & Subscribe.   
+> Using WAMP you can build distributed systems out of application components which are loosely coupled and communicate in (soft) real-time.
 
 but what are RPC and PubSub? here's a [nice and neat explanation][faq] if you have doubts.
 
 
-## Changes
-
-### 1.1.0
-
-- Added OSX framework target
-- dropped iOS 4 compatibility now iOS >= 5.0 is required
-- added block callback for connection, rpc and pub/sub messages
-- removed RPC and Event delegates (now they only works with blocks)
-- added unit test
 
 ## Installation
 
@@ -43,23 +36,18 @@ Just add this to your Podfile
 
 ## API
 
-MDWamp is made of a main class `MDWamp` that does all the work it makes connection to the server and expose methods to publish an receive events to and from a topic, and to call Rempte Procedure.
+MDWamp is made of a main class `MDWamp` that does all the work, it makes connection to the server and expose methods to publish an receive events to and from a topic, and to call Rempte Procedure.
+
+To instantiate it you must specify a transport (since WAMP can support different transports) in accord to the server you're connecting to.   
+Now WebSocket is the only supported transport (raw socket is on the way).  
+Note that the object `MDWamp` must be a retained property or ARC will get rid of it ahead of time.
 
 You start a connection initing an MDWamp object, and by setting some features like auto reconnect:
 	
-	// if you want debug log set this to YES, default is NO
-	[MDWamp setDebug:YES];
+	// You can specify a particular protocol version to use like kMDWampVersion2JSON, kMDWampVersion2Msgpack or use default
+	MDWampTransportWebSocket *websocket = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080/ws"] protocolVersions:@[kMDWampVersion2]];   
 	
-	MDWamp *wamp = [[MDWamp alloc] initWithUrl:@"ws://localhost:9000" delegate:self];
-
-	// set if MDWAMP should automatically try to reconnect after a network fail default YES
-	[wamp setShouldAutoreconnect:YES];
-	
-	// set number of times it tries to autoreconnect after a fail
-	[wamp setAutoreconnectMaxRetries:2];
-	
-	// set seconds between each reconnection try
-	[wamp setAutoreconnectDelay:5];
+    _wamp = [[MDWamp alloc] initWithTransport:websocket realm:@"realm1" delegate:self];
 
 
 when your done and you want to fire the connection:
@@ -70,100 +58,106 @@ to disconnect:
 
 	[wamp disconnect];
 
-You can optionally implement two methods in the delegate you've setted when initing MDWamp
+You can optionally implement two methods in the delegate you've setted when initing MDWamp:
 
-- `- (void) onOpen;`   
-Called when client connect to the server
-- `- (void) onClose:(int)code reason:(NSString *)reason;`    
-Called when client disconnect from the server
+	// Called when client has connected to the server
+	- (void) mdwamp:(MDWamp*)wamp sessionEstablished:(NSDictionary*)info;
+	
+	// Called when client disconnect from the server
+	- (void) mdwamp:(MDWamp *)wamp closedSession:(NSInteger)code reason:(NSString*)reason details:(NSDictionary *)details;
+
 
 You can also provide similar callback instead of using the delegate:
 
-	@property (nonatomic, copy) void (^onConnectionOpen)(MDWamp *client);
-	@property (nonatomic, copy) void (^onConnectionClose)(MDWamp *client, NSInteger code, NSString *reason);
+	@property (nonatomic, copy) void (^onSessionEstablished)(MDWamp *client, NSDictionary *info);
+	@property (nonatomic, copy) void (^onSessionClosed)(MDWamp *client, NSInteger code, NSString *reason, NSDictionary *details);
 
-The Header files of `MDWamp` class and of the Delegates are all well commented so the API is trivial, anyway here are some usage examples
+The Header files of `MDWamp` class and of the Delegates are all well commented so the API is trivial, anyway here are some common usage examples
 
 ### Call a remote procedure:
-
-	[_wc call:@"http://example.com/simple/calc#add" complete:^(NSString *callURI, id result, NSError *error) {
-	    if (error== nil) {
-	        // do something with result
+	
+	[wamp call:@"com.hello.hello" args:nil kwArgs:nil complete:^(MDWampResult *result, NSError *error) {
+        if (error== nil) {
+	        // do something with result object
 	    } else {
 	        // handle the error
 	    }
-	} args:@2, @3, nil];
-
+    }];
+	
 ### Publish to a topic] this json object `{"user" : ["foo", "bar"]}`:
 
-	[wamp publish:[NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:@"foo", @"bar", nil],@"user", nil] toTopic:@"http://example.com/simple" excludeMe:NO];
+	[_wamp publishTo:@"com.topic.hello" args:nil kw:@{@"user":@[@"foo", @"bar"]} options:@{@"acknowledge":@YES, @"exclude_me":@NO} result:^(NSError *error) {
+		
+		// if acknowledge is TRUE this callback will be called to notify the successful publishing
+        NSLog(@"published? %@", (error==nil)?@"YES":@"NO");
+    }];
 
 ### Subscribe to a Topic and handle received events:
 
-	[client subscribeTopic:@"http://example.com/simple/simple" onEvent:^(id payload) {
-        // do something with the payload
+	[wamp subscribe:@"com.topic.hello" onEvent:^(MDWampEvent *payload) {
+        
+        // do something with the payload of the event
+        NSLog(@"received an event %@", payload.arguments);
+        
+    } result:^(NSError *error) {
+        NSLog(@"subscribe ok? %@", (error==nil)?@"YES":@"NO");
     }];
 
-### Authenticate using WAMP-CRA:
 
-	- (void) onOpen
-	{
-	    [wamp authReqWithAppKey:appKey andExtra:nil];
-	}
+## Tests
 
-	- (void) onAuthReqWithAnswer:(NSString *)answer
-	{	    
-	    [wamp authSignChallenge:answer withSecret:appSecret];
-	}
-
-	- (void) onAuthSignWithSignature:(NSString *)signature
-	{
-	    [wamp authWithSignature:signature];
-	}
-
-	// then you have these callbakcs
-	- (void) onAuthWithAnswer:(NSString *)answer;
-	- (void) onAuthFailForCall:(NSString *)procCall withError:(NSError *)error;
-
-### Authenticate using WAMP-CRA (Block-based):
-
-	- (void) onOpen
-	{
-		[wamp authWithKey:key Secret:secret Extra:nil 
-			Success:^(NSString *answer) {
-				NSLog(@"Authenticated");
-    		} Error:^(NSString *procCall, NSString *errorURI, NSString *errorDetails) {
-        		NSLog(@"Auth Fail:%@:%@",errorURI,errorDetails);
-    		}
-	   	];
-	}
-
-
-## Test
-If you want to run the tests you have to add the SocketRockt dependancy this is handled by using submodules so:
+If you want to run the tests you have to installdependancies by using submodules so:
 
 - clone the repository: `git clone git@github.com:mogui/MDWamp.git`
 - `cd MDWamp`
-- run a `git submodule init && git submodule update` inside the MDWamp cloned directory to init the SocketRocket dependancy. 
+- run a `git submodule init && git submodule update` inside the MDWamp cloned directory to init the SocketRocket and msgpack-objectivec dependancy.
 
-Once everything compiles smoothly, you need a WAMP server to test against.  
-The creator of the specification also have a nice test suite tool [autobahn test suite](http://autobahn.ws/testsuite/installation/) (it's for WebSocket in general not only WAMP)   
-The WAMP part though is undere heavy development nowdays for the new specification (WAMP v2) and not everuyhting works as it should, so temporarily, and just for the sake of the test, I suggest you to install it from my fork [over here](https://github.com/mogui/AutobahnTestSuite)  
-As for everything python I suggest to make a `virtualenv`
+Everything should build straight away
 
-	git clone git://github.com/mogui/AutobahnTestSuite.git
-	cd AutobahnTestSuite
-	git checkout mdwamp
-	cd autobahntestsuite
-	python setup.py install
+You can run Unit Test on `MDWamp` target without any other dependancy, BUT the tests aginst MDWampTransportWebSocket won't be run.
 
-Finally you can start the test server:
+If you want to run the full test suite (with also code coverage) you want to run tests on `MDWamp+crossbar.io+covarege` target.
 
-	wstest -d -m wampserver -w ws://localhost:9000
+To do that you need to install an instance of crossbar.io and start it, leave all the things with default settings it will be ok
 
-and run the test target from Xcode.
+	pip install crossbar[msgpack]
+	crossbar init
+	crossbar start
 
-##Authors
+Enjoy :)
+
+
+## Changes
+
+### 2.0
+
+- Addopted WAMP v2 [basic protocol](https://github.com/tavendo/WAMP/blob/master/spec/basic.md)
+- new library intreface, due to protocol changes
+- decoupled architecture to give flexibility over new transport and serialization
+- dropped iOS 5 compatibility now iOS >= 6.0 is required
+- not yet supported backword compatibility with WAMP v1
+
+### 1.1.0
+
+- Added OSX framework target
+- dropped iOS 4 compatibility now iOS >= 5.0 is required
+- added block callback for connection, rpc and pub/sub messages
+- removed RPC and Event delegates (now they only works with blocks)
+- added unit test
+
+## Roadmap
+
+- make an iOS App Target in the prject to show all the features
+- implement raw socket transport
+- implement the [advanced protocol](https://github.com/tavendo/WAMP/blob/master/spec/advanced.md) spec
+-  make the library also a Server Library integrating with GCDWebServer
+
+
+
+
+
+
+##Authors & contributors
 - [mogui](https://github.com/mogui/)
 - [cvanderschuere](https://github.com/cvanderschuere)
 - [JohnFricker](https://github.com/JohnFricker)

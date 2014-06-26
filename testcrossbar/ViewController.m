@@ -29,12 +29,12 @@
     [wamp call:@"com.hello.hello" args:nil kwArgs:nil complete:^(MDWampResult *result, NSError *error) {
         NSLog(@"---> %@, errror: %@", result.result, error);
     }];
-//    [wamp subscribe:@"com.hello.hello2" onEvent:^(MDWampEvent *payload) {
-//        NSLog(@"received an event %@", payload.arguments);
-//        
-//    } result:^(NSError *error) {
-//        NSLog(@"subscribe ok? %@", error);
-//    }];
+    [wamp subscribe:@"com.hello.hello2" onEvent:^(MDWampEvent *payload) {
+        NSLog(@"received an event %@", payload.arguments);
+        
+    } result:^(NSError *error) {
+        NSLog(@"subscribe ok? %@", error);
+    }];
 }
 
 - (void) mdwamp:(MDWamp *)wamp closedSession:(NSInteger)code reason:(NSString*)reason details:(NSDictionary *)details {
