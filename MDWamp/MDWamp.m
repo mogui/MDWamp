@@ -1,4 +1,4 @@
-//
+    //
 //  MDWampClient.m
 //  MDWamp
 //
@@ -78,15 +78,13 @@ NSString * const kMDWampRoleCallee      = @"callee";
         // Setting  defaults value
         self.serializationInstanceMap = @{
                                           [NSNumber numberWithInt:kMDWampSerializationJSON]: [MDWampSerializationJSON class],
-                                          [NSNumber numberWithInt:kMDWampSerializationMsgPack]: [MDWampSerializationJSON class]
+                                          [NSNumber numberWithInt:kMDWampSerializationMsgPack]: [MDWampSerializationMsgpack class]
                                           };
-#warning MSGPACK is missing
         
-        self.roles = @[kMDWampRolePublisher, kMDWampRoleSubscriber, kMDWampRoleCaller, kMDWampRoleCallee];
-        _shouldAutoreconnect        = YES;
-        
-		_autoreconnectDelay         = 3;
-		_autoreconnectMaxRetries    = 10;
+//        _shouldAutoreconnect        = YES;
+//        
+//		_autoreconnectDelay         = 3;
+//		_autoreconnectMaxRetries    = 10;
         autoreconnectRetries        = 0;
         explicitSessionClose = NO;
         _sessionEstablished = NO;
@@ -109,7 +107,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
         
 //        self.subprotocols = @[kMDWampSubprotocolWamp2MsgPack, kMDWampSubprotocolWamp2JSON, kMDWampSubprotocolWamp];
         
-        self.roles = @[kMDWampRolePublisher, kMDWampRoleSubscriber, kMDWampRoleCaller, kMDWampRoleCallee];
+        self.roles = @{kMDWampRolePublisher:@{}, kMDWampRoleSubscriber:@{}, kMDWampRoleCaller:@{}, kMDWampRoleCallee:@{}};
 	}
 	return self;
 }
@@ -117,7 +115,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
 #pragma mark Utils
 - (NSNumber *) generateID
 {
-    int r = arc4random_uniform(4294967295);
+    unsigned int r = abs(arc4random_uniform(exp2(32)-1));
     return [NSNumber numberWithInt:r];
 }
 
@@ -189,6 +187,14 @@ NSString * const kMDWampRoleCallee      = @"callee";
     NSMutableArray *unpacked = [[self.serializator unpack:message] mutableCopy];
     NSNumber *code = [unpacked shift];
     
+    if (!unpacked || [unpacked count] < 1) {
+#ifdef DEBUG
+        [NSException raise:@"it.mogui.mdwamp" format:@"Wrong message recived"];
+#else
+        MDWampDebugLog(@"Invalid message code received !!");
+#endif
+    }
+    
     @try {
         	
         Class messageClass = [MDWampMessageFactory messageClassFromCode:code forVersion:self.version];
@@ -216,25 +222,25 @@ NSString * const kMDWampRoleCallee      = @"callee";
     _sessionId = nil;
     [self cleanUp];
     
-    if (!explicitSessionClose) {
-
-        if (_shouldAutoreconnect && autoreconnectRetries < _autoreconnectMaxRetries) {
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, _autoreconnectDelay * NSEC_PER_SEC);
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                MDWampDebugLog(@"trying to reconnect...");
-                autoreconnectRetries +=1;
-
-            });
-        }
-        
-        if (self.onSessionClosed) {
-            self.onSessionClosed(self, error.code, error.localizedDescription, error.userInfo);
-        }
-        
-        if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:closedSession:reason:details:)]) {
-            [_delegate mdwamp:self closedSession:error.code reason:error.localizedDescription details:error.userInfo];
-        }
-    }
+//    if (!explicitSessionClose) {
+//
+//        if (_shouldAutoreconnect && autoreconnectRetries < _autoreconnectMaxRetries) {
+//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, _autoreconnectDelay * NSEC_PER_SEC);
+//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//                MDWampDebugLog(@"trying to reconnect...");
+//                autoreconnectRetries +=1;
+//
+//            });
+//        }
+//        
+//        if (self.onSessionClosed) {
+//            self.onSessionClosed(self, error.code, error.localizedDescription, error.userInfo);
+//        }
+//        
+//        if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:closedSession:reason:details:)]) {
+//            [_delegate mdwamp:self closedSession:error.code reason:error.localizedDescription details:error.userInfo];
+//        }
+//    }
 }
 
 #pragma mark -
@@ -432,6 +438,17 @@ NSString * const kMDWampRoleCallee      = @"callee";
             
             [self.publishRequests removeObjectForKey:pub.request];
         }
+    } else if ([message isKindOfClass:[MDWampEvent class]]) {
+        MDWampEvent *event = (MDWampEvent *)message;
+        NSArray *events = [self.subscriptionEvents objectForKey:event.subscription];
+        
+        for (void(^eventCallback)(MDWampEvent *) in events) {
+            if (eventCallback) {
+                eventCallback(event);
+            }
+        }
+        
+        
     } else if ([message isKindOfClass:[MDWampResult class]]) {
         MDWampResult *result = (MDWampResult *)message;
         
@@ -534,17 +551,11 @@ NSString * const kMDWampRoleCallee      = @"callee";
 #pragma mark -
 #pragma mark Commands
 
-- (void) prefix:(NSString*)prefix uri:(NSString*)uri
-{
-//	NSString *payload = [self packArguments:[NSNumber numberWithInt:MDWampMessageTypePrefix],prefix, uri, nil];
-//	MDWampDebugLog(@"sending prefix: %@", payload);
-//	[_socket send:payload];
-}
 
 #pragma mark -
 #pragma mark Pub/Sub
 - (void) subscribe:(NSString *)topic
-           onEvent:(void(^)(id payload))eventBlock
+           onEvent:(void(^)(MDWampEvent *payload))eventBlock
             result:(void(^)(NSError *error))result
 {
     NSNumber *request = [self generateID];
@@ -604,15 +615,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
     }
 }
 
-- (void)unsubscribeAll
-{
-    //	for (NSString *topicUri in [_subscribersCallbackMap allKeys]){
-    //		[self unsubscribeTopic:topicUri];
-    //	}
-    //
-    //	[_subscribersCallbackMap removeAllObjects];
-}
-
 - (void) publishTo:(NSString *)topic
               args:(NSArray*)args
                 kw:(NSDictionary *)argsKw
@@ -620,6 +622,9 @@ NSString * const kMDWampRoleCallee      = @"callee";
             result:(void(^)(NSError *error))result
 {
     NSNumber *request = [self generateID];
+    if (options == nil)
+        options = @{};
+    
     MDWampPublish *msg = [[MDWampPublish alloc] initWithPayload:@[request, options, topic]];
     if (args)
         msg.arguments = args;

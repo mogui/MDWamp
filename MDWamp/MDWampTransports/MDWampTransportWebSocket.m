@@ -30,6 +30,10 @@
         if ([protocols containsObject:kMDWampVersion2]) {
             [supportedProtocols unshift:@"wamp.2.json"];
             [supportedProtocols unshift:@"wamp.2.msgpack"];
+        } else if ([protocols containsObject:kMDWampVersion2JSON]) {
+            [supportedProtocols unshift:@"wamp.2.json"];
+        } else if ([protocols containsObject:kMDWampVersion2Msgpack]) {
+            [supportedProtocols unshift:@"wamp.2.msgpack"];
         }
         
         NSAssert([supportedProtocols count] > 0, @"Specify a valid WAMP version");
@@ -64,7 +68,6 @@
 #pragma mark SRWebSocket Delegate
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
-    
     [self.delegate transportDidReceiveMessage:message];
 }
 

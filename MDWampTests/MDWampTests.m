@@ -51,10 +51,8 @@
 {
     NSArray *arr = [_s unpack:[_transport.sendBuffer lastObject]];
     Class msgC = [MDWampMessageFactory messageClassFromCode:arr[0] forVersion:kMDWampVersion2];
-
-    if ( ![msgC isSubclassOfClass:class]) {
-        return nil;
-    }
+    
+    XCTAssertTrue([msgC isSubclassOfClass:class], @"Wrong class");
     
     NSMutableArray *tmp = [arr mutableCopy];
     [tmp shift];
@@ -127,14 +125,7 @@
     XCTAssertFalse([_wamp isConnected], @"Must not be connected");
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
-
-- (void)testSubscribeUnsubscribe
-{
-    
-    //
-    // test fail subscription
-    //
-
+- (void)testSubscribeFails {
     [_wamp subscribe:@"com.topic.x"  onEvent:^(id payload) {
         // nothing to do
     } result:^(NSError *error) {
@@ -146,12 +137,9 @@
     [_transport triggerDidReceiveMessage:[error marshallFor:kMDWampVersion2]];
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
-    
-    
-    //
-    // test succed subscription
-    //
-    [self prepare];
+}
+
+- (void)testSubscribe {
     [_wamp subscribe:@"com.topic.x" onEvent:^(id payload) {
         // nothing to do
     } result:^(NSError *error) {
@@ -163,34 +151,44 @@
     [_transport triggerDidReceiveMessage:[subscribed marshallFor:kMDWampVersion2]];
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
+
+- (void)testSubscribeLegacy {
     
+}
+
+- (void)testUnsubscribe
+{
     
-    //
-    // test succed unsubscription
-    //
-    [self prepare];
-    [_wamp unsubscribe:@"com.topic.x" result:^(NSError *error) {
-        XCTAssertNil(error, @"Must correctly unsubscribe");
-        [self notify:kXCTUnitWaitStatusSuccess];
-    }];
+    [_wamp subscribe:@"com.asder.x" onEvent:^(id payload) {
+        // nothing
+    } result:^(NSError *error) {
+        
+        // triggering an error server side
+        [_wamp unsubscribe:@"com.asder.x" result:^(NSError *error) {
+            XCTAssertNil(error, @"Successfully unsubscribed");
+            // Should fail instantly
+            [self notify:kXCTUnitWaitStatusSuccess];
+        }];
+        
+        MDWampUnsubscribe *un2 = [self msgFromTransportAndCheckIsA:[MDWampUnsubscribe class]];
+        
+        MDWampUnsubscribed *unsub = [[MDWampUnsubscribed alloc] initWithPayload:@[un2.request]];
+        [_transport triggerDidReceiveMessage:[unsub marshallFor:kMDWampVersion2]];
+        
+    } ];
     
-    MDWampUnsubscribe *un = [self msgFromTransportAndCheckIsA:[MDWampUnsubscribe class]];
-    MDWampUnsubscribed *unsubscribed = [[MDWampUnsubscribed alloc] initWithPayload:@[un.request]];
-    [_transport triggerDidReceiveMessage:[unsubscribed marshallFor:kMDWampVersion2]];
+    MDWampSubscribe *sub3 = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
+    MDWampSubscribed *subscribed2 = [[MDWampSubscribed alloc] initWithPayload:@[sub3.request, @12343234]];
+    [_transport triggerDidReceiveMessage:[subscribed2 marshallFor:kMDWampVersion2]];
+    
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
-    
-    // fail unsubscription for inexistent topic
-    [self prepare];
-    [_wamp unsubscribe:@"com.topic.y" result:^(NSError *error) {
-        XCTAssertNotNil(error, @"Must call error");
-        // Should fail instantly
-        [self notify:kXCTUnitWaitStatusSuccess];
-    }];
-    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
-    
-    
-    [self prepare];
+}
+
+
+- (void)testUnsubscribeFail
+    {
     [_wamp subscribe:@"com.asder.x" onEvent:^(id payload) {
         // nothing
     } result:^(NSError *error) {
@@ -217,7 +215,6 @@
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
-
 - (void)testPublish {
     [_wamp publishTo:@"com.myapp.mytopic1"
                 args:self.arrayPayload
@@ -235,6 +232,10 @@
     MDWampPublished *pub = [[MDWampPublished alloc] initWithPayload:@[msg.request, @123123123]];
     [_transport triggerDidReceiveMessage:[pub marshallFor:kMDWampVersion2]];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
+
+- (void)testPublishLegacy {
+#warning to implement
 }
 
 - (void)testPublishWithError {
@@ -256,8 +257,27 @@
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
-- (void)testPublishLegacy {
-#warning to implement
+- (void)testEvent {
+    NSArray *eventPayload = @[@"foo"];
+    __block MDWampSubscribed *subscribed = nil;
+    
+    [_wamp subscribe:@"com.topic.x"  onEvent:^(MDWampEvent *payload) {
+        // nothing to do
+        XCTAssertEqualObjects(payload.arguments, eventPayload, @"event received must be the same of event dispatched");
+        [self notify:kXCTUnitWaitStatusSuccess];
+    } result:^(NSError *error) {
+        XCTAssertNil(error, @"Must be no error");
+        // trigger event
+        MDWampEvent *event = [[MDWampEvent alloc] initWithPayload:@[subscribed.subscription, @123343, @{}, eventPayload]];
+        [_transport triggerDidReceiveMessage:[event marshallFor:kMDWampVersion2]];
+
+    }];
+    
+    MDWampSubscribe *sub = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
+    subscribed = [[MDWampSubscribed alloc] initWithPayload:@[sub.request, @12343234]];
+    [_transport triggerDidReceiveMessage:[subscribed marshallFor:kMDWampVersion2]];
+    
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
 - (void)testCallProcedure {
@@ -286,7 +306,7 @@
 }
 
 - (void)testCallProcedureLegacy {
-    
+#warning TO IMPLEMENT
 }
 
 - (void)testRegister {

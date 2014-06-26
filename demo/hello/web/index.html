@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+   <body>
+      <h1>hello</h1>
+      <p>Open JavaScript console to watch output.</p>
+      <script>AUTOBAHN_DEBUG = true;</script>
+      <script src="autobahn.min.js"></script>
+
+      <script>
+         // the URL of the WAMP Router (Crossbar.io)
+         AUTOBAHN_DEBUG = true;
+         var wsuri;
+         if (document.location.origin == "file://") {
+            wsuri = "ws://127.0.0.1:8080/ws";
+
+         } else {
+            wsuri = (document.location.protocol === "http:" ? "ws:" : "wss:") + "//" +
+                        document.location.host + "/ws";
+         }
+
+         var connection = new autobahn.Connection({
+            url: wsuri,
+            realm: "realm1"
+         });
+
+         connection.onopen = function (session) {
+
+            console.log("Connected");
+            function onevent(args) {
+              console.log("Event:", args[0]);
+            }
+
+
+            session.subscribe('com.hello.hello2', onevent).then(
+               function (subscription) {
+                  // subscription succeeded, subscription is an instance of autobahn.Subscription
+                  console.log("Scribed");
+               },
+               function (error) {
+                  // subscription failed, error is an instance of autobahn.Error
+                  console.log("Nope");
+               }
+            );
+
+            // session.call('com.hello.hello').then(
+            //    function (res) {
+            //       console.log(res);
+            //    },
+            //    function (err) {
+            //       console.log(err);
+            //    }
+            // );
+         };
+
+         connection.onclose = function () {
+            console.log("Connection lost", arguments);
+         }
+
+         connection.open();
+
+         var connection2 = new autobahn.Connection({
+            url: wsuri,
+            realm: "realm1"
+         });
+         connection2.onopen = function (session) {
+
+            session.publish('com.myapp.hello', ['Hello, world!'], {}, { acknowledge: true, disclose_me: true}).then(
+
+                  function(publication) {
+                     console.log("published, publication ID is ", publication);
+                  },
+
+                  function(error) {
+                     console.log("publication error", error);
+                  }
+
+               );
+
+         };
+
+         connection2.open();
+      </script>
+   </body>
+</html>

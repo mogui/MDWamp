@@ -19,7 +19,7 @@
 //
 
 #import "MDWampConstants.h"
-#import "MDWampTransport.h"
+#import "MDWampTransports.h"
 #import "MDWampClientDelegate.h"
 #import "MDWampMessages.h"
 
@@ -74,27 +74,27 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  *  An array of MDWampRoles the client will assume on connection
  *  default is all roles TODO: what makes sense to do with feature of advanced protocol??
  */
-@property (nonatomic, strong) NSArray *roles;
+@property (nonatomic, strong) NSDictionary *roles;
 
 /**
  *  A map of Class name that immplements a given serialization (which is the key in the dict) it has a default map that can be changed
  */
 @property (nonatomic, strong) NSDictionary *serializationInstanceMap;
 
-/**
- * Indicates whether or not MDWamp tries to reconnect after a non implicit disconnection
- */
-@property (nonatomic, assign) BOOL shouldAutoreconnect;
-
-/**
- * The seconds between each reconnection try
- */
-@property (nonatomic, assign) NSTimeInterval autoreconnectDelay;
-
-/**
- * The maximum times MDWamp will try to reconnect
- */
-@property (nonatomic, assign) NSInteger autoreconnectMaxRetries;
+///**
+// * Indicates whether or not MDWamp tries to reconnect after a non implicit disconnection
+// */
+//@property (nonatomic, assign) BOOL shouldAutoreconnect;
+//
+///**
+// * The seconds between each reconnection try
+// */
+//@property (nonatomic, assign) NSTimeInterval autoreconnectDelay;
+//
+///**
+// * The maximum times MDWamp will try to reconnect
+// */
+//@property (nonatomic, assign) NSInteger autoreconnectMaxRetries;
 
 
 #pragma mark - 
@@ -133,15 +133,6 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
 
 #pragma mark -
 #pragma mark Commands
-/**
- * Sets the prefix Uri to share with the server
- * so we can in future calls of other methods use CURIEs instead of full URIs
- * see http://wamp.ws/spec#uris_and_curies for details
- *
- * @param prefix		a string to be used as prefix
- * @param uri			the URI which is subsequently to be abbreviated using the prefix.
- */
-- (void) prefix:(NSString*)prefix uri:(NSString*)uri;
 
 #pragma mark -
 #pragma mark Pub/Sub
@@ -154,7 +145,7 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  *  @param eventBlock The Block invoked when an event on the topic is received
  */
 - (void) subscribe:(NSString *)topic
-           onEvent:(void(^)(id payload))eventBlock
+           onEvent:(void(^)(MDWampEvent *payload))eventBlock
             result:(void(^)(NSError *error))result;
 
 
@@ -166,11 +157,6 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  */
 - (void)unsubscribe:(NSString *)topic
              result:(void(^)(NSError *error))result;
-
-/**
- * Unubscribe from all subscribed topic
- */
-- (void) unsubscribeAll;
 
 
 /**

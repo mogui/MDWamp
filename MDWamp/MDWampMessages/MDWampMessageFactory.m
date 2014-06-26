@@ -61,7 +61,7 @@
             else
 //                return [MDWampHeartbeat class];
         case 8:
-            if (version >= kMDWampVersion2)
+            if ([version intValue] >= [kMDWampVersion2 intValue])
                 return [MDWampError class];
             else
                 return [MDWampEvent class];

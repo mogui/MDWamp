@@ -12,6 +12,5 @@
 
 - (id) pack:(NSArray*)arguments;
 - (NSArray*) unpack:(id)data;
-- (id) packArguments:(id)firstObj, ... NS_REQUIRES_NIL_TERMINATION;
 
 @end

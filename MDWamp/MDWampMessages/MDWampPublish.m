@@ -19,7 +19,7 @@
         if ([tmp[0] isKindOfClass:[NSString class]]) {
             // version 1 PUBLISH
             // [ TYPE_ID_PUBLISH , topicURI , event , exclude , eligible ]
-#warning exclude , eligible not implemented
+            #warning exclude , eligible not implemented
             self.topic = [tmp shift];
             self.argumentsKw = [tmp shift];
         } else {
