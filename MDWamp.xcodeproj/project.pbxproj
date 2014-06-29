@@ -37,6 +37,8 @@
 		7646E524185BBAEF004990DD /* MDWampClientDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 7646E523185BBAEF004990DD /* MDWampClientDelegate.h */; };
 		7646E535185BCEBC004990DD /* SocketRocket.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7604D794185B6E6E0087773E /* SocketRocket.framework */; };
 		7646E53B185BCF92004990DD /* SocketRocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D794185B6E6E0087773E /* SocketRocket.framework */; };
+		7657A3B7195F594D00F58BB4 /* libMDWamp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D766185B6B880087773E /* libMDWamp.a */; };
+		7657A3B8195F598200F58BB4 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7698B1F619522D1C0045D400 /* libicucore.dylib */; };
 		7659705918620990008B7709 /* XCTAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7659705818620990008B7709 /* XCTAsyncTestCase.m */; };
 		765DD2D118E484D000D4C19F /* MDWampTransportMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF81D318D1043700DFB13B /* MDWampTransportMock.m */; };
 		7660CBDF1906DF7700FCCD7A /* MDWampPublished.h in Headers */ = {isa = PBXBuildFile; fileRef = 7660CBDD1906DF7700FCCD7A /* MDWampPublished.h */; };
@@ -83,20 +85,19 @@
 		766CE94718F73F6F00CADAC9 /* MDWampSubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 766CE94518F73F6F00CADAC9 /* MDWampSubscribed.m */; };
 		766CE94818F73F6F00CADAC9 /* MDWampSubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 766CE94518F73F6F00CADAC9 /* MDWampSubscribed.m */; };
 		7698B1B41952278E0045D400 /* MDWampSerializations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7698B1B31952278E0045D400 /* MDWampSerializations.m */; };
-		7698B1BE19522AF80045D400 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D73A185B4A7B0087773E /* Foundation.framework */; };
-		7698B1C019522AF80045D400 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7698B1BF19522AF80045D400 /* CoreGraphics.framework */; };
-		7698B1C719522AF80045D400 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7698B1C519522AF80045D400 /* InfoPlist.strings */; };
-		7698B1C919522AF80045D400 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7698B1C819522AF80045D400 /* main.m */; };
-		7698B1CD19522AF90045D400 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7698B1CC19522AF90045D400 /* AppDelegate.m */; };
-		7698B1D019522AF90045D400 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7698B1CE19522AF90045D400 /* Main.storyboard */; };
-		7698B1D319522AF90045D400 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7698B1D219522AF90045D400 /* ViewController.m */; };
-		7698B1D519522AF90045D400 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7698B1D419522AF90045D400 /* Images.xcassets */; };
 		7698B1F019522C530045D400 /* MDWampSubscribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 766CE94118F73B6A00CADAC9 /* MDWampSubscribe.m */; };
 		7698B1F119522C530045D400 /* MDWampPublish.m in Sources */ = {isa = PBXBuildFile; fileRef = 766CE93D18F73AA500CADAC9 /* MDWampPublish.m */; };
-		7698B1F219522C940045D400 /* libMDWamp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D766185B6B880087773E /* libMDWamp.a */; };
-		7698B1F719522D1C0045D400 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7698B1F619522D1C0045D400 /* libicucore.dylib */; };
-		7698B1F919522D2B0045D400 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7698B1F819522D2B0045D400 /* CFNetwork.framework */; };
-		7698B1FB19522D310045D400 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7698B1FA19522D310045D400 /* Security.framework */; };
+		76A34EF0195DED5400233B76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D73A185B4A7B0087773E /* Foundation.framework */; };
+		76A34EF1195DED5400233B76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7698B1BF19522AF80045D400 /* CoreGraphics.framework */; };
+		76A34EF3195DED5400233B76 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A34EF2195DED5400233B76 /* UIKit.framework */; };
+		76A34EF9195DED5400233B76 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76A34EF7195DED5400233B76 /* InfoPlist.strings */; };
+		76A34EFB195DED5400233B76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A34EFA195DED5400233B76 /* main.m */; };
+		76A34EFF195DED5400233B76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A34EFE195DED5400233B76 /* AppDelegate.m */; };
+		76A34F02195DED5400233B76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76A34F00195DED5400233B76 /* Main.storyboard */; };
+		76A34F05195DED5400233B76 /* ConnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A34F04195DED5400233B76 /* ConnectViewController.m */; };
+		76A34F08195DED5400233B76 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A34F07195DED5400233B76 /* ChatViewController.m */; };
+		76A34F0A195DED5400233B76 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76A34F09195DED5400233B76 /* Images.xcassets */; };
+		76A34F2A195DF00900233B76 /* ChatStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A34F29195DF00900233B76 /* ChatStartViewController.m */; };
 		76BFC09B18CCF142007B518F /* MDWampSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BFC09A18CCF142007B518F /* MDWampSerialization.h */; };
 		76BFC09E18CCF1CB007B518F /* MDWampSerializationJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BFC09C18CCF1CB007B518F /* MDWampSerializationJSON.h */; };
 		76BFC09F18CCF1CB007B518F /* MDWampSerializationJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BFC09D18CCF1CB007B518F /* MDWampSerializationJSON.m */; };
@@ -216,7 +217,7 @@
 			remoteGlobalIDString = F62417E314D52F3C003CE997;
 			remoteInfo = TestChat;
 		};
-		7698B1EE19522B1C0045D400 /* PBXContainerItemProxy */ = {
+		7657A3B5195F594800F58BB4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7604D6FE185B499D0087773E /* Project object */;
 			proxyType = 1;
@@ -321,21 +322,26 @@
 		766CE94418F73F6F00CADAC9 /* MDWampSubscribed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDWampSubscribed.h; path = MDWampMessages/MDWampSubscribed.h; sourceTree = "<group>"; };
 		766CE94518F73F6F00CADAC9 /* MDWampSubscribed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDWampSubscribed.m; path = MDWampMessages/MDWampSubscribed.m; sourceTree = "<group>"; };
 		7698B1B31952278E0045D400 /* MDWampSerializations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSerializations.m; sourceTree = "<group>"; };
-		7698B1BD19522AF80045D400 /* testcrossbar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testcrossbar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7698B1BF19522AF80045D400 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		7698B1C419522AF80045D400 /* testcrossbar-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "testcrossbar-Info.plist"; sourceTree = "<group>"; };
-		7698B1C619522AF80045D400 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7698B1C819522AF80045D400 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		7698B1CA19522AF80045D400 /* testcrossbar-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "testcrossbar-Prefix.pch"; sourceTree = "<group>"; };
-		7698B1CB19522AF90045D400 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		7698B1CC19522AF90045D400 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7698B1CF19522AF90045D400 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		7698B1D119522AF90045D400 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		7698B1D219522AF90045D400 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		7698B1D419522AF90045D400 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7698B1F619522D1C0045D400 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
 		7698B1F819522D2B0045D400 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		7698B1FA19522D310045D400 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		76A34EEF195DED5400233B76 /* MDWampDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDWampDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		76A34EF2195DED5400233B76 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		76A34EF6195DED5400233B76 /* MDWampDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MDWampDemo-Info.plist"; sourceTree = "<group>"; };
+		76A34EF8195DED5400233B76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		76A34EFA195DED5400233B76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		76A34EFC195DED5400233B76 /* MDWampDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDWampDemo-Prefix.pch"; sourceTree = "<group>"; };
+		76A34EFD195DED5400233B76 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		76A34EFE195DED5400233B76 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		76A34F01195DED5400233B76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		76A34F03195DED5400233B76 /* ConnectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectViewController.h; sourceTree = "<group>"; };
+		76A34F04195DED5400233B76 /* ConnectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectViewController.m; sourceTree = "<group>"; };
+		76A34F06195DED5400233B76 /* ChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		76A34F07195DED5400233B76 /* ChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		76A34F09195DED5400233B76 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		76A34F28195DF00900233B76 /* ChatStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatStartViewController.h; sourceTree = "<group>"; };
+		76A34F29195DF00900233B76 /* ChatStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatStartViewController.m; sourceTree = "<group>"; };
 		76BFC09A18CCF142007B518F /* MDWampSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDWampSerialization.h; path = MDWampSerializations/MDWampSerialization.h; sourceTree = "<group>"; };
 		76BFC09C18CCF1CB007B518F /* MDWampSerializationJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDWampSerializationJSON.h; path = MDWampSerializations/MDWampSerializationJSON.h; sourceTree = "<group>"; };
 		76BFC09D18CCF1CB007B518F /* MDWampSerializationJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDWampSerializationJSON.m; path = MDWampSerializations/MDWampSerializationJSON.m; sourceTree = "<group>"; };
@@ -434,16 +440,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7698B1BA19522AF80045D400 /* Frameworks */ = {
+		76A34EEC195DED5400233B76 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7698B1FB19522D310045D400 /* Security.framework in Frameworks */,
-				7698B1F919522D2B0045D400 /* CFNetwork.framework in Frameworks */,
-				7698B1F719522D1C0045D400 /* libicucore.dylib in Frameworks */,
-				7698B1F219522C940045D400 /* libMDWamp.a in Frameworks */,
-				7698B1C019522AF80045D400 /* CoreGraphics.framework in Frameworks */,
-				7698B1BE19522AF80045D400 /* Foundation.framework in Frameworks */,
+				7657A3B8195F598200F58BB4 /* libicucore.dylib in Frameworks */,
+				7657A3B7195F594D00F58BB4 /* libMDWamp.a in Frameworks */,
+				76A34EF1195DED5400233B76 /* CoreGraphics.framework in Frameworks */,
+				76A34EF3195DED5400233B76 /* UIKit.framework in Frameworks */,
+				76A34EF0195DED5400233B76 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,7 +462,7 @@
 				76F0153C1959F38F00F9991E /* msgpack-objectivec */,
 				76FD803B185BB3C800D1B5C0 /* MDWamp */,
 				76CCC6ED185BD1F10056AB98 /* MDWampTests */,
-				7698B1C219522AF80045D400 /* testcrossbar */,
+				76A34EF4195DED5400233B76 /* MDWampDemo */,
 				7604D709185B499D0087773E /* Frameworks */,
 				7604D708185B499D0087773E /* Products */,
 				762A51DE195CB2B000A3B344 /* READMEv1.md */,
@@ -473,7 +478,7 @@
 				7604D707185B499D0087773E /* MDWamp.framework */,
 				7604D71E185B499D0087773E /* MDWampTests.xctest */,
 				7604D766185B6B880087773E /* libMDWamp.a */,
-				7698B1BD19522AF80045D400 /* testcrossbar.app */,
+				76A34EEF195DED5400233B76 /* MDWampDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -488,6 +493,7 @@
 				7604D71F185B499D0087773E /* XCTest.framework */,
 				7604D73A185B4A7B0087773E /* Foundation.framework */,
 				7698B1BF19522AF80045D400 /* CoreGraphics.framework */,
+				76A34EF2195DED5400233B76 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -592,29 +598,49 @@
 			name = RPC;
 			sourceTree = "<group>";
 		};
-		7698B1C219522AF80045D400 /* testcrossbar */ = {
+		76A34EF4195DED5400233B76 /* MDWampDemo */ = {
 			isa = PBXGroup;
 			children = (
-				7698B1CB19522AF90045D400 /* AppDelegate.h */,
-				7698B1CC19522AF90045D400 /* AppDelegate.m */,
-				7698B1CE19522AF90045D400 /* Main.storyboard */,
-				7698B1D119522AF90045D400 /* ViewController.h */,
-				7698B1D219522AF90045D400 /* ViewController.m */,
-				7698B1D419522AF90045D400 /* Images.xcassets */,
-				7698B1C319522AF80045D400 /* Supporting Files */,
+				76A34F27195DEFF000233B76 /* Chat */,
+				76A34F23195DEF8E00233B76 /* Connect */,
+				76A34EFD195DED5400233B76 /* AppDelegate.h */,
+				76A34EFE195DED5400233B76 /* AppDelegate.m */,
+				76A34F00195DED5400233B76 /* Main.storyboard */,
+				76A34F09195DED5400233B76 /* Images.xcassets */,
+				76A34EF5195DED5400233B76 /* Supporting Files */,
 			);
-			path = testcrossbar;
+			path = MDWampDemo;
 			sourceTree = "<group>";
 		};
-		7698B1C319522AF80045D400 /* Supporting Files */ = {
+		76A34EF5195DED5400233B76 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7698B1C419522AF80045D400 /* testcrossbar-Info.plist */,
-				7698B1C519522AF80045D400 /* InfoPlist.strings */,
-				7698B1C819522AF80045D400 /* main.m */,
-				7698B1CA19522AF80045D400 /* testcrossbar-Prefix.pch */,
+				76A34EF6195DED5400233B76 /* MDWampDemo-Info.plist */,
+				76A34EF7195DED5400233B76 /* InfoPlist.strings */,
+				76A34EFA195DED5400233B76 /* main.m */,
+				76A34EFC195DED5400233B76 /* MDWampDemo-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		76A34F23195DEF8E00233B76 /* Connect */ = {
+			isa = PBXGroup;
+			children = (
+				76A34F03195DED5400233B76 /* ConnectViewController.h */,
+				76A34F04195DED5400233B76 /* ConnectViewController.m */,
+			);
+			name = Connect;
+			sourceTree = "<group>";
+		};
+		76A34F27195DEFF000233B76 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				76A34F06195DED5400233B76 /* ChatViewController.h */,
+				76A34F07195DED5400233B76 /* ChatViewController.m */,
+				76A34F28195DF00900233B76 /* ChatStartViewController.h */,
+				76A34F29195DF00900233B76 /* ChatStartViewController.m */,
+			);
+			name = Chat;
 			sourceTree = "<group>";
 		};
 		76BFC09918CCF11A007B518F /* MDWampSerializations */ = {
@@ -890,22 +916,22 @@
 			productReference = 7604D766185B6B880087773E /* libMDWamp.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		7698B1BC19522AF80045D400 /* testcrossbar */ = {
+		76A34EEE195DED5400233B76 /* MDWampDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7698B1E819522AF90045D400 /* Build configuration list for PBXNativeTarget "testcrossbar" */;
+			buildConfigurationList = 76A34F1D195DED5400233B76 /* Build configuration list for PBXNativeTarget "MDWampDemo" */;
 			buildPhases = (
-				7698B1B919522AF80045D400 /* Sources */,
-				7698B1BA19522AF80045D400 /* Frameworks */,
-				7698B1BB19522AF80045D400 /* Resources */,
+				76A34EEB195DED5400233B76 /* Sources */,
+				76A34EEC195DED5400233B76 /* Frameworks */,
+				76A34EED195DED5400233B76 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				7698B1EF19522B1C0045D400 /* PBXTargetDependency */,
+				7657A3B6195F594800F58BB4 /* PBXTargetDependency */,
 			);
-			name = testcrossbar;
-			productName = testcrossbar;
-			productReference = 7698B1BD19522AF80045D400 /* testcrossbar.app */;
+			name = MDWampDemo;
+			productName = MDWampDemo;
+			productReference = 76A34EEF195DED5400233B76 /* MDWampDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -944,7 +970,7 @@
 				7604D706185B499D0087773E /* MDWamp */,
 				7604D71D185B499D0087773E /* MDWampTests */,
 				7604D765185B6B880087773E /* libMDWamp */,
-				7698B1BC19522AF80045D400 /* testcrossbar */,
+				76A34EEE195DED5400233B76 /* MDWampDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -998,13 +1024,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7698B1BB19522AF80045D400 /* Resources */ = {
+		76A34EED195DED5400233B76 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7698B1D519522AF90045D400 /* Images.xcassets in Resources */,
-				7698B1C719522AF80045D400 /* InfoPlist.strings in Resources */,
-				7698B1D019522AF90045D400 /* Main.storyboard in Resources */,
+				76A34F0A195DED5400233B76 /* Images.xcassets in Resources */,
+				76A34EF9195DED5400233B76 /* InfoPlist.strings in Resources */,
+				76A34F02195DED5400233B76 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1135,13 +1161,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7698B1B919522AF80045D400 /* Sources */ = {
+		76A34EEB195DED5400233B76 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7698B1D319522AF90045D400 /* ViewController.m in Sources */,
-				7698B1CD19522AF90045D400 /* AppDelegate.m in Sources */,
-				7698B1C919522AF80045D400 /* main.m in Sources */,
+				76A34F08195DED5400233B76 /* ChatViewController.m in Sources */,
+				76A34EFF195DED5400233B76 /* AppDelegate.m in Sources */,
+				76A34F05195DED5400233B76 /* ConnectViewController.m in Sources */,
+				76A34EFB195DED5400233B76 /* main.m in Sources */,
+				76A34F2A195DF00900233B76 /* ChatStartViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1153,26 +1181,26 @@
 			target = 7604D706185B499D0087773E /* MDWamp */;
 			targetProxy = 7604D722185B499E0087773E /* PBXContainerItemProxy */;
 		};
-		7698B1EF19522B1C0045D400 /* PBXTargetDependency */ = {
+		7657A3B6195F594800F58BB4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7604D765185B6B880087773E /* libMDWamp */;
-			targetProxy = 7698B1EE19522B1C0045D400 /* PBXContainerItemProxy */;
+			targetProxy = 7657A3B5195F594800F58BB4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		7698B1C519522AF80045D400 /* InfoPlist.strings */ = {
+		76A34EF7195DED5400233B76 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				7698B1C619522AF80045D400 /* en */,
+				76A34EF8195DED5400233B76 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		7698B1CE19522AF90045D400 /* Main.storyboard */ = {
+		76A34F00195DED5400233B76 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				7698B1CF19522AF90045D400 /* Base */,
+				76A34F01195DED5400233B76 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1413,7 +1441,7 @@
 			};
 			name = Release;
 		};
-		7698B1E919522AF90045D400 /* Debug */ = {
+		76A34F1E195DED5400233B76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1425,13 +1453,13 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "testcrossbar/testcrossbar-Prefix.pch";
+				GCC_PREFIX_HEADER = "MDWampDemo/MDWampDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "testcrossbar/testcrossbar-Info.plist";
+				INFOPLIST_FILE = "MDWampDemo/MDWampDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1440,7 +1468,7 @@
 			};
 			name = Debug;
 		};
-		7698B1EA19522AF90045D400 /* Release */ = {
+		76A34F1F195DED5400233B76 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1452,9 +1480,9 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "testcrossbar/testcrossbar-Prefix.pch";
+				GCC_PREFIX_HEADER = "MDWampDemo/MDWampDemo-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "testcrossbar/testcrossbar-Info.plist";
+				INFOPLIST_FILE = "MDWampDemo/MDWampDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1503,11 +1531,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7698B1E819522AF90045D400 /* Build configuration list for PBXNativeTarget "testcrossbar" */ = {
+		76A34F1D195DED5400233B76 /* Build configuration list for PBXNativeTarget "MDWampDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7698B1E919522AF90045D400 /* Debug */,
-				7698B1EA19522AF90045D400 /* Release */,
+				76A34F1E195DED5400233B76 /* Debug */,
+				76A34F1F195DED5400233B76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

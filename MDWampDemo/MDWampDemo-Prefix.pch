@@ -5,6 +5,7 @@
 //
 
 #import <Availability.h>
+#import "AppDelegate.h"
 
 #ifndef __IPHONE_5_0
 #warning "This project uses features only available in iOS SDK 5.0 and later."
@@ -13,4 +14,7 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+
+
+    #define AppDel (AppDelegate *)[[UIApplication sharedApplication] delegate]
 #endif
