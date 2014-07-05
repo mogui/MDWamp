@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *realmField;
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
 @property (weak, nonatomic) IBOutlet UITextView *serverDetails;
+@property (weak, nonatomic) IBOutlet UIButton *connectIcon;
+
 
 - (IBAction)connect:(id)sender;
 @end

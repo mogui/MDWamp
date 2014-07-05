@@ -63,6 +63,8 @@ NSString * const MDWampErrorDomain = @"com.mogui.MDWamp";
         } else if(self.arguments) {
             return @[@8, self.type, self.request, self.details, self.error,
                      self.arguments ];
+        } else if(self.argumentsKw) {
+            return @[@8, self.type, self.request, self.details, self.error, @[], self.argumentsKw ];
         } else {
             return @[@8, self.type, self.request, self.details, self.error ];
         }

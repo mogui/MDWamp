@@ -75,6 +75,8 @@
             return @[@48, self.request, self.options, self.procedure, self.arguments, self.argumentsKw ];
         } else if(self.arguments) {
             return @[@48, self.request, self.options, self.procedure, self.arguments ];
+        } else if(self.argumentsKw) {
+            return @[@48, self.request, self.options, self.procedure, @[], self.argumentsKw ];
         } else {
             return @[@48,self.request, self.options, self.procedure];
         }

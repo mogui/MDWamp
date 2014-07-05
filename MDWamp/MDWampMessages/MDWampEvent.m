@@ -56,6 +56,8 @@
             return @[@36, self.subscription, self.publication, self.details, self.arguments, self.argumentsKw ];
         } else if(self.arguments) {
             return @[@36, self.subscription, self.publication, self.details, self.arguments ];
+        } else if(self.argumentsKw) {
+            return @[@36, self.subscription, self.publication, self.details, @[], self.argumentsKw ];
         } else {
             return @[@36,self.subscription, self.publication, self.details];
         }

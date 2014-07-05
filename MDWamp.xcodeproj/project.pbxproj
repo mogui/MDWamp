@@ -98,6 +98,18 @@
 		76A34F08195DED5400233B76 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A34F07195DED5400233B76 /* ChatViewController.m */; };
 		76A34F0A195DED5400233B76 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76A34F09195DED5400233B76 /* Images.xcassets */; };
 		76A34F2A195DF00900233B76 /* ChatStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A34F29195DF00900233B76 /* ChatStartViewController.m */; };
+		76B23F9719672FA600556248 /* CallRPCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76B23F9619672FA600556248 /* CallRPCViewController.m */; };
+		76B23F99196762A300556248 /* online-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B23F98196762A300556248 /* online-32.png */; };
+		76B23F9B196762B300556248 /* online-32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B23F9A196762B300556248 /* online-32@2x.png */; };
+		76B23F9D1967632E00556248 /* collaboration@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B23F9C1967632E00556248 /* collaboration@2x.png */; };
+		76B23F9F1967634B00556248 /* collaboration.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B23F9E1967634B00556248 /* collaboration.png */; };
+		76B23FA11967636D00556248 /* save_as.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B23FA01967636D00556248 /* save_as.png */; };
+		76B23FA31967637800556248 /* save_as@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B23FA21967637800556248 /* save_as@2x.png */; };
+		76B23FA51967639400556248 /* run_command@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B23FA41967639400556248 /* run_command@2x.png */; };
+		76B23FA71967639D00556248 /* run_command.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B23FA61967639D00556248 /* run_command.png */; };
+		76B23FA919676C9D00556248 /* broken_link-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B23FA819676C9D00556248 /* broken_link-32.png */; };
+		76B23FAB19676CAB00556248 /* link-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B23FAA19676CAB00556248 /* link-32.png */; };
+		76B7933D1965EF5300CB18BC /* RegisterRPCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76B7933C1965EF5300CB18BC /* RegisterRPCViewController.m */; };
 		76BFC09B18CCF142007B518F /* MDWampSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BFC09A18CCF142007B518F /* MDWampSerialization.h */; };
 		76BFC09E18CCF1CB007B518F /* MDWampSerializationJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 76BFC09C18CCF1CB007B518F /* MDWampSerializationJSON.h */; };
 		76BFC09F18CCF1CB007B518F /* MDWampSerializationJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BFC09D18CCF1CB007B518F /* MDWampSerializationJSON.m */; };
@@ -342,6 +354,20 @@
 		76A34F09195DED5400233B76 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		76A34F28195DF00900233B76 /* ChatStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatStartViewController.h; sourceTree = "<group>"; };
 		76A34F29195DF00900233B76 /* ChatStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatStartViewController.m; sourceTree = "<group>"; };
+		76B23F9519672FA600556248 /* CallRPCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallRPCViewController.h; sourceTree = "<group>"; };
+		76B23F9619672FA600556248 /* CallRPCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallRPCViewController.m; sourceTree = "<group>"; };
+		76B23F98196762A300556248 /* online-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "online-32.png"; sourceTree = "<group>"; };
+		76B23F9A196762B300556248 /* online-32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "online-32@2x.png"; sourceTree = "<group>"; };
+		76B23F9C1967632E00556248 /* collaboration@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "collaboration@2x.png"; sourceTree = "<group>"; };
+		76B23F9E1967634B00556248 /* collaboration.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collaboration.png; sourceTree = "<group>"; };
+		76B23FA01967636D00556248 /* save_as.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save_as.png; sourceTree = "<group>"; };
+		76B23FA21967637800556248 /* save_as@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "save_as@2x.png"; sourceTree = "<group>"; };
+		76B23FA41967639400556248 /* run_command@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "run_command@2x.png"; sourceTree = "<group>"; };
+		76B23FA61967639D00556248 /* run_command.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = run_command.png; sourceTree = "<group>"; };
+		76B23FA819676C9D00556248 /* broken_link-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "broken_link-32.png"; sourceTree = "<group>"; };
+		76B23FAA19676CAB00556248 /* link-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "link-32.png"; sourceTree = "<group>"; };
+		76B7933B1965EF5300CB18BC /* RegisterRPCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterRPCViewController.h; sourceTree = "<group>"; };
+		76B7933C1965EF5300CB18BC /* RegisterRPCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterRPCViewController.m; sourceTree = "<group>"; };
 		76BFC09A18CCF142007B518F /* MDWampSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDWampSerialization.h; path = MDWampSerializations/MDWampSerialization.h; sourceTree = "<group>"; };
 		76BFC09C18CCF1CB007B518F /* MDWampSerializationJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDWampSerializationJSON.h; path = MDWampSerializations/MDWampSerializationJSON.h; sourceTree = "<group>"; };
 		76BFC09D18CCF1CB007B518F /* MDWampSerializationJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDWampSerializationJSON.m; path = MDWampSerializations/MDWampSerializationJSON.m; sourceTree = "<group>"; };
@@ -601,6 +627,17 @@
 		76A34EF4195DED5400233B76 /* MDWampDemo */ = {
 			isa = PBXGroup;
 			children = (
+				76B23FA819676C9D00556248 /* broken_link-32.png */,
+				76B23FAA19676CAB00556248 /* link-32.png */,
+				76B23F98196762A300556248 /* online-32.png */,
+				76B23F9A196762B300556248 /* online-32@2x.png */,
+				76B23F9E1967634B00556248 /* collaboration.png */,
+				76B23F9C1967632E00556248 /* collaboration@2x.png */,
+				76B23FA01967636D00556248 /* save_as.png */,
+				76B23FA21967637800556248 /* save_as@2x.png */,
+				76B23FA61967639D00556248 /* run_command.png */,
+				76B23FA41967639400556248 /* run_command@2x.png */,
+				76B793361965EF4000CB18BC /* RPC */,
 				76A34F27195DEFF000233B76 /* Chat */,
 				76A34F23195DEF8E00233B76 /* Connect */,
 				76A34EFD195DED5400233B76 /* AppDelegate.h */,
@@ -641,6 +678,17 @@
 				76A34F29195DF00900233B76 /* ChatStartViewController.m */,
 			);
 			name = Chat;
+			sourceTree = "<group>";
+		};
+		76B793361965EF4000CB18BC /* RPC */ = {
+			isa = PBXGroup;
+			children = (
+				76B7933B1965EF5300CB18BC /* RegisterRPCViewController.h */,
+				76B7933C1965EF5300CB18BC /* RegisterRPCViewController.m */,
+				76B23F9519672FA600556248 /* CallRPCViewController.h */,
+				76B23F9619672FA600556248 /* CallRPCViewController.m */,
+			);
+			name = RPC;
 			sourceTree = "<group>";
 		};
 		76BFC09918CCF11A007B518F /* MDWampSerializations */ = {
@@ -1029,8 +1077,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				76A34F0A195DED5400233B76 /* Images.xcassets in Resources */,
+				76B23FAB19676CAB00556248 /* link-32.png in Resources */,
+				76B23F9F1967634B00556248 /* collaboration.png in Resources */,
+				76B23FA71967639D00556248 /* run_command.png in Resources */,
+				76B23F9D1967632E00556248 /* collaboration@2x.png in Resources */,
 				76A34EF9195DED5400233B76 /* InfoPlist.strings in Resources */,
+				76B23FA919676C9D00556248 /* broken_link-32.png in Resources */,
+				76B23F9B196762B300556248 /* online-32@2x.png in Resources */,
+				76B23FA11967636D00556248 /* save_as.png in Resources */,
+				76B23FA31967637800556248 /* save_as@2x.png in Resources */,
 				76A34F02195DED5400233B76 /* Main.storyboard in Resources */,
+				76B23F99196762A300556248 /* online-32.png in Resources */,
+				76B23FA51967639400556248 /* run_command@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1166,10 +1224,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				76A34F08195DED5400233B76 /* ChatViewController.m in Sources */,
+				76B7933D1965EF5300CB18BC /* RegisterRPCViewController.m in Sources */,
 				76A34EFF195DED5400233B76 /* AppDelegate.m in Sources */,
 				76A34F05195DED5400233B76 /* ConnectViewController.m in Sources */,
 				76A34EFB195DED5400233B76 /* main.m in Sources */,
 				76A34F2A195DF00900233B76 /* ChatStartViewController.m in Sources */,
+				76B23F9719672FA600556248 /* CallRPCViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

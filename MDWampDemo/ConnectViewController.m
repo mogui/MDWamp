@@ -42,7 +42,7 @@
 - (IBAction)connect:(id)sender {
     // CHECK empty fields
     if (!self.connected) {
-        MDWampTransportWebSocket *tr = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:self.hostField.text] protocolVersions:@[kMDWampVersion2]];
+        MDWampTransportWebSocket *tr = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:self.hostField.text] protocolVersions:@[kMDWampVersion2JSON]];
         MDWamp *ws = [[MDWamp alloc] initWithTransport:tr realm:self.realmField.text delegate:self];
         [AppDel setWampConnection:ws];
         [ws connect];
@@ -57,7 +57,7 @@
     self.connected = YES;
     [self.connectButton setTitle:@"DISCONNECT" forState:UIControlStateNormal];
     NSLog(@"serverd details: %@", info);
-    self.view.backgroundColor = [UIColor greenColor];
+    [self.connectIcon setHighlighted:YES];
     self.serverDetails.text = [NSString stringWithFormat:@"\n"\
                                @"authid:\t %@\n"\
                                @"authmethod:\t %@\n"\
@@ -66,9 +66,9 @@
 }
 
 - (void) mdwamp:(MDWamp *)wamp closedSession:(NSInteger)code reason:(NSString*)reason details:(NSDictionary *)details {
-    self.view.backgroundColor = [UIColor whiteColor];
+    [self.connectIcon setHighlighted:NO];
     self.connected = NO;
-    self.serverDetails.text = @"Not Connected";
+    self.serverDetails.text = reason;
     [self.connectButton setTitle:@"CONNECT" forState:UIControlStateNormal];
 }
 

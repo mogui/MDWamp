@@ -57,6 +57,8 @@
             return @[@50, self.request, self.details, self.arguments, self.argumentsKw ];
         } else if(self.arguments) {
             return @[@50, self.request, self.details, self.arguments ];
+        } else if(self.argumentsKw) {
+            return @[@50, self.request, self.details, @[], self.argumentsKw ];
         } else {
             return @[@50, self.request, self.details];
         }

@@ -10,7 +10,7 @@
 
 @interface ChatViewController () <UITextFieldDelegate>
 @property (nonatomic, strong) NSMutableArray *messages;
-
+@property (assign) BOOL cellIsLeft;
 
 @end
 
@@ -21,7 +21,6 @@
     [super viewDidLoad];
     self.roomNameField.text = self.room;
     self.messages = [[NSMutableArray alloc] init];
-    self.tableView.backgroundColor = UIColor.redColor;
     MDWamp *wamp = [AppDel wampConnection];
     [wamp subscribe:[NSString stringWithFormat:@"com.mogui.%@", [self.room stringByReplacingOccurrencesOfString:@" " withString:@"-"]] onEvent:^(MDWampEvent *payload) {
         if(payload.arguments && [payload.arguments count] > 0){
@@ -29,6 +28,8 @@
             // message arrives
             [self.messages addObject:payload.arguments[0]];
             [self.tableView reloadData];
+            NSIndexPath *ip = [NSIndexPath indexPathForRow:([self.messages count]-1) inSection:0];
+            [self.tableView scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
     } result:^(NSError *error) {
         if (error) {
@@ -47,20 +48,37 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    BOOL samePosterAsBefore = NO;
+    
+    if (indexPath.row == 0) {
+        self.cellIsLeft = YES;
+    } else {
+        samePosterAsBefore = [self.messages[indexPath.row][@"nickname"] isEqual:self.messages[indexPath.row-1][@"nickname"]];
+        
+        if (!samePosterAsBefore) {
+            self.cellIsLeft = !self.cellIsLeft;
+        }
+    }
+    
     NSString *identifier;
-    if (indexPath.row % 2 == 0) {
+    if (self.cellIsLeft) {
         identifier = @"LeftCell";
-    } else if (indexPath.row == 1) {
+    } else  {
         identifier = @"RightCell";
     }
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    
     UILabel *name = (UILabel*)[cell viewWithTag:1];
     UILabel *text = (UILabel*)[cell viewWithTag:2];
     
-    if (indexPath.row == 0 || ![self.messages[indexPath.row][@"nick"] isEqual:self.messages[indexPath.row-1][@"nick"]]) {
+    if (indexPath.row == 0 || !samePosterAsBefore) {
         name.text = self.messages[indexPath.row][@"nickname"];
+    } else {
+        name.text = @"";
     }
-    
+    NSLog(@"%@", self.messages[indexPath.row]);
     text.text = self.messages[indexPath.row][@"text"];
     return cell;
 }
@@ -71,9 +89,9 @@
                                   self.inputControls.frame.origin.y - 215,
                                   self.inputControls.frame.size.width,
                                   self.inputControls.frame.size.height);   //resize
-//    CGRect tv = self.tableView.frame;
-//    tv.size.height = tv.size.height - 215 - 24;
-//    self.tableView.frame = tv;
+    CGRect tv = self.tableView.frame;
+    tv.size.height = tv.size.height - 215;
+    self.tableView.frame = tv;
     
 }
 
@@ -86,7 +104,7 @@
                                           self.inputControls.frame.size.width,
                                           self.inputControls.frame.size.height); //resize
     CGRect tv = self.tableView.frame;
-    tv.size.height = tv.size.height + 215 + 44;
+    tv.size.height = tv.size.height + 215;
     self.tableView.frame = tv;
 
     return YES;
@@ -99,9 +117,13 @@
 
 - (IBAction)send:(id)sender {
     if (![self.inputText.text isEqual:@""]) {
+        
+        
         NSDictionary *payload = @{@"nickname":self.nickname, @"text":self.inputText.text};
         
         [[AppDel wampConnection] publishTo:[NSString stringWithFormat:@"com.mogui.%@", [self.room stringByReplacingOccurrencesOfString:@" " withString:@"-"]] args:@[payload] kw:nil options:@{@"exclude_me":@NO} result:nil];
+        self.inputText.text = @"";
+        
     }
 }
 @end

@@ -1,4 +1,4 @@
-    //
+        //
 //  MDWampClient.m
 //  MDWamp
 //
@@ -147,9 +147,15 @@ NSString * const kMDWampRoleCallee      = @"callee";
     if (self.onSessionClosed) {
         self.onSessionClosed(self, MDWampConnectionClosed, @"MDWamp.session.explicit_closed", nil);
     }
+        
+    if (self.onSessionClosed) {
+        self.onSessionClosed(self, MDWampConnectionClosed, @"MDWamp.session.explicit_closed", nil);
+    }
     
     if (_delegate) {
-        [_delegate mdwamp:self closedSession:MDWampConnectionClosed reason:@"MDWamp.session.explicit_closed" details:nil];
+        if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:closedSession:reason:details:)]) {
+            [_delegate mdwamp:self closedSession:MDWampConnectionClosed reason:@"MDWamp.session.explicit_closed" details:nil];
+        }
     }
 }
 
@@ -194,12 +200,12 @@ NSString * const kMDWampRoleCallee      = @"callee";
         MDWampDebugLog(@"Invalid message code received !!");
 #endif
     }
-    
+    id<MDWampMessage> msg;
     @try {
         	
         Class messageClass = [MDWampMessageFactory messageClassFromCode:code forVersion:self.version];
-        id<MDWampMessage> msg = [(id<MDWampMessage>)[messageClass alloc] initWithPayload:unpacked];
-        [self receivedMessage:msg];
+        msg = [(id<MDWampMessage>)[messageClass alloc] initWithPayload:unpacked];
+        
         
     }
     @catch (NSException *exception) {
@@ -209,16 +215,23 @@ NSString * const kMDWampRoleCallee      = @"callee";
         MDWampDebugLog(@"Invalid message code received !!");
 #endif
     }
+    
+    [self receivedMessage:msg];
 }
 
 - (void)transportDidFailWithError:(NSError *)error {
     MDWampDebugLog(@"DID FAIL reason %@", error.localizedDescription);
+    if (self.onSessionClosed) {
+        self.onSessionClosed(self, error.code, error.localizedDescription, error.userInfo);
+    }
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:closedSession:reason:details:)]) {
+        [_delegate mdwamp:self closedSession:error.code reason:error.localizedDescription details:error.userInfo];
+    }
 }
 
 - (void)transportDidCloseWithError:(NSError *)error {
     MDWampDebugLog(@"DID CLOSE reason %@", error.localizedDescription);
-    
-    self.sessionEstablished = NO;
     _sessionId = nil;
     [self cleanUp];
     
@@ -232,14 +245,18 @@ NSString * const kMDWampRoleCallee      = @"callee";
 //
 //            });
 //        }
-//        
-//        if (self.onSessionClosed) {
-//            self.onSessionClosed(self, error.code, error.localizedDescription, error.userInfo);
-//        }
-//        
-//        if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:closedSession:reason:details:)]) {
-//            [_delegate mdwamp:self closedSession:error.code reason:error.localizedDescription details:error.userInfo];
-//        }
+//
+    if (!explicitSessionClose) {
+        if (self.onSessionClosed) {
+            self.onSessionClosed(self, error.code, error.localizedDescription, error.userInfo);
+        }
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:closedSession:reason:details:)]) {
+            [_delegate mdwamp:self closedSession:error.code reason:error.localizedDescription details:error.userInfo];
+        }
+        
+    }
+    self.sessionEstablished = NO;
 //    }
 }
 
@@ -689,7 +706,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
 {
     NSNumber *request = [self generateID];
     
-    MDWampRegister *msg = [[MDWampRegister alloc] initWithPayload:@[request, @{}, @"com.myapp.myprocedure1"]];
+    MDWampRegister *msg = [[MDWampRegister alloc] initWithPayload:@[request, @{}, procUri]];
     
     [self.rpcRegisterRequests setObject:@[resultCallback, procUri, procedureBlock] forKey:request];
     

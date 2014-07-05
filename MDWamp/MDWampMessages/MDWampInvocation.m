@@ -45,6 +45,8 @@
         return @[@68, self.request, self.registration, self.details, self.arguments, self.argumentsKw ];
     } else if(self.arguments) {
         return @[@68, self.request, self.registration, self.details, self.arguments ];
+    } else if(self.argumentsKw) {
+        return @[@68, self.request, self.registration, self.details, @[], self.argumentsKw ];
     } else {
         return @[@68, self.request, self.registration, self.details];
     }
