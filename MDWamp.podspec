@@ -17,6 +17,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.7'
   s.dependency 'SocketRocket'
   s.dependency 'MessagePack'
+  s.dependency 'CocoaAsyncSocket'
   s.osx.frameworks      = %w{CFNetwork Security}
   s.ios.frameworks      = %w{MobileCoreServices CFNetwork Security}
   s.libraries           = "icucore"

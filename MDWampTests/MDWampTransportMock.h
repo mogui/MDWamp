@@ -29,4 +29,5 @@
 @property (assign) BOOL serializationClass;
 @property (nonatomic, strong) NSMutableArray *sendBuffer;
 - (void) triggerDidReceiveMessage:(id)msg;
+- (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols;
 @end
