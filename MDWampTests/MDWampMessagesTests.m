@@ -26,13 +26,10 @@
 #define makeMessage(mdclass, pay) self.payload = pay; \
 mdclass *msg = [[mdclass alloc] initWithPayload:self.payload];
 
-#define testMarshall1(cc) \
-XCTAssertNotNil(msg, @"Message Must not be nil"); \
-[self checkMarshallingV1:msg code:cc];
 
 #define testMarshall2(cc) \
 XCTAssertNotNil(msg, @"Message Must not be nil"); \
-[self checkMarshallingV2:msg code:cc];
+[self checkMarshalling:msg code:cc];
 
 #define msgIntegrity(property, value) XCTAssertEqualObjects(property, self.payload[value], @"Checking Message integrity: %s must be %@", #property, self.payload[value]);
 
@@ -56,31 +53,18 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     [super tearDown];
 }
 
-- (void) checkMarshallingV1:(id<MDWampMessage>)msg code:(NSNumber *)code
-{
-    // Marshalling
-    if (code != nil) {
-        NSMutableArray *marshalled = [[msg marshallFor:kMDWampVersion1] mutableCopy];
-        XCTAssertEqualObjects(code, [marshalled shift], @"Code is wrong");
-        
-        // equality
-        XCTAssertEqualObjects(self.payload, marshalled, @"Marshalled Message should be equal to payload");
-    } else {
-        XCTAssertThrows([msg marshallFor:kMDWampVersion1], @"Version 1 of protocol not supproted");
-    }
-}
 
-- (void) checkMarshallingV2:(id<MDWampMessage>)msg code:(NSNumber *)code
+- (void) checkMarshalling:(id<MDWampMessage>)msg code:(NSNumber *)code
 {
     // Marshalling
     if (code != nil) {
-        NSMutableArray *marshalled = [[msg marshallFor:kMDWampVersion2] mutableCopy];
+        NSMutableArray *marshalled = [[msg marshall] mutableCopy];
         XCTAssertEqualObjects(code, [marshalled shift], @"Code is wrong");
         
         // equality
         XCTAssertEqualObjects(self.payload, marshalled, @"Marshalled Message should be equal to payload");
     } else {
-        XCTAssertThrows([msg marshallFor:kMDWampVersion1], @"Version 2 of protocol not supproted");
+        XCTAssertThrows([msg marshall], @"Version 2 of protocol not supproted");
     }
 }
 
@@ -94,8 +78,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     XCTAssertNotNil([hello.roles objectForKey:@"publisher"], @"Checking Message integrity");
     XCTAssertEqualObjects(hello.realm, _payload[0], @"Checking Message integrity");
     
-    [self checkMarshallingV1:hello code:nil];
-    [self checkMarshallingV2:hello code:@1];
+    [self checkMarshalling:hello code:@1];
 }
 
 - (void)testWelcome
@@ -107,11 +90,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     XCTAssertNotNil(msg, @"Message Must not be nil");
     XCTAssertNotNil([msg.roles objectForKey:@"broker"], @"Checking Message integrity");
     XCTAssertEqualObjects(msg.session, _payload[0], @"Checking Message integrity");
-    [self checkMarshallingV2:msg code:@2];
-    
-    self.payload = @[@21233872738, @1, @"Autobahn/0.5.1"];
-    MDWampWelcome *msg2 = [[MDWampWelcome alloc] initWithPayload:self.payload];
-    [self checkMarshallingV1:msg2 code:@0];
+    [self checkMarshalling:msg code:@2];
     
 }
 
@@ -125,8 +104,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     XCTAssertNotNil([msg.details objectForKey:@"message"], @"Checking Message integrity");
     XCTAssertEqualObjects(msg.reason, _payload[1], @"Checking Message integrity");
     
-    [self checkMarshallingV1:msg code:nil];
-    [self checkMarshallingV2:msg code:@3];
+    [self checkMarshalling:msg code:@3];
 }
 
 - (void)testChallangeCode
@@ -149,32 +127,11 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     XCTAssertNotNil([msg.details objectForKey:@"message"], @"Checking Message integrity");
     XCTAssertEqualObjects(msg.reason, _payload[1], @"Checking Message integrity");
     
-    [self checkMarshallingV1:msg code:nil];
-    [self checkMarshallingV2:msg code:@6];}
+    [self checkMarshalling:msg code:@6];}
 
 - (void)testHeartbitCode
 {
     self.payload = @[@7,  @{@"message": @"The realm does not exist."}, @"wamp.error.no_such_realm"];
-}
-
-- (void)testErrorLegacy
-{
-    /*
-     
-     [4, "AStPd8RS60pfYP8c",
-     "http://example.com/error#invalid_numbers",
-     "one or more numbers are multiples of 3",
-     [0, 3]]
-     
-     */
-    self.payload = @[@"AStPd8RS60pfYP8c", @"http://example.com/error#invalid_numbers", @"one or more numbers are multiples of 3", @[@0, @3]];
-    
-    MDWampError *msg = [[MDWampError alloc] initWithPayload:_payload];
-    XCTAssertNotNil(msg, @"Message Must not be nil");
-    XCTAssertEqualObjects(msg.callID, _payload[0], @"Checking Message integrity");
-    XCTAssertEqualObjects(msg.error, _payload[1], @"Checking Message integrity");
-    XCTAssertEqualObjects(msg.errorDesc, _payload[2], @"Checking Message integrity");
-    [self checkMarshallingV1:msg code:@4];
 }
 
 - (void)testError {
@@ -186,7 +143,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     XCTAssertEqualObjects(msg2.arguments[0], _payload[4][0], @"Checking Message integrity");
     XCTAssertEqualObjects(msg2.argumentsKw[@"severity"], _payload[5][@"severity"], @"Checking Message integrity");
     
-    [self checkMarshallingV2:msg2 code:@8];
+    [self checkMarshalling:msg2 code:@8];
 }
 
 - (void) testSubscribe {
@@ -195,18 +152,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     MDWampSubscribe *msg2 = [[MDWampSubscribe alloc] initWithPayload:self.payload];
     XCTAssertNotNil(msg2, @"Message Must not be nil");
     XCTAssertEqualObjects(msg2.topic, _payload[2], @"Checking Message integrity");
-    [self checkMarshallingV2:msg2 code:@32];
-}
-
-- (void) testSubscribeLegacy
-{
-    self.payload = @[@"http://example.com/simple"];
-    // [5, "http://example.com/simple"]
-    MDWampSubscribe *msg = [[MDWampSubscribe alloc] initWithPayload:self.payload];
-    
-    XCTAssertNotNil(msg, @"Message Must not be nil");
-    XCTAssertEqualObjects(msg.topic, _payload[0], @"Checking Message integrity");
-    [self checkMarshallingV1:msg code:@5];
+    [self checkMarshalling:msg2 code:@32];
 }
 
 - (void) testSubscribed
@@ -217,7 +163,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     XCTAssertNotNil(msg2, @"Message Must not be nil");
     XCTAssertEqualObjects(msg2.request, _payload[0], @"Checking Message integrity");
     XCTAssertEqualObjects(msg2.subscription, _payload[1], @"Checking Message integrity");
-    [self checkMarshallingV2:msg2 code:@33];
+    [self checkMarshalling:msg2 code:@33];
 }
 
 - (void) testUnsubscribe
@@ -229,14 +175,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     XCTAssertNotNil(msg, @"Message Must not be nil");
     XCTAssertEqualObjects(msg.request, _payload[0], @"Checking Message integrity");
     XCTAssertEqualObjects(msg.subscription, _payload[1], @"Checking Message integrity");
-    [self checkMarshallingV2:msg code:@34];
-    
-    self.payload = @[@"com.myapp.mytopic1"];
-    MDWampUnsubscribe *msg2 = [[MDWampUnsubscribe alloc] initWithPayload:self.payload];
-    XCTAssertNotNil(msg2, @"Message Must not be nil");
-    XCTAssertEqualObjects(msg2.topic, _payload[0], @"Checking Message integrity");
-    [self checkMarshallingV1:msg2 code:@6];
-
+    [self checkMarshalling:msg code:@34];
 }
 
 - (void) testUnsubscribed
@@ -245,7 +184,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     MDWampUnsubscribed *msg2 = [[MDWampUnsubscribed alloc] initWithPayload:self.payload];
     XCTAssertNotNil(msg2, @"Message Must not be nil");
     XCTAssertEqualObjects(msg2.request, _payload[0], @"Checking Message integrity");
-    [self checkMarshallingV2:msg2 code:@35];
+    [self checkMarshalling:msg2 code:@35];
 }
 
 - (void) testPublish {
@@ -257,18 +196,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     XCTAssertEqualObjects(msg.request, _payload[0], @"Checking Message integrity");
     XCTAssertEqualObjects(msg.topic, _payload[2], @"Checking Message integrity");
     XCTAssertEqualObjects(msg.argumentsKw[@"color"], @"orange", @"Checking Message integrity");
-    [self checkMarshallingV2:msg code:@16];
-}
-
-- (void)testPublishLegacy {
-    // [ TYPE_ID_PUBLISH , topicURI , event ]
-    self.payload = @[@"com.myapp.mytopic1", @{@"color":@"orange", @"sizes":@[@23, @42]}];
-    MDWampPublish *msg = [[MDWampPublish alloc] initWithPayload:self.payload];
-    XCTAssertNotNil(msg, @"Message Must not be nil");
-    XCTAssertEqualObjects(msg.topic, _payload[0], @"Checking Message integrity");
-    XCTAssertEqualObjects(msg.event[@"color"], @"orange", @"Checking Message integrity");
-    
-    [self checkMarshallingV1:msg code:@7];
+    [self checkMarshalling:msg code:@16];
 }
 
 - (void) testPublished
@@ -278,7 +206,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     XCTAssertNotNil(msg, @"Message Must not be nil");
     XCTAssertEqualObjects(msg.request, _payload[0], @"Checking Message integrity");
     XCTAssertEqualObjects(msg.publication, _payload[1], @"Checking Message integrity");
-    [self checkMarshallingV2:msg code:@17];
+    [self checkMarshalling:msg code:@17];
 }
 
 - (void) testEvent {
@@ -292,15 +220,6 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     msgIntegrity(msg.event        , 4);
 }
 
-- (void) testEventLegacy {
-    // [8, "http://example.com/simple", "Hello, I am a simple event."]
-    makeMessage(MDWampEvent, ( @[@"http://example.com/simple", @"Hello, I am a simple event."]));
-    
-    testMarshall1(@8);
-    
-    msgIntegrity(msg.topic , 0);
-    msgIntegrity(msg.event , 1);
-}
 
 - (void) testRegister {
     //    [64, 25349185, {}, "com.myapp.myprocedure1"]
@@ -341,14 +260,6 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     msgIntegrity(msg.argumentsKw, 4);
 }
 
-- (void) testCallLegacy {
-    makeMessage(MDWampCall, (@[@"Yp9EFZt9DFkuKndg", @"api:add2", @23, @99]) );
-    testMarshall1(@2);
-    msgIntegrity(msg.callID, 0);
-    msgIntegrity(msg.procedure, 1);
-    msgIntegrity(msg.arguments[0], 2);
-    msgIntegrity(msg.arguments[1], 3);
-}
 
 - (void) testResult {
     makeMessage(MDWampResult, (@[@7814135, @{}, @[], @{@"userid": @123, @"karma": @10}]));
@@ -357,13 +268,6 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     msgIntegrity(msg.details, 1);
     msgIntegrity(msg.arguments, 2);
     msgIntegrity(msg.argumentsKw, 3);
-}
-
-- (void) testResultLegacy {
-    makeMessage(MDWampResult, (@[@"otZom9UsJhrnzvLa", @"Awesome result .."]));
-    testMarshall1(@3);
-    msgIntegrity(msg.callID, 0);
-    msgIntegrity(msg.result, 1);
 }
 
 - (void) testInvocation {

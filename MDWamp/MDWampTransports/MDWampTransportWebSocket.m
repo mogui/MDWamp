@@ -37,11 +37,6 @@
         
         NSAssert([protocols isKindOfClass:[NSArray class]], @"Must be an array of protocols !");
         
-        if ([protocols containsObject:kMDWampVersion1]) {
-            NSAssert(NO, @"WAMP 1 Legacy protocol not yet adopted fully");
-            [supportedProtocols unshift:@"wamp"];
-        }
-        
         if ([protocols containsObject:kMDWampVersion2]) {
             [supportedProtocols unshift:@"wamp.2.json"];
             [supportedProtocols unshift:@"wamp.2.msgpack"];

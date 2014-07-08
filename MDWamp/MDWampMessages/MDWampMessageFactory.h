@@ -20,7 +20,37 @@
 
 #import <Foundation/Foundation.h>
 #import "MDWampConstants.h"
+#import "MDWampMessage.h"
+
+#define kMDWampHello        @"MDWampHello"
+#define kMDWampWelcome      @"MDWampWelcome"
+#define kMDWampAbort        @"MDWampAbort"
+#define kMDWampChallange    @"MDWampChallange"
+#define kMDWampAuthenticate @"MDWampAuthenticate"
+#define kMDWampGoodbye      @"MDWampGoodbye"
+#define kMDWampHeartbeat    @"MDWampHeartbeat"
+#define kMDWampError        @"MDWampError"
+#define kMDWampPublish      @"MDWampPublish"
+#define kMDWampPublished    @"MDWampPublished"
+#define kMDWampSubscribe    @"MDWampSubscribe"
+#define kMDWampSubscribed   @"MDWampSubscribed"
+#define kMDWampUnsubscribe  @"MDWampUnsubscribe"
+#define kMDWampUnsubscribed @"MDWampUnsubscribed"
+#define kMDWampEvent        @"MDWampEvent"
+#define kMDWampCall         @"MDWampCall"
+#define kMDWampCancel       @"MDWampCancel"
+#define kMDWampResult       @"MDWampResult"
+#define kMDWampRegister     @"MDWampRegister"
+#define kMDWampRegistered   @"MDWampRegistered"
+#define kMDWampUnregister   @"MDWampUnregister"
+#define kMDWampUnregistered @"MDWampUnregistered"
+#define kMDWampInvocation   @"MDWampInvocation"
+#define kMDWampInterrupt    @"MDWampInterrupt"
+#define kMDWampYield        @"MDWampYield"
 
 @interface MDWampMessageFactory : NSObject
-+ (Class) messageClassFromCode:(NSNumber*)code forVersion:(MDWampVersion)version;
++ (instancetype) sharedFactory;
+- (id<MDWampMessage>)messageObjectFromCode:(NSNumber*)code withPayload:(NSArray*)payload;
+- (NSString *)messageNameFromCode:(NSNumber*)code;
+- (NSNumber *)messageCodeFromObject:(id)object;
 @end

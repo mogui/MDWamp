@@ -24,6 +24,6 @@
 @protocol MDWampMessage <NSObject>
 
 - (id) initWithPayload:(NSArray *)payload;
-- (NSArray *) marshallFor:(MDWampVersion)version;
+- (NSArray *) marshall;
 @end
 

@@ -39,7 +39,7 @@
     return self;
 }
 
-- (NSArray *)marshallFor:(MDWampVersion)version
+- (NSArray *)marshall
 {
     if (self.arguments && self.argumentsKw) {
         return @[@68, self.request, self.registration, self.details, self.arguments, self.argumentsKw ];
