@@ -12,7 +12,9 @@
 
 typedef enum : NSUInteger {
     TestOpen,
-    TestMessage
+    TestClose,
+    TestMessage,
+    TestFail
 } MDWampRawSocketTestsOperation;
 
 @interface MDWampTransportRawSocketTests : XCTAsyncTestCase <MDWampTransportDelegate>
@@ -27,7 +29,7 @@ typedef enum : NSUInteger {
 - (void)setUp
 {
     [super setUp];
-    transport = [[MDWampTransportRawSocket alloc] initWithHost:@"127.0.0.1" port:5555];
+    transport = [[MDWampTransportRawSocket alloc] initWithHost:@"127.0.0.1" port:9000];
     [transport setSerialization:kMDWampSerializationJSON];
     [transport setDelegate:self];
     [self prepare];
@@ -35,30 +37,40 @@ typedef enum : NSUInteger {
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-- (void) transportDidReceiveMessage:(NSData *)message {
-    if (self.operation == TestMessage) {
-        XCTAssertNotNil(message, @"Must receive welcome message");
+- (void) transportDidOpenWithSerialization:(NSString*)serialization {
+    if (self.operation == TestOpen) {
         [self notify:kXCTUnitWaitStatusSuccess];
+    } else if (self.operation == TestClose) {
+        [transport close];
+    } else if (self.operation == TestMessage) {
+        NSString *helloMsg = @"[1,\"Realm1\",{\"roles\":{\"publisher\":{},\"subscriber\":{}}}]";
+        NSData *d = [helloMsg dataUsingEncoding:NSUTF8StringEncoding];
+        [transport send:d];
+    } else if (self.operation == TestFail) {
+        NSData *d = [@"[Wrong format at all]" dataUsingEncoding:NSUTF8StringEncoding];
+        [transport send:d];
     }
 }
 
-- (void) transportDidOpenWithSerialization:(NSString*)serialization {
-    if (self.operation == TestOpen) {
+- (void) transportDidReceiveMessage:(NSData *)message {
+    if (self.operation == TestMessage) {
+        XCTAssertNotNil(message, @"Must receive something");
+        
+        NSString *welcome = [[NSString alloc] initWithData:message encoding:NSUTF8StringEncoding];
+        NSLog(@"received %@", welcome);
+        // Test if the received string is a JSON representing a Welcome message
+        XCTAssert([welcome hasPrefix:@"[2,"], @"Check received Welcome");
+        
         [self notify:kXCTUnitWaitStatusSuccess];
     }
 }
 
 - (void) transportDidFailWithError:(NSError *)error {
-    
+    [self notify:kXCTUnitWaitStatusSuccess];
 }
 
 - (void) transportDidCloseWithError:(NSError *)error {
-   
+   [self notify:kXCTUnitWaitStatusSuccess];
 }
 
 - (void)testOpen
@@ -68,14 +80,22 @@ typedef enum : NSUInteger {
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:1];
 }
 
-- (void)testSendMessage {
-    self.operation = TestMessage;
+- (void)testClose
+{
+    self.operation = TestClose;
     [transport open];
-    
-    NSString *helloMsg = @"[1,\"Realm1\",{}]";
-    NSData *d = [helloMsg dataUsingEncoding:NSUTF8StringEncoding];
-    [transport send:d];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:1];
 }
 
+- (void)testSendAndReceiveMessage {
+    self.operation = TestMessage;
+    [transport open];
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:1];
+}
+
+- (void)testFail {
+    self.operation = TestFail;
+    [transport open];
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:1];
+}
 @end

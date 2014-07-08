@@ -32,14 +32,27 @@
 
 - (void)socket:(GCDAsyncSocket *)sender didConnectToHost:(NSString *)host port:(UInt16)port
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(transportDidOpenWithVersion:andSerialization:)]) {
-        // NOTICE always version 2 !!
-        [_delegate transportDidOpenWithSerialization:self.serialization];
+    if (_delegate && [_delegate respondsToSelector:@selector(transportDidOpenWithSerialization:)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_delegate transportDidOpenWithSerialization:self.serialization];
+        });
     }
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
-    
+    if (err) {
+        if (_delegate && [_delegate respondsToSelector:@selector(transportDidFailWithError:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_delegate transportDidFailWithError:err];
+            });
+        }
+    } else {
+        if (_delegate && [_delegate respondsToSelector:@selector(transportDidCloseWithError:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_delegate transportDidCloseWithError:nil];
+            });
+        }
+    }
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
@@ -47,7 +60,18 @@
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
+    NSRange lRange = NSMakeRange(0, 4);
+    NSData *l = [data subdataWithRange:lRange];
+    uint32_t *bigEndianLength = (uint32_t *)[l bytes];
+    uint32_t length = CFSwapInt32BigToHost(*bigEndianLength);
     
+    NSRange contentRange = NSMakeRange(4, length);
+    NSData *content = [data subdataWithRange:contentRange];
+    if (_delegate && [_delegate respondsToSelector:@selector(transportDidReceiveMessage:)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_delegate transportDidReceiveMessage:content];
+        });
+    }
 }
 
 - (void) open
@@ -62,20 +86,27 @@
 
 - (void) close
 {
-   
+    [_socket disconnect];
 }
 
 - (BOOL) isConnected
 {
-    return YES;
+    return [_socket isConnected];
 }
 
 - (void)send:(id)data
 {
+    if ([data isKindOfClass:[NSString class]]) {
+        data = [(NSString*)data dataUsingEncoding:NSUTF8StringEncoding];
+    } else {
+        assert(NO);
+    }
     unsigned int len = (unsigned int)[data length];
-    NSMutableData *dd = [NSMutableData dataWithBytes:&len length:sizeof(unsigned int)];
+    int32_t swapped = CFSwapInt32HostToBig(len);
+    NSMutableData *dd = [NSMutableData dataWithBytes:&swapped length:sizeof(unsigned int)];
     [dd appendData:data];
     [_socket writeData:dd withTimeout:0.5 tag:1];
+    [_socket readDataWithTimeout:0.5 tag:2];
 }
 
 @end

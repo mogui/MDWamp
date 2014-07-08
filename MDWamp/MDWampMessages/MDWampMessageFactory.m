@@ -85,12 +85,12 @@
     return [(id<MDWampMessage>)[messageClass alloc] initWithPayload:payload];
 }
 
-- (NSNumber *)messageCodeFromObject:(id)object
-{
-    NSString *className = [object className];
-    NSArray *keys = [self.messageMapping allKeysForObject:className];
-    return keys[0];
-}
+//- (NSNumber *)messageCodeFromObject:(NSObject*)object
+//{
+//    NSString *className = [object className];
+//    NSArray *keys = [self.messageMapping allKeysForObject:className];
+//    return keys[0];
+//}
 
 
 @end
