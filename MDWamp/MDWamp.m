@@ -75,16 +75,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     self = [super init];
 	if (self) {
 		
-        // Setting  defaults value
-        self.serializationInstanceMap = @{
-                                          [NSNumber numberWithInt:kMDWampSerializationJSON]: [MDWampSerializationJSON class],
-                                          [NSNumber numberWithInt:kMDWampSerializationMsgPack]: [MDWampSerializationMsgpack class]
-                                          };
         
-//        _shouldAutoreconnect        = YES;
-//        
-//		_autoreconnectDelay         = 3;
-//		_autoreconnectMaxRetries    = 10;
         autoreconnectRetries        = 0;
         explicitSessionClose = NO;
         _sessionEstablished = NO;
@@ -167,25 +158,22 @@ NSString * const kMDWampRoleCallee      = @"callee";
 #pragma mark -
 #pragma mark MDWampTransport Delegate
 
-- (void)transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerializationClass)serialization
+- (void)transportDidOpenWithSerialization:(NSString*)serialization
 {
     MDWampDebugLog(@"websocket connection opened");
 	autoreconnectRetries = 0;
     
-    _version = version;
     _serialization = serialization;
     
     // Init the serializator
-    Class ser = self.serializationInstanceMap[[NSNumber numberWithInt:self.serialization]];
+    Class ser = NSClassFromString(self.serialization);
     NSAssert(ser != nil, @"Serialization %@ doesn't exists", ser);
     self.serializator = [[ser alloc] init];
     
-    if ([self.version intValue] >= [kMDWampVersion2 intValue]) {
-        // from version 2 of the protocol we have to send an hello message
-        MDWampHello *hello = [[MDWampHello alloc] initWithPayload:@[self.realm, @{@"roles":self.roles}]];
-        hello.realm = self.realm;
-        [self sendMessage:hello];
-    }
+    // send hello message
+    MDWampHello *hello = [[MDWampHello alloc] initWithPayload:@[self.realm, @{@"roles":self.roles}]];
+    hello.realm = self.realm;
+    [self sendMessage:hello];
 }
 
 - (void)transportDidReceiveMessage:(NSData *)message
@@ -202,11 +190,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     }
     id<MDWampMessage> msg;
     @try {
-        	
-        Class messageClass = [MDWampMessageFactory messageClassFromCode:code forVersion:self.version];
-        msg = [(id<MDWampMessage>)[messageClass alloc] initWithPayload:unpacked];
-        
-        
+        msg = [[MDWampMessageFactory sharedFactory] messageObjectFromCode:code withPayload:unpacked];
     }
     @catch (NSException *exception) {
 #ifdef DEBUG
@@ -270,14 +254,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
         MDWampWelcome *welcome = (MDWampWelcome *)message;
         _sessionId = [welcome.session stringValue];
     
-        NSDictionary *details;
-        if (welcome.details) {
-            details = welcome.details;
-        } else {
-            // version 1
-            details = @{@"protocolVersion": welcome.protocolVersion,
-                        @"serverIdent": welcome.serverIdent};
-        }
+        NSDictionary *details = welcome.details;
         
         self.sessionEstablished = YES;
         
@@ -331,9 +308,9 @@ NSString * const kMDWampRoleCallee      = @"callee";
         // that relates to message classes
         
         MDWampError *error = (MDWampError *)message;
-        Class errorType = [MDWampMessageFactory messageClassFromCode:error.type forVersion:self.version];
         
-        if ([errorType isSubclassOfClass:[MDWampSubscribe class]]) {
+        NSString *errorType = [[MDWampMessageFactory sharedFactory] messageNameFromCode:error.type];
+        if ([errorType isEqual:kMDWampSubscribe]) {
             // It's a subscribe error
             NSArray *callbacks = self.subscriptionRequests[error.request];
 
@@ -350,7 +327,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
             NSString *topicName = [self.subscriptionID allKeysForObject:error.request][0];
             [self.subscriptionID removeObjectForKey:topicName];
             
-        } else if ([errorType isSubclassOfClass:[MDWampUnsubscribe class]]) {
+        } else if ([errorType isEqual:kMDWampUnsubscribe]) {
             NSArray *callbacks = self.subscriptionRequests[error.request];
             
             if (!callbacks) {
@@ -363,7 +340,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
             // cleanup
             [self.subscriptionRequests removeObjectForKey:error.request];
             
-        } else if ([errorType isSubclassOfClass:[MDWampPublish class]]) {
+        } else if ([errorType isEqual:kMDWampPublish ]) {
             
             void(^resultCallback)(NSError *) = [self.publishRequests objectForKey:error.request];
             
@@ -374,7 +351,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
             // cleanup
             [self.publishRequests removeObjectForKey:error.request];
             
-        } else if ([errorType isSubclassOfClass:[MDWampCall class]]) {
+        } else if ([errorType isEqual:kMDWampCall]) {
 
             void(^resultcallback)(MDWampResult *, NSError *) = self.rpcCallbackMap[error.request];
             if (resultcallback) {
@@ -383,7 +360,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
 
             [self.rpcCallbackMap removeObjectForKey:error.request];
             
-        } else if ([errorType isSubclassOfClass:[MDWampRegister class]]) {
+        } else if ([errorType isEqual:kMDWampRegister]) {
             NSArray *registrationRequest = [self.rpcRegisterRequests objectForKey:error.request];
             if (!registrationRequest) {
                 MDWampDebugLog(@"registration not present ignore");
@@ -396,7 +373,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
             void(^resultCallback)(NSError *) = registrationRequest[0];
             resultCallback([error makeError]);
 
-        } else if ([errorType isSubclassOfClass:[MDWampUnregister class]]) {
+        } else if ([errorType isEqual:kMDWampUnregister]) {
             NSArray *unregistrationRequest = [self.rpcUnregisterRequests objectForKey:error.request];
             if (!unregistrationRequest) {
                 MDWampDebugLog(@"request not present ignoring");
@@ -413,7 +390,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
         }
         
     } else if ([message isKindOfClass:[MDWampSubscribed class]]) {
-        // version 1 never arrives here
         
         MDWampSubscribed *subscribed = (MDWampSubscribed *)message;
         NSArray *callbacks = self.subscriptionRequests[subscribed.request];
@@ -558,7 +534,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     if ([message isKindOfClass:[MDWampGoodbye class]]) {
         self.goodbyeSent = YES;
     }
-    NSArray *marshalled = [message marshallFor:self.version];
+    NSArray *marshalled = [message marshall];
     id packed = [self.serializator pack:marshalled];
     [self.transport send:packed];
 }
@@ -578,26 +554,10 @@ NSString * const kMDWampRoleCallee      = @"callee";
     NSNumber *request = [self generateID];
     MDWampSubscribe *subscribe = [[MDWampSubscribe alloc] initWithPayload:@[request, @{}, topic]];
     
-    if ([self.version intValue] >= [kMDWampVersion2 intValue]) {
-        
-        // we have to wait Subscribed message before add event
-        [self.subscriptionRequests setObject:@[result, eventBlock] forKey:request];
-        [self.subscriptionID setObject:request forKey:topic];
-        
-    } else {
-        
-        // for version 1 we just add the callback by topic key
-        NSMutableArray *subscribers = [self.subscriptionEvents objectForKey:topic];
+    // we have to wait Subscribed message before add event
+    [self.subscriptionRequests setObject:@[result, eventBlock] forKey:request];
+    [self.subscriptionID setObject:request forKey:topic];
 
-        if (subscribers == nil) {
-            NSMutableArray *subList = [[NSMutableArray alloc] init];
-            [self.subscriptionEvents setObject:subList forKey:topic];
-            subscribers = [self.subscriptionEvents objectForKey:topic];
-        }
-        [subscribers addObject:eventBlock];
-        
-    }
-    
     [self sendMessage:subscribe];
 }
 
@@ -610,26 +570,13 @@ NSString * const kMDWampRoleCallee      = @"callee";
         return;
     }
     
-    NSArray *payload;
-    
-    if ([self.version intValue] >= [kMDWampVersion2 intValue]) {
-        NSNumber *request = [self generateID];
-        NSNumber *subscription = self.subscriptionID[topic];
-        payload = @[request, subscription];
-        // storing callback for unsubscription result
-        [self.subscriptionRequests setObject:@[result, topic] forKey:request];
-    } else {
-        payload = @[topic];
-    }
-    
+    NSNumber *request = [self generateID];
+    NSNumber *subscription = self.subscriptionID[topic];
+    NSArray *payload = @[request, subscription];
+    // storing callback for unsubscription result
+    [self.subscriptionRequests setObject:@[result, topic] forKey:request];
     MDWampUnsubscribe *unsubscribe = [[MDWampUnsubscribe alloc] initWithPayload:payload];
     [self sendMessage:unsubscribe];
-    
-    if ([self.version intValue] < [kMDWampVersion2 intValue]) {
-        // remove subscription immediately in version 1
-        [self.subscriptionEvents removeObjectForKey:topic];
-        [self.subscriptionID removeObjectForKey:topic];
-    }
 }
 
 - (void) publishTo:(NSString *)topic
@@ -649,7 +596,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     if (argsKw)
         msg.argumentsKw = argsKw;
     
-    if ([self.version intValue] >= [kMDWampVersion2 intValue] && options[@"acknowledge"]) {
+    if (options[@"acknowledge"]) {
         // store callback to later use if acknowledge is TRUE
         [self.publishRequests setObject:result forKey:request];
     }

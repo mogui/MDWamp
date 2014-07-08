@@ -21,6 +21,11 @@
 #import "MDWampTransportWebSocket.h"
 #import "SRWebSocket.h"
 #import "NSMutableArray+MDStack.h"
+
+NSString *const kMDWampProtocolWamp2json    = @"wamp.2.json";
+NSString *const kMDWampProtocolWamp2msgpack = @"wamp.2.msgpack";
+
+
 @interface MDWampTransportWebSocket () <SRWebSocketDelegate>
 
 @property (nonatomic, strong) SRWebSocket *socket;
@@ -33,27 +38,12 @@
 {
     self = [super init];
     if (self) {
-        NSMutableArray *supportedProtocols = [[NSMutableArray alloc] init];
+        NSAssert([protocols count] > 0, @"Specify a valid WAMP protocol");
         
-        NSAssert([protocols isKindOfClass:[NSArray class]], @"Must be an array of protocols !");
+        NSAssert(([protocols containsObject:kMDWampProtocolWamp2json]
+                  ||[protocols containsObject:kMDWampProtocolWamp2msgpack]), @"No valid WAMP protocol found");
         
-        if ([protocols containsObject:kMDWampVersion1]) {
-            NSAssert(NO, @"WAMP 1 Legacy protocol not yet adopted fully");
-            [supportedProtocols unshift:@"wamp"];
-        }
-        
-        if ([protocols containsObject:kMDWampVersion2]) {
-            [supportedProtocols unshift:@"wamp.2.json"];
-            [supportedProtocols unshift:@"wamp.2.msgpack"];
-        } else if ([protocols containsObject:kMDWampVersion2JSON]) {
-            [supportedProtocols unshift:@"wamp.2.json"];
-        } else if ([protocols containsObject:kMDWampVersion2Msgpack]) {
-            [supportedProtocols unshift:@"wamp.2.msgpack"];
-        }
-        
-        NSAssert([supportedProtocols count] > 0, @"Specify a valid WAMP version");
-        
-        self.socket = [[SRWebSocket alloc] initWithURL:request protocols:supportedProtocols];
+        self.socket = [[SRWebSocket alloc] initWithURL:request protocols:protocols];
         [_socket setDelegate:self];
     }
     return self;
@@ -91,11 +81,11 @@
     MDWampDebugLog(@"negotiated protocol is %@", webSocket.protocol);
     NSArray *splittedProtocol = [webSocket.protocol componentsSeparatedByString:@"."];
     if ([splittedProtocol count] == 1) {
-        [self.delegate transportDidOpenWithVersion:kMDWampVersion1 andSerialization:kMDWampSerializationJSON];
+        [self.delegate transportDidOpenWithSerialization:kMDWampSerializationJSON];
     } else if ([splittedProtocol count] > 1 && [splittedProtocol[1] isEqual:@"2"] && [splittedProtocol[2] isEqual:@"msgpack"]){
-        [self.delegate transportDidOpenWithVersion:kMDWampVersion2 andSerialization:kMDWampSerializationMsgPack];
+        [self.delegate transportDidOpenWithSerialization:kMDWampSerializationMsgpack];
     } else if ([splittedProtocol count] > 1 && [splittedProtocol[1] isEqual:@"2"] && [splittedProtocol[2] isEqual:@"json"]){
-        [self.delegate transportDidOpenWithVersion:kMDWampVersion2 andSerialization:kMDWampSerializationJSON];
+        [self.delegate transportDidOpenWithSerialization:kMDWampSerializationJSON];
     }
 }
 

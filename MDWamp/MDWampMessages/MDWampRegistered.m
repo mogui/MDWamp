@@ -33,7 +33,7 @@
     return self;
 }
 
-- (NSArray *)marshallFor:(MDWampVersion)version
+- (NSArray *)marshall
 {
     return @[@65, self.request, self.registration];
 }

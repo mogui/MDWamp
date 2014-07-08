@@ -24,7 +24,7 @@
         self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:queue];
         self.host = host;
         self.port = port;
-        self.serialization = kMDWampSerializationMsgPack;
+        self.serialization = kMDWampSerializationJSON;
         
     }
     return self;
@@ -34,7 +34,7 @@
 {
     if (_delegate && [_delegate respondsToSelector:@selector(transportDidOpenWithVersion:andSerialization:)]) {
         // NOTICE always version 2 !!
-        [_delegate transportDidOpenWithVersion:kMDWampVersion2 andSerialization:self.serialization];
+        [_delegate transportDidOpenWithSerialization:self.serialization];
     }
 }
 

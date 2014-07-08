@@ -51,7 +51,16 @@
                      "type": "websocket"
                   }
                }
-            }
+            },
+             {
+                "type": "rawsocket",
+                "serializer": "json",
+                "endpoint": {
+                   "type": "tcp",
+                   "port": 9000
+                },
+                "debug": true
+             }
          ],
          "components": [
             {

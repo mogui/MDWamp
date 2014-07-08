@@ -12,5 +12,5 @@
 @interface MDWampTransportRawSocket : NSObject <MDWampTransport>
 - (id)initWithHost:(NSString*)host port:(NSInteger)port;
 @property id<MDWampTransportDelegate>delegate;
-@property (assign) MDWampSerializationClass serialization;
+@property (nonatomic, strong) NSString *serialization;
 @end

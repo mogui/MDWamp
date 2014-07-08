@@ -33,13 +33,8 @@
 }
 
 
-- (NSArray *)marshallFor:(MDWampVersion)version
+- (NSArray *)marshall
 {
-    if ([version  isEqual: kMDWampVersion1]) {
-        [NSException raise:NSInvalidArgumentException format:@"Message not supported"];
-        return nil;
-    } else {
-        return @[@35, self.request];
-    }
+    return @[@35, self.request];
 }
 @end

@@ -47,7 +47,7 @@ typedef enum : NSUInteger {
     }
 }
 
-- (void) transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerializationClass)serialization {
+- (void) transportDidOpenWithSerialization:(NSString*)serialization {
     if (self.operation == TestOpen) {
         [self notify:kXCTUnitWaitStatusSuccess];
     }
