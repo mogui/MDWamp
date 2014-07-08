@@ -52,7 +52,7 @@
         NSError *error = [NSError errorWithDomain:kMDWampErrorDomain code:-10 userInfo:@{NSLocalizedDescriptionKey: @"Opening the transport failed miserably"}];
         [self.delegate transportDidFailWithError:error];
     } else {
-        [self.delegate transportDidOpenWithVersion:kMDWampVersion2 andSerialization:self.serializationClass];
+        [self.delegate transportDidOpenWithSerialization:self.serializationClass];
         self.connected = YES;
     }
 }

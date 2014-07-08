@@ -42,7 +42,7 @@
 - (IBAction)connect:(id)sender {
     // CHECK empty fields
     if (!self.connected) {
-        MDWampTransportWebSocket *tr = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:self.hostField.text] protocolVersions:@[kMDWampVersion2JSON]];
+        MDWampTransportWebSocket *tr = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:self.hostField.text] protocolVersions:@[kMDWampProtocolWamp2json]];
         MDWamp *ws = [[MDWamp alloc] initWithTransport:tr realm:self.realmField.text delegate:self];
         [AppDel setWampConnection:ws];
         [ws connect];

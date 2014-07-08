@@ -75,11 +75,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
     self = [super init];
 	if (self) {
 		
-        // Setting  defaults value
-        self.serializationInstanceMap = @{
-                                          [NSNumber numberWithInt:kMDWampSerializationJSON]: [MDWampSerializationJSON class],
-                                          [NSNumber numberWithInt:kMDWampSerializationMsgPack]: [MDWampSerializationMsgpack class]
-                                          };
         
         autoreconnectRetries        = 0;
         explicitSessionClose = NO;
@@ -163,16 +158,15 @@ NSString * const kMDWampRoleCallee      = @"callee";
 #pragma mark -
 #pragma mark MDWampTransport Delegate
 
-- (void)transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerializationClass)serialization
+- (void)transportDidOpenWithSerialization:(NSString*)serialization
 {
     MDWampDebugLog(@"websocket connection opened");
 	autoreconnectRetries = 0;
     
-    _version = version;
     _serialization = serialization;
     
     // Init the serializator
-    Class ser = self.serializationInstanceMap[[NSNumber numberWithInt:self.serialization]];
+    Class ser = NSClassFromString(self.serialization);
     NSAssert(ser != nil, @"Serialization %@ doesn't exists", ser);
     self.serializator = [[ser alloc] init];
     
@@ -260,14 +254,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
         MDWampWelcome *welcome = (MDWampWelcome *)message;
         _sessionId = [welcome.session stringValue];
     
-        NSDictionary *details;
-        if (welcome.details) {
-            details = welcome.details;
-        } else {
-            // version 1
-            details = @{@"protocolVersion": welcome.protocolVersion,
-                        @"serverIdent": welcome.serverIdent};
-        }
+        NSDictionary *details = welcome.details;
         
         self.sessionEstablished = YES;
         
@@ -403,7 +390,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
         }
         
     } else if ([message isKindOfClass:[MDWampSubscribed class]]) {
-        // version 1 never arrives here
         
         MDWampSubscribed *subscribed = (MDWampSubscribed *)message;
         NSArray *callbacks = self.subscriptionRequests[subscribed.request];

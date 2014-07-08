@@ -25,7 +25,7 @@
 #import "MDWamp.h"
 #import "NSString+MDString.h"
 
-#define kMDWampTestsFakeSerialization 99
+#define kMDWampSerializationMock @"MDWampSerializationMock"
 
 @interface MDWampTests : XCTAsyncTestCase
 @property (strong, nonatomic) MDWamp *wamp;
@@ -43,9 +43,8 @@
     [super setUp];
     _delegate = [[MDWampClientDelegateMock alloc] init];
     _transport = [[MDWampTransportMock alloc] initWithServer:[NSURL URLWithString:@"http://fakeserver.com"] protocolVersions:@[]];
-    _transport.serializationClass = kMDWampTestsFakeSerialization;
+    _transport.serializationClass = kMDWampSerializationMock;
     self.wamp = [[MDWamp alloc] initWithTransport:_transport realm:@"Realm1" delegate:_delegate];
-    self.wamp.serializationInstanceMap = @{[NSNumber numberWithInt:kMDWampTestsFakeSerialization]: [MDWampSerializationMock class]};
     _s = [[MDWampSerializationMock alloc] init];
 
     self.dictionaryPayload = @{@"color": @"orange", @"sizes": @[@23, @42, @7]};
@@ -246,10 +245,6 @@
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
-- (void)testPublishLegacy {
-#warning to implement
-}
-
 - (void)testPublishWithError {
     [_wamp publishTo:@"com.myapp.mytopic1"
                 args:self.arrayPayload
@@ -317,9 +312,6 @@
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
-- (void)testCallProcedureLegacy {
-#warning TO IMPLEMENT
-}
 
 - (void)testRegister {
     // register and receive registered message
