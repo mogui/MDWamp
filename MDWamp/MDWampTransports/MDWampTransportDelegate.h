@@ -31,7 +31,7 @@
 /**
  *  Transport has correctly opened a connection
  */
-- (void)transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerializationClass)serialization;
+- (void)transportDidOpenWithSerialization:(NSString *)serialization;
 
 /**
  *  Transport Failed connection

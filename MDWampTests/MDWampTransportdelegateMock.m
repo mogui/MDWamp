@@ -30,7 +30,7 @@
     self.didReceiveCalled = YES;
 }
 
-- (void)transportDidOpenWithVersion:(MDWampVersion)version andSerialization:(MDWampSerializationClass)serialization {
+- (void)transportDidOpenWithSerialization:(NSString*)serialization {
     self.didOpenCalled = YES;
 }
 

@@ -28,24 +28,19 @@
     if (self) {
         NSMutableArray *tmp = [payload mutableCopy];
         self.details = [tmp shift];
-        self.reason = [tmp shift];
+        self.reason  = [tmp shift];
     }
     return self;
 }
 
 
-- (NSArray *)marshallFor:(MDWampVersion)version
+- (NSArray *)marshall
 {
-    if ([version  isEqual: kMDWampVersion1]) {
-        [NSException raise:NSInvalidArgumentException format:@"Message not supported"];
-        return nil;
-    } else {
-        return @[
-                 @6,
-                 self.details,
-                 self.reason
-                 ];
-    }
+    return @[
+             @6,
+             self.details,
+             self.reason
+             ];
 }
 
 

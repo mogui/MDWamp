@@ -21,6 +21,9 @@
 #import <Foundation/Foundation.h>
 #import "MDWampTransport.h"
 
+FOUNDATION_EXPORT NSString *const kMDWampProtocolWamp2json;
+FOUNDATION_EXPORT NSString *const kMDWampProtocolWamp2msgpack;
+
 @interface MDWampTransportWebSocket : NSObject <MDWampTransport>
 @property id<MDWampTransportDelegate>delegate;
 @end

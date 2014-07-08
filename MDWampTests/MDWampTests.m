@@ -25,7 +25,7 @@
 #import "MDWamp.h"
 #import "NSString+MDString.h"
 
-#define kMDWampTestsFakeSerialization 99
+#define kMDWampSerializationMock @"MDWampSerializationMock"
 
 @interface MDWampTests : XCTAsyncTestCase
 @property (strong, nonatomic) MDWamp *wamp;
@@ -43,9 +43,8 @@
     [super setUp];
     _delegate = [[MDWampClientDelegateMock alloc] init];
     _transport = [[MDWampTransportMock alloc] initWithServer:[NSURL URLWithString:@"http://fakeserver.com"] protocolVersions:@[]];
-    _transport.serializationClass = kMDWampTestsFakeSerialization;
+    _transport.serializationClass = kMDWampSerializationMock;
     self.wamp = [[MDWamp alloc] initWithTransport:_transport realm:@"Realm1" delegate:_delegate];
-    self.wamp.serializationInstanceMap = @{[NSNumber numberWithInt:kMDWampTestsFakeSerialization]: [MDWampSerializationMock class]};
     _s = [[MDWampSerializationMock alloc] init];
 
     self.dictionaryPayload = @{@"color": @"orange", @"sizes": @[@23, @42, @7]};
@@ -64,14 +63,12 @@
 - (id<MDWampMessage>)msgFromTransportAndCheckIsA:(Class)class
 {
     NSArray *arr = [_s unpack:[_transport.sendBuffer lastObject]];
-    Class msgC = [MDWampMessageFactory messageClassFromCode:arr[0] forVersion:kMDWampVersion2];
-    
-    XCTAssertTrue([msgC isSubclassOfClass:class], @"Wrong class");
     
     NSMutableArray *tmp = [arr mutableCopy];
     [tmp shift];
     
-    id<MDWampMessage> msg = [(id<MDWampMessage>)[msgC alloc] initWithPayload:tmp];
+    id<MDWampMessage> msg = [[MDWampMessageFactory sharedFactory] messageObjectFromCode:arr[0] withPayload:tmp];
+    XCTAssertTrue([[msg class] isSubclassOfClass:class], @"Wrong class");
     XCTAssertNotNil(msg, @"An %@ message must be in the transport buffer", NSStringFromClass(class));
     
     return msg;
@@ -79,7 +76,7 @@
 
 - (void)triggerMsg:(id<MDWampMessage>)msg
 {
-    NSArray *arr = [msg marshallFor:kMDWampVersion2];
+    NSArray *arr = [msg marshall];
     NSData *d = [_s pack:arr];
     [_transport triggerDidReceiveMessage:d];
 }
@@ -148,7 +145,7 @@
     }];
     MDWampSubscribe *sub = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
     MDWampError *error = [[MDWampError alloc] initWithPayload:@[@32, sub.request, @{}, @"wamp.error.not_authorized"]];
-    [_transport triggerDidReceiveMessage:[error marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[error marshall]];
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
@@ -162,7 +159,7 @@
     }];
     MDWampSubscribe *sub2 = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
     MDWampSubscribed *subscribed = [[MDWampSubscribed alloc] initWithPayload:@[sub2.request, @12343234]];
-    [_transport triggerDidReceiveMessage:[subscribed marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[subscribed marshall]];
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
@@ -188,13 +185,13 @@
         MDWampUnsubscribe *un2 = [self msgFromTransportAndCheckIsA:[MDWampUnsubscribe class]];
         
         MDWampUnsubscribed *unsub = [[MDWampUnsubscribed alloc] initWithPayload:@[un2.request]];
-        [_transport triggerDidReceiveMessage:[unsub marshallFor:kMDWampVersion2]];
+        [_transport triggerDidReceiveMessage:[unsub marshall]];
         
     } ];
     
     MDWampSubscribe *sub3 = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
     MDWampSubscribed *subscribed2 = [[MDWampSubscribed alloc] initWithPayload:@[sub3.request, @12343234]];
-    [_transport triggerDidReceiveMessage:[subscribed2 marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[subscribed2 marshall]];
     
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
@@ -217,13 +214,13 @@
         MDWampUnsubscribe *un2 = [self msgFromTransportAndCheckIsA:[MDWampUnsubscribe class]];
         
         MDWampError *error2 = [[MDWampError alloc] initWithPayload:@[@34, un2.request, @{}, @"wamp.error.no_such_subscription"]];
-        [_transport triggerDidReceiveMessage:[error2 marshallFor:kMDWampVersion2]];
+        [_transport triggerDidReceiveMessage:[error2 marshall]];
 
     } ];
     
     MDWampSubscribe *sub3 = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
     MDWampSubscribed *subscribed2 = [[MDWampSubscribed alloc] initWithPayload:@[sub3.request, @12343234]];
-    [_transport triggerDidReceiveMessage:[subscribed2 marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[subscribed2 marshall]];
     
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
@@ -244,12 +241,8 @@
     XCTAssertEqualObjects(msg.argumentsKw, self.dictionaryPayload, @"Publish message sent to transport");
     XCTAssertEqualObjects(msg.arguments, self.arrayPayload, @"Publish message sent to transport");
     MDWampPublished *pub = [[MDWampPublished alloc] initWithPayload:@[msg.request, @123123123]];
-    [_transport triggerDidReceiveMessage:[pub marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[pub marshall]];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
-}
-
-- (void)testPublishLegacy {
-#warning to implement
 }
 
 - (void)testPublishWithError {
@@ -267,7 +260,7 @@
     XCTAssertEqualObjects(msg.argumentsKw, self.dictionaryPayload, @"Publish message sent to transport");
     XCTAssertEqualObjects(msg.arguments, self.arrayPayload, @"Publish message sent to transport");
     MDWampError *error = [[MDWampError alloc] initWithPayload:@[@16, msg.request,@{},@"wamp.error.not_authorized"]];
-    [_transport triggerDidReceiveMessage:[error marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[error marshall]];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
@@ -283,13 +276,13 @@
         XCTAssertNil(error, @"Must be no error");
         // trigger event
         MDWampEvent *event = [[MDWampEvent alloc] initWithPayload:@[subscribed.subscription, @123343, @{}, eventPayload]];
-        [_transport triggerDidReceiveMessage:[event marshallFor:kMDWampVersion2]];
+        [_transport triggerDidReceiveMessage:[event marshall]];
 
     }];
     
     MDWampSubscribe *sub = [self msgFromTransportAndCheckIsA:[MDWampSubscribe class]];
     subscribed = [[MDWampSubscribed alloc] initWithPayload:@[sub.request, @12343234]];
-    [_transport triggerDidReceiveMessage:[subscribed marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[subscribed marshall]];
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
@@ -302,7 +295,7 @@
     MDWampCall *msg = [self msgFromTransportAndCheckIsA:[MDWampCall class]];
 
     MDWampResult *res = [[MDWampResult alloc] initWithPayload:@[msg.request, @{}, @[@30]]];
-    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[res marshall]];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
@@ -315,13 +308,10 @@
     MDWampCall *msg = [self msgFromTransportAndCheckIsA:[MDWampCall class]];
     
     MDWampError *res = [[MDWampError alloc] initWithPayload:@[@48, msg.request, @{}, @"wamp.error.no_such_procedure"]];
-    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[res marshall]];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
-- (void)testCallProcedureLegacy {
-#warning TO IMPLEMENT
-}
 
 - (void)testRegister {
     // register and receive registered message
@@ -336,7 +326,7 @@
     MDWampRegister *msg = [self msgFromTransportAndCheckIsA:[MDWampRegister class]];
     
     MDWampRegistered *res = [[MDWampRegistered alloc] initWithPayload:@[msg.request, @12343565]];
-    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[res marshall]];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
@@ -353,7 +343,7 @@
     MDWampRegister *msg = [self msgFromTransportAndCheckIsA:[MDWampRegister class]];
     
     MDWampError *res = [[MDWampError alloc] initWithPayload:@[@64, msg.request, @{}, @"wamp.error.procedure_already_exists"]];
-    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[res marshall]];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
@@ -371,13 +361,13 @@
         MDWampUnregister *msg = [self msgFromTransportAndCheckIsA:[MDWampUnregister class]];
         
         MDWampUnregistered *res = [[MDWampUnregistered alloc] initWithPayload:@[msg.request]];
-        [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+        [_transport triggerDidReceiveMessage:[res marshall]];
     }];
     
     MDWampRegister *msg = [self msgFromTransportAndCheckIsA:[MDWampRegister class]];
     
     MDWampRegistered *res = [[MDWampRegistered alloc] initWithPayload:@[msg.request, @12343565]];
-    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[res marshall]];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
@@ -395,13 +385,13 @@
         MDWampUnregister *msg = [self msgFromTransportAndCheckIsA:[MDWampUnregister class]];
         
         MDWampError *res = [[MDWampError alloc] initWithPayload:@[@66, msg.request, @{}, @"wamp.error.no_such_registration"]];
-        [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+        [_transport triggerDidReceiveMessage:[res marshall]];
     }];
     
     MDWampRegister *msg = [self msgFromTransportAndCheckIsA:[MDWampRegister class]];
     
     MDWampRegistered *res = [[MDWampRegistered alloc] initWithPayload:@[msg.request, @12343565]];
-    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[res marshall]];
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
@@ -420,7 +410,7 @@
         
         XCTAssertNil(error, @"No error should be triggered");
         MDWampInvocation *invoke = [[MDWampInvocation alloc] initWithPayload:@[invokationRequestID, registrationID, @{}, @[@23, @7]]];
-        [_transport triggerDidReceiveMessage:[invoke marshallFor:kMDWampVersion2]];
+        [_transport triggerDidReceiveMessage:[invoke marshall]];
         // retrieve the Yield message with the result
         MDWampYield *yield = [self msgFromTransportAndCheckIsA:[MDWampYield class]];
         XCTAssertEqualObjects(yield.arguments[0], @30, @"Yield must contain the result of the procedure registered");
@@ -430,7 +420,7 @@
     
     MDWampRegister *msg = [self msgFromTransportAndCheckIsA:[MDWampRegister class]];
     MDWampRegistered *res = [[MDWampRegistered alloc] initWithPayload:@[msg.request, registrationID]];
-    [_transport triggerDidReceiveMessage:[res marshallFor:kMDWampVersion2]];
+    [_transport triggerDidReceiveMessage:[res marshall]];
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }

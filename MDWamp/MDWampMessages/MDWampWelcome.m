@@ -27,36 +27,20 @@
     self = [super init];
     if (self) {
         NSMutableArray *tmp = [payload mutableCopy];
-
-        if ([tmp count] > 2) {
-            self.session = [tmp shift];
-            self.protocolVersion = [tmp shift];
-            self.serverIdent = [tmp shift];
-        } else {
-            self.session = [tmp shift];
-            self.details = [tmp shift];
-        }
-        
+        self.session = [tmp shift];
+        self.details = [tmp shift];
     }
     return self;
 }
 
 
-- (NSArray *)marshallFor:(MDWampVersion)version
+- (NSArray *)marshall
 {
-    if ([version  isEqual: kMDWampVersion1]) {
-        return @[
-                 @0,
-                 self.session,
-                 self.protocolVersion,
-                 self.serverIdent];
-    } else {
-        return @[
-                 @2,
-                 self.session,
-                 self.details
-                 ];
-    }
+    return @[
+             @2,
+             self.session,
+             self.details
+             ];
 }
 
 - (NSDictionary *)roles

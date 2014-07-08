@@ -29,39 +29,25 @@
     self = [super init];
     if (self) {
         NSMutableArray *tmp = [payload mutableCopy];
-        
-        if ([tmp[0] isKindOfClass:[NSString class]]) {
-            // version 1 PUBLISH
-            // [ TYPE_ID_CALLRESULT , callID , result ]
-            
-            self.callID = [tmp shift];
-            self.result = [tmp shift];
-        } else {
-            // [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
-
-            self.request   = [tmp shift];
-            self.details    = [tmp shift];
-            if ([tmp count] > 0) self.arguments     = [tmp shift];
-            if ([tmp count] > 0) self.argumentsKw   = [tmp shift];
-        }
+        // [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
+        self.request   = [tmp shift];
+        self.details    = [tmp shift];
+        if ([tmp count] > 0) self.arguments     = [tmp shift];
+        if ([tmp count] > 0) self.argumentsKw   = [tmp shift];
     }
     return self;
 }
 
-- (NSArray *)marshallFor:(MDWampVersion)version
+- (NSArray *)marshall
 {
-    if ([version  isEqual: kMDWampVersion1]) {
-        return @[@3, self.callID, self.result];
+    if (self.arguments && self.argumentsKw) {
+        return @[@50, self.request, self.details, self.arguments, self.argumentsKw ];
+    } else if(self.arguments) {
+        return @[@50, self.request, self.details, self.arguments ];
+    } else if(self.argumentsKw) {
+        return @[@50, self.request, self.details, @[], self.argumentsKw ];
     } else {
-        if (self.arguments && self.argumentsKw) {
-            return @[@50, self.request, self.details, self.arguments, self.argumentsKw ];
-        } else if(self.arguments) {
-            return @[@50, self.request, self.details, self.arguments ];
-        } else if(self.argumentsKw) {
-            return @[@50, self.request, self.details, @[], self.argumentsKw ];
-        } else {
-            return @[@50, self.request, self.details];
-        }
+        return @[@50, self.request, self.details];
     }
 }
 

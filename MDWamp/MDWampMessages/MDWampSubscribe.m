@@ -27,26 +27,16 @@
     self = [super init];
     if (self) {
         NSMutableArray *tmp = [payload mutableCopy];
-        id first = [tmp shift];
-        if ([first isKindOfClass:[NSString class]]) {
-            // version 1 error
-            self.topic = first;
-        } else {
-            self.request = first;
-            self.options = [tmp shift];
-            self.topic = [tmp shift];
-        }
+        self.request = [tmp shift];
+        self.options = [tmp shift];
+        self.topic = [tmp shift];
     }
     return self;
 }
 
-- (NSArray *)marshallFor:(MDWampVersion)version
+- (NSArray *)marshall
 {
-    if ([version  isEqual: kMDWampVersion1]) {
-        return @[@5, self.topic];
-    } else {
-        return @[@32, self.request, self.options, self.topic];
-    }
+    return @[@32, self.request, self.options, self.topic];
 }
 
 @end

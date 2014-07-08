@@ -26,7 +26,7 @@
 
 // test utility
 @property (assign) BOOL openWillFail;
-@property (assign) BOOL serializationClass;
+@property (nonatomic, strong) NSString *serializationClass;
 @property (nonatomic, strong) NSMutableArray *sendBuffer;
 - (void) triggerDidReceiveMessage:(id)msg;
 @end

@@ -44,15 +44,11 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  */
 @property (nonatomic, copy, readonly) NSString *sessionId;
 
-/**
- * Protocol version choosed by the transport
- */
-@property (nonatomic, readonly) MDWampVersion version;
 
 /**
  * Serialization choosed by the transport
  */
-@property (nonatomic, readonly) MDWampSerializationClass serialization;
+@property (nonatomic, readonly) NSString *serialization;
 
 /**
  * The delegate must implement the MDWampClientDelegate
@@ -76,10 +72,6 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  */
 @property (nonatomic, strong) NSDictionary *roles;
 
-/**
- *  A map of Class name that immplements a given serialization (which is the key in the dict) it has a default map that can be changed
- */
-@property (nonatomic, strong) NSDictionary *serializationInstanceMap;
 
 ///**
 // * Indicates whether or not MDWamp tries to reconnect after a non implicit disconnection

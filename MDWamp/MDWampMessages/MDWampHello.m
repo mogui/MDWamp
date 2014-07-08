@@ -38,12 +38,8 @@
     return self;
 }
 
-- (NSArray *) marshallFor:(MDWampVersion)version
+- (NSArray *) marshall
 {
-    if ([version intValue] < [kMDWampVersion2 intValue]) {
-        [NSException raise:NSInvalidArgumentException format:@"Message not supported"];
-        return nil;
-    }
     return @[
              [NSNumber numberWithInt:1],
                  self.realm,
