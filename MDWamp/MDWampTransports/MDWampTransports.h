@@ -22,5 +22,6 @@
 #define MDWampTransport_h
 
 #import "MDWampTransportWebSocket.h"
+#import "MDWampTransportRawSocket.h"
 
 #endif

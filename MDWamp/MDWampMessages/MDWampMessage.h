@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MDWampConstants.h"
+#import "MDWampMessageFactory.h"
 
 @protocol MDWampMessage <NSObject>
 

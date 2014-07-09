@@ -22,7 +22,6 @@
 
 @implementation MDWampYield
 
-
 - (id)initWithPayload:(NSArray *)payload
 {
     self = [super init];
@@ -40,14 +39,15 @@
 
 - (NSArray *)marshall
 {
+    NSNumber *code = [[MDWampMessageFactory sharedFactory] codeFromObject:self];
     if (self.arguments && self.argumentsKw) {
-        return @[@70, self.request, self.options, self.arguments, self.argumentsKw ];
+        return @[code, self.request, self.options, self.arguments, self.argumentsKw ];
     } else if(self.arguments) {
-        return @[@70, self.request, self.options, self.arguments ];
+        return @[code, self.request, self.options, self.arguments ];
     } else if(self.argumentsKw) {
-        return @[@70, self.request, self.options, @[], self.argumentsKw ];
+        return @[code, self.request, self.options, @[], self.argumentsKw ];
     } else {
-        return @[@70, self.request, self.options];
+        return @[code, self.request, self.options];
     }
 }
 

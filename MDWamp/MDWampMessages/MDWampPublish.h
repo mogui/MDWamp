@@ -20,7 +20,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MDWampMessage.h"
-// [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
 
 @interface MDWampPublish : NSObject<MDWampMessage>
 @property (nonatomic, strong) NSNumber *request;

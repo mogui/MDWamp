@@ -20,10 +20,6 @@
 
 #import "MDWampHello.h"
 
-@interface MDWampHello ()
-@end
-
-
 @implementation MDWampHello
 
 - (id)initWithPayload:(NSArray *)payload
@@ -40,11 +36,8 @@
 
 - (NSArray *) marshall
 {
-    return @[
-             [NSNumber numberWithInt:1],
-                 self.realm,
-                 self.details
-                 ];
+    NSNumber *code = [[MDWampMessageFactory sharedFactory] codeFromObject:self];
+    return @[code, self.realm, self.details ];
     
 }
 

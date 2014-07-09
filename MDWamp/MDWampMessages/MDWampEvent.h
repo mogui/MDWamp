@@ -20,7 +20,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MDWampMessage.h"
-// [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
 @interface MDWampEvent : NSObject <MDWampMessage>
 @property (nonatomic, strong) NSNumber *subscription;
 @property (nonatomic, strong) NSNumber *publication;

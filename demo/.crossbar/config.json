@@ -1,66 +1,44 @@
-
 {
-   "controller": {
-   },
-   "workers": [
-      {
-         "type": "router",
-         "options": {
-            "pythonpath": [".."]
-         },
-         "realms": [
+  "workers": [
+    {
+      "type": "router",
+      "realms": [
+        {
+          "name": "realm1",
+          "roles": [
             {
-               "name": "realm1",
-               "roles": [
-                  {
-                     "name": "anonymous",
-                     "permissions": [
-                        {
-                           "uri": "*",
-                           "publish": true,
-                           "subscribe": true,
-                           "call": true,
-                           "register": true
-                        }
-                     ]
-                  }
-               ]
+              "name": "anonymous",
+              "permissions": [
+                {
+                  "uri": "*",
+                  "publish": true,
+                  "subscribe": true,
+                  "call": true,
+                  "register": true
+                }
+              ]
             }
-         ],
-         "transports": [
-            {
-               "type": "web",
-               "endpoint": {
-                  "type": "tcp",
-                  "port": 8080
-               },
-               "paths": {
-                  "/": {
-                     "type": "static",
-                     "directory": "../hello/web"
-                  },
-                  "ws": {
-                     "type": "websocket"
-                  }
-               }
-            },
-             {
-                "type": "rawsocket",
-                "serializer": "json",
-                "endpoint": {
-                   "type": "tcp",
-                   "port": 9000
-                },
-                "debug": true
-             }
-         ],
-         "components": [
-            {
-               "type": "class",
-               "classname": "hello.hello.AppSession",
-               "realm": "realm1"
-            }
-         ]
-      }
-   ]
+          ]
+        }
+      ],
+      "transports": [
+        {
+          "type": "rawsocket",
+          "serializer": "json",
+          "endpoint": {
+            "type": "tcp",
+            "port": 9000
+          },
+          "debug": true
+        },
+        {
+          "type": "websocket",
+          "endpoint": {
+            "type": "tcp",
+            "port": 8080
+          }
+        }
+      ]
+    }
+  ]
 }

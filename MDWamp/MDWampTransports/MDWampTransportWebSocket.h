@@ -26,4 +26,16 @@ FOUNDATION_EXPORT NSString *const kMDWampProtocolWamp2msgpack;
 
 @interface MDWampTransportWebSocket : NSObject <MDWampTransport>
 @property id<MDWampTransportDelegate>delegate;
+
+/**
+ *  Default initializer
+ *  By restricting the array of protocol versions we force to use a given protocol
+ *  they are in the form of wamp, wamp.2.json, wamp.2.msgpack
+ *
+ *  @param request   request representing a server
+ *
+ *  @return intsance of the transport
+ */
+- (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols;
+
 @end

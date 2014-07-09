@@ -4,3 +4,6 @@
 [submodule "lib/msgpack-objectivec"]
 	path = lib/msgpack-objectivec
 	url = https://github.com/msgpack/msgpack-objectivec.git
+[submodule "lib/CocoaAsyncSocket"]
+	path = lib/CocoaAsyncSocket
+	url = https://github.com/robbiehanson/CocoaAsyncSocket.git

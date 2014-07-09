@@ -36,11 +36,8 @@ NSString * const kMDWampRoleCallee      = @"callee";
 
 
 @interface MDWamp () <MDWampTransportDelegate, NSURLConnectionDelegate>
-{
-	int autoreconnectRetries;
-    BOOL explicitSessionClose;
-}
 
+@property (nonatomic, assign) BOOL explicitSessionClose;
 @property (nonatomic, strong) id<MDWampTransport> transport;
 @property (nonatomic, strong) id<MDWampSerialization> serializator;
 @property (nonatomic, strong) NSString *realm;
@@ -59,8 +56,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
 @property (nonatomic, strong) NSMutableDictionary *rpcRegisteredUri;
 @property (nonatomic, strong) NSMutableDictionary *rpcRegisteredProcedures;
 
-
-
 @end
 
 
@@ -75,9 +70,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     self = [super init];
 	if (self) {
 		
-        
-        autoreconnectRetries        = 0;
-        explicitSessionClose = NO;
+        _explicitSessionClose = NO;
         _sessionEstablished = NO;
         _goodbyeSent        = NO;
         
@@ -95,8 +88,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
 		self.subscriptionEvents     = [[NSMutableDictionary alloc] init];
         self.subscriptionID         = [[NSMutableDictionary alloc] init];
         self.publishRequests        = [[NSMutableDictionary alloc] init];
-        
-//        self.subprotocols = @[kMDWampSubprotocolWamp2MsgPack, kMDWampSubprotocolWamp2JSON, kMDWampSubprotocolWamp];
         
         self.roles = @{kMDWampRolePublisher:@{}, kMDWampRoleSubscriber:@{}, kMDWampRoleCaller:@{}, kMDWampRoleCallee:@{}};
 	}
@@ -132,7 +123,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
 
 - (void) disconnect
 {
-    explicitSessionClose = YES;
+    _explicitSessionClose = YES;
 	[self.transport close];
 
     if (self.onSessionClosed) {
@@ -161,7 +152,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
 - (void)transportDidOpenWithSerialization:(NSString*)serialization
 {
     MDWampDebugLog(@"websocket connection opened");
-	autoreconnectRetries = 0;
     
     _serialization = serialization;
     
@@ -190,7 +180,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     }
     id<MDWampMessage> msg;
     @try {
-        msg = [[MDWampMessageFactory sharedFactory] messageObjectFromCode:code withPayload:unpacked];
+        msg = [[MDWampMessageFactory sharedFactory] objectFromCode:code withPayload:unpacked];
     }
     @catch (NSException *exception) {
 #ifdef DEBUG
@@ -218,19 +208,8 @@ NSString * const kMDWampRoleCallee      = @"callee";
     MDWampDebugLog(@"DID CLOSE reason %@", error.localizedDescription);
     _sessionId = nil;
     [self cleanUp];
-    
-//    if (!explicitSessionClose) {
-//
-//        if (_shouldAutoreconnect && autoreconnectRetries < _autoreconnectMaxRetries) {
-//            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, _autoreconnectDelay * NSEC_PER_SEC);
-//            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//                MDWampDebugLog(@"trying to reconnect...");
-//                autoreconnectRetries +=1;
-//
-//            });
-//        }
-//
-    if (!explicitSessionClose) {
+ 
+    if (!_explicitSessionClose) {
         if (self.onSessionClosed) {
             self.onSessionClosed(self, error.code, error.localizedDescription, error.userInfo);
         }
@@ -241,7 +220,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
         
     }
     self.sessionEstablished = NO;
-//    }
+
 }
 
 #pragma mark -
@@ -269,7 +248,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     } else if ([message isKindOfClass:[MDWampAbort class]]) {
         
         MDWampAbort *abort = (MDWampAbort *)message;
-        explicitSessionClose = YES;
+        _explicitSessionClose = YES;
         [self.transport close];
   
         if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:closedSession:reason:details:)]) {
@@ -309,7 +288,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
         
         MDWampError *error = (MDWampError *)message;
         
-        NSString *errorType = [[MDWampMessageFactory sharedFactory] messageNameFromCode:error.type];
+        NSString *errorType = [[MDWampMessageFactory sharedFactory] nameFromCode:error.type];
         if ([errorType isEqual:kMDWampSubscribe]) {
             // It's a subscribe error
             NSArray *callbacks = self.subscriptionRequests[error.request];
@@ -527,7 +506,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
     }
 }
 
-
 - (void) sendMessage:(id<MDWampMessage>)message
 {
     MDWampDebugLog(@"Sending %@", message);
@@ -543,7 +521,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
 
 #pragma mark -
 #pragma mark Commands
-
 
 #pragma mark -
 #pragma mark Pub/Sub
@@ -624,6 +601,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     }
 }
 
+#pragma mark -
 #pragma mark Remote Procedure Call
 
 - (void) call:(NSString*)procUri
@@ -660,14 +638,13 @@ NSString * const kMDWampRoleCallee      = @"callee";
     [self sendMessage:msg];
 }
 
-
 - (void) unregisterRPC:(NSString *)procUri
                 result:(void(^)(NSError *error))resultCallback
 {
     NSNumber *request = [self generateID];
     NSNumber *registrationID = [self.rpcRegisteredUri objectForKey:procUri];
     if (registrationID == nil) {
-        resultCallback([NSError errorWithDomain:MDWampErrorDomain code:12 userInfo:@{NSLocalizedDescriptionKey: @"wamp.error.no_such_registration"}]);
+        resultCallback([NSError errorWithDomain:kMDWampErrorDomain code:12 userInfo:@{NSLocalizedDescriptionKey: @"wamp.error.no_such_registration"}]);
         return;
     }
     MDWampUnregister *msg = [[MDWampUnregister alloc] initWithPayload:@[request, registrationID]];
@@ -675,72 +652,4 @@ NSString * const kMDWampRoleCallee      = @"callee";
     [self sendMessage:msg];
 }
 
-//
-//#pragma mark -
-//#pragma mark AUTH WAMP-CRA -
-//#pragma mark TODO: NOT UNIT TESTED
-//
-//static NSString *wampProcedureURL = @"http://api.wamp.ws/procedure";
-//
-//- (void) authReqWithAppKey:(NSString *)appKey andExtra:(NSString *)extra
-//{
-////    
-////    [self call:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"]
-////      complete:^(NSString *callURI, id result, NSError *error) {
-////          if (!error) {
-////              if ([_delegate respondsToSelector:@selector(onAuthReqWithAnswer:)]) {
-////                  [_delegate onAuthReqWithAnswer:result];
-////              }
-////          } else {
-////              if ([_delegate respondsToSelector:@selector(onAuthFailForCall:withError:)]) {
-////                  [_delegate onAuthFailForCall:@"authreq" withError:error.localizedDescription];
-////              }
-////          }
-////      } args:appKey,extra, nil];
-//}
-////
-//- (void) authSignChallenge:(NSString *)challenge withSecret:(NSString *)secret
-//{
-////    NSString *signature = [self hmacSHA256Data:challenge withKey:secret];
-////    if ([_delegate respondsToSelector:@selector(onAuthSignWithSignature:)]) {
-////		[_delegate onAuthSignWithSignature:signature];
-////	}
-//}
-////
-//- (void) authWithSignature:(NSString *)signature
-//{
-////    [self call:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"]
-////      complete:^(NSString *callURI, id result, NSError *error) {
-////          if (!error) {
-////              if ([_delegate respondsToSelector:@selector(onAuthWithAnswer:)]) {
-////                  [_delegate onAuthWithAnswer:result];
-////              }
-////          } else {
-////              if ([_delegate respondsToSelector:@selector(onAuthFailForCall:withError:)]) {
-////                  [_delegate onAuthFailForCall:@"auth" withError:error.localizedDescription];
-////              }
-////          }
-////      } args:signature,nil];
-//}
-////
-//-(void) authWithKey:(NSString*)authKey Secret:(NSString*)authSecret Extra:(NSString*)authExtra
-//            Success:(void(^)(NSString* answer)) successBlock
-//              Error:(void(^)(NSString* procCall, NSString* errorURI, NSString* errorDetails)) errorBlock
-//{
-////    [self call:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"authreq"] complete:^(NSString *callURI, id result, NSError *error) {
-////        if (!error) {
-////            //Respond with signature
-////            NSString *signature = [self hmacSHA256Data:result withKey:authSecret];
-////            
-////            [self call:[NSString stringWithFormat:@"%@#%@", wampProcedureURL, @"auth"] complete:^(NSString *callURI, id result, NSError *error) {
-////                if (!error) {
-////                    successBlock(result);
-////                } else {
-////                    errorBlock(@"auth",callURI, error.localizedDescription);
-////                }
-////            } args:signature, nil];
-////        }
-////    } args:authKey, authExtra, nil];
-//}
-//
 @end
