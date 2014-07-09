@@ -38,12 +38,10 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
 
 @interface MDWamp : NSObject
 
-
 /**
  * The server generated sessionId
  */
 @property (nonatomic, copy, readonly) NSString *sessionId;
-
 
 /**
  * Serialization choosed by the transport
@@ -72,24 +70,7 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  */
 @property (nonatomic, strong) NSDictionary *roles;
 
-
-///**
-// * Indicates whether or not MDWamp tries to reconnect after a non implicit disconnection
-// */
-//@property (nonatomic, assign) BOOL shouldAutoreconnect;
-//
-///**
-// * The seconds between each reconnection try
-// */
-//@property (nonatomic, assign) NSTimeInterval autoreconnectDelay;
-//
-///**
-// * The maximum times MDWamp will try to reconnect
-// */
-//@property (nonatomic, assign) NSInteger autoreconnectMaxRetries;
-
-
-#pragma mark - 
+#pragma mark -
 #pragma mark Init methods
 /**
  *  Returns a new istance with connection configured with given server
@@ -224,51 +205,5 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  */
 - (void) unregisterRPC:(NSString *)procUri
                 result:(void(^)(NSError *error))result;
-
-
-//#pragma mark -
-//#pragma mark AUTH WAMP-CRA
-//
-///**
-// * Issues an authentication request
-// *
-// * @param appKey		Authentication key, i.e. user or application name
-// *                      If undefined, anonymous authentication is performed
-// * @param extra			Authentication extra information - optional
-// */
-//- (void) authReqWithAppKey:(NSString *)appKey andExtra:(NSString *)extra;
-//
-//
-///**
-// * Signs an authentication challenge
-// *
-// * @param challenge		Authentication challenge as returned by the WAMP server upon a authentication request
-// * @param secret		Authentication secret
-// */
-//- (void) authSignChallenge:(NSString *)challenge withSecret:(NSString *)secret;
-//
-//
-///**
-// * Authenticate, finishing the authentication handshake
-// *
-// * @param signature		A authentication signature
-// */
-//- (void) authWithSignature:(NSString *)signature;
-//
-//
-///**
-// * Authenticate websocket with wamp-cra; same protocol as above methods but in single call
-// *
-// * @param authKey		Authentication key, i.e. user or application name
-// *                      If undefined, anonymous authentication is performed
-// * @param authExtra			Authentication extra information - optional
-// * @param secret		Authentication secret (ie password)
-// * @param successBlock  Block to be executed upon sucessful authentication
-// * @param errorBlock    Block to be executed upon error during authentication
-// */
-//-(void) authWithKey:(NSString*)authKey Secret:(NSString*)authSecret Extra:(NSString*)authExtra
-//            Success:(void(^)(NSString* answer)) successBlock
-//              Error:(void(^)(NSString* procCall, NSString* errorURI, NSString* errorDetails)) errorBlock;
-
 
 @end

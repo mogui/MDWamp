@@ -20,8 +20,6 @@
 
 #import "MDWampError.h"
 
-NSString * const MDWampErrorDomain = @"com.mogui.MDWamp";
-
 @implementation MDWampError
 - (id)initWithPayload:(NSArray *)payload
 {
@@ -41,16 +39,18 @@ NSString * const MDWampErrorDomain = @"com.mogui.MDWamp";
 
 - (NSArray *)marshall
 {
+    NSNumber *code = [[MDWampMessageFactory sharedFactory] codeFromObject:self];
+    
     if (self.arguments && self.argumentsKw) {
-        return @[@8, self.type, self.request, self.details, self.error,
+        return @[code, self.type, self.request, self.details, self.error,
                  self.arguments, self.argumentsKw ];
     } else if(self.arguments) {
-        return @[@8, self.type, self.request, self.details, self.error,
+        return @[code, self.type, self.request, self.details, self.error,
                  self.arguments ];
     } else if(self.argumentsKw) {
-        return @[@8, self.type, self.request, self.details, self.error, @[], self.argumentsKw ];
+        return @[code, self.type, self.request, self.details, self.error, @[], self.argumentsKw ];
     } else {
-        return @[@8, self.type, self.request, self.details, self.error ];
+        return @[code, self.type, self.request, self.details, self.error ];
     }
 }
 
@@ -63,7 +63,7 @@ NSString * const MDWampErrorDomain = @"com.mogui.MDWamp";
     } else {
         info = @{NSLocalizedDescriptionKey: self.error};
     }
-    return [NSError errorWithDomain:MDWampErrorDomain code:[self.type integerValue] userInfo:info];
+    return [NSError errorWithDomain:kMDWampErrorDomain code:[self.type integerValue] userInfo:info];
 }
 
 @end

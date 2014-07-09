@@ -22,7 +22,6 @@
 
 @implementation MDWampEvent
 
-
 - (id)initWithPayload:(NSArray *)payload
 {
     self = [super init];
@@ -41,17 +40,18 @@
 
 - (NSArray *)marshall
 {
+    NSNumber *code = [[MDWampMessageFactory sharedFactory] codeFromObject:self];
+    
     if (self.arguments && self.argumentsKw) {
-        return @[@36, self.subscription, self.publication, self.details, self.arguments, self.argumentsKw ];
+        return @[code, self.subscription, self.publication, self.details, self.arguments, self.argumentsKw ];
     } else if(self.arguments) {
-        return @[@36, self.subscription, self.publication, self.details, self.arguments ];
+        return @[code, self.subscription, self.publication, self.details, self.arguments ];
     } else if(self.argumentsKw) {
-        return @[@36, self.subscription, self.publication, self.details, @[], self.argumentsKw ];
+        return @[code, self.subscription, self.publication, self.details, @[], self.argumentsKw ];
     } else {
-        return @[@36,self.subscription, self.publication, self.details];
+        return @[code,self.subscription, self.publication, self.details];
     }
 }
-
 
 - (NSDictionary *)event {
     return self.argumentsKw;

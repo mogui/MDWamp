@@ -22,67 +22,116 @@
 #import "MDWampMessageFactory.h"
 #import "MDWampMessages.h"
 @interface MDWampMessageFactoryTests : XCTestCase
-
+{
+    MDWampMessageFactory *factory;
+}
 @end
 
 @implementation MDWampMessageFactoryTests
-#warning TODO vanno rifatti i test del message factory ha poco senso così
+
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    factory = [MDWampMessageFactory sharedFactory];
 }
 
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-//
-//- (Class)v2Class:(NSNumber*)code
-//{
-//    return [MDWampMessageFactory messageClassFromCode:code forVersion:kMDWampVersion2];
-//}
+- (void)testObjectFromCode {
+    XCTAssert([[[factory objectFromCode:@1 withPayload:nil] class] isSubclassOfClass:[MDWampHello class]], @"@1 is Hello");
+    XCTAssert([[[factory objectFromCode:@2 withPayload:nil] class] isSubclassOfClass:[MDWampWelcome class]], @"2 is Welcome");
+    XCTAssert([[[factory objectFromCode:@3 withPayload:nil] class] isSubclassOfClass:[MDWampAbort class]], @"3 is Abort");
+    // 4 kMDWampChallange
+    // 5 kMDWampAuthenticate,
+    XCTAssert([[[factory objectFromCode:@6 withPayload:nil] class] isSubclassOfClass:[MDWampGoodbye class]], @"6 is Goodbye");
+    // 7  : kMDWampHeartbeat,
+    XCTAssert([[[factory objectFromCode:@8 withPayload:nil] class] isSubclassOfClass:[MDWampError class]], @"8 is Error");
+
+    XCTAssert([[[factory objectFromCode:@16 withPayload:nil] class] isSubclassOfClass:[MDWampPublish class]], @"16 is Publish");
+    XCTAssert([[[factory objectFromCode:@17 withPayload:nil] class] isSubclassOfClass:[MDWampPublished class]], @"16 is Publish");
 
 
-- (void)testVersion2Messages
-{
-    
-//    XCTAssertThrows([self v2Class:@0], @"zero code in version 2 doesn't exist");
-//    XCTAssert([[self v2Class:@1] isSubclassOfClass:[MDWampHello class]], @"1 is Hello");
-//    XCTAssert([[self v2Class:@2] isSubclassOfClass:[MDWampWelcome class]], @"2 is Welcome");
-//    XCTAssert([[self v2Class:@3] isSubclassOfClass:[MDWampAbort class]], @"3 is Abort");
-//    XCTAssert([[self v2Class:@6] isSubclassOfClass:[MDWampGoodbye class]], @"6 is Goodbye");
-//    XCTAssert([[self v2Class:@8] isSubclassOfClass:[MDWampError class]], @"8 is Error");
-//
-//    XCTAssert([[self v2Class:@16] isSubclassOfClass:[MDWampPublish class]], @"16 is Publish");
-//    XCTAssert([[self v2Class:@17] isSubclassOfClass:[MDWampPublished class]], @"16 is Publish");
-//
-//    
-//    XCTAssert([[self v2Class:@32] isSubclassOfClass:[MDWampSubscribe class]], @"32 is Subscribe");
-//    XCTAssert([[self v2Class:@33] isSubclassOfClass:[MDWampSubscribed class]], @"33 is Subscribed");
-//    XCTAssert([[self v2Class:@34] isSubclassOfClass:[MDWampUnsubscribe class]], @"34 is Subscribe");
-//    XCTAssert([[self v2Class:@35] isSubclassOfClass:[MDWampUnsubscribed class]], @"35 is Subscribed");
-//    XCTAssert([[self v2Class:@36] isSubclassOfClass:[MDWampEvent class]], @"36 is Event");
-//    
-//    XCTAssert([[self v2Class:@48] isSubclassOfClass:[MDWampCall class]], @"48 is call");
-//    // Cancel
-//    XCTAssert([[self v2Class:@50] isSubclassOfClass:[MDWampResult class]], @"50 is Result");
-//    /*
-//     64	REGISTER						Rx	Tx
-//     65	REGISTERED						Tx	Rx
-//     66	UNREGISTER						Rx	Tx
-//     67	UNREGISTERED						Tx	Rx
-//     68	INVOCATION						Tx	Rx
-//     69	INTERRUPT	advanced					Tx	Rx
-//     70	YIELD
-//     */
-//    XCTAssert([[self v2Class:@64] isSubclassOfClass:[MDWampRegister class]], @"64 is register");
-//    XCTAssert([[self v2Class:@65] isSubclassOfClass:[MDWampRegistered class]], @"65 is registered");
-//    XCTAssert([[self v2Class:@66] isSubclassOfClass:[MDWampUnregister class]], @"66 is unregister");
-//    XCTAssert([[self v2Class:@67] isSubclassOfClass:[MDWampUnregistered class]], @"67 is unregistered");
-//    XCTAssert([[self v2Class:@68] isSubclassOfClass:[MDWampInvocation class]], @"68 is invocation");
-//    XCTAssert([[self v2Class:@70] isSubclassOfClass:[MDWampYield class]], @"70 is Yield");
+    XCTAssert([[[factory objectFromCode:@32 withPayload:nil] class] isSubclassOfClass:[MDWampSubscribe class]], @"32 is Subscribe");
+    XCTAssert([[[factory objectFromCode:@33 withPayload:nil] class] isSubclassOfClass:[MDWampSubscribed class]], @"33 is Subscribed");
+    XCTAssert([[[factory objectFromCode:@34 withPayload:nil] class] isSubclassOfClass:[MDWampUnsubscribe class]], @"34 is Subscribe");
+    XCTAssert([[[factory objectFromCode:@35 withPayload:nil] class] isSubclassOfClass:[MDWampUnsubscribed class]], @"35 is Subscribed");
+    XCTAssert([[[factory objectFromCode:@36 withPayload:nil] class] isSubclassOfClass:[MDWampEvent class]], @"36 is Event");
+
+    XCTAssert([[[factory objectFromCode:@48 withPayload:nil] class] isSubclassOfClass:[MDWampCall class]], @"48 is call");
+    // 49 kMDWampCancel
+    XCTAssert([[[factory objectFromCode:@50 withPayload:nil] class] isSubclassOfClass:[MDWampResult class]], @"50 is Result");
+
+    XCTAssert([[[factory objectFromCode:@64 withPayload:nil] class] isSubclassOfClass:[MDWampRegister class]], @"64 is register");
+    XCTAssert([[[factory objectFromCode:@65 withPayload:nil] class] isSubclassOfClass:[MDWampRegistered class]], @"65 is registered");
+    XCTAssert([[[factory objectFromCode:@66 withPayload:nil] class] isSubclassOfClass:[MDWampUnregister class]], @"66 is unregister");
+    XCTAssert([[[factory objectFromCode:@67 withPayload:nil] class] isSubclassOfClass:[MDWampUnregistered class]], @"67 is unregistered");
+    XCTAssert([[[factory objectFromCode:@68 withPayload:nil] class] isSubclassOfClass:[MDWampInvocation class]], @"68 is invocation");
+    // 69 kMDWampInterrupt
+    XCTAssert([[[factory objectFromCode:@70 withPayload:nil] class] isSubclassOfClass:[MDWampYield class]], @"70 is Yield");
 }
+
+#define nameFromCodeMacro(code, name) \
+    XCTAssert([[factory nameFromCode:code] isEqual:name], @"code: %@ must be: %@", code, name);
+
+- (void)testNameFromCode {
+    nameFromCodeMacro(@1 , kMDWampHello);
+    nameFromCodeMacro(@2 , kMDWampWelcome);
+    nameFromCodeMacro(@3 , kMDWampAbort);
+    nameFromCodeMacro(@4 , kMDWampChallange);
+    nameFromCodeMacro(@5 , kMDWampAuthenticate);
+    nameFromCodeMacro(@6 , kMDWampGoodbye);
+    nameFromCodeMacro(@7 , kMDWampHeartbeat);
+    nameFromCodeMacro(@8 , kMDWampError);
+    nameFromCodeMacro(@16, kMDWampPublish);
+    nameFromCodeMacro(@17, kMDWampPublished);
+    nameFromCodeMacro(@32, kMDWampSubscribe);
+    nameFromCodeMacro(@33, kMDWampSubscribed);
+    nameFromCodeMacro(@34, kMDWampUnsubscribe);
+    nameFromCodeMacro(@35, kMDWampUnsubscribed);
+    nameFromCodeMacro(@36, kMDWampEvent);
+    nameFromCodeMacro(@48, kMDWampCall);
+    nameFromCodeMacro(@49, kMDWampCancel);
+    nameFromCodeMacro(@50, kMDWampResult);
+    nameFromCodeMacro(@64, kMDWampRegister);
+    nameFromCodeMacro(@65, kMDWampRegistered);
+    nameFromCodeMacro(@66, kMDWampUnregister);
+    nameFromCodeMacro(@67, kMDWampUnregistered);
+    nameFromCodeMacro(@68, kMDWampInvocation);
+    nameFromCodeMacro(@69, kMDWampInterrupt);
+    nameFromCodeMacro(@70, kMDWampYield);
+}
+#define codeFromObjectMacro(c, CLASS) \
+obj = [[CLASS alloc] init]; \
+code = [factory codeFromObject:obj]; \
+XCTAssert([code isEqual:c],@""#CLASS @" must be code %@", c); \
+
+- (void)testCodeFromObject {
+    id<MDWampMessage> obj;
+    NSNumber *code;
+    codeFromObjectMacro(@1 , MDWampHello);
+    codeFromObjectMacro(@2 , MDWampWelcome);
+    codeFromObjectMacro(@3 , MDWampAbort);
+//    codeFromObjectMacro(@4 , MDWampChallange);
+//    codeFromObjectMacro(@5 , MDWampAuthenticate);
+    codeFromObjectMacro(@6 , MDWampGoodbye);
+//    codeFromObjectMacro(@7 , MDWampHeartbeat);
+    codeFromObjectMacro(@8 , MDWampError);
+    codeFromObjectMacro(@16, MDWampPublish);
+    codeFromObjectMacro(@17, MDWampPublished);
+    codeFromObjectMacro(@32, MDWampSubscribe);
+    codeFromObjectMacro(@33, MDWampSubscribed);
+    codeFromObjectMacro(@34, MDWampUnsubscribe);
+    codeFromObjectMacro(@35, MDWampUnsubscribed);
+    codeFromObjectMacro(@36, MDWampEvent);
+    codeFromObjectMacro(@48, MDWampCall);
+//    codeFromObjectMacro(@49, MDWampCancel);
+    codeFromObjectMacro(@50, MDWampResult);
+    codeFromObjectMacro(@64, MDWampRegister);
+    codeFromObjectMacro(@65, MDWampRegistered);
+    codeFromObjectMacro(@66, MDWampUnregister);
+    codeFromObjectMacro(@67, MDWampUnregistered);
+    codeFromObjectMacro(@68, MDWampInvocation);
+//    codeFromObjectMacro(@69, MDWampInterrupt);
+    codeFromObjectMacro(@70, MDWampYield );}
+
+
 
 @end

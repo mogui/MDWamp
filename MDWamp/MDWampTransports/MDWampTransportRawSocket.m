@@ -55,10 +55,6 @@
     }
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
-    
-}
-
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSRange lRange = NSMakeRange(0, 4);
     NSData *l = [data subdataWithRange:lRange];
@@ -98,16 +94,17 @@
 {
     if ([data isKindOfClass:[NSString class]]) {
         data = [(NSString*)data dataUsingEncoding:NSUTF8StringEncoding];
-    } else if ([data isKindOfClass:[NSData class]]) {
-        unsigned int len = (unsigned int)[data length];
-        int32_t swapped = CFSwapInt32HostToBig(len);
-        NSMutableData *dd = [NSMutableData dataWithBytes:&swapped length:sizeof(unsigned int)];
-        [dd appendData:data];
-        [_socket writeData:dd withTimeout:0.5 tag:1];
-        [_socket readDataWithTimeout:0.5 tag:2];
-    } else {
+    } else if (![data isKindOfClass:[NSData class]]) {
         NSLog(@"MDWamp: wrong object sent to transport");
+        return;
     }
+    unsigned int len = (unsigned int)[data length];
+    int32_t swapped = CFSwapInt32HostToBig(len);
+    NSMutableData *dd = [NSMutableData dataWithBytes:&swapped length:sizeof(unsigned int)];
+    [dd appendData:data];
+    [_socket writeData:dd withTimeout:0.5 tag:1];
+    [_socket readDataWithTimeout:0.5 tag:2];
+    
 }
 
 @end

@@ -20,37 +20,69 @@
 
 #import <Foundation/Foundation.h>
 #import "MDWampConstants.h"
-#import "MDWampMessage.h"
+@protocol MDWampMessage;
 
-#define kMDWampHello        @"MDWampHello"
-#define kMDWampWelcome      @"MDWampWelcome"
-#define kMDWampAbort        @"MDWampAbort"
-#define kMDWampChallange    @"MDWampChallange"
-#define kMDWampAuthenticate @"MDWampAuthenticate"
-#define kMDWampGoodbye      @"MDWampGoodbye"
-#define kMDWampHeartbeat    @"MDWampHeartbeat"
-#define kMDWampError        @"MDWampError"
-#define kMDWampPublish      @"MDWampPublish"
-#define kMDWampPublished    @"MDWampPublished"
-#define kMDWampSubscribe    @"MDWampSubscribe"
-#define kMDWampSubscribed   @"MDWampSubscribed"
-#define kMDWampUnsubscribe  @"MDWampUnsubscribe"
-#define kMDWampUnsubscribed @"MDWampUnsubscribed"
-#define kMDWampEvent        @"MDWampEvent"
-#define kMDWampCall         @"MDWampCall"
-#define kMDWampCancel       @"MDWampCancel"
-#define kMDWampResult       @"MDWampResult"
-#define kMDWampRegister     @"MDWampRegister"
-#define kMDWampRegistered   @"MDWampRegistered"
-#define kMDWampUnregister   @"MDWampUnregister"
-#define kMDWampUnregistered @"MDWampUnregistered"
-#define kMDWampInvocation   @"MDWampInvocation"
-#define kMDWampInterrupt    @"MDWampInterrupt"
-#define kMDWampYield        @"MDWampYield"
+FOUNDATION_EXPORT NSString *const kMDWampHello        ;
+FOUNDATION_EXPORT NSString *const kMDWampWelcome      ;
+FOUNDATION_EXPORT NSString *const kMDWampAbort        ;
+FOUNDATION_EXPORT NSString *const kMDWampChallange    ;
+FOUNDATION_EXPORT NSString *const kMDWampAuthenticate ;
+FOUNDATION_EXPORT NSString *const kMDWampGoodbye      ;
+FOUNDATION_EXPORT NSString *const kMDWampHeartbeat    ;
+FOUNDATION_EXPORT NSString *const kMDWampError        ;
+FOUNDATION_EXPORT NSString *const kMDWampPublish      ;
+FOUNDATION_EXPORT NSString *const kMDWampPublished    ;
+FOUNDATION_EXPORT NSString *const kMDWampSubscribe    ;
+FOUNDATION_EXPORT NSString *const kMDWampSubscribed   ;
+FOUNDATION_EXPORT NSString *const kMDWampUnsubscribe  ;
+FOUNDATION_EXPORT NSString *const kMDWampUnsubscribed ;
+FOUNDATION_EXPORT NSString *const kMDWampEvent        ;
+FOUNDATION_EXPORT NSString *const kMDWampCall         ;
+FOUNDATION_EXPORT NSString *const kMDWampCancel       ;
+FOUNDATION_EXPORT NSString *const kMDWampResult       ;
+FOUNDATION_EXPORT NSString *const kMDWampRegister     ;
+FOUNDATION_EXPORT NSString *const kMDWampRegistered   ;
+FOUNDATION_EXPORT NSString *const kMDWampUnregister   ;
+FOUNDATION_EXPORT NSString *const kMDWampUnregistered ;
+FOUNDATION_EXPORT NSString *const kMDWampInvocation   ;
+FOUNDATION_EXPORT NSString *const kMDWampInterrupt    ;
+FOUNDATION_EXPORT NSString *const kMDWampYield        ;
 
 @interface MDWampMessageFactory : NSObject
+
+/**
+ *  Singleton
+ *
+ */
 + (instancetype) sharedFactory;
-- (id<MDWampMessage>)messageObjectFromCode:(NSNumber*)code withPayload:(NSArray*)payload;
-- (NSString *)messageNameFromCode:(NSNumber*)code;
-- (NSNumber *)messageCodeFromObject:(id)object;
+
+/**
+ *  return an MDWampMessage instance, given the code
+ *  and inited with the payload
+ *
+ *  @param code    protocol code
+ *  @param payload array of parameters to init the message with
+ *
+ *  @return an instance of the right message
+ */
+- (id<MDWampMessage>)objectFromCode:(NSNumber*)code withPayload:(NSArray*)payload;
+
+/**
+ *  Gives the class name as a string given the right code
+ *
+ *  @param code protocol code
+ *
+ *  @return Class string name
+ */
+- (NSString *)nameFromCode:(NSNumber*)code;
+
+/**
+ *  Gives the protocol code for a given object
+ *
+ *  @param object an MDWampMessage ninstance
+ *
+ *  @return protocol code
+ */
+- (NSNumber *)codeFromObject:(id<MDWampMessage>)object;
+
 @end

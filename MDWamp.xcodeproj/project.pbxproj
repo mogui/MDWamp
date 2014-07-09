@@ -26,7 +26,6 @@
 		762A2F1118772302001BE6FE /* MDWamp.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76FD8049185BB3F000D1B5C0 /* MDWamp.h */; };
 		762A2F1318772302001BE6FE /* MDWampClientDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7646E523185BBAEF004990DD /* MDWampClientDelegate.h */; };
 		762A51DC195CADCE00A3B344 /* MDWamp-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 762A51DA195CADCE00A3B344 /* MDWamp-Prefix.pch */; };
-		762A51DD195CADCE00A3B344 /* MDWamp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 762A51DB195CADCE00A3B344 /* MDWamp-Info.plist */; };
 		763EEA6C18F8867F007329A6 /* MDWampUnsubscribed.h in Headers */ = {isa = PBXBuildFile; fileRef = 763EEA6A18F8867F007329A6 /* MDWampUnsubscribed.h */; };
 		763EEA6D18F8867F007329A6 /* MDWampUnsubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 763EEA6B18F8867F007329A6 /* MDWampUnsubscribed.m */; };
 		763EEA6E18F8867F007329A6 /* MDWampUnsubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 763EEA6B18F8867F007329A6 /* MDWampUnsubscribed.m */; };
@@ -172,7 +171,6 @@
 		76F015881959F38F00F9991E /* NSDictionary+MessagePack.h in Headers */ = {isa = PBXBuildFile; fileRef = 76F0155D1959F38F00F9991E /* NSDictionary+MessagePack.h */; };
 		76F015891959F38F00F9991E /* NSDictionary+MessagePack.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F0155E1959F38F00F9991E /* NSDictionary+MessagePack.m */; };
 		76F0158A1959F38F00F9991E /* NSDictionary+MessagePack.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F0155E1959F38F00F9991E /* NSDictionary+MessagePack.m */; };
-		76F0158B1959F38F00F9991E /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 76F0155F1959F38F00F9991E /* readme.md */; };
 		76F0158E1959F3DE00F9991E /* MDWampSerializationMsgpack.h in Headers */ = {isa = PBXBuildFile; fileRef = 76F0158C1959F3DE00F9991E /* MDWampSerializationMsgpack.h */; };
 		76F0158F1959F3DE00F9991E /* MDWampSerializationMsgpack.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F0158D1959F3DE00F9991E /* MDWampSerializationMsgpack.m */; };
 		76F015901959F3DE00F9991E /* MDWampSerializationMsgpack.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F0158D1959F3DE00F9991E /* MDWampSerializationMsgpack.m */; };
@@ -1096,8 +1094,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				762A51DD195CADCE00A3B344 /* MDWamp-Info.plist in Resources */,
-				76F0158B1959F38F00F9991E /* readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

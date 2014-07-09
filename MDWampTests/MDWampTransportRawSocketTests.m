@@ -38,6 +38,8 @@ typedef enum : NSUInteger {
 }
 
 - (void) transportDidOpenWithSerialization:(NSString*)serialization {
+    XCTAssert([transport isConnected], @"Must be connected");
+    
     if (self.operation == TestOpen) {
         [self notify:kXCTUnitWaitStatusSuccess];
     } else if (self.operation == TestClose) {
@@ -66,11 +68,13 @@ typedef enum : NSUInteger {
 }
 
 - (void) transportDidFailWithError:(NSError *)error {
+    XCTAssertFalse([transport isConnected], @"Must be not connected");
     [self notify:kXCTUnitWaitStatusSuccess];
 }
 
 - (void) transportDidCloseWithError:(NSError *)error {
-   [self notify:kXCTUnitWaitStatusSuccess];
+    XCTAssertFalse([transport isConnected], @"Must be not connected");
+    [self notify:kXCTUnitWaitStatusSuccess];
 }
 
 - (void)testOpen

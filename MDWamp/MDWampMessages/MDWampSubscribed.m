@@ -36,7 +36,8 @@
 
 - (NSArray *)marshall
 {
-    return @[@33, self.request, self.subscription];
+    NSNumber *code = [[MDWampMessageFactory sharedFactory] codeFromObject:self];
+    return @[code, self.request, self.subscription];
 }
 
 

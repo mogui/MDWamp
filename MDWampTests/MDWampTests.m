@@ -67,7 +67,7 @@
     NSMutableArray *tmp = [arr mutableCopy];
     [tmp shift];
     
-    id<MDWampMessage> msg = [[MDWampMessageFactory sharedFactory] messageObjectFromCode:arr[0] withPayload:tmp];
+    id<MDWampMessage> msg = [[MDWampMessageFactory sharedFactory] objectFromCode:arr[0] withPayload:tmp];
     XCTAssertTrue([[msg class] isSubclassOfClass:class], @"Wrong class");
     XCTAssertNotNil(msg, @"An %@ message must be in the transport buffer", NSStringFromClass(class));
     

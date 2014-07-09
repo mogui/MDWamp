@@ -21,8 +21,6 @@
 #import <Foundation/Foundation.h>
 #import "MDWampMessage.h"
 
-extern NSString * const MDWampErrorDomain   ;
-
 @interface MDWampError : NSObject<MDWampMessage>
 @property (nonatomic, strong) NSNumber *type;
 @property (nonatomic, strong) NSNumber *request;

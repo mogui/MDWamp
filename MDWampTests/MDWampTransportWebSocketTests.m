@@ -95,7 +95,7 @@
 
 - (void)testDidOpen
 {
-    transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080/ws"] protocolVersions:@[kMDWampProtocolWamp2json]];
+    transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080"] protocolVersions:@[kMDWampProtocolWamp2json]];
     transport.delegate = self;
     [transport open];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:1];
@@ -103,7 +103,7 @@
 
 - (void)testDidFailWrongProtocol
 {
-    transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080/ws"] protocolVersions:@[kMDWampProtocolWamp2json]]; // crossbar fails when giving verison 1
+    transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080"] protocolVersions:@[kMDWampProtocolWamp2json]]; // crossbar fails when giving verison 1
     transport.delegate = self;
     [transport open];
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:1];
@@ -111,7 +111,7 @@
 
 - (void)testSendReceiveMessage
 {
-    transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080/ws"] protocolVersions:@[kMDWampProtocolWamp2json]]; // crossbar fails when giving verison 1
+    transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080"] protocolVersions:@[kMDWampProtocolWamp2json]]; // crossbar fails when giving verison 1
     transport.delegate = self;
     self.testMessage = YES;
     [transport open];
@@ -129,7 +129,7 @@
 
 - (void)testDidCloseError
 {
-    transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080/ws"] protocolVersions:@[kMDWampProtocolWamp2json]]; // crossbar fails when giving verison 1
+    transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080"] protocolVersions:@[kMDWampProtocolWamp2json]]; // crossbar fails when giving verison 1
     transport.delegate = self;
     self.testCloseError = YES;
     [transport open];

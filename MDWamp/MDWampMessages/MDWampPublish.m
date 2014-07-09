@@ -39,14 +39,16 @@
 
 - (NSArray *)marshall
 {
+    NSNumber *code = [[MDWampMessageFactory sharedFactory] codeFromObject:self];
+    
     if (self.arguments && self.argumentsKw) {
-        return @[@16, self.request, self.options, self.topic, self.arguments, self.argumentsKw ];
+        return @[code, self.request, self.options, self.topic, self.arguments, self.argumentsKw ];
     } else if(self.arguments) {
-        return @[@16, self.request, self.options, self.topic, self.arguments ];
+        return @[code, self.request, self.options, self.topic, self.arguments ];
     } else if(self.argumentsKw) {
-        return @[@16, self.request, self.options, self.topic, @[], self.argumentsKw ];
+        return @[code, self.request, self.options, self.topic, @[], self.argumentsKw ];
     } else {
-        return @[@16, self.request, self.options, self.topic];
+        return @[code, self.request, self.options, self.topic];
     }
 }
 

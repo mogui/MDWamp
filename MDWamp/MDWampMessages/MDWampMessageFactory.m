@@ -21,12 +21,38 @@
 #import "MDWampMessageFactory.h"
 #import "MDWampMessage.h"
 
+NSString *const kMDWampHello        = @"MDWampHello";
+NSString *const kMDWampWelcome      = @"MDWampWelcome";
+NSString *const kMDWampAbort        = @"MDWampAbort";
+NSString *const kMDWampChallange    = @"MDWampChallange";
+NSString *const kMDWampAuthenticate = @"MDWampAuthenticate";
+NSString *const kMDWampGoodbye      = @"MDWampGoodbye";
+NSString *const kMDWampHeartbeat    = @"MDWampHeartbeat";
+NSString *const kMDWampError        = @"MDWampError";
+NSString *const kMDWampPublish      = @"MDWampPublish";
+NSString *const kMDWampPublished    = @"MDWampPublished";
+NSString *const kMDWampSubscribe    = @"MDWampSubscribe";
+NSString *const kMDWampSubscribed   = @"MDWampSubscribed";
+NSString *const kMDWampUnsubscribe  = @"MDWampUnsubscribe";
+NSString *const kMDWampUnsubscribed = @"MDWampUnsubscribed";
+NSString *const kMDWampEvent        = @"MDWampEvent";
+NSString *const kMDWampCall         = @"MDWampCall";
+NSString *const kMDWampCancel       = @"MDWampCancel";
+NSString *const kMDWampResult       = @"MDWampResult";
+NSString *const kMDWampRegister     = @"MDWampRegister";
+NSString *const kMDWampRegistered   = @"MDWampRegistered";
+NSString *const kMDWampUnregister   = @"MDWampUnregister";
+NSString *const kMDWampUnregistered = @"MDWampUnregistered";
+NSString *const kMDWampInvocation   = @"MDWampInvocation";
+NSString *const kMDWampInterrupt    = @"MDWampInterrupt";
+NSString *const kMDWampYield        = @"MDWampYield";
+
+
 @interface MDWampMessageFactory ()
-@property (nonatomic, strong) NSDictionary *messageMapping;
+    @property (nonatomic, strong) NSDictionary *messageMapping;
 @end
 
 @implementation MDWampMessageFactory
-
 
 + (instancetype) sharedFactory {
     static id sharedInstance = nil;
@@ -70,27 +96,33 @@
     return self;
 }
 
-- (NSString *)messageNameFromCode:(NSNumber*)code
+- (NSString *)nameFromCode:(NSNumber*)code
 {
     return self.messageMapping[code];
 }
 
-- (id<MDWampMessage>)messageObjectFromCode:(NSNumber*)code withPayload:(NSArray*)payload
+- (id<MDWampMessage>)objectFromCode:(NSNumber*)code withPayload:(NSArray*)payload
 {
     NSString *className = self.messageMapping[code];
+    if (!className) {
+        [NSException raise:kMDWampErrorDomain format:@"No registered Message for given code: %@", code];
+    }
     Class messageClass = NSClassFromString(className);
     if (!messageClass) {
-        [NSException raise:@"it.mogui.mdwamp" format:@"Unimplemented message: %@", className];
+        [NSException raise:kMDWampErrorDomain format:@"Class %@ is not implemented", className];
     }
     return [(id<MDWampMessage>)[messageClass alloc] initWithPayload:payload];
 }
 
-//- (NSNumber *)messageCodeFromObject:(NSObject*)object
-//{
-//    NSString *className = [object className];
-//    NSArray *keys = [self.messageMapping allKeysForObject:className];
-//    return keys[0];
-//}
+- (NSNumber *)codeFromObject:(id)object
+{
+    NSString *className = NSStringFromClass([object class]);
+    NSArray *keys = [self.messageMapping allKeysForObject:className];
+    if ([keys count] != 1) {
+        [NSException raise:kMDWampErrorDomain format:@"Class %@ is not a registered message in the protocol", className];
+    }
+    return keys[0];
+}
 
 
 @end
