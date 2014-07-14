@@ -2,10 +2,6 @@
 
 MDWamp is a client side objective-C implementation of the WebSocket subprotocol [WAMP][wamp_link] (v2).  
 
-**Right now therw is NO backward support for WAMP v1**, but it is something that is already partially developed.
-
-It uses [SocketRocket][socket_rocket] as WebSocket Protocol implementation.
-
 With this library and with a server [implementation of WAMP protocol][wamp_impl] you can bring Real-time notification not only for a web app (as WebSocket was created for) but also on your mobile App, just like an inner-app Apple Push Notifcation Service, avoiding the hassle of long polling request to the server for getting new things.
 
 WAMP in its creator words is:
@@ -14,7 +10,7 @@ WAMP in its creator words is:
 Remote Procedure Calls + Publish & Subscribe.   
 > Using WAMP you can build distributed systems out of application components which are loosely coupled and communicate in (soft) real-time.
 
-but what are RPC and PubSub? here's a [nice and neat explanation][faq] if you have doubts.
+It uses well known and maintained libraries for low level connections: [SocketRocket][socket_rocket] and [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket).
 
 
 ## Installation
@@ -35,6 +31,14 @@ Just add this to your Podfile
 	pod "MDWamp" 
 
 
+## Demo App
+
+The Xcode project has a `MDWampDemo` target that is an iOS Application that you can run (better on two or more device / simulator) and explore.   
+It expects a [crossbar.io](http://crossbar.io/) server running on the local machine with the config file under the demo folder.   
+Having it [installed](https://github.com/crossbario/crossbar/wiki/Quick-Start) just cd in `demo` directory and run `crossbar start`.
+
+By looking at the simple code of the application you can see sample usage of the library and have a taste of the capability of the WAMP protocol.
+
 
 ## API
 
@@ -42,14 +46,13 @@ MDWamp is made of a main class `MDWamp` that does all the work, it makes connect
 
 To instantiate it you must specify a transport (since WAMP can support different transports) in accord to the server you're connecting to.   
 
-Now WebSocket is the only supported transport (raw socket is on the way).  
+Right now two transports are implemented `WebSocket` and `raw sockets`
 
 *Note that the object `MDWamp` must be a retained property or ARC will get rid of it ahead of time.*
 
-You start a connection initiating an MDWamp object:
+First you have to choose a transport (ie. WebSocket) and init the `MDWamp` object with it:
 	
-	// You can specify a particular protocol version to use like kMDWampVersion2JSON, kMDWampVersion2Msgpack or use default
-	MDWampTransportWebSocket *websocket = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080/ws"] protocolVersions:@[kMDWampVersion2]];   
+	MDWampTransportWebSocket *websocket = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:@"ws://localhost:8080/ws"] protocolVersions:@[kMDWampProtocolWamp2msgpack, kMDWampProtocolWamp2json]];   
 	
     _wamp = [[MDWamp alloc] initWithTransport:websocket realm:@"realm1" delegate:self];
 
@@ -76,7 +79,7 @@ You can also provide similar callback instead of using the delegate:
 	@property (nonatomic, copy) void (^onSessionEstablished)(MDWamp *client, NSDictionary *info);
 	@property (nonatomic, copy) void (^onSessionClosed)(MDWamp *client, NSInteger code, NSString *reason, NSDictionary *details);
 
-The Header files of `MDWamp` class and of the Delegates are all well commented so the API is trivial, anyway here are some common usage examples
+The Header files of `MDWamp` class and of the Delegates are all well commented so the API is trivial. Anyway here are some common usage examples
 
 ### Call a remote procedure:
 	
@@ -88,7 +91,7 @@ The Header files of `MDWamp` class and of the Delegates are all well commented s
 	    }
     }];
 	
-### Publish to a topic] this json object `{"user" : ["foo", "bar"]}`:
+### Publish to a topic this json object `{"user" : ["foo", "bar"]}`:
 
 	[_wamp publishTo:@"com.topic.hello" args:nil kw:@{@"user":@[@"foo", @"bar"]} options:@{@"acknowledge":@YES, @"exclude_me":@NO} result:^(NSError *error) {
 		
@@ -131,9 +134,17 @@ To do that you need to install an instance of crossbar.io and start it, leave al
 Enjoy :)
 
 
-## Changes
+## Changes 
 
-### 2.0
+
+### 2.1.0
+- added RawSocketTransport
+- added iOS Test application target
+- Removed mdwamp version 1 related code
+- Refactoring of some part of the codebase to not handle anymore version 1/2 differences
+
+
+### 2.0.0
 
 - Addopted WAMP v2 [basic protocol](https://github.com/tavendo/WAMP/blob/master/spec/basic.md)
 - new library interface, due to protocol changes
@@ -151,17 +162,16 @@ Enjoy :)
 
 ## Roadmap
 
-- make an iOS App Target in the project to show all the features
-- implement raw socket transport
+- <strike>make an iOS App Target in the project to show all the features</strike>
+- <strike>implement raw socket transport </strike>
 - implement the [advanced protocol](https://github.com/tavendo/WAMP/blob/master/spec/advanced.md) spec
 -  make the library also a Server Library integrating with GCDWebServer
 
 
 
-##Authors & contributors
+##Authors
 - [mogui](https://github.com/mogui/)
-- [cvanderschuere](https://github.com/cvanderschuere)
-- [JohnFricker](https://github.com/JohnFricker)
+- [several contributors](https://github.com/mogui/MDWamp/graphs/contributors)
 
 ## Copyright
 Copyright © 2012 Niko Usai. See LICENSE for details.   
