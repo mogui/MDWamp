@@ -102,7 +102,7 @@ NSString *const kMDWampProtocolWamp2msgpack = @"wamp.2.msgpack";
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
-    NSError *error = [NSError errorWithDomain:kMDWampErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey: reason}];
+    NSError *error = [NSError errorWithDomain:kMDWampErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey: reason ? reason : @""}];
      [self.delegate transportDidCloseWithError:error];
 }
 
