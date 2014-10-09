@@ -25,7 +25,7 @@
 FOUNDATION_EXPORT NSString *const kMDWampHello        ;
 FOUNDATION_EXPORT NSString *const kMDWampWelcome      ;
 FOUNDATION_EXPORT NSString *const kMDWampAbort        ;
-FOUNDATION_EXPORT NSString *const kMDWampChallange    ;
+FOUNDATION_EXPORT NSString *const kMDWampChallenge    ;
 FOUNDATION_EXPORT NSString *const kMDWampAuthenticate ;
 FOUNDATION_EXPORT NSString *const kMDWampGoodbye      ;
 FOUNDATION_EXPORT NSString *const kMDWampHeartbeat    ;

@@ -25,8 +25,6 @@
 #import "MDWamp.h"
 #import "NSString+MDString.h"
 
-#define kMDWampSerializationMock @"MDWampSerializationMock"
-
 @interface MDWampTests : XCTAsyncTestCase
 @property (strong, nonatomic) MDWamp *wamp;
 @property (strong, nonatomic) MDWampClientDelegateMock *delegate;
@@ -164,9 +162,6 @@
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
-- (void)testSubscribeLegacy {
-    
-}
 
 - (void)testUnsubscribe
 {
@@ -428,5 +423,9 @@
 - (void)testYieldFails {
     
 }
+
+
+
+
 
 @end

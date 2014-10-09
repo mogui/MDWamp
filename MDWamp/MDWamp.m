@@ -19,6 +19,7 @@
 //
 
 #include <stdlib.h>
+#import <CommonCrypto/CommonCrypto.h>
 
 #import "MDWamp.h"
 #import "NSString+MDString.h"
@@ -27,12 +28,7 @@
 #import "MDWampSerializations.h"
 #import "MDWampMessageFactory.h"
 
-#pragma Constants
 
-NSString * const kMDWampRolePublisher   = @"publisher";
-NSString * const kMDWampRoleSubscriber  = @"subscriber";
-NSString * const kMDWampRoleCaller      = @"caller";
-NSString * const kMDWampRoleCallee      = @"callee";
 
 
 @interface MDWamp () <MDWampTransportDelegate, NSURLConnectionDelegate>
@@ -56,6 +52,10 @@ NSString * const kMDWampRoleCallee      = @"callee";
 @property (nonatomic, strong) NSMutableDictionary *rpcRegisteredUri;
 @property (nonatomic, strong) NSMutableDictionary *rpcRegisteredProcedures;
 
+@property (nonatomic, strong) NSTimer *hbTimer;
+@property (nonatomic, assign) int hbIncomingSeq;
+@property (nonatomic, assign) int hbOutgoingSeq;
+
 @end
 
 
@@ -70,9 +70,9 @@ NSString * const kMDWampRoleCallee      = @"callee";
     self = [super init];
 	if (self) {
 		
-        _explicitSessionClose = NO;
-        _sessionEstablished = NO;
-        _goodbyeSent        = NO;
+        self.explicitSessionClose = NO;
+        self.sessionEstablished   = NO;
+        self.goodbyeSent          = NO;
         
         self.realm      = realm;
         self.delegate   = delegate;
@@ -89,7 +89,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
         self.subscriptionID         = [[NSMutableDictionary alloc] init];
         self.publishRequests        = [[NSMutableDictionary alloc] init];
         
-        self.roles = @{kMDWampRolePublisher:@{}, kMDWampRoleSubscriber:@{}, kMDWampRoleCaller:@{}, kMDWampRoleCallee:@{}};
 	}
 	return self;
 }
@@ -124,8 +123,16 @@ NSString * const kMDWampRoleCallee      = @"callee";
 - (void) disconnect
 {
     _explicitSessionClose = YES;
+    
+    if (self.hbTimer) {
+        [self.hbTimer invalidate];
+        self.hbTimer = nil;
+        self.hbIncomingSeq = 0;
+        self.hbOutgoingSeq = 0;
+    }
+    
 	[self.transport close];
-
+    
     if (self.onSessionClosed) {
         self.onSessionClosed(self, MDWampConnectionClosed, @"MDWamp.session.explicit_closed", nil);
     }
@@ -149,21 +156,48 @@ NSString * const kMDWampRoleCallee      = @"callee";
 #pragma mark -
 #pragma mark MDWampTransport Delegate
 
+///
 - (void)transportDidOpenWithSerialization:(NSString*)serialization
 {
     MDWampDebugLog(@"websocket connection opened");
-    
+
     _serialization = serialization;
-    
+
     // Init the serializator
     Class ser = NSClassFromString(self.serialization);
     NSAssert(ser != nil, @"Serialization %@ doesn't exists", ser);
     self.serializator = [[ser alloc] init];
-    
+
+    NSDictionary* helloDetails = nil;
+    if (!self.config) {
+        // if no configuration is setted, we default as all roles
+        helloDetails = @{
+            @"roles" : @{
+                kMDWampRolePublisher : @{},
+                kMDWampRoleSubscriber : @{},
+                kMDWampRoleCaller : @{},
+                kMDWampRoleCallee : @{}
+            }
+        };
+    }
+    else {
+        helloDetails = [self.config getHelloDetails];
+    }
+
     // send hello message
-    MDWampHello *hello = [[MDWampHello alloc] initWithPayload:@[self.realm, @{@"roles":self.roles}]];
+    MDWampHello* hello =
+        [[MDWampHello alloc] initWithPayload:@[ self.realm, helloDetails ]];
     hello.realm = self.realm;
     [self sendMessage:hello];
+
+    if (self.config != 0 && self.config.heartbeatInterval > 0) {
+        self.hbTimer =
+            [NSTimer scheduledTimerWithTimeInterval:self.config.heartbeatInterval
+                                             target:self
+                                           selector:@selector(fireHeartbeat)
+                                           userInfo:nil
+                                            repeats:YES];
+    }
 }
 
 - (void)transportDidReceiveMessage:(NSData *)message
@@ -232,9 +266,9 @@ NSString * const kMDWampRoleCallee      = @"callee";
         
         MDWampWelcome *welcome = (MDWampWelcome *)message;
         _sessionId = [welcome.session stringValue];
-    
+
         NSDictionary *details = welcome.details;
-        
+// TODO: maybe do something with details? save some auth related stuff??
         self.sessionEstablished = YES;
         
         if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:sessionEstablished:)]) {
@@ -246,7 +280,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
         }
         
     } else if ([message isKindOfClass:[MDWampAbort class]]) {
-        
+        #pragma mark MDWampAbort
         MDWampAbort *abort = (MDWampAbort *)message;
         _explicitSessionClose = YES;
         [self.transport close];
@@ -282,7 +316,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
         }
         
     } else if ([message isKindOfClass:[MDWampError class]]) {
-        
+        #pragma mark MDWampError
         // Manage different errors based on the type code
         // that relates to message classes
         
@@ -503,6 +537,64 @@ NSString * const kMDWampRoleCallee      = @"callee";
         }
 
         [self sendMessage:yield];
+    /**
+     * ADvanced Protocol
+     */
+    } else if ([message isKindOfClass:[MDWampHeartbeat class]]) {
+        
+        MDWampHeartbeat *beat = (MDWampHeartbeat *)message;
+        self.hbIncomingSeq = [beat.outgoingSeq intValue];
+    #pragma mark MDWampChallenge
+    } else if ([message isKindOfClass:[MDWampChallenge class]]) {
+        MDWampChallenge *challenge = (MDWampChallenge *)message;
+        
+        // WAMP CRA
+        // If I've no config object something is wrong :P
+        // Default WampClient hasn't any auth
+        if ([challenge.authMethod isEqualTo:kMDWampAuthMethodCRA] &&  self.config && self.config.sharedSecret) {
+            
+            // deferred challenge signing
+            if (self.config && self.config.deferredWampCRASigningBlock) {
+                
+                self.config.deferredWampCRASigningBlock(challenge.extra[@"challenge"], ^(NSString *signature) {
+                    // Sending auth message
+                    MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[signature, @{}]];
+                    [self sendMessage:auth];
+
+                });
+                
+            } else {
+                // calculate the signature
+                NSData *key = nil;
+                
+                // if we have salt, keylen, iterations
+                // we calculate the  PBKDF2
+                if (challenge.extra[@"salt"] && challenge.extra[@"keylen"] && challenge.extra[@"iterations"]) {
+                    NSMutableData *hash = [NSMutableData dataWithLength:[challenge.extra[@"keylen"] integerValue] ];
+                    NSData *pass = [self.config.sharedSecret dataUsingEncoding:NSUTF8StringEncoding];
+                    NSData *salt = [challenge.extra[@"salt"] dataUsingEncoding:NSUTF8StringEncoding];
+                    CCKeyDerivationPBKDF(kCCPBKDF2, pass.bytes, pass.length, salt.bytes, salt.length, kCCPRFHmacAlgSHA256, [challenge.extra[@"iterations"] intValue], hash.mutableBytes, [challenge.extra[@"keylen"] integerValue]);
+                    key = hash;
+                } else {
+                    key = [self.config.sharedSecret dataUsingEncoding:NSUTF8StringEncoding];
+                    
+                }
+                
+                NSData *data = [challenge.extra[@"challenge"] dataUsingEncoding:NSUTF8StringEncoding];
+                NSMutableData* hash = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH ];
+                CCHmac(kCCHmacAlgSHA256, key.bytes, key.length, data.bytes, data.length, hash.mutableBytes);
+                NSString *signature = [hash base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                
+                // Sending auth message
+                MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[signature, @{}]];
+                [self sendMessage:auth];
+            }
+
+        // Ticket Based Auth
+        } else if ([challenge.authMethod isEqualTo:kMDWampAuthMethodTicket] &&  self.config && self.config.ticket) {
+            MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[self.config.ticket, @{}]];
+            [self sendMessage:auth];
+        }
     }
 }
 
@@ -517,7 +609,16 @@ NSString * const kMDWampRoleCallee      = @"callee";
     [self.transport send:packed];
 }
 
-
+- (void) fireHeartbeat
+{
+    MDWampHeartbeat *beat = [[MDWampHeartbeat alloc] init];
+    beat.incomingSeq = [NSNumber numberWithInt: self.hbIncomingSeq];
+    // increment outgoing seq
+    self.hbOutgoingSeq++;
+    beat.outgoingSeq = [NSNumber numberWithInt: self.hbOutgoingSeq];
+    
+    [self sendMessage:beat];
+}
 
 #pragma mark -
 #pragma mark Commands
