@@ -64,7 +64,7 @@ NSString *const kMDWampProtocolWamp2msgpack = @"wamp.2.msgpack";
     return (_socket!=nil)? _socket.readyState == SR_OPEN : NO;
 }
 
-- (void)send:(id)data
+- (void)send:(NSData *)data
 {
     [_socket send:data];
 }

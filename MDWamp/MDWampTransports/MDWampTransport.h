@@ -51,6 +51,6 @@
 /**
  *  Method to send data on the transport
  */
-- (void)send:(id)data;
+- (void)send:(NSData *)data;
 
 @end

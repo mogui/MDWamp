@@ -11,3 +11,6 @@
 [submodule "lib/xctest-additions"]
 	path = lib/xctest-additions
 	url = https://github.com/iheartradio/xctest-additions.git
+[submodule "lib/MPMessagePack"]
+	path = lib/MPMessagePack
+	url = git@github.com:gabriel/MPMessagePack.git
