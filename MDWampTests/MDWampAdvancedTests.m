@@ -150,6 +150,41 @@
 }
 
 
+
+- (void)testAuthWampCRAThreeLegged {
+    MDWampClientConfig *conf = [[MDWampClientConfig alloc] init];
+    conf.authmethods = @[kMDWampAuthMethodCRA];
+    conf.authid = @"guybrush";
+    conf.sharedSecret = SECRET;
+    [conf setDeferredWampCRASigningBlock:^(NSString *challange, void(^finishBLock)(NSString *signature) ) {
+        // do something with challenge
+        // call http service ....
+        NSString *sign = [challange substringToIndex:5];
+       // ... then call finish block
+        finishBLock(sign);
+    }];
+    
+    [_wamp setConfig:conf];
+    
+    [self prepare];
+
+    [_wamp connect];
+    
+    MDWampHello *msg = [self msgFromTransportAndCheckIsA:[MDWampHello class]];
+    XCTAssertEqualObjects(@"guybrush", msg.details[@"authid"]);
+    
+    // server response normal Challenge
+    MDWampChallenge* challenge = [[MDWampChallenge alloc] initWithPayload:@[ kMDWampAuthMethodCRA, @{ @"challenge" : @"{\"nonce\": \"LHRTC9zeOIrt_9U3\", \"authprovider\": \"userdb\", \"authid\": \"guybrush\",\"timestamp\": \"2014-06-22T16:36:25.448Z\",\"authmethod\": \"wampcra\", \"session\": 3251278072152162}" } ]];
+    
+    [_transport triggerDidReceiveMessage:[challenge marshall]];
+    NSString *signature = [challenge.extra[@"challenge"] substringToIndex:5]; // Yeah signature !!
+    MDWampAuthenticate *auth = [self msgFromTransportAndCheckIsA:[MDWampAuthenticate class]];
+
+    
+    XCTAssertEqualObjects(signature, auth.signature, @"Signature must be the same");
+    
+}
+
 - (void)testAuthTicket {
     MDWampClientConfig *conf = [[MDWampClientConfig alloc] init];
     conf.authmethods = @[kMDWampAuthMethodTicket];

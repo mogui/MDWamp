@@ -552,30 +552,43 @@
         // If I've no config object something is wrong :P
         // Default WampClient hasn't any auth
         if ([challenge.authMethod isEqualTo:kMDWampAuthMethodCRA] &&  self.config && self.config.sharedSecret) {
-
-            // calculate the signature
-            NSData *key = nil;
             
-            // if we have salt, keylen, iterations
-            // we calculate the  PBKDF2
-            if (challenge.extra[@"salt"] && challenge.extra[@"keylen"] && challenge.extra[@"iterations"]) {
-                NSMutableData *hash = [NSMutableData dataWithLength:[challenge.extra[@"keylen"] integerValue] ];
-                NSData *pass = [self.config.sharedSecret dataUsingEncoding:NSUTF8StringEncoding];
-                NSData *salt = [challenge.extra[@"salt"] dataUsingEncoding:NSUTF8StringEncoding];
-                CCKeyDerivationPBKDF(kCCPBKDF2, pass.bytes, pass.length, salt.bytes, salt.length, kCCPRFHmacAlgSHA256, [challenge.extra[@"iterations"] intValue], hash.mutableBytes, [challenge.extra[@"keylen"] integerValue]);
-                key = hash;
-            } else {
-                key = [self.config.sharedSecret dataUsingEncoding:NSUTF8StringEncoding];
+            // deferred challenge signing
+            if (self.config && self.config.deferredWampCRASigningBlock) {
                 
+                self.config.deferredWampCRASigningBlock(challenge.extra[@"challenge"], ^(NSString *signature) {
+                    // Sending auth message
+                    MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[signature, @{}]];
+                    [self sendMessage:auth];
+
+                });
+                
+            } else {
+                // calculate the signature
+                NSData *key = nil;
+                
+                // if we have salt, keylen, iterations
+                // we calculate the  PBKDF2
+                if (challenge.extra[@"salt"] && challenge.extra[@"keylen"] && challenge.extra[@"iterations"]) {
+                    NSMutableData *hash = [NSMutableData dataWithLength:[challenge.extra[@"keylen"] integerValue] ];
+                    NSData *pass = [self.config.sharedSecret dataUsingEncoding:NSUTF8StringEncoding];
+                    NSData *salt = [challenge.extra[@"salt"] dataUsingEncoding:NSUTF8StringEncoding];
+                    CCKeyDerivationPBKDF(kCCPBKDF2, pass.bytes, pass.length, salt.bytes, salt.length, kCCPRFHmacAlgSHA256, [challenge.extra[@"iterations"] intValue], hash.mutableBytes, [challenge.extra[@"keylen"] integerValue]);
+                    key = hash;
+                } else {
+                    key = [self.config.sharedSecret dataUsingEncoding:NSUTF8StringEncoding];
+                    
+                }
+                
+                NSData *data = [challenge.extra[@"challenge"] dataUsingEncoding:NSUTF8StringEncoding];
+                NSMutableData* hash = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH ];
+                CCHmac(kCCHmacAlgSHA256, key.bytes, key.length, data.bytes, data.length, hash.mutableBytes);
+                NSString *signature = [hash base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                
+                // Sending auth message
+                MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[signature, @{}]];
+                [self sendMessage:auth];
             }
-            
-            NSData *data = [challenge.extra[@"challenge"] dataUsingEncoding:NSUTF8StringEncoding];
-            NSMutableData* hash = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH ];
-            CCHmac(kCCHmacAlgSHA256, key.bytes, key.length, data.bytes, data.length, hash.mutableBytes);
-            NSString *signature = [hash base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-            // Sending auth message
-            MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[signature, @{}]];
-            [self sendMessage:auth];
 
         // Ticket Based Auth
         } else if ([challenge.authMethod isEqualTo:kMDWampAuthMethodTicket] &&  self.config && self.config.ticket) {

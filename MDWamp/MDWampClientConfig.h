@@ -60,6 +60,13 @@ extern NSString* const kMDWampAuthMethodTicket;
 @property (nonatomic, strong) NSString *authid;
 
 /**
+ *  Block used to defer the signing of a Wamp CRA challange
+ * in the block you do your processing to sign the challange (async if you need)
+ * once getted the signature call
+ */
+@property (nonatomic, strong) void (^deferredWampCRASigningBlock)( NSString *challange, void(^finishBLock)(NSString *signature) );
+
+/**
  *  returns a suitable Dictionary to be used as details settings for an HELLO message
  *
  *  @return NSDictionary hello details dictionary
