@@ -280,7 +280,7 @@
         }
         
     } else if ([message isKindOfClass:[MDWampAbort class]]) {
-        
+        #pragma mark MDWampAbort
         MDWampAbort *abort = (MDWampAbort *)message;
         _explicitSessionClose = YES;
         [self.transport close];
@@ -576,7 +576,11 @@
             // Sending auth message
             MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[signature, @{}]];
             [self sendMessage:auth];
-            
+
+        // Ticket Based Auth
+        } else if ([challenge.authMethod isEqualTo:kMDWampAuthMethodTicket] &&  self.config && self.config.ticket) {
+            MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[self.config.ticket, @{}]];
+            [self sendMessage:auth];
         }
     }
 }

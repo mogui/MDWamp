@@ -15,6 +15,7 @@ NSString * const kMDWampRoleSubscriber  = @"subscriber";
 NSString * const kMDWampRoleCaller      = @"caller";
 NSString * const kMDWampRoleCallee      = @"callee";
 NSString * const kMDWampAuthMethodCRA   = @"wampcra";
+NSString * const kMDWampAuthMethodTicket      = @"ticket";
 
 @interface MDWampClientConfig()
 
@@ -47,13 +48,22 @@ NSString * const kMDWampAuthMethodCRA   = @"wampcra";
         d[@"authid"] = self.authid;
     }
     
-    // Checkings of integrity
+    // Integrity checks
     if ([self.authmethods containsObject:kMDWampAuthMethodCRA] && (!self.authid || !self.sharedSecret) ) {
         // if wampcra MUST be provided authid
 #ifdef DEBUG
         [NSException raise:@"it.mogui.mdwamp" format:@"Inconsistent MDWampClientConfig with wampcra an authid and sharedSecred must be provided"];
 #else
         MDWampDebugLog(@"Inconsistent MDWampClientConfig with wampcra an authid must be provided");
+#endif
+    }
+    
+    if ([self.authmethods containsObject:kMDWampAuthMethodTicket] && (!self.authid || !self.ticket) ) {
+        // if wampcra MUST be provided authid
+#ifdef DEBUG
+        [NSException raise:@"it.mogui.mdwamp" format:@"Inconsistent MDWampClientConfig with ticket based auth an authid and ticket must be provided"];
+#else
+        MDWampDebugLog(@"Inconsistent MDWampClientConfig with ticket based auth an authid and ticket must be provided");
 #endif
     }
     

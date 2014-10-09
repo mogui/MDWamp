@@ -149,4 +149,45 @@
     XCTAssertNotNil(_wamp.sessionId , @"Must have session");
 }
 
+
+- (void)testAuthTicket {
+    MDWampClientConfig *conf = [[MDWampClientConfig alloc] init];
+    conf.authmethods = @[kMDWampAuthMethodTicket];
+    conf.authid = @"guybrush";
+    conf.ticket = SECRET;
+    [_wamp setConfig:conf];
+    
+    [self prepare];
+    [_wamp connect];
+    
+    MDWampHello *msg = [self msgFromTransportAndCheckIsA:[MDWampHello class]];
+    XCTAssertEqualObjects(@"guybrush", msg.details[@"authid"]);
+    
+    // server response normal Challenge
+    MDWampChallenge* challenge = [[MDWampChallenge alloc] initWithPayload:@[ kMDWampAuthMethodTicket, @{} ]];
+    
+    [_transport triggerDidReceiveMessage:[challenge marshall]];
+    
+    MDWampAuthenticate *auth = [self msgFromTransportAndCheckIsA:[MDWampAuthenticate class]];
+    
+    XCTAssertEqualObjects(SECRET, auth.signature, @"Signature must be the same");
+    
+    // auth succede simulate welcome message form server
+    MDWampWelcome *welcome = [[MDWampWelcome alloc] init];
+    welcome.session = [NSNumber numberWithInt:[@123123234324 intValue]];
+    welcome.details = @{
+                        @"serverIdent" : @"MDWampServer",
+                        @"authid" : @"peter",
+                        @"authrole" : @"user",
+                        @"authmethod" : @"wampcra",
+                        @"authprovider" : @"userdb",
+                        };
+    
+    [_transport triggerDidReceiveMessage:[welcome marshall]];
+    
+    XCTAssertTrue([_wamp isConnected], @"must be connected");
+    XCTAssertNotNil(_wamp.sessionId , @"Must have session");
+}
+
+
 @end
