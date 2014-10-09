@@ -109,12 +109,18 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
 
 - (void)testChallangeCode
 {
-    self.payload = @[@4,  @{@"message": @"The realm does not exist."}, @"wamp.error.no_such_realm"];
+    makeMessage(MDWampChallenge, (@[@"simple", @{}]) );
+    testMarshall2(@4);
+    msgIntegrity(msg.authMethod, 0)
+    msgIntegrity(msg.extra, 1)
 }
 
 - (void)testAuthenticateCode
 {
-    self.payload = @[@5,  @{@"message": @"The realm does not exist."}, @"wamp.error.no_such_realm"];
+    makeMessage(MDWampAuthenticate, (@[@"76YASTFDa8s7das8d6", @{}]) );
+    testMarshall2(@5);
+    msgIntegrity(msg.signature, 0)
+    msgIntegrity(msg.extra, 1)
 }
 
 - (void)testGoodbye
@@ -131,7 +137,11 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
 
 - (void)testHeartbitCode
 {
-    self.payload = @[@7,  @{@"message": @"The realm does not exist."}, @"wamp.error.no_such_realm"];
+    makeMessage(MDWampHeartbeat, (@[@3, @3, @"meh :/"]) );
+    testMarshall2(@7);
+    msgIntegrity(msg.incomingSeq, 0)
+    msgIntegrity(msg.outgoingSeq, 1)
+    msgIntegrity(msg.discard, 2)
 }
 
 - (void)testError {
@@ -288,4 +298,17 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     msgIntegrity(msg.argumentsKw, 3);
 }
 
+- (void) testCancel {
+    makeMessage(MDWampCancel, (@[@123019283, @{}]) );
+    testMarshall2(@49);
+    msgIntegrity(msg.request, 0)
+    msgIntegrity(msg.options, 1)
+}
+
+- (void) testInterrupt {
+    makeMessage(MDWampInterrupt, (@[@123019283, @{}]) );
+    testMarshall2(@69);
+    msgIntegrity(msg.request, 0)
+    msgIntegrity(msg.options, 1)
+}
 @end

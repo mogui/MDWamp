@@ -49,4 +49,9 @@
 #import "MDWampInvocation.h"
 #import "MDWampYield.h"
 
+#import "MDWampChallenge.h"
+#import "MDWampAuthenticate.h"
+#import "MDWampHeartbeat.h"
+#import "MDWampCancel.h"
+#import "MDWampInterrupt.h"
 #endif
