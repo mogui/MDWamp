@@ -10,31 +10,79 @@
 	<string>MDWamp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>740CB0A1-3A79-40B2-9E6E-0DE188334BD3</key>
+		<key>04446D0907D972D22B547153E50BABA9DD3C1A71</key>
+		<string>https://github.com/msgpack/msgpack-objectivec.git</string>
+		<key>1B6FE545B8D3EC80F41806ED22174EE41CBC43A0</key>
+		<string>https://github.com/iheartradio/xctest-additions.git</string>
+		<key>1C75F1C5CFCB95B3702F6F632FA05ED5244B519E</key>
+		<string>https://github.com/robbiehanson/CocoaAsyncSocket.git</string>
+		<key>65D58A67FEF44BCFD55A1DA7714DB9E9B2A1548B</key>
 		<string>ssh://github.com/mogui/MDWamp.git</string>
+		<key>ABB939127996C66F7E852A780552ADEEF03C6B13</key>
+		<string>https://github.com/square/SocketRocket.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MDWamp.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>740CB0A1-3A79-40B2-9E6E-0DE188334BD3</key>
+		<key>04446D0907D972D22B547153E50BABA9DD3C1A71</key>
+		<string>../../lib/msgpack-objectivec</string>
+		<key>1B6FE545B8D3EC80F41806ED22174EE41CBC43A0</key>
+		<string>../../lib/xctest-additions</string>
+		<key>1C75F1C5CFCB95B3702F6F632FA05ED5244B519E</key>
+		<string>../../lib/CocoaAsyncSocket</string>
+		<key>65D58A67FEF44BCFD55A1DA7714DB9E9B2A1548B</key>
 		<string>../..</string>
+		<key>ABB939127996C66F7E852A780552ADEEF03C6B13</key>
+		<string>../../lib/SocketRocket</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/mogui/MDWamp.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>740CB0A1-3A79-40B2-9E6E-0DE188334BD3</string>
+	<string>65D58A67FEF44BCFD55A1DA7714DB9E9B2A1548B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>740CB0A1-3A79-40B2-9E6E-0DE188334BD3</string>
+			<string>1C75F1C5CFCB95B3702F6F632FA05ED5244B519E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CocoaAsyncSocket</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>65D58A67FEF44BCFD55A1DA7714DB9E9B2A1548B</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MDWamp</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>04446D0907D972D22B547153E50BABA9DD3C1A71</string>
+			<key>IDESourceControlWCCName</key>
+			<string>msgpack-objectivec</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>ABB939127996C66F7E852A780552ADEEF03C6B13</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SocketRocket</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1B6FE545B8D3EC80F41806ED22174EE41CBC43A0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>xctest-additions</string>
 		</dict>
 	</array>
 </dict>

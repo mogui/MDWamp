@@ -7,3 +7,6 @@
 [submodule "lib/CocoaAsyncSocket"]
 	path = lib/CocoaAsyncSocket
 	url = https://github.com/robbiehanson/CocoaAsyncSocket.git
+[submodule "lib/xctest-additions"]
+	path = lib/xctest-additions
+	url = https://github.com/iheartradio/xctest-additions.git
