@@ -24,7 +24,7 @@
 NSString *const kMDWampHello        = @"MDWampHello";
 NSString *const kMDWampWelcome      = @"MDWampWelcome";
 NSString *const kMDWampAbort        = @"MDWampAbort";
-NSString *const kMDWampChallange    = @"MDWampChallange";
+NSString *const kMDWampChallenge    = @"MDWampChallenge";
 NSString *const kMDWampAuthenticate = @"MDWampAuthenticate";
 NSString *const kMDWampGoodbye      = @"MDWampGoodbye";
 NSString *const kMDWampHeartbeat    = @"MDWampHeartbeat";
@@ -46,7 +46,6 @@ NSString *const kMDWampUnregistered = @"MDWampUnregistered";
 NSString *const kMDWampInvocation   = @"MDWampInvocation";
 NSString *const kMDWampInterrupt    = @"MDWampInterrupt";
 NSString *const kMDWampYield        = @"MDWampYield";
-
 
 @interface MDWampMessageFactory ()
     @property (nonatomic, strong) NSDictionary *messageMapping;
@@ -70,7 +69,7 @@ NSString *const kMDWampYield        = @"MDWampYield";
                                 @1  : kMDWampHello,
                                 @2  : kMDWampWelcome,
                                 @3  : kMDWampAbort,
-                                @4  : kMDWampChallange,
+                                @4  : kMDWampChallenge,
                                 @5  : kMDWampAuthenticate,
                                 @6  : kMDWampGoodbye,
                                 @7  : kMDWampHeartbeat,
