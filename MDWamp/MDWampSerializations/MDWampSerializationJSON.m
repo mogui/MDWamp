@@ -22,17 +22,17 @@
 
 @implementation MDWampSerializationJSON
 
-- (id) pack:(NSArray*)arguments
+- (NSData *) pack:(NSArray*)arguments
 {
     NSError *error = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arguments options:0 error:&error];
     if (error) {
         return nil;
     }
-    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    return jsonData;
 }
 
-- (NSArray*) unpack:(id)data
+- (NSArray*) unpack:(NSData *)data
 {
     NSData *d = data;
     if (![data isKindOfClass:[NSData class]]) {

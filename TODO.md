@@ -1,9 +1,10 @@
 # README
 - document Wamp cra auth with an example
 
+# GO
+- resolve issues msg pack
 
 # Advanced profile
-
 - Transports
    * Batched Transport
    * Multiplexed Transport

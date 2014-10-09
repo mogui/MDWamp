@@ -19,20 +19,22 @@
 //
 
 #import "MDWampSerializationMsgpack.h"
-#import "MessagePack.h"
+#import "MPMessagePack.h"
+
 
 @implementation MDWampSerializationMsgpack
-- (id) pack:(NSArray*)arguments
+- (NSData *) pack:(NSArray*)arguments
 {
-    return [arguments messagePack];
+    return [arguments mp_messagePack];
 }
 
-- (NSArray*) unpack:(id)data
+- (NSArray*) unpack:(NSData *)data
 {
-    NSData *d = data;
-    if (![data isKindOfClass:[NSData class]]) {
-        d = [(NSString*)data dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    NSArray *unpacked = [MPMessagePackReader readData:data error:&error];
+    if (error) {
+        return nil;
     }
-    return [d messagePackParse];
+    return unpacked;
 }
 @end
