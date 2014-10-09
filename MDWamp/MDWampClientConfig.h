@@ -16,6 +16,7 @@ extern NSString* const kMDWampRoleCallee;
 
 // Auth methods
 extern NSString* const kMDWampAuthMethodCRA;
+extern NSString* const kMDWampAuthMethodTicket;
 
 @interface MDWampClientConfig : NSObject
 
@@ -35,6 +36,11 @@ extern NSString* const kMDWampAuthMethodCRA;
  *  Shared secret to use in wampCRA
  */
 @property (nonatomic, strong) NSString *sharedSecret;
+
+/**
+ *  Ticket used with ticket-based Auth
+ */
+@property (nonatomic, strong) NSString *ticket;
 
 /**
  *  Similar to what browsers do with the User-Agent HTTP header, 
