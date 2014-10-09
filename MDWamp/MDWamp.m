@@ -27,12 +27,7 @@
 #import "MDWampSerializations.h"
 #import "MDWampMessageFactory.h"
 
-#pragma Constants
 
-NSString * const kMDWampRolePublisher   = @"publisher";
-NSString * const kMDWampRoleSubscriber  = @"subscriber";
-NSString * const kMDWampRoleCaller      = @"caller";
-NSString * const kMDWampRoleCallee      = @"callee";
 
 
 @interface MDWamp () <MDWampTransportDelegate, NSURLConnectionDelegate>
@@ -56,6 +51,10 @@ NSString * const kMDWampRoleCallee      = @"callee";
 @property (nonatomic, strong) NSMutableDictionary *rpcRegisteredUri;
 @property (nonatomic, strong) NSMutableDictionary *rpcRegisteredProcedures;
 
+@property (nonatomic, strong) NSTimer *hbTimer;
+@property (nonatomic, assign) int hbIncomingSeq;
+@property (nonatomic, assign) int hbOutgoingSeq;
+
 @end
 
 
@@ -70,9 +69,9 @@ NSString * const kMDWampRoleCallee      = @"callee";
     self = [super init];
 	if (self) {
 		
-        _explicitSessionClose = NO;
-        _sessionEstablished = NO;
-        _goodbyeSent        = NO;
+        self.explicitSessionClose = NO;
+        self.sessionEstablished   = NO;
+        self.goodbyeSent          = NO;
         
         self.realm      = realm;
         self.delegate   = delegate;
@@ -89,7 +88,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
         self.subscriptionID         = [[NSMutableDictionary alloc] init];
         self.publishRequests        = [[NSMutableDictionary alloc] init];
         
-        self.roles = @{kMDWampRolePublisher:@{}, kMDWampRoleSubscriber:@{}, kMDWampRoleCaller:@{}, kMDWampRoleCallee:@{}};
 	}
 	return self;
 }
@@ -124,8 +122,16 @@ NSString * const kMDWampRoleCallee      = @"callee";
 - (void) disconnect
 {
     _explicitSessionClose = YES;
+    
+    if (self.hbTimer) {
+        [self.hbTimer invalidate];
+        self.hbTimer = nil;
+        self.hbIncomingSeq = 0;
+        self.hbOutgoingSeq = 0;
+    }
+    
 	[self.transport close];
-
+    
     if (self.onSessionClosed) {
         self.onSessionClosed(self, MDWampConnectionClosed, @"MDWamp.session.explicit_closed", nil);
     }
@@ -149,6 +155,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
 #pragma mark -
 #pragma mark MDWampTransport Delegate
 
+///
 - (void)transportDidOpenWithSerialization:(NSString*)serialization
 {
     MDWampDebugLog(@"websocket connection opened");
@@ -160,10 +167,32 @@ NSString * const kMDWampRoleCallee      = @"callee";
     NSAssert(ser != nil, @"Serialization %@ doesn't exists", ser);
     self.serializator = [[ser alloc] init];
     
+    NSDictionary *helloDetails = nil;
+    if (!self.config) {
+        // if no configuration is setted, we default as all roles
+        helloDetails = @{
+          @"roles" : @{
+            kMDWampRolePublisher : @{},
+            kMDWampRoleSubscriber : @{},
+            kMDWampRoleCaller : @{},
+            kMDWampRoleCallee : @{}
+          }
+        };
+    } else {
+        helloDetails = [self.config getHelloDetails];
+    }
+    
     // send hello message
-    MDWampHello *hello = [[MDWampHello alloc] initWithPayload:@[self.realm, @{@"roles":self.roles}]];
+    MDWampHello *hello = [[MDWampHello alloc] initWithPayload:@[self.realm, helloDetails]];
     hello.realm = self.realm;
     [self sendMessage:hello];
+    
+    if (self.config != 0 && self.config.heartbeatInterval > 0) {
+        self.hbTimer = [NSTimer scheduledTimerWithTimeInterval:self.config.heartbeatInterval
+                                target:self
+                              selector:@selector(fireHeartbeat)
+                              userInfo:nil repeats:YES];
+    }
 }
 
 - (void)transportDidReceiveMessage:(NSData *)message
@@ -503,6 +532,9 @@ NSString * const kMDWampRoleCallee      = @"callee";
         }
 
         [self sendMessage:yield];
+    } else if ([message isKindOfClass:[MDWampHeartbeat class]]) {
+        MDWampHeartbeat *beat = (MDWampHeartbeat *)message;
+        self.hbIncomingSeq = [beat.outgoingSeq intValue];
     }
 }
 
@@ -517,7 +549,16 @@ NSString * const kMDWampRoleCallee      = @"callee";
     [self.transport send:packed];
 }
 
-
+- (void) fireHeartbeat
+{
+    MDWampHeartbeat *beat = [[MDWampHeartbeat alloc] init];
+    beat.incomingSeq = [NSNumber numberWithInt: self.hbIncomingSeq];
+    // increment outgoing seq
+    self.hbOutgoingSeq++;
+    beat.outgoingSeq = [NSNumber numberWithInt: self.hbOutgoingSeq];
+    
+    [self sendMessage:beat];
+}
 
 #pragma mark -
 #pragma mark Commands

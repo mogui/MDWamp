@@ -22,29 +22,29 @@
 #import "MDWampTransports.h"
 #import "MDWampClientDelegate.h"
 #import "MDWampMessages.h"
+#import "MDWampClientConfig.h"
 
 /**
  *  Wamp - Roles
  */
-extern NSString * const kMDWampRolePublisher   ;
-extern NSString * const kMDWampRoleSubscriber  ;
-extern NSString * const kMDWampRoleCaller      ;
-extern NSString * const kMDWampRoleCallee      ;
 
 typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
     MDWampConnectionAborted,
     MDWampConnectionClosed
 };
 
+/**
+ *  Main client class
+ */
 @interface MDWamp : NSObject
 
 /**
- * The server generated sessionId
+ * The server generated sessionId, readonly
  */
 @property (nonatomic, copy, readonly) NSString *sessionId;
 
 /**
- * Serialization choosed by the transport
+ * Serialization choosed by the transport, readonly
  */
 @property (nonatomic, readonly) NSString *serialization;
 
@@ -65,10 +65,9 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
 @property (nonatomic, copy) void (^onSessionClosed)(MDWamp *client, NSInteger code, NSString *reason, NSDictionary *details);
 
 /**
- *  An array of MDWampRoles the client will assume on connection
- *  default is all roles TODO: what makes sense to do with feature of advanced protocol??
+ *  Client configuration object, it's optional, you may use it to adjust some advanced protocol configurations
  */
-@property (nonatomic, strong) NSDictionary *roles;
+@property (nonatomic, strong) MDWampClientConfig *config;
 
 #pragma mark -
 #pragma mark Init methods
