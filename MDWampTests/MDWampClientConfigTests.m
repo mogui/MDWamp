@@ -25,13 +25,15 @@
     conf.roles = ROLES;
     conf.heartbeatInterval = 2;
     conf.agent = AGENT;
+    conf.authmethods = @[];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)testGetHelloDetails {
     // This is an example of a functional test case.
-    NSDictionary *d =  @{@"roles" : ROLES, @"agent" : AGENT};
-    XCTAssertEqualObjects(d, [conf getHelloDetails], @"Not proper details dictionary returned");
+    NSDictionary *d =  @{@"roles" : ROLES, @"agent" : AGENT, @"authmetods":@[]};
+    NSDictionary *hello = [conf getHelloDetails];
+    XCTAssertEqualObjects(d, hello, @"Not proper details dictionary returned");
 }
 
 @end
