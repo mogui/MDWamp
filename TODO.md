@@ -1,9 +1,13 @@
+# README
+- document Wamp cra auth with an example
+
+
 # Advanced profile
- 
 - Authentication
     * TLS Certificate-based Authentication
     * HTTP Cookie-based Authentication
     * WAMP Challenge-Response Authentication
+    	- Three-legged Authentication -> imlpement a block based  https://github.com/tavendo/WAMP/blob/master/spec/advanced.md#three-legged-authenticationdetachment for signing the challenge
     * One Time Token Authentication
 
 - Transports

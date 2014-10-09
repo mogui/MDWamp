@@ -25,8 +25,6 @@
 #import "MDWamp.h"
 #import "NSString+MDString.h"
 
-#define kMDWampSerializationMock @"MDWampSerializationMock"
-
 @interface MDWampTests : XCTAsyncTestCase
 @property (strong, nonatomic) MDWamp *wamp;
 @property (strong, nonatomic) MDWampClientDelegateMock *delegate;
@@ -242,39 +240,6 @@
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
-- (void)testHeartbeat {
-    
-    [_wamp disconnect]; // we must set heartbeat before connect
-    MDWampClientConfig *conf = [[MDWampClientConfig alloc] init];
-    conf.roles = @{
-      kMDWampRolePublisher : @{},
-      kMDWampRoleSubscriber : @{},
-      kMDWampRoleCaller : @{},
-      kMDWampRoleCallee : @{}
-      };
-    conf.heartbeatInterval = 1;
-    [_wamp setConfig:conf];
-    [_wamp connect];
-    
-    // wait for beat to be received
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        MDWampHeartbeat *msg = [self msgFromTransportAndCheckIsA:[MDWampHeartbeat class]];
-        XCTAssertEqualObjects(msg.incomingSeq, @0, @"Incoming must be 0 for first message");
-        XCTAssertEqualObjects(msg.outgoingSeq, @1, @"Out must be 1");
-        MDWampHeartbeat *beat = [[MDWampHeartbeat alloc] initWithPayload:@[@1, @1]];
-        [_transport triggerDidReceiveMessage:[beat marshall]];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            MDWampHeartbeat *msg = [self msgFromTransportAndCheckIsA:[MDWampHeartbeat class]];
-            XCTAssertEqualObjects(msg.incomingSeq, @1, @"Incoming must be 0 for first message");
-            XCTAssertEqualObjects(msg.outgoingSeq, @2, @"Out must be 1");
-            [self notify:kXCTUnitWaitStatusSuccess];
-        });
-    });
-
-    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:7];
-}
-
 - (void)testPublishWithError {
     [_wamp publishTo:@"com.myapp.mytopic1"
                 args:self.arrayPayload
@@ -458,6 +423,8 @@
 - (void)testYieldFails {
     
 }
+
+
 
 
 

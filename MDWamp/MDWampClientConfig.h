@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const kMDWampRolePublisher   ;
-extern NSString * const kMDWampRoleSubscriber  ;
-extern NSString * const kMDWampRoleCaller      ;
-extern NSString * const kMDWampRoleCallee      ;
+// ROles
+extern NSString* const kMDWampRolePublisher;
+extern NSString* const kMDWampRoleSubscriber;
+extern NSString* const kMDWampRoleCaller;
+extern NSString* const kMDWampRoleCallee;
+
+// Auth methods
+extern NSString* const kMDWampAuthMethodCRA;
 
 @interface MDWampClientConfig : NSObject
 
@@ -28,10 +32,26 @@ extern NSString * const kMDWampRoleCallee      ;
 @property (nonatomic, assign) double heartbeatInterval;
 
 /**
+ *  Shared secret to use in wampCRA
+ */
+@property (nonatomic, strong) NSString *sharedSecret;
+
+/**
  *  Similar to what browsers do with the User-Agent HTTP header, 
  *  HELLO message MAY disclose the WAMP implementation in use to its peer
  */
 @property (nonatomic, strong) NSString *agent;
+
+/**
+ *  list of authentication method that client is willing to use, currently implemented are:
+ *      wampcra - WAMP Challenge-Response Authentication
+ */
+@property (nonatomic, strong) NSArray *authmethods;
+
+/**
+ *  the authentication ID (e.g. username) the client wishes to authenticate as
+ */
+@property (nonatomic, strong) NSString *authid;
 
 /**
  *  returns a suitable Dictionary to be used as details settings for an HELLO message
@@ -39,4 +59,7 @@ extern NSString * const kMDWampRoleCallee      ;
  *  @return NSDictionary hello details dictionary
  */
 - (NSDictionary *) getHelloDetails;
+
+
+
 @end

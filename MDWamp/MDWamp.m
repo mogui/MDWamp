@@ -19,6 +19,7 @@
 //
 
 #include <stdlib.h>
+#import <CommonCrypto/CommonCrypto.h>
 
 #import "MDWamp.h"
 #import "NSString+MDString.h"
@@ -159,39 +160,43 @@
 - (void)transportDidOpenWithSerialization:(NSString*)serialization
 {
     MDWampDebugLog(@"websocket connection opened");
-    
+
     _serialization = serialization;
-    
+
     // Init the serializator
     Class ser = NSClassFromString(self.serialization);
     NSAssert(ser != nil, @"Serialization %@ doesn't exists", ser);
     self.serializator = [[ser alloc] init];
-    
-    NSDictionary *helloDetails = nil;
+
+    NSDictionary* helloDetails = nil;
     if (!self.config) {
         // if no configuration is setted, we default as all roles
         helloDetails = @{
-          @"roles" : @{
-            kMDWampRolePublisher : @{},
-            kMDWampRoleSubscriber : @{},
-            kMDWampRoleCaller : @{},
-            kMDWampRoleCallee : @{}
-          }
+            @"roles" : @{
+                kMDWampRolePublisher : @{},
+                kMDWampRoleSubscriber : @{},
+                kMDWampRoleCaller : @{},
+                kMDWampRoleCallee : @{}
+            }
         };
-    } else {
+    }
+    else {
         helloDetails = [self.config getHelloDetails];
     }
-    
+
     // send hello message
-    MDWampHello *hello = [[MDWampHello alloc] initWithPayload:@[self.realm, helloDetails]];
+    MDWampHello* hello =
+        [[MDWampHello alloc] initWithPayload:@[ self.realm, helloDetails ]];
     hello.realm = self.realm;
     [self sendMessage:hello];
-    
+
     if (self.config != 0 && self.config.heartbeatInterval > 0) {
-        self.hbTimer = [NSTimer scheduledTimerWithTimeInterval:self.config.heartbeatInterval
-                                target:self
-                              selector:@selector(fireHeartbeat)
-                              userInfo:nil repeats:YES];
+        self.hbTimer =
+            [NSTimer scheduledTimerWithTimeInterval:self.config.heartbeatInterval
+                                             target:self
+                                           selector:@selector(fireHeartbeat)
+                                           userInfo:nil
+                                            repeats:YES];
     }
 }
 
@@ -261,9 +266,9 @@
         
         MDWampWelcome *welcome = (MDWampWelcome *)message;
         _sessionId = [welcome.session stringValue];
-    
+
         NSDictionary *details = welcome.details;
-        
+// TODO: maybe do something with details? save some auth related stuff??
         self.sessionEstablished = YES;
         
         if (_delegate && [_delegate respondsToSelector:@selector(mdwamp:sessionEstablished:)]) {
@@ -311,7 +316,7 @@
         }
         
     } else if ([message isKindOfClass:[MDWampError class]]) {
-        
+        #pragma mark MDWampError
         // Manage different errors based on the type code
         // that relates to message classes
         
@@ -532,9 +537,47 @@
         }
 
         [self sendMessage:yield];
+    /**
+     * ADvanced Protocol
+     */
     } else if ([message isKindOfClass:[MDWampHeartbeat class]]) {
+        
         MDWampHeartbeat *beat = (MDWampHeartbeat *)message;
         self.hbIncomingSeq = [beat.outgoingSeq intValue];
+    #pragma mark MDWampChallenge
+    } else if ([message isKindOfClass:[MDWampChallenge class]]) {
+        MDWampChallenge *challenge = (MDWampChallenge *)message;
+        
+        // WAMP CRA
+        // If I've no config object something is wrong :P
+        // Default WampClient hasn't any auth
+        if ([challenge.authMethod isEqualTo:kMDWampAuthMethodCRA] &&  self.config && self.config.sharedSecret) {
+
+            // calculate the signature
+            NSData *key = nil;
+            
+            // if we have salt, keylen, iterations
+            // we calculate the  PBKDF2
+            if (challenge.extra[@"salt"] && challenge.extra[@"keylen"] && challenge.extra[@"iterations"]) {
+                NSMutableData *hash = [NSMutableData dataWithLength:[challenge.extra[@"keylen"] integerValue] ];
+                NSData *pass = [self.config.sharedSecret dataUsingEncoding:NSUTF8StringEncoding];
+                NSData *salt = [challenge.extra[@"salt"] dataUsingEncoding:NSUTF8StringEncoding];
+                CCKeyDerivationPBKDF(kCCPBKDF2, pass.bytes, pass.length, salt.bytes, salt.length, kCCPRFHmacAlgSHA256, [challenge.extra[@"iterations"] intValue], hash.mutableBytes, [challenge.extra[@"keylen"] integerValue]);
+                key = hash;
+            } else {
+                key = [self.config.sharedSecret dataUsingEncoding:NSUTF8StringEncoding];
+                
+            }
+            
+            NSData *data = [challenge.extra[@"challenge"] dataUsingEncoding:NSUTF8StringEncoding];
+            NSMutableData* hash = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH ];
+            CCHmac(kCCHmacAlgSHA256, key.bytes, key.length, data.bytes, data.length, hash.mutableBytes);
+            NSString *signature = [hash base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+            // Sending auth message
+            MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[signature, @{}]];
+            [self sendMessage:auth];
+            
+        }
     }
 }
 
