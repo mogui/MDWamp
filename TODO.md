@@ -3,10 +3,6 @@
 
 
 # Advanced profile
-- Authentication
-    * WAMP Challenge-Response Authentication
-    	- Three-legged Authentication -> imlpement a block based  https://github.com/tavendo/WAMP/blob/master/spec/advanced.md#three-legged-authenticationdetachment for signing the challenge
-    * One Time Token Authentication
 
 - Transports
    * Batched Transport
@@ -47,3 +43,4 @@
 	- TLS Certificate-based Authentication Out of the box with scoketrocket
 	- WAMP Challenge-Response Authentication
 	- HTTP Cookie-based Authentication no sense on mobile
+	- One Time Token Authentication
