@@ -64,7 +64,7 @@ typedef enum {
 }
 
 - (void)prepare {
-    [self prepare:self.selector];
+    [self prepare:self.invocation.selector];
 }
 
 - (void)prepare:(SEL)selector {
@@ -126,7 +126,7 @@ typedef enum {
     if (error == kXCTUnitAsyncErrorTimedOut) {
         XCTFail(@"Request timed out");
     } else if (error == kXCTUnitAsyncErrorInvalidStatus) {
-        XCTFail(@"Request finished with the wrong status: %ld != %ld", status, notifiedStatus_);
+        XCTFail(@"Request finished with the wrong status: %ld != %ld", (long)status, (long)notifiedStatus_);
     } else if (error == kXCTUnitAsyncErrorUnprepared) {
         XCTFail(@"Call prepare before calling asynchronous method and waitForStatus:timeout:");
     }
@@ -142,25 +142,25 @@ typedef enum {
 // Similar to _waitFor:timeout: but just runs the loops
 // From Robert Palmer, pauseForTimeout
 - (void)runForInterval:(NSTimeInterval)interval {
-	NSTimeInterval checkEveryInterval = 0.05;
-	NSDate *runUntilDate = [NSDate dateWithTimeIntervalSinceNow:interval];
+    NSTimeInterval checkEveryInterval = 0.05;
+    NSDate *runUntilDate = [NSDate dateWithTimeIntervalSinceNow:interval];
     
-	if (!_runLoopModes)
-		_runLoopModes = [NSArray arrayWithObjects:NSDefaultRunLoopMode, NSRunLoopCommonModes, nil];
+    if (!_runLoopModes)
+        _runLoopModes = [NSArray arrayWithObjects:NSDefaultRunLoopMode, NSRunLoopCommonModes, nil];
     
-	NSUInteger runIndex = 0;
+    NSUInteger runIndex = 0;
     
-	while ([runUntilDate compare:[NSDate dateWithTimeIntervalSinceNow:0]] == NSOrderedDescending) {
-		NSString *mode = [_runLoopModes objectAtIndex:(runIndex++ % [_runLoopModes count])];
+    while ([runUntilDate compare:[NSDate dateWithTimeIntervalSinceNow:0]] == NSOrderedDescending) {
+        NSString *mode = [_runLoopModes objectAtIndex:(runIndex++ % [_runLoopModes count])];
         
-		[lock_ unlock];
-		@autoreleasepool {
-			if (!mode || ![[NSRunLoop currentRunLoop] runMode:mode beforeDate:[NSDate dateWithTimeIntervalSinceNow:checkEveryInterval]])
-				// If there were no run loop sources or timers then we should sleep for the interval
-				[NSThread sleepForTimeInterval:checkEveryInterval];
-		}
-		[lock_ lock];
-	}
+        [lock_ unlock];
+        @autoreleasepool {
+            if (!mode || ![[NSRunLoop currentRunLoop] runMode:mode beforeDate:[NSDate dateWithTimeIntervalSinceNow:checkEveryInterval]])
+                // If there were no run loop sources or timers then we should sleep for the interval
+                [NSThread sleepForTimeInterval:checkEveryInterval];
+        }
+        [lock_ lock];
+    }
 }
 
 - (void)notify:(NSInteger)status {
