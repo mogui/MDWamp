@@ -1,4 +1,5 @@
 # What is it?
+[![Build Status](https://travis-ci.org/mogui/MDWamp.svg?branch=master)](https://travis-ci.org/mogui/MDWamp)
 
 MDWamp is a client side objective-C implementation of the WebSocket subprotocol [WAMP][wamp_link] (v2).  
 
