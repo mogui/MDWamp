@@ -7,10 +7,9 @@
 [submodule "lib/CocoaAsyncSocket"]
 	path = lib/CocoaAsyncSocket
 	url = git://github.com/robbiehanson/CocoaAsyncSocket.git
-	url = https://github.com/robbiehanson/CocoaAsyncSocket.git
 [submodule "lib/xctest-additions"]
 	path = lib/xctest-additions
-	url = https://github.com/iheartradio/xctest-additions.git
+	url = git://github.com/iheartradio/xctest-additions.git
 [submodule "lib/MPMessagePack"]
 	path = lib/MPMessagePack
-	url = git@github.com:gabriel/MPMessagePack.git
+	url = git://github.com/gabriel/MPMessagePack.git
