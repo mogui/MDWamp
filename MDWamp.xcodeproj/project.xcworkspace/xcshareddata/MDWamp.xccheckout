@@ -18,8 +18,6 @@
 		<string>https://github.com/robbiehanson/CocoaAsyncSocket.git</string>
 		<key>65D58A67FEF44BCFD55A1DA7714DB9E9B2A1548B</key>
 		<string>ssh://github.com/mogui/MDWamp.git</string>
-		<key>697C717FC055E6E0717DFD1A6FDE9FC75B2B36B5</key>
-		<string>github.com:gabriel/MPMessagePack.git</string>
 		<key>ABB939127996C66F7E852A780552ADEEF03C6B13</key>
 		<string>https://github.com/square/SocketRocket.git</string>
 	</dict>
@@ -30,13 +28,11 @@
 		<key>04446D0907D972D22B547153E50BABA9DD3C1A71</key>
 		<string>../../lib/msgpack-objectivec</string>
 		<key>1B6FE545B8D3EC80F41806ED22174EE41CBC43A0</key>
-		<string>../../lib/xctest-additions/</string>
+		<string>../../lib/xctest-additions</string>
 		<key>1C75F1C5CFCB95B3702F6F632FA05ED5244B519E</key>
 		<string>../../lib/CocoaAsyncSocket</string>
 		<key>65D58A67FEF44BCFD55A1DA7714DB9E9B2A1548B</key>
 		<string>../..</string>
-		<key>697C717FC055E6E0717DFD1A6FDE9FC75B2B36B5</key>
-		<string>../../lib/MPMessagePack/</string>
 		<key>ABB939127996C66F7E852A780552ADEEF03C6B13</key>
 		<string>../../lib/SocketRocket</string>
 	</dict>
@@ -63,14 +59,6 @@
 			<string>65D58A67FEF44BCFD55A1DA7714DB9E9B2A1548B</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MDWamp</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>697C717FC055E6E0717DFD1A6FDE9FC75B2B36B5</string>
-			<key>IDESourceControlWCCName</key>
-			<string>MPMessagePack</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
