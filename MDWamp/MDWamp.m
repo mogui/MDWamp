@@ -540,7 +540,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
 
 - (void)unsubscribe:(NSString *)topic result:(void(^)(NSError *error))result
 {
-    if (!self.subscriptionID[topic] && !self.subscriptionEvents[topic]) {
+    if (!self.subscriptionID[topic]) {
         // inexistent sunscription we abort
         MDWampError *error = [[MDWampError alloc] initWithPayload:@[@-12, @0, @{}, @"mdwamp.error.no_such_subscription"]];
         result([error makeError]);
