@@ -343,6 +343,7 @@
 		766CE94118F73B6A00CADAC9 /* MDWampSubscribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDWampSubscribe.m; path = MDWampMessages/MDWampSubscribe.m; sourceTree = "<group>"; };
 		766CE94418F73F6F00CADAC9 /* MDWampSubscribed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDWampSubscribed.h; path = MDWampMessages/MDWampSubscribed.h; sourceTree = "<group>"; };
 		766CE94518F73F6F00CADAC9 /* MDWampSubscribed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDWampSubscribed.m; path = MDWampMessages/MDWampSubscribed.m; sourceTree = "<group>"; };
+		769702B31A02F839002B4E79 /* MDWamp.podspec.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MDWamp.podspec.json; sourceTree = "<group>"; };
 		7698B1B31952278E0045D400 /* MDWampSerializations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSerializations.m; sourceTree = "<group>"; };
 		7698B1BF19522AF80045D400 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		7698B1F619522D1C0045D400 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
@@ -501,6 +502,7 @@
 		7604D6FD185B499D0087773E = {
 			isa = PBXGroup;
 			children = (
+				769702B31A02F839002B4E79 /* MDWamp.podspec.json */,
 				7649D0E119E81486008571A1 /* .travis.yml */,
 				76FD803B185BB3C800D1B5C0 /* MDWamp */,
 				76ABE18919688CB500C68911 /* Libraries */,
