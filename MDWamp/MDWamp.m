@@ -337,8 +337,6 @@
 
             // clean subscriber structures
             [self.subscriptionRequests removeObjectForKey:error.request];
-            NSString *topicName = [self.subscriptionID allKeysForObject:error.request][0];
-            [self.subscriptionID removeObjectForKey:topicName];
             
         } else if ([errorType isEqual:kMDWampUnsubscribe]) {
             NSArray *callbacks = self.subscriptionRequests[error.request];
@@ -414,6 +412,9 @@
             [self.subscriptionEvents setObject:subscribers forKey:subscribed.subscription];
         }
         [subscribers addObject:callbacks[1]];
+        
+        // add mapping of topic subscribedID
+        [self.subscriptionID setObject:subscribed.subscription forKey:callbacks[2]];
         
         // clean subscriptionRequest map once called the callback
         [self.subscriptionRequests removeObjectForKey:subscribed.request];
@@ -633,15 +634,14 @@
     MDWampSubscribe *subscribe = [[MDWampSubscribe alloc] initWithPayload:@[request, @{}, topic]];
     
     // we have to wait Subscribed message before add event
-    [self.subscriptionRequests setObject:@[result, eventBlock] forKey:request];
-    [self.subscriptionID setObject:request forKey:topic];
+    [self.subscriptionRequests setObject:@[result, eventBlock, topic] forKey:request];
 
     [self sendMessage:subscribe];
 }
 
 - (void)unsubscribe:(NSString *)topic result:(void(^)(NSError *error))result
 {
-    if (!self.subscriptionID[topic] && !self.subscriptionEvents[topic]) {
+    if (!self.subscriptionID[topic]) {
         // inexistent sunscription we abort
         MDWampError *error = [[MDWampError alloc] initWithPayload:@[@-12, @0, @{}, @"mdwamp.error.no_such_subscription"]];
         result([error makeError]);
