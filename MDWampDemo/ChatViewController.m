@@ -112,7 +112,14 @@
 
 - (IBAction)part:(id)sender {
     // unregister
-    [self dismissViewControllerAnimated:YES completion:nil];
+    MDWamp *wamp = [AppDel wampConnection];
+    [wamp unsubscribe:[NSString stringWithFormat:@"com.mogui.%@", [self.room stringByReplacingOccurrencesOfString:@" " withString:@"-"]] result:^(NSError *error) {
+        NSLog(@"%@", error);
+        if (!error) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+    
 }
 
 - (IBAction)send:(id)sender {

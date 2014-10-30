@@ -303,8 +303,6 @@ NSString * const kMDWampRoleCallee      = @"callee";
 
             // clean subscriber structures
             [self.subscriptionRequests removeObjectForKey:error.request];
-            NSString *topicName = [self.subscriptionID allKeysForObject:error.request][0];
-            [self.subscriptionID removeObjectForKey:topicName];
             
         } else if ([errorType isEqual:kMDWampUnsubscribe]) {
             NSArray *callbacks = self.subscriptionRequests[error.request];
@@ -380,6 +378,9 @@ NSString * const kMDWampRoleCallee      = @"callee";
             [self.subscriptionEvents setObject:subscribers forKey:subscribed.subscription];
         }
         [subscribers addObject:callbacks[1]];
+        
+        // add mapping of topic subscribedID
+        [self.subscriptionID setObject:subscribed.subscription forKey:callbacks[2]];
         
         // clean subscriptionRequest map once called the callback
         [self.subscriptionRequests removeObjectForKey:subscribed.request];
@@ -532,8 +533,7 @@ NSString * const kMDWampRoleCallee      = @"callee";
     MDWampSubscribe *subscribe = [[MDWampSubscribe alloc] initWithPayload:@[request, @{}, topic]];
     
     // we have to wait Subscribed message before add event
-    [self.subscriptionRequests setObject:@[result, eventBlock] forKey:request];
-    [self.subscriptionID setObject:request forKey:topic];
+    [self.subscriptionRequests setObject:@[result, eventBlock, topic] forKey:request];
 
     [self sendMessage:subscribe];
 }
