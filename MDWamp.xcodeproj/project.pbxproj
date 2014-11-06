@@ -20,7 +20,6 @@
 		764374A2194E238D000F29A8 /* MDStackTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 764374A1194E238D000F29A8 /* MDStackTest.m */; };
 		764F059E1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 764F059D1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m */; };
 		764F05A61969B2A700EB1A8A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 764F05A51969B2A700EB1A8A /* Security.framework */; };
-		7657671519E68B8D0008967E /* XCTAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7657671419E68B8D0008967E /* XCTAsyncTestCase.m */; };
 		7657A3B7195F594D00F58BB4 /* libMDWamp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D766185B6B880087773E /* libMDWamp.a */; };
 		7657A3B8195F598200F58BB4 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7698B1F619522D1C0045D400 /* libicucore.dylib */; };
 		765BAF9C19E722C800EC580D /* cmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF8F19E722C800EC580D /* cmp.c */; };
@@ -186,6 +185,7 @@
 		76AE165A1A0C24150041016F /* MDWampTransportWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15E81A0C24150041016F /* MDWampTransportWebSocket.m */; };
 		76AE165B1A0C24150041016F /* MDWampTransportWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15E81A0C24150041016F /* MDWampTransportWebSocket.m */; };
 		76AE165C1A0C24150041016F /* MDWamp-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15E91A0C24150041016F /* MDWamp-Prefix.pch */; };
+		76AE16611A0C29940041016F /* XCTAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE16601A0C29940041016F /* XCTAsyncTestCase.m */; };
 		76CCC6F6185BD1F10056AB98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76CCC6EE185BD1F10056AB98 /* InfoPlist.strings */; };
 		76CCC6F7185BD1F10056AB98 /* MDWampClientDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CCC6F1185BD1F10056AB98 /* MDWampClientDelegateMock.m */; };
 		76EF81DB18D1087000DFB13B /* MDWampSerializationMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF81DA18D1087000DFB13B /* MDWampSerializationMock.m */; };
@@ -263,8 +263,6 @@
 		764F05A31969B26D00EB1A8A /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 		764F05A51969B2A700EB1A8A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		7657671119E6850F0008967E /* MDWamp.podspec.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MDWamp.podspec.json; sourceTree = "<group>"; };
-		7657671319E68B8D0008967E /* XCTAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XCTAsyncTestCase.h; path = "lib/xctest-additions/XCTAsyncTestCase.h"; sourceTree = SOURCE_ROOT; };
-		7657671419E68B8D0008967E /* XCTAsyncTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XCTAsyncTestCase.m; path = "lib/xctest-additions/XCTAsyncTestCase.m"; sourceTree = SOURCE_ROOT; };
 		765BAF8F19E722C800EC580D /* cmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cmp.c; path = MPMessagePack/cmp.c; sourceTree = "<group>"; };
 		765BAF9019E722C800EC580D /* cmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cmp.h; path = MPMessagePack/cmp.h; sourceTree = "<group>"; };
 		765BAF9119E722C800EC580D /* MPMessagePack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMessagePack.h; path = MPMessagePack/MPMessagePack.h; sourceTree = "<group>"; };
@@ -397,6 +395,8 @@
 		76AE15E81A0C24150041016F /* MDWampTransportWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportWebSocket.m; sourceTree = "<group>"; };
 		76AE15E91A0C24150041016F /* MDWamp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDWamp-Prefix.pch"; sourceTree = "<group>"; };
 		76AE15EA1A0C24150041016F /* MDWamp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MDWamp-Info.plist"; sourceTree = "<group>"; };
+		76AE165F1A0C29940041016F /* XCTAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XCTAsyncTestCase.h; path = "External/xctest-additions/XCTAsyncTestCase.h"; sourceTree = "<group>"; };
+		76AE16601A0C29940041016F /* XCTAsyncTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XCTAsyncTestCase.m; path = "External/xctest-additions/XCTAsyncTestCase.m"; sourceTree = "<group>"; };
 		76CCC6EF185BD1F10056AB98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		76CCC6F0185BD1F10056AB98 /* MDWampClientDelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampClientDelegateMock.h; sourceTree = "<group>"; };
 		76CCC6F1185BD1F10056AB98 /* MDWampClientDelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampClientDelegateMock.m; sourceTree = "<group>"; };
@@ -498,15 +498,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		760DA6F918EB0A0D006EC89C /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				7657671319E68B8D0008967E /* XCTAsyncTestCase.h */,
-				7657671419E68B8D0008967E /* XCTAsyncTestCase.m */,
-			);
-			name = lib;
-			sourceTree = "<group>";
-		};
 		765BAF8E19E722C800EC580D /* MPMessagePack */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +541,8 @@
 		76ABE18919688CB500C68911 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				76AE165F1A0C29940041016F /* XCTAsyncTestCase.h */,
+				76AE16601A0C29940041016F /* XCTAsyncTestCase.m */,
 				76AE15911A0C23130041016F /* SRWebSocket.h */,
 				76AE15921A0C23130041016F /* SRWebSocket.m */,
 				765BAF8E19E722C800EC580D /* MPMessagePack */,
@@ -721,7 +714,6 @@
 			children = (
 				76CCC6EE185BD1F10056AB98 /* InfoPlist.strings */,
 				76CCC6F4185BD1F10056AB98 /* MDWampTests-Info.plist */,
-				760DA6F918EB0A0D006EC89C /* lib */,
 				76CCC6FB185BD2210056AB98 /* Mock */,
 				76CCC6F3185BD1F10056AB98 /* MDWampTestIncludes.h */,
 				760DA6FA18EB0A9E006EC89C /* MDWampMessageFactoryTests.m */,
@@ -1048,7 +1040,7 @@
 			files = (
 				765DD2D118E484D000D4C19F /* MDWampTransportMock.m in Sources */,
 				760DA6FD18EB0E7D006EC89C /* MDWampMessagesTests.m in Sources */,
-				7657671519E68B8D0008967E /* XCTAsyncTestCase.m in Sources */,
+				76AE16611A0C29940041016F /* XCTAsyncTestCase.m in Sources */,
 				766E10E719E6B4390083173B /* MDWampClientConfigTests.m in Sources */,
 				7619E69A18CF8E9F00B0209D /* MDWampTests.m in Sources */,
 				764F059E1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m in Sources */,
