@@ -186,7 +186,6 @@
 		76AE165A1A0C24150041016F /* MDWampTransportWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15E81A0C24150041016F /* MDWampTransportWebSocket.m */; };
 		76AE165B1A0C24150041016F /* MDWampTransportWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15E81A0C24150041016F /* MDWampTransportWebSocket.m */; };
 		76AE165C1A0C24150041016F /* MDWamp-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15E91A0C24150041016F /* MDWamp-Prefix.pch */; };
-		76AE165D1A0C24150041016F /* MDWamp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76AE15EA1A0C24150041016F /* MDWamp-Info.plist */; };
 		76CCC6F6185BD1F10056AB98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76CCC6EE185BD1F10056AB98 /* InfoPlist.strings */; };
 		76CCC6F7185BD1F10056AB98 /* MDWampClientDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CCC6F1185BD1F10056AB98 /* MDWampClientDelegateMock.m */; };
 		76EF81DB18D1087000DFB13B /* MDWampSerializationMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF81DA18D1087000DFB13B /* MDWampSerializationMock.m */; };
@@ -909,7 +908,7 @@
 		7604D6FE185B499D0087773E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = mogui.it;
 				TargetAttributes = {
 					7604D71D185B499D0087773E = {
@@ -943,7 +942,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76AE165D1A0C24150041016F /* MDWamp-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
