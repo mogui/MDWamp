@@ -552,7 +552,7 @@
         // WAMP CRA
         // If I've no config object something is wrong :P
         // Default WampClient hasn't any auth
-        if ([challenge.authMethod isEqualTo:kMDWampAuthMethodCRA] &&  self.config && self.config.sharedSecret) {
+        if ([challenge.authMethod isEqualToString:kMDWampAuthMethodCRA] &&  self.config && self.config.sharedSecret) {
             
             // deferred challenge signing
             if (self.config && self.config.deferredWampCRASigningBlock) {
@@ -592,7 +592,7 @@
             }
 
         // Ticket Based Auth
-        } else if ([challenge.authMethod isEqualTo:kMDWampAuthMethodTicket] &&  self.config && self.config.ticket) {
+        } else if ([challenge.authMethod isEqualToString:kMDWampAuthMethodTicket] &&  self.config && self.config.ticket) {
             MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[self.config.ticket, @{}]];
             [self sendMessage:auth];
         }

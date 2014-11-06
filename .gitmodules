@@ -1,15 +1,15 @@
-[submodule "lib/SocketRocket"]
-	path = lib/SocketRocket
+[submodule "External/SocketRocket"]
+	path = External/SocketRocket
 	url = git://github.com/square/SocketRocket.git
-[submodule "lib/msgpack-objectivec"]
-	path = lib/msgpack-objectivec
+[submodule "External/msgpack-objectivec"]
+	path = External/msgpack-objectivec
 	url = git://github.com/msgpack/msgpack-objectivec.git
-[submodule "lib/CocoaAsyncSocket"]
-	path = lib/CocoaAsyncSocket
+[submodule "External/CocoaAsyncSocket"]
+	path = External/CocoaAsyncSocket
 	url = git://github.com/robbiehanson/CocoaAsyncSocket.git
-[submodule "lib/xctest-additions"]
-	path = lib/xctest-additions
+[submodule "External/xctest-additions"]
+	path = External/xctest-additions
 	url = git://github.com/iheartradio/xctest-additions.git
-[submodule "lib/MPMessagePack"]
-	path = lib/MPMessagePack
+[submodule "External/MPMessagePack"]
+	path = External/MPMessagePack
 	url = git://github.com/gabriel/MPMessagePack.git
