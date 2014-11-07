@@ -28,11 +28,21 @@ NSString * const kMDWampAuthMethodTicket      = @"ticket";
     if (self) {
         self.authmethods = @[kMDWampAuthMethodCRA];
         self.roles = @{
-          kMDWampRolePublisher : @{},
-          kMDWampRoleSubscriber : @{},
+          kMDWampRolePublisher : @{
+                  @"subscriber_blackwhite_listing": @YES,
+                  @"publisher_exclusion":           @YES,
+                  @"publisher_identification":      @YES
+                  },
+          kMDWampRoleSubscriber : @{
+                  @"publication_trustlevels":       @YES,
+                  @"pattern_based_subscription":    @YES
+                  },
           kMDWampRoleCaller : @{},
           kMDWampRoleCallee : @{}
         };
+        self.publisher_acknowledge = NO;
+        self.publisher_exclude_me = YES;
+        self.publisher_identification = NO;
     }
     return self;
 }

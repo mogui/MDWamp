@@ -643,17 +643,33 @@
             result:(void(^)(NSError *error))result
 {
     NSNumber *request = [self generateID];
-    if (options == nil)
-        options = @{};
     
-    MDWampPublish *msg = [[MDWampPublish alloc] initWithPayload:@[request, options, topic]];
+    NSMutableDictionary *opts = nil;
+    if (options == nil) {
+        opts = [[NSMutableDictionary alloc] init];
+    } else {
+        opts = [options mutableCopy];
+    }
+    
+    // Use defaults advanced features if not expressed in options
+    if(opts[@"acknowledge"] == nil && self.config.publisher_acknowledge){
+        opts[@"acknowledge"] = @YES;
+    }
+    if(opts[@"exclude_me"] == nil && !self.config.publisher_exclude_me){
+        opts[@"exclude_me"] = @NO;
+    }
+    if(opts[@"disclose_me"] == nil && self.config.publisher_identification){
+        opts[@"disclose_me"] = @YES;
+    }
+    
+    MDWampPublish *msg = [[MDWampPublish alloc] initWithPayload:@[request, opts, topic]];
     if (args)
         msg.arguments = args;
     
     if (argsKw)
         msg.argumentsKw = argsKw;
     
-    if (options[@"acknowledge"]) {
+    if (opts[@"acknowledge"]) {
         // store callback to later use if acknowledge is TRUE
         [self.publishRequests setObject:result forKey:request];
     }
@@ -662,24 +678,35 @@
 }
 
 - (void) publishTo:(NSString *)topic
-              args:(NSArray*)args
+           exclude:(NSArray*)exclude
+          eligible:(NSArray*)eligible
+           payload:(id)payload
             result:(void(^)(NSError *error))result
 {
-    [self publishTo:topic args:args kw:nil options:nil result:result];
+    NSMutableDictionary *options = [[NSMutableDictionary alloc] init];
+    
+    if (exclude)
+        options[@"exclude"] = exclude;
+    if (eligible)
+        options[@"eligible"] = eligible;
+    
+    if ([payload isKindOfClass:[NSDictionary class]]) {
+        [self publishTo:topic args:nil kw:payload options:options result:result];
+    } else if ([payload isKindOfClass:[NSArray class]]) {
+        [self publishTo:topic args:payload kw:nil options:options result:result];
+    } else {
+        [self publishTo:topic args:@[payload] kw:nil options:options result:result];
+    }
 }
 
 - (void) publishTo:(NSString *)topic
            payload:(id)payload
             result:(void(^)(NSError *error))result
 {
-    if ([payload isKindOfClass:[NSDictionary class]]) {
-        [self publishTo:topic args:nil kw:payload options:nil result:result];
-    } else if ([payload isKindOfClass:[NSArray class]]) {
-        [self publishTo:topic args:payload kw:nil options:nil result:result];
-    } else {
-        [self publishTo:topic args:@[payload] kw:nil options:nil result:result];
-    }
+    [self publishTo:topic exclude:nil eligible:nil payload:payload result:result];
 }
+
+
 
 #pragma mark -
 #pragma mark Remote Procedure Call

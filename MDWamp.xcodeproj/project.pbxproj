@@ -275,6 +275,7 @@
 		765BAF9B19E722C800EC580D /* NSDictionary+MPMessagePack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+MPMessagePack.m"; path = "MPMessagePack/NSDictionary+MPMessagePack.m"; sourceTree = "<group>"; };
 		766E10E619E6B4390083173B /* MDWampClientConfigTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampClientConfigTests.m; sourceTree = "<group>"; };
 		766E10EC19E6C1E00083173B /* MDWampAdvancedTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampAdvancedTests.m; sourceTree = "<group>"; };
+		7691AA151A0D168C007FE84C /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = config.json; path = .crossbar/config.json; sourceTree = "<group>"; };
 		7698B1B31952278E0045D400 /* MDWampSerializations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSerializations.m; sourceTree = "<group>"; };
 		7698B1BF19522AF80045D400 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		7698B1F619522D1C0045D400 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
@@ -459,9 +460,10 @@
 				7604D708185B499D0087773E /* Products */,
 				762A51DE195CB2B000A3B344 /* READMEv1.md */,
 				762A51DF195CB2B000A3B344 /* README.md */,
+				762A51E1195CB2B000A3B344 /* LICENSE */,
 				7641ADC519E43BBC002167E0 /* TODO.md */,
 				7657671119E6850F0008967E /* MDWamp.podspec.json */,
-				762A51E1195CB2B000A3B344 /* LICENSE */,
+				7691AA151A0D168C007FE84C /* config.json */,
 			);
 			sourceTree = "<group>";
 		};

@@ -138,6 +138,7 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  *  @param args    is a list of application-level event payload elements.
  *  @param argsKw  is a an optional dictionary containing application-level event payload
  *  @param options is a dictionary that allows to provide additional publication request details in an extensible way
+ *  @param result    block to execute on completion
  */
 - (void) publishTo:(NSString *)topic
               args:(NSArray*)args
@@ -146,22 +147,30 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
             result:(void(^)(NSError *error))result;
 
 /**
- *  Shortand for publishing a list of payload
+ * Shortand for publishing a generic payload
+ * Could be Dictionary, array, or object
+ * you can specify advanced feature to exclude or elige specific peers
  *
- *  @param topic   is the topic published to.
- *  @param args    is a list of application-level event payload elements.
+ *  @param topic     the topic
+ *  @param exclude   array of session id to exclude
+ *  @param eligible  Array of session id to elige
+ *  @param payload   teh payload (array, dictionary or object)
+ *  @param result    block to execute on completion
  */
+
 - (void) publishTo:(NSString *)topic
-              args:(NSArray*)args
+           exclude:(NSArray*)exclude
+          eligible:(NSArray*)eligible
+           payload:(id)payload
             result:(void(^)(NSError *error))result;
 
 /**
- *  Shortand for publishing a payload
- *  it's the only publishing method suitable for Legacy protocol
- *  NOTICE that from version 2 if payload isn't a dictionary it will complain!
+ * Shortand for publishing a generic payload
+ * Could be Dictionary, array, or object
  *
  *  @param topic   is the topic published to.
- *  @param payload is a list of application-level event payload elements.
+ *  @param payload is a generic payload
+ *  @param result    block to execute on completion
  */
 - (void) publishTo:(NSString *)topic
            payload:(id)payload
