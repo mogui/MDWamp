@@ -43,7 +43,6 @@
     XCTAssert([[[factory objectFromCode:@5 withPayload:nil] class] isSubclassOfClass:[MDWampAuthenticate class]], @"5 is authemticate");
 
     XCTAssert([[[factory objectFromCode:@6 withPayload:nil] class] isSubclassOfClass:[MDWampGoodbye class]], @"6 is Goodbye");
-    XCTAssert([[[factory objectFromCode:@7 withPayload:nil] class] isSubclassOfClass:[MDWampHeartbeat class]], @"7 is heartbeat");
     XCTAssert([[[factory objectFromCode:@8 withPayload:nil] class] isSubclassOfClass:[MDWampError class]], @"8 is Error");
 
     XCTAssert([[[factory objectFromCode:@16 withPayload:nil] class] isSubclassOfClass:[MDWampPublish class]], @"16 is Publish");
@@ -80,7 +79,6 @@
     nameFromCodeMacro(@4 , kMDWampChallenge);
     nameFromCodeMacro(@5 , kMDWampAuthenticate);
     nameFromCodeMacro(@6 , kMDWampGoodbye);
-    nameFromCodeMacro(@7 , kMDWampHeartbeat);
     nameFromCodeMacro(@8 , kMDWampError);
     nameFromCodeMacro(@16, kMDWampPublish);
     nameFromCodeMacro(@17, kMDWampPublished);
@@ -114,7 +112,6 @@ XCTAssert([code isEqual:c],@""#CLASS @" must be code %@", c); \
 //    codeFromObjectMacro(@4 , MDWampChallange);
 //    codeFromObjectMacro(@5 , MDWampAuthenticate);
     codeFromObjectMacro(@6 , MDWampGoodbye);
-//    codeFromObjectMacro(@7 , MDWampHeartbeat);
     codeFromObjectMacro(@8 , MDWampError);
     codeFromObjectMacro(@16, MDWampPublish);
     codeFromObjectMacro(@17, MDWampPublished);

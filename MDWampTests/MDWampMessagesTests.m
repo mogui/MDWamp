@@ -135,14 +135,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     
     [self checkMarshalling:msg code:@6];}
 
-- (void)testHeartbitCode
-{
-    makeMessage(MDWampHeartbeat, (@[@3, @3, @"meh :/"]) );
-    testMarshall2(@7);
-    msgIntegrity(msg.incomingSeq, 0)
-    msgIntegrity(msg.outgoingSeq, 1)
-    msgIntegrity(msg.discard, 2)
-}
+
 
 - (void)testError {
     self.payload = @[@48, @123456789, @{}, @"com.myapp.error.object_write_protected", @[@"Object is write protected"], @{@"severity": @3}];

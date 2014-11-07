@@ -23,7 +23,6 @@
     [super setUp];
     conf = [[MDWampClientConfig alloc] init];
     conf.roles = ROLES;
-    conf.heartbeatInterval = 2;
     conf.agent = AGENT;
     conf.authmethods = @[];
     // Put setup code here. This method is called before the invocation of each test method in the class.

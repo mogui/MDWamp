@@ -27,12 +27,6 @@ extern NSString* const kMDWampAuthMethodTicket;
 @property (nonatomic, strong) NSDictionary *roles;
 
 /**
- * Interval between each heartbeat
- * default is: 0 meaning no heartbeat will be triggered
- */
-@property (nonatomic, assign) double heartbeatInterval;
-
-/**
  *  Shared secret to use in wampCRA
  */
 @property (nonatomic, strong) NSString *sharedSecret;

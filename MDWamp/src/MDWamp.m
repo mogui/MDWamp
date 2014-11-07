@@ -190,15 +190,7 @@
     hello.realm = self.realm;
     [self sendMessage:hello];
 
-    if (self.config != 0 && self.config.heartbeatInterval > 0) {
-        self.hbTimer =
-            [NSTimer scheduledTimerWithTimeInterval:self.config.heartbeatInterval
-                                             target:self
-                                           selector:@selector(fireHeartbeat)
-                                           userInfo:nil
-                                            repeats:YES];
     }
-}
 
 - (void)transportDidReceiveMessage:(NSData *)message
 {
@@ -541,10 +533,6 @@
     /**
      * ADvanced Protocol
      */
-    } else if ([message isKindOfClass:[MDWampHeartbeat class]]) {
-        
-        MDWampHeartbeat *beat = (MDWampHeartbeat *)message;
-        self.hbIncomingSeq = [beat.outgoingSeq intValue];
     #pragma mark MDWampChallenge
     } else if ([message isKindOfClass:[MDWampChallenge class]]) {
         MDWampChallenge *challenge = (MDWampChallenge *)message;
@@ -610,16 +598,7 @@
     [self.transport send:packed];
 }
 
-- (void) fireHeartbeat
-{
-    MDWampHeartbeat *beat = [[MDWampHeartbeat alloc] init];
-    beat.incomingSeq = [NSNumber numberWithInt: self.hbIncomingSeq];
-    // increment outgoing seq
-    self.hbOutgoingSeq++;
-    beat.outgoingSeq = [NSNumber numberWithInt: self.hbOutgoingSeq];
-    
-    [self sendMessage:beat];
-}
+
 
 #pragma mark -
 #pragma mark Commands

@@ -27,7 +27,6 @@ NSString *const kMDWampAbort        = @"MDWampAbort";
 NSString *const kMDWampChallenge    = @"MDWampChallenge";
 NSString *const kMDWampAuthenticate = @"MDWampAuthenticate";
 NSString *const kMDWampGoodbye      = @"MDWampGoodbye";
-NSString *const kMDWampHeartbeat    = @"MDWampHeartbeat";
 NSString *const kMDWampError        = @"MDWampError";
 NSString *const kMDWampPublish      = @"MDWampPublish";
 NSString *const kMDWampPublished    = @"MDWampPublished";
@@ -72,7 +71,6 @@ NSString *const kMDWampYield        = @"MDWampYield";
                                 @4  : kMDWampChallenge,
                                 @5  : kMDWampAuthenticate,
                                 @6  : kMDWampGoodbye,
-                                @7  : kMDWampHeartbeat,
                                 @8  : kMDWampError,
                                 @16 : kMDWampPublish,
                                 @17 : kMDWampPublished,

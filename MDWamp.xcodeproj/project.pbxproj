@@ -111,9 +111,6 @@
 		76AE16101A0C24150041016F /* MDWampGoodbye.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15B21A0C24150041016F /* MDWampGoodbye.h */; };
 		76AE16111A0C24150041016F /* MDWampGoodbye.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B31A0C24150041016F /* MDWampGoodbye.m */; };
 		76AE16121A0C24150041016F /* MDWampGoodbye.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B31A0C24150041016F /* MDWampGoodbye.m */; };
-		76AE16131A0C24150041016F /* MDWampHeartbeat.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15B41A0C24150041016F /* MDWampHeartbeat.h */; };
-		76AE16141A0C24150041016F /* MDWampHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B51A0C24150041016F /* MDWampHeartbeat.m */; };
-		76AE16151A0C24150041016F /* MDWampHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B51A0C24150041016F /* MDWampHeartbeat.m */; };
 		76AE16161A0C24150041016F /* MDWampHello.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15B61A0C24150041016F /* MDWampHello.h */; };
 		76AE16171A0C24150041016F /* MDWampHello.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B71A0C24150041016F /* MDWampHello.m */; };
 		76AE16181A0C24150041016F /* MDWampHello.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B71A0C24150041016F /* MDWampHello.m */; };
@@ -342,8 +339,6 @@
 		76AE15B11A0C24150041016F /* MDWampEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampEvent.m; sourceTree = "<group>"; };
 		76AE15B21A0C24150041016F /* MDWampGoodbye.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampGoodbye.h; sourceTree = "<group>"; };
 		76AE15B31A0C24150041016F /* MDWampGoodbye.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampGoodbye.m; sourceTree = "<group>"; };
-		76AE15B41A0C24150041016F /* MDWampHeartbeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampHeartbeat.h; sourceTree = "<group>"; };
-		76AE15B51A0C24150041016F /* MDWampHeartbeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampHeartbeat.m; sourceTree = "<group>"; };
 		76AE15B61A0C24150041016F /* MDWampHello.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampHello.h; sourceTree = "<group>"; };
 		76AE15B71A0C24150041016F /* MDWampHello.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampHello.m; sourceTree = "<group>"; };
 		76AE15B81A0C24150041016F /* MDWampInterrupt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampInterrupt.h; sourceTree = "<group>"; };
@@ -640,8 +635,6 @@
 				76AE15B11A0C24150041016F /* MDWampEvent.m */,
 				76AE15B21A0C24150041016F /* MDWampGoodbye.h */,
 				76AE15B31A0C24150041016F /* MDWampGoodbye.m */,
-				76AE15B41A0C24150041016F /* MDWampHeartbeat.h */,
-				76AE15B51A0C24150041016F /* MDWampHeartbeat.m */,
 				76AE15B61A0C24150041016F /* MDWampHello.h */,
 				76AE15B71A0C24150041016F /* MDWampHello.m */,
 				76AE15B81A0C24150041016F /* MDWampInterrupt.h */,
@@ -810,7 +803,6 @@
 				76AE16451A0C24150041016F /* MDWampWelcome.h in Headers */,
 				765BAF9E19E722C800EC580D /* cmp.h in Headers */,
 				765BAFA319E722C800EC580D /* MPMessagePackWriter.h in Headers */,
-				76AE16131A0C24150041016F /* MDWampHeartbeat.h in Headers */,
 				765BAFA019E722C800EC580D /* MPMessagePackReader.h in Headers */,
 				76AE15F41A0C24150041016F /* MDWampClientConfig.h in Headers */,
 				76AE16331A0C24150041016F /* MDWampSubscribe.h in Headers */,
@@ -1021,7 +1013,6 @@
 				76AE16561A0C24150041016F /* MDWampTransportRawSocket.m in Sources */,
 				76AE16171A0C24150041016F /* MDWampHello.m in Sources */,
 				76AE16371A0C24150041016F /* MDWampSubscribed.m in Sources */,
-				76AE16141A0C24150041016F /* MDWampHeartbeat.m in Sources */,
 				76AE15FF1A0C24150041016F /* MDWampAuthenticate.m in Sources */,
 				76AE15F91A0C24150041016F /* MDWampConstants.m in Sources */,
 				76AE163D1A0C24150041016F /* MDWampUnregistered.m in Sources */,
@@ -1092,7 +1083,6 @@
 				76AE16571A0C24150041016F /* MDWampTransportRawSocket.m in Sources */,
 				76AE16181A0C24150041016F /* MDWampHello.m in Sources */,
 				76AE16381A0C24150041016F /* MDWampSubscribed.m in Sources */,
-				76AE16151A0C24150041016F /* MDWampHeartbeat.m in Sources */,
 				76AE16001A0C24150041016F /* MDWampAuthenticate.m in Sources */,
 				76AE15FA1A0C24150041016F /* MDWampConstants.m in Sources */,
 				76AE163E1A0C24150041016F /* MDWampUnregistered.m in Sources */,
