@@ -25,7 +25,7 @@
 
 @property (nonatomic, strong) NSNumber *request;
 @property (nonatomic, strong) NSNumber *registration;
-@property (nonatomic, strong) NSDictionary *details;
+@property (nonatomic, strong) NSDictionary *options;
 @property (nonatomic, strong) NSArray *arguments;
 @property (nonatomic, strong) NSDictionary *argumentsKw;
 

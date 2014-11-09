@@ -99,6 +99,14 @@ extern NSString* const kMDWampAuthMethodTicket;
  */
 @property (nonatomic, assign) BOOL caller_identification;
 
+/**
+ * Default config when Sending a CALL request (can be overrided using options dictionary for every mesg)
+ * If YES the Caller indicates it's willingness to receive progressive results
+ * default: NO
+
+ */
+@property (nonatomic, assign) BOOL caller_progressive_result;
+
 #pragma mark Helpers
 /**
  *  returns a suitable Dictionary to be used as details settings for an HELLO message

@@ -40,9 +40,14 @@ NSString * const kMDWampAuthMethodTicket      = @"ticket";
           kMDWampRoleCaller : @{
                   @"callee_blackwhite_listing": @YES,
                   @"caller_exclusion": @YES,
-                  @"caller_identification": @YES
+                  @"caller_identification": @YES,
+                  @"call_canceling":@YES,
+                  @"progressive_call_results":@YES
                   },
-          kMDWampRoleCallee : @{}
+          kMDWampRoleCallee : @{
+                  @"call_canceling":@YES,
+                  @"progressive_call_results":@YES
+                  }
         };
         self.publisher_acknowledge = NO;
         self.publisher_exclude_me = YES;
@@ -50,6 +55,7 @@ NSString * const kMDWampAuthMethodTicket      = @"ticket";
         
         self.caller_exclude_me = YES;
         self.caller_identification = NO;
+        self.caller_progressive_result = NO;
     }
     return self;
 }

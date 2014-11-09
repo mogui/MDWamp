@@ -27,9 +27,9 @@
     self = [super init];
     if (self) {
         NSMutableArray *tmp = [payload mutableCopy];
-        // [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
+        // [RESULT, CALL.Request|id, options|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
         self.request   = [tmp shift];
-        self.details    = [tmp shift];
+        self.options    = [tmp shift];
         if ([tmp count] > 0) self.arguments     = [tmp shift];
         if ([tmp count] > 0) self.argumentsKw   = [tmp shift];
     }
@@ -40,13 +40,13 @@
 {
     NSNumber *code = [[MDWampMessageFactory sharedFactory] codeFromObject:self];
     if (self.arguments && self.argumentsKw) {
-        return @[code, self.request, self.details, self.arguments, self.argumentsKw ];
+        return @[code, self.request, self.options, self.arguments, self.argumentsKw ];
     } else if(self.arguments) {
-        return @[code, self.request, self.details, self.arguments ];
+        return @[code, self.request, self.options, self.arguments ];
     } else if(self.argumentsKw) {
-        return @[code, self.request, self.details, @[], self.argumentsKw ];
+        return @[code, self.request, self.options, @[], self.argumentsKw ];
     } else {
-        return @[code, self.request, self.details];
+        return @[code, self.request, self.options];
     }
 }
 
@@ -58,5 +58,9 @@
 - (id)result
 {
     return self.arguments[0];
+}
+
+- (BOOL)progress {
+    return [self.options[@"progress"] boolValue];
 }
 @end

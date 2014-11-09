@@ -174,21 +174,7 @@
     NSAssert(ser != nil, @"Serialization %@ doesn't exists", ser);
     self.serializator = [[ser alloc] init];
 
-    NSDictionary* helloDetails = nil;
-    if (!self.config) {
-        // if no configuration is setted, we default as all roles
-        helloDetails = @{
-            @"roles" : @{
-                kMDWampRolePublisher : @{},
-                kMDWampRoleSubscriber : @{},
-                kMDWampRoleCaller : @{},
-                kMDWampRoleCallee : @{}
-            }
-        };
-    }
-    else {
-        helloDetails = [self.config getHelloDetails];
-    }
+    NSDictionary* helloDetails = [self.config getHelloDetails];
 
     // send hello message
     MDWampHello* hello =
@@ -463,7 +449,11 @@
             resultcallback(result, nil);
         }
         
-        [self.rpcCallbackMap removeObjectForKey:result.request];
+        if (!result.progress) {
+            // remove callback only if it is not a progress
+            [self.rpcCallbackMap removeObjectForKey:result.request];
+        }
+
     } else if ([message isKindOfClass:[MDWampRegistered class]]) {
         #pragma mark MDWampRegistered
         
@@ -680,14 +670,14 @@
     }
     
     // Use defaults advanced features if not expressed in options
-    if(opts[@"acknowledge"] == nil && self.config.publisher_acknowledge){
-        opts[@"acknowledge"] = @YES;
+    if(opts[MDWampOption_acknowledge] == nil && self.config.publisher_acknowledge){
+        opts[MDWampOption_acknowledge] = @YES;
     }
-    if(opts[@"exclude_me"] == nil && !self.config.publisher_exclude_me){
-        opts[@"exclude_me"] = @NO;
+    if(opts[MDWampOption_exclude_me] == nil && !self.config.publisher_exclude_me){
+        opts[MDWampOption_exclude_me] = @NO;
     }
-    if(opts[@"disclose_me"] == nil && self.config.publisher_identification){
-        opts[@"disclose_me"] = @YES;
+    if(opts[MDWampOption_disclose_me] == nil && self.config.publisher_identification){
+        opts[MDWampOption_disclose_me] = @YES;
     }
     
     MDWampPublish *msg = [[MDWampPublish alloc] initWithPayload:@[request, opts, topic]];
@@ -697,7 +687,7 @@
     if (argsKw)
         msg.argumentsKw = argsKw;
     
-    if (opts[@"acknowledge"]) {
+    if (opts[MDWampOption_acknowledge]) {
         // store callback to later use if acknowledge is TRUE
         [self.publishRequests setObject:result forKey:request];
     }
@@ -714,9 +704,9 @@
     NSMutableDictionary *options = [[NSMutableDictionary alloc] init];
     
     if (exclude)
-        options[@"exclude"] = exclude;
+        options[MDWampOption_exclude] = exclude;
     if (eligible)
-        options[@"eligible"] = eligible;
+        options[MDWampOption_eligible] = eligible;
     
     if ([payload isKindOfClass:[NSDictionary class]]) {
         [self publishTo:topic args:nil kw:payload options:options result:result];
@@ -754,13 +744,18 @@
         opts = [options mutableCopy];
     }
     
-    if(opts[@"exclude_me"] == nil && !self.config.caller_exclude_me){
-        opts[@"exclude_me"] = @NO;
+    if(opts[MDWampOption_exclude_me] == nil && !self.config.caller_exclude_me){
+        opts[MDWampOption_exclude_me] = @NO;
     }
     
-    if(opts[@"disclose_me"] == nil && self.config.caller_identification){
-        opts[@"disclose_me"] = @YES;
+    if(opts[MDWampOption_exclude_me] == nil && self.config.caller_identification){
+        opts[MDWampOption_exclude_me] = @YES;
     }
+    
+    if(opts[MDWampOption_receive_progress] == nil && self.config.caller_progressive_result){
+        opts[MDWampOption_receive_progress] = @YES;
+    }
+    
     MDWampCall *msg = [[MDWampCall alloc] initWithPayload:@[request, opts, procUri]];
     if (args)
         msg.arguments = args;
@@ -784,9 +779,9 @@
     NSMutableDictionary *options = [[NSMutableDictionary alloc] init];
     
     if (exclude)
-        options[@"exclude"] = exclude;
+        options[MDWampOption_exclude] = exclude;
     if (eligible)
-        options[@"eligible"] = eligible;
+        options[MDWampOption_eligible] = eligible;
  
     if ([payload isKindOfClass:[NSDictionary class]]) {
         return [self call:procUri args:nil kwArgs:payload options:options complete:completeBlock];
@@ -833,8 +828,15 @@
 
 - (void)resultForInvocation:(MDWampInvocation*)invocation arguments:(NSArray*)arguments argumentsKw:(NSDictionary*)argumentsKw
 {
+    NSMutableDictionary *options = [[NSMutableDictionary alloc] init];
+    
+    // Handle progressive results
+    if (invocation.options && invocation.options[MDWampOption_receive_progress]) {
+        options[MDWampOption_progress] = @YES;
+    }
+    
     // creating the yield message
-    MDWampYield *yield = [[MDWampYield alloc] initWithPayload:@[invocation.request, @{}]];
+    MDWampYield *yield = [[MDWampYield alloc] initWithPayload:@[invocation.request, options]];
     
     if(arguments)
         yield.arguments = arguments;

@@ -374,6 +374,31 @@
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 
+- (void)testCallProgressive {
+    __block int sum = 0;
+    [_wamp call:@"com.myapp.somproc" args:nil kwArgs:nil options:@{MDWampOption_receive_progress: @YES} complete:^(MDWampResult *result, NSError *error) {
+        
+        if (!result.progress) {
+            // Just the last result
+            XCTAssertEqual(sum, 4);
+            [self notify:kXCTUnitWaitStatusSuccess];
+        } else {
+            sum += [result.result intValue];
+        }
+    }];
+    MDWampCall *msg = [self msgFromTransportAndCheckIsA:[MDWampCall class]];
+    
+    for (int i=0; i<4; i++) {
+        MDWampResult *res = [[MDWampResult alloc] initWithPayload:@[msg.request, @{MDWampOption_progress:@YES}, @[@1]]];
+        [_transport triggerDidReceiveMessage:[res marshall]];
+        
+    }
+    
+    // Last one close the progress
+    MDWampResult *res = [[MDWampResult alloc] initWithPayload:@[msg.request, @{}, @[]]];
+    [_transport triggerDidReceiveMessage:[res marshall]];
+    [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
+}
 
 - (void)testRegister {
     // register and receive registered message
@@ -539,13 +564,5 @@
     
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
-
-- (void)testYieldFails {
-    
-}
-
-
-
-
 
 @end

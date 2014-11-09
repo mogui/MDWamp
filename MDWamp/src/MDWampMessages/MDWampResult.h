@@ -24,8 +24,9 @@
 @interface MDWampResult : NSObject <MDWampMessage>
 @property (nonatomic, strong) NSNumber *request;
 @property (nonatomic, strong) NSString *callID;
-@property (nonatomic, strong) NSDictionary *details;
+@property (nonatomic, strong) NSDictionary *options;
 @property (nonatomic, strong) NSArray *arguments;
 @property (nonatomic, strong) NSDictionary *argumentsKw;
 @property (nonatomic, strong) id result;
+@property (nonatomic, readonly) BOOL progress;
 @end

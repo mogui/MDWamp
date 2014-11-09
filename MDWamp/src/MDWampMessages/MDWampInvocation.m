@@ -27,11 +27,11 @@
     self = [super init];
     if (self) {
         NSMutableArray *tmp = [payload mutableCopy];
-        // [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+        // [INVOCATION, Request|id, REGISTERED.Registration|id, options|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
         
         self.request   = [tmp shift];
         self.registration    = [tmp shift];
-        self.details        = [tmp shift];
+        self.options        = [tmp shift];
         if ([tmp count] > 0) self.arguments     = [tmp shift];
         if ([tmp count] > 0) self.argumentsKw   = [tmp shift];
     }
@@ -42,13 +42,13 @@
 {
     NSNumber *code = [[MDWampMessageFactory sharedFactory] codeFromObject:self];
     if (self.arguments && self.argumentsKw) {
-        return @[code, self.request, self.registration, self.details, self.arguments, self.argumentsKw ];
+        return @[code, self.request, self.registration, self.options, self.arguments, self.argumentsKw ];
     } else if(self.arguments) {
-        return @[code, self.request, self.registration, self.details, self.arguments ];
+        return @[code, self.request, self.registration, self.options, self.arguments ];
     } else if(self.argumentsKw) {
-        return @[code, self.request, self.registration, self.details, @[], self.argumentsKw ];
+        return @[code, self.request, self.registration, self.options, @[], self.argumentsKw ];
     } else {
-        return @[code, self.request, self.registration, self.details];
+        return @[code, self.request, self.registration, self.options];
     }
 }
 

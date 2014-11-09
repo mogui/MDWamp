@@ -268,7 +268,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     makeMessage(MDWampResult, (@[@7814135, @{}, @[], @{@"userid": @123, @"karma": @10}]));
     testMarshall2(@50);
     msgIntegrity(msg.request, 0);
-    msgIntegrity(msg.details, 1);
+    msgIntegrity(msg.options, 1);
     msgIntegrity(msg.arguments, 2);
     msgIntegrity(msg.argumentsKw, 3);
 }
