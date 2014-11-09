@@ -47,10 +47,13 @@
 @property (nonatomic, strong) NSMutableDictionary *publishRequests;
 
 @property (nonatomic, strong) NSMutableDictionary *rpcCallbackMap;
+
 @property (nonatomic, strong) NSMutableDictionary *rpcRegisterRequests;
 @property (nonatomic, strong) NSMutableDictionary *rpcUnregisterRequests;
 @property (nonatomic, strong) NSMutableDictionary *rpcRegisteredUri;
 @property (nonatomic, strong) NSMutableDictionary *rpcRegisteredProcedures;
+
+@property (nonatomic, strong) NSMutableDictionary *rpcPendingInvocation;
 
 @property (nonatomic, strong) NSTimer *hbTimer;
 @property (nonatomic, assign) int hbIncomingSeq;
@@ -85,9 +88,12 @@
         self.rpcUnregisterRequests  = [[NSMutableDictionary alloc] init];
 		self.rpcRegisteredProcedures= [[NSMutableDictionary alloc] init];
         self.rpcRegisteredUri       = [[NSMutableDictionary alloc] init];
-		self.subscriptionEvents     = [[NSMutableDictionary alloc] init];
+        self.rpcPendingInvocation   = [[NSMutableDictionary alloc] init];
+        self.subscriptionEvents     = [[NSMutableDictionary alloc] init];
         self.subscriptionID         = [[NSMutableDictionary alloc] init];
         self.publishRequests        = [[NSMutableDictionary alloc] init];
+        
+        self.config = [[MDWampClientConfig alloc] init];
         
 	}
 	return self;
@@ -459,6 +465,8 @@
         
         [self.rpcCallbackMap removeObjectForKey:result.request];
     } else if ([message isKindOfClass:[MDWampRegistered class]]) {
+        #pragma mark MDWampRegistered
+        
         MDWampRegistered *registered = (MDWampRegistered *)message;
         
         NSArray *registrationRequest = self.rpcRegisterRequests[registered.request];
@@ -467,8 +475,16 @@
             return;
         }
         
-        // store the procedure
-        [self.rpcRegisteredProcedures setObject:registrationRequest[2] forKey:registered.registration];
+        NSArray *procedures = nil;
+        // store the procedure and cancel handler
+        if ([registrationRequest count] == 4) {
+            // we have the cancelation handler
+            procedures = @[registrationRequest[2], registrationRequest[3]];
+        } else {
+            procedures = @[registrationRequest[2]];
+        }
+
+        [self.rpcRegisteredProcedures setObject:procedures forKey:registered.registration];
         
         // map uri to registrationID
         [self.rpcRegisteredUri setObject:registered.registration forKey:registrationRequest[1]];
@@ -479,10 +495,9 @@
         [self.rpcRegisterRequests removeObjectForKey:registered.request];
         
         if (resultcallback) {
+            // call the resutl callback
             resultcallback(nil);
         }
-        
-        
         
     } else if ([message isKindOfClass:[MDWampUnregistered class]]) {
         MDWampUnregistered *unregistered    = (MDWampUnregistered *)message;
@@ -509,30 +524,43 @@
         [self.rpcUnregisterRequests removeObjectForKey:unregistered.request];
         
     } else if ([message isKindOfClass:[MDWampInvocation class]]) {
+#pragma mark MDWampInvocation
         MDWampInvocation *invocation = (MDWampInvocation *)message;
-        
-        id(^procedure)(NSDictionary* details, NSArray *arguments, NSDictionary *argumentsKW) = [self.rpcRegisteredProcedures objectForKey:invocation.registration];
-        
-        id result = procedure(invocation.details, invocation.arguments, invocation.argumentsKw);
-        
-        // creating the yield message
-        MDWampYield *yield = [[MDWampYield alloc] initWithPayload:@[invocation.request, @{}]];
-        
-        // try to parse result and craft a meaningful YIELD
-        if (result == nil) {
-            // nothing to do procedure is returning a void
-        } else if([result isKindOfClass:[NSDictionary class]]) {
-            yield.argumentsKw = result;
-        } else if([result isKindOfClass:[NSArray class]]) {
-            yield.arguments = result;
-        } else {
-            yield.arguments = @[result];
-        }
 
-        [self sendMessage:yield];
+        // Store association between this invocation.request to the generic registration
+        [self.rpcPendingInvocation setObject:invocation.registration forKey:invocation.request];
+        
+        NSArray *procedures = [self.rpcRegisteredProcedures objectForKey:invocation.registration];
+        
+        void(^procedure)(MDWamp *client, MDWampInvocation* invocation) = procedures[0];
+        
+        // exec procedure
+        procedure(self, invocation);
+
     /**
      * ADvanced Protocol
      */
+    } else if ([message isKindOfClass:[MDWampInterrupt class]]) {
+        MDWampInterrupt *interrupt = (MDWampInterrupt *)message;
+        NSNumber *registration = [self.rpcPendingInvocation objectForKey:interrupt.request];
+        NSArray *procedures = [self.rpcRegisteredProcedures objectForKey:registration];
+        
+        if ([procedures count]==2) {
+            // we've got a cancel handler
+            void(^cancelHandler)(void) = procedures[1];
+            
+            // execute the cancel Handler
+            cancelHandler();
+        }
+        
+        // removing pending invocation
+        [self.rpcPendingInvocation removeObjectForKey:interrupt.request];
+        
+        // send an error
+        NSNumber *invocationCode = [[MDWampMessageFactory sharedFactory] codeFromClassName:kMDWampInvocation];
+        MDWampError *error = [[MDWampError alloc] initWithPayload:@[invocationCode, interrupt.request, @{}, @"mdwamp.error.invocation_interrupted"]];
+        [self sendMessage:error];
+        
     #pragma mark MDWampChallenge
     } else if ([message isKindOfClass:[MDWampChallenge class]]) {
         MDWampChallenge *challenge = (MDWampChallenge *)message;
@@ -711,15 +739,29 @@
 #pragma mark -
 #pragma mark Remote Procedure Call
 
-- (void) call:(NSString*)procUri
+- (NSNumber *) call:(NSString*)procUri
               args:(NSArray*)args
             kwArgs:(NSDictionary*)argsKw
+           options:(NSDictionary*)options
           complete:(void(^)(MDWampResult *result, NSError *error))completeBlock
 {
     NSNumber *request = [self generateID];
 
-
-    MDWampCall *msg = [[MDWampCall alloc] initWithPayload:@[request, @{}, procUri]];
+    NSMutableDictionary *opts = nil;
+    if (options == nil) {
+        opts = [[NSMutableDictionary alloc] init];
+    } else {
+        opts = [options mutableCopy];
+    }
+    
+    if(opts[@"exclude_me"] == nil && !self.config.caller_exclude_me){
+        opts[@"exclude_me"] = @NO;
+    }
+    
+    if(opts[@"disclose_me"] == nil && self.config.caller_identification){
+        opts[@"disclose_me"] = @YES;
+    }
+    MDWampCall *msg = [[MDWampCall alloc] initWithPayload:@[request, opts, procUri]];
     if (args)
         msg.arguments = args;
     
@@ -729,20 +771,79 @@
     [self.rpcCallbackMap setObject:completeBlock forKey:msg.request];
     
     [self sendMessage:msg];
+    
+    return request;
+}
 
+- (NSNumber *) call:(NSString*)procUri
+      payload:(id)payload
+      exclude:(NSArray*)exclude
+     eligible:(NSArray*)eligible
+     complete:(void(^)(MDWampResult *result, NSError *error))completeBlock
+{
+    NSMutableDictionary *options = [[NSMutableDictionary alloc] init];
+    
+    if (exclude)
+        options[@"exclude"] = exclude;
+    if (eligible)
+        options[@"eligible"] = eligible;
+ 
+    if ([payload isKindOfClass:[NSDictionary class]]) {
+        return [self call:procUri args:nil kwArgs:payload options:options complete:completeBlock];
+    } else if ([payload isKindOfClass:[NSArray class]]) {
+        return [self call:procUri args:payload kwArgs:nil options:options complete:completeBlock];
+    } else {
+        return [self call:procUri args:@[payload] kwArgs:nil options:options complete:completeBlock];
+    }
+}
+
+- (NSNumber *) call:(NSString*)procUri
+      payload:(id)payload
+     complete:(void(^)(MDWampResult *result, NSError *error))completeBlock
+{
+    return [self call:procUri payload:payload exclude:nil eligible:nil complete:completeBlock];
+}
+
+- (void) cancelCallProcedure:(NSNumber*)requestID
+{
+    MDWampCancel *msg = [[MDWampCancel alloc] initWithPayload:@[requestID,@{}]];
+    [self sendMessage:msg];
 }
 
 - (void) registerRPC:(NSString *)procUri
-           procedure:(id (^)(NSDictionary* details, NSArray *arguments, NSDictionary *argumentsKW))procedureBlock
-              result:(void(^)(NSError *error))resultCallback
+           procedure:(void(^)(MDWamp *client, MDWampInvocation* invocation))procedureBlock
+       cancelHandler:(void(^)(void))cancelBlock
+      registerResult:(void(^)(NSError *error))resultCallback
 {
     NSNumber *request = [self generateID];
     
     MDWampRegister *msg = [[MDWampRegister alloc] initWithPayload:@[request, @{}, procUri]];
     
-    [self.rpcRegisterRequests setObject:@[resultCallback, procUri, procedureBlock] forKey:request];
+    // TODO resultCallback now cannot be nil
+    
+    // cancel Block could be nil
+    if (cancelBlock) {
+        [self.rpcRegisterRequests setObject:@[resultCallback, procUri, procedureBlock, cancelBlock] forKey:request];
+    } else {
+        [self.rpcRegisterRequests setObject:@[resultCallback, procUri, procedureBlock] forKey:request];
+    }
     
     [self sendMessage:msg];
+}
+
+- (void)resultForInvocation:(MDWampInvocation*)invocation arguments:(NSArray*)arguments argumentsKw:(NSDictionary*)argumentsKw
+{
+    // creating the yield message
+    MDWampYield *yield = [[MDWampYield alloc] initWithPayload:@[invocation.request, @{}]];
+    
+    if(arguments)
+        yield.arguments = arguments;
+    
+    if (argumentsKw)
+        yield.argumentsKw = argumentsKw;
+    
+    [self sendMessage:yield];
+    [self.rpcPendingInvocation removeObjectForKey:invocation.request];
 }
 
 - (void) unregisterRPC:(NSString *)procUri

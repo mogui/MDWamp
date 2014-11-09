@@ -26,7 +26,7 @@ NSString * const kMDWampAuthMethodTicket      = @"ticket";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.authmethods = @[kMDWampAuthMethodCRA];
+        self.authmethods = @[];
         self.roles = @{
           kMDWampRolePublisher : @{
                   @"subscriber_blackwhite_listing": @YES,
@@ -37,12 +37,19 @@ NSString * const kMDWampAuthMethodTicket      = @"ticket";
                   @"publication_trustlevels":       @YES,
                   @"pattern_based_subscription":    @YES
                   },
-          kMDWampRoleCaller : @{},
+          kMDWampRoleCaller : @{
+                  @"callee_blackwhite_listing": @YES,
+                  @"caller_exclusion": @YES,
+                  @"caller_identification": @YES
+                  },
           kMDWampRoleCallee : @{}
         };
         self.publisher_acknowledge = NO;
         self.publisher_exclude_me = YES;
         self.publisher_identification = NO;
+        
+        self.caller_exclude_me = YES;
+        self.caller_identification = NO;
     }
     return self;
 }

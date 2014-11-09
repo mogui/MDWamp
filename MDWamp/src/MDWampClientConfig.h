@@ -85,6 +85,20 @@ extern NSString* const kMDWampAuthMethodTicket;
  */
 @property (nonatomic, assign) BOOL publisher_identification;
 
+/**
+ * Default config when Sending a Call request (can be overrided using options dictionary for every mesg)
+ * If YES the Caller will NOT receive the call of a procedure if he has registered to that procedure
+ * default: YES
+ */
+@property (nonatomic, assign) BOOL caller_exclude_me;
+
+/**
+ * Default config when Sending a CALL request (can be overrided using options dictionary for every mesg)
+ * If YES the Caller  request the disclosure of its identity (its WAMP session ID) to callee
+ * default: NO
+ */
+@property (nonatomic, assign) BOOL caller_identification;
+
 #pragma mark Helpers
 /**
  *  returns a suitable Dictionary to be used as details settings for an HELLO message

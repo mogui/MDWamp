@@ -15,7 +15,6 @@
 		760DA6FB18EB0A9E006EC89C /* MDWampMessageFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA6FA18EB0A9E006EC89C /* MDWampMessageFactoryTests.m */; };
 		760DA6FD18EB0E7D006EC89C /* MDWampMessagesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA6FC18EB0E7D006EC89C /* MDWampMessagesTests.m */; };
 		7619E69A18CF8E9F00B0209D /* MDWampTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7619E69918CF8E9F00B0209D /* MDWampTests.m */; };
-		76414F501950C86400788300 /* MDWampTransportWebSocketTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 76414F4F1950C86400788300 /* MDWampTransportWebSocketTests.m */; };
 		76414F531950C8E900788300 /* MDWampTransportdelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76414F521950C8E900788300 /* MDWampTransportdelegateMock.m */; };
 		764374A2194E238D000F29A8 /* MDStackTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 764374A1194E238D000F29A8 /* MDStackTest.m */; };
 		764F059E1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 764F059D1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m */; };
@@ -44,6 +43,7 @@
 		765DD2D118E484D000D4C19F /* MDWampTransportMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF81D318D1043700DFB13B /* MDWampTransportMock.m */; };
 		766E10E719E6B4390083173B /* MDWampClientConfigTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E10E619E6B4390083173B /* MDWampClientConfigTests.m */; };
 		766E10ED19E6C1E00083173B /* MDWampAdvancedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E10EC19E6C1E00083173B /* MDWampAdvancedTests.m */; };
+		7673B7AF1A0FDA3F0072CDD3 /* MDWampTransportWebSocketTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7673B7AE1A0FDA3F0072CDD3 /* MDWampTransportWebSocketTests.m */; };
 		7698B1B41952278E0045D400 /* MDWampSerializations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7698B1B31952278E0045D400 /* MDWampSerializations.m */; };
 		76A34EF0195DED5400233B76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D73A185B4A7B0087773E /* Foundation.framework */; };
 		76A34EF1195DED5400233B76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7698B1BF19522AF80045D400 /* CoreGraphics.framework */; };
@@ -251,7 +251,6 @@
 		762A51DE195CB2B000A3B344 /* READMEv1.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = READMEv1.md; sourceTree = "<group>"; };
 		762A51DF195CB2B000A3B344 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		762A51E1195CB2B000A3B344 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		76414F4F1950C86400788300 /* MDWampTransportWebSocketTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportWebSocketTests.m; sourceTree = "<group>"; };
 		76414F511950C8E900788300 /* MDWampTransportdelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportdelegateMock.h; sourceTree = "<group>"; };
 		76414F521950C8E900788300 /* MDWampTransportdelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportdelegateMock.m; sourceTree = "<group>"; };
 		7641ADC519E43BBC002167E0 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
@@ -275,6 +274,7 @@
 		765BAF9B19E722C800EC580D /* NSDictionary+MPMessagePack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+MPMessagePack.m"; path = "MPMessagePack/NSDictionary+MPMessagePack.m"; sourceTree = "<group>"; };
 		766E10E619E6B4390083173B /* MDWampClientConfigTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampClientConfigTests.m; sourceTree = "<group>"; };
 		766E10EC19E6C1E00083173B /* MDWampAdvancedTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampAdvancedTests.m; sourceTree = "<group>"; };
+		7673B7AE1A0FDA3F0072CDD3 /* MDWampTransportWebSocketTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportWebSocketTests.m; sourceTree = "<group>"; };
 		7691AA151A0D168C007FE84C /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = config.json; path = .crossbar/config.json; sourceTree = "<group>"; };
 		7698B1B31952278E0045D400 /* MDWampSerializations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSerializations.m; sourceTree = "<group>"; };
 		7698B1BF19522AF80045D400 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -707,6 +707,7 @@
 		76CCC6ED185BD1F10056AB98 /* MDWampTests */ = {
 			isa = PBXGroup;
 			children = (
+				7673B7AE1A0FDA3F0072CDD3 /* MDWampTransportWebSocketTests.m */,
 				76CCC6EE185BD1F10056AB98 /* InfoPlist.strings */,
 				76CCC6F4185BD1F10056AB98 /* MDWampTests-Info.plist */,
 				76CCC6FB185BD2210056AB98 /* Mock */,
@@ -716,7 +717,6 @@
 				7619E69918CF8E9F00B0209D /* MDWampTests.m */,
 				766E10EC19E6C1E00083173B /* MDWampAdvancedTests.m */,
 				764374A1194E238D000F29A8 /* MDStackTest.m */,
-				76414F4F1950C86400788300 /* MDWampTransportWebSocketTests.m */,
 				764F059D1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m */,
 				7698B1B31952278E0045D400 /* MDWampSerializations.m */,
 				766E10E619E6B4390083173B /* MDWampClientConfigTests.m */,
@@ -1043,8 +1043,8 @@
 				76CCC6F7185BD1F10056AB98 /* MDWampClientDelegateMock.m in Sources */,
 				7698B1B41952278E0045D400 /* MDWampSerializations.m in Sources */,
 				766E10ED19E6C1E00083173B /* MDWampAdvancedTests.m in Sources */,
-				76414F501950C86400788300 /* MDWampTransportWebSocketTests.m in Sources */,
 				764374A2194E238D000F29A8 /* MDStackTest.m in Sources */,
+				7673B7AF1A0FDA3F0072CDD3 /* MDWampTransportWebSocketTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1171,16 +1171,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
-				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1233,10 +1229,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MDWamp/MDWamp-Prefix.pch";
-				GENERATE_PROFILING_CODE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1281,8 +1276,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
-				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MDWamp/MDWamp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (

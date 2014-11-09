@@ -76,6 +76,15 @@ FOUNDATION_EXPORT NSString *const kMDWampYield        ;
 - (NSString *)nameFromCode:(NSNumber*)code;
 
 /**
+ *  Gives the protocol code for a class Name
+ *
+ *  @param NSString         class name
+ *
+ *  @return code
+ */
+- (NSNumber *)codeFromClassName:(NSString*)className;
+
+/**
  *  Gives the protocol code for a given object
  *
  *  @param object an MDWampMessage ninstance

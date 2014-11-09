@@ -114,6 +114,12 @@ NSString *const kMDWampYield        = @"MDWampYield";
 - (NSNumber *)codeFromObject:(id)object
 {
     NSString *className = NSStringFromClass([object class]);
+
+    return [self codeFromClassName:className];
+}
+
+- (NSNumber *)codeFromClassName:(NSString*)className
+{
     NSArray *keys = [self.messageMapping allKeysForObject:className];
     if ([keys count] != 1) {
         [NSException raise:kMDWampErrorDomain format:@"Class %@ is not a registered message in the protocol", className];
