@@ -137,6 +137,26 @@ Enjoy :)
 
 ## Changes 
 
+### 2.2.0
+
+Implemented Stable Features of Advanced protocol
+
+- Transport
+    - RawSocket Transport (old spec - to be updated)
+    - LongPoll Transport (Doesn't make sense on mobile)
+- Publish & Subscribe
+    - Subscriber Black- and Whitelisting
+    - Publisher Exclusion 
+    - Publisher Identification 
+- Remote Procedure Calls
+    - Caller Identification
+    - Progressive Call Results
+    - Canceling Calls
+- Authentication
+    - TLS Certificate-based Authentication (SocketRocket)
+    - WAMP Challenge-Response Authentication
+    - One Time Token Authentication
+
 
 ### 2.1.0
 - added RawSocketTransport

@@ -57,7 +57,7 @@
         [tmpIv removeFromSuperview];
     }
 
-    [[AppDel wampConnection] call:self.procedureName.text args:nil kwArgs:nil complete:^(MDWampResult *result, NSError *error) {
+    [[AppDel wampConnection] call:self.procedureName.text args:nil kwArgs:nil options:nil complete:^(MDWampResult *result, NSError *error) {
         self.resultText.text = @"";
         if (error) {
             self.resultText.text = error.localizedDescription;

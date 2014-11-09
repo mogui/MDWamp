@@ -182,7 +182,7 @@
     hello.realm = self.realm;
     [self sendMessage:hello];
 
-    }
+}
 
 - (void)transportDidReceiveMessage:(NSData *)message
 {

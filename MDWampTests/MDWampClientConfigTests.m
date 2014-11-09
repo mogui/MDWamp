@@ -10,7 +10,7 @@
 #import "MDWampClientConfig.h"
 
 #define ROLES @{@"some role" : @"other"}
-#define AGENT @"MDWamp v 2.10"
+#define AGENT @"MDWamp v2.2.0"
 
 @interface MDWampClientConfigTests : XCTestCase {
     MDWampClientConfig *conf;

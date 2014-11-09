@@ -22,7 +22,7 @@
 
 @protocol MDWampSerialization <NSObject>
 
-- (NSData *) pack:(NSArray*)arguments;
+- (id) pack:(NSArray*)arguments;
 - (NSArray*) unpack:(NSData *)data;
 
 @end

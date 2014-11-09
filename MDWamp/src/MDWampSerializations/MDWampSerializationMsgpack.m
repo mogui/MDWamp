@@ -23,7 +23,7 @@
 
 
 @implementation MDWampSerializationMsgpack
-- (NSData *) pack:(NSArray*)arguments
+- (id) pack:(NSArray*)arguments
 {
     return [arguments mp_messagePack];
 }

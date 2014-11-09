@@ -1,6 +1,6 @@
 {
   "name": "MDWamp",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "license": "Apache 2.0",
   "homepage": "http://github.com/mogui/MDWamp",
   "summary": "A client side objective-C implementation of the WebSocket subprotocol WAMP",

@@ -39,8 +39,8 @@
 {
     ser = [[MDWampSerializationJSON alloc] init];
     NSArray *a = @[@1, @2];
-    NSData *json = [ser pack:a];
-    XCTAssertEqualObjects(json , [@"[1,2]" dataUsingEncoding:NSUTF8StringEncoding], @"Must return correct json");
+    NSString *json = [ser pack:a];
+    XCTAssertEqualObjects(json , @"[1,2]" , @"Must return correct json");
 }
 
 - (void)testUnpackJson
