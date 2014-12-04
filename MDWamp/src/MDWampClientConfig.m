@@ -7,6 +7,7 @@
 //
 
 #import "MDWampClientConfig.h"
+#import "MDWampConstants.h"
 
 #pragma Constants
 

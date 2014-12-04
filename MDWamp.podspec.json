@@ -20,7 +20,7 @@
     "SocketRocket": [
 
     ],
-    "MessagePack": [
+    "MPMessagePack": [
 
     ],
     "CocoaAsyncSocket": [
