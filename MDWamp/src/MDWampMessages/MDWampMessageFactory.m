@@ -24,10 +24,9 @@
 NSString *const kMDWampHello        = @"MDWampHello";
 NSString *const kMDWampWelcome      = @"MDWampWelcome";
 NSString *const kMDWampAbort        = @"MDWampAbort";
-NSString *const kMDWampChallange    = @"MDWampChallange";
+NSString *const kMDWampChallenge    = @"MDWampChallenge";
 NSString *const kMDWampAuthenticate = @"MDWampAuthenticate";
 NSString *const kMDWampGoodbye      = @"MDWampGoodbye";
-NSString *const kMDWampHeartbeat    = @"MDWampHeartbeat";
 NSString *const kMDWampError        = @"MDWampError";
 NSString *const kMDWampPublish      = @"MDWampPublish";
 NSString *const kMDWampPublished    = @"MDWampPublished";
@@ -46,7 +45,6 @@ NSString *const kMDWampUnregistered = @"MDWampUnregistered";
 NSString *const kMDWampInvocation   = @"MDWampInvocation";
 NSString *const kMDWampInterrupt    = @"MDWampInterrupt";
 NSString *const kMDWampYield        = @"MDWampYield";
-
 
 @interface MDWampMessageFactory ()
     @property (nonatomic, strong) NSDictionary *messageMapping;
@@ -70,10 +68,9 @@ NSString *const kMDWampYield        = @"MDWampYield";
                                 @1  : kMDWampHello,
                                 @2  : kMDWampWelcome,
                                 @3  : kMDWampAbort,
-                                @4  : kMDWampChallange,
+                                @4  : kMDWampChallenge,
                                 @5  : kMDWampAuthenticate,
                                 @6  : kMDWampGoodbye,
-                                @7  : kMDWampHeartbeat,
                                 @8  : kMDWampError,
                                 @16 : kMDWampPublish,
                                 @17 : kMDWampPublished,
@@ -117,6 +114,12 @@ NSString *const kMDWampYield        = @"MDWampYield";
 - (NSNumber *)codeFromObject:(id)object
 {
     NSString *className = NSStringFromClass([object class]);
+
+    return [self codeFromClassName:className];
+}
+
+- (NSNumber *)codeFromClassName:(NSString*)className
+{
     NSArray *keys = [self.messageMapping allKeysForObject:className];
     if ([keys count] != 1) {
         [NSException raise:kMDWampErrorDomain format:@"Class %@ is not a registered message in the protocol", className];

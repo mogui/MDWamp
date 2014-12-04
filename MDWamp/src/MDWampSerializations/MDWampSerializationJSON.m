@@ -29,10 +29,11 @@
     if (error) {
         return nil;
     }
-    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];;
 }
 
-- (NSArray*) unpack:(id)data
+- (NSArray*) unpack:(NSData *)data
 {
     NSData *d = data;
     if (![data isKindOfClass:[NSData class]]) {

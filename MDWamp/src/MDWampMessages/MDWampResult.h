@@ -1,8 +1,8 @@
 //
-//  MDWampTransportProtocol.h
+//  MDWampResult.h
 //  MDWamp
 //
-//  Created by Niko Usai on 11/03/14.
+//  Created by Niko Usai on 22/04/14.
 //  Copyright (c) 2014 mogui.it. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,38 +19,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MDWampTransportDelegate.h"
-#import "MDWampConstants.h"
+#import "MDWampMessage.h"
 
-@class MDWampMessage;
-@protocol MDWampTransport <NSObject>
-
-/**
- *  The transport delegate
- */
-@property id<MDWampTransportDelegate>delegate;
-
-
-
-/**
- *  Method used to open a connection to the transport
- */
-- (void) open;
-
-/**
- *  Method used to close a connection with the transport
- */
-- (void) close;
-/**
- *  Test the connection with the transport
- *
- *  @return connection status
- */
-- (BOOL) isConnected;
-
-/**
- *  Method to send data on the transport
- */
-- (void)send:(id)data;
-
+@interface MDWampResult : NSObject <MDWampMessage>
+@property (nonatomic, strong) NSNumber *request;
+@property (nonatomic, strong) NSString *callID;
+@property (nonatomic, strong) NSDictionary *options;
+@property (nonatomic, strong) NSArray *arguments;
+@property (nonatomic, strong) NSDictionary *argumentsKw;
+@property (nonatomic, strong) id result;
+@property (nonatomic, readonly) BOOL progress;
 @end

@@ -75,7 +75,8 @@
     
     if(self.procedureAction.enabled) {
         
-        [[AppDel wampConnection] registerRPC:self.procedureName.text procedure:^id(NSDictionary *details, NSArray *arguments, NSDictionary *argumentsKW) {
+        [[AppDel wampConnection] registerRPC:self.procedureName.text procedure:^(MDWamp *client, MDWampInvocation *invocation) {
+            
             if(self.procedureAction.selectedSegmentIndex == 0) {
                 CGRect rect=self.view.bounds;
                 UIGraphicsBeginImageContext(rect.size);
@@ -88,19 +89,18 @@
                 UIGraphicsEndImageContext();
                 NSData * data = UIImagePNGRepresentation(image);
                 NSString *b64 = [[NSString alloc] initWithData:[data base64EncodedDataWithOptions:NSDataBase64Encoding64CharacterLineLength] encoding:NSUTF8StringEncoding];
-                return b64;
+                [client resultForInvocation:invocation arguments:@[b64] argumentsKw:nil];
             } else {
-                return @{
-                         @"systemVersion": [[UIDevice currentDevice] systemVersion],
-                         @"systemName": [[UIDevice currentDevice] systemName],
-                         @"name": [[UIDevice currentDevice] name]
-                         };
+                [client resultForInvocation:invocation arguments:nil argumentsKw:@{
+                            @"systemVersion": [[UIDevice currentDevice] systemVersion],
+                            @"systemName": [[UIDevice currentDevice] systemName],
+                            @"name": [[UIDevice currentDevice] name]
+                            }];
             }
-                
-                
-            return nil;
             
-        } result:^(NSError *error) {
+
+        } cancelHandler:nil registerResult:^(NSError *error) {
+             
             if(error){
                 UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"!" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
                 [av show];

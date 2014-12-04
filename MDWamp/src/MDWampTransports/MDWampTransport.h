@@ -1,8 +1,8 @@
 //
-//  MDWampSerialization.h
+//  MDWampTransportProtocol.h
 //  MDWamp
 //
-//  Created by Niko Usai on 09/03/14.
+//  Created by Niko Usai on 11/03/14.
 //  Copyright (c) 2014 mogui.it. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,10 +19,38 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MDWampTransportDelegate.h"
+#import "MDWampConstants.h"
 
-@protocol MDWampSerialization <NSObject>
+@class MDWampMessage;
+@protocol MDWampTransport <NSObject>
 
-- (id) pack:(NSArray*)arguments;
-- (NSArray*) unpack:(id)data;
+/**
+ *  The transport delegate
+ */
+@property id<MDWampTransportDelegate>delegate;
+
+
+
+/**
+ *  Method used to open a connection to the transport
+ */
+- (void) open;
+
+/**
+ *  Method used to close a connection with the transport
+ */
+- (void) close;
+/**
+ *  Test the connection with the transport
+ *
+ *  @return connection status
+ */
+- (BOOL) isConnected;
+
+/**
+ *  Method to send data on the transport
+ */
+- (void)send:(NSData *)data;
 
 @end

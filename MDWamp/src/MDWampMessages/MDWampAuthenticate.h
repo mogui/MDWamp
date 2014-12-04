@@ -1,8 +1,8 @@
 //
-//  MDWampSerializationMsgpack.m
+//  MDWampAuthenticate.h
 //  MDWamp
 //
-//  Created by Niko Usai on 24/06/14.
+//  Created by Niko Usai on 26/08/14.
 //  Copyright (c) 2014 mogui.it. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,21 +18,9 @@
 //  limitations under the License.
 //
 
-#import "MDWampSerializationMsgpack.h"
-#import "MessagePack.h"
-
-@implementation MDWampSerializationMsgpack
-- (id) pack:(NSArray*)arguments
-{
-    return [arguments messagePack];
-}
-
-- (NSArray*) unpack:(id)data
-{
-    NSData *d = data;
-    if (![data isKindOfClass:[NSData class]]) {
-        d = [(NSString*)data dataUsingEncoding:NSUTF8StringEncoding];
-    }
-    return [d messagePackParse];
-}
+#import <Foundation/Foundation.h>
+#import "MDWampMessage.h"
+@interface MDWampAuthenticate : NSObject <MDWampMessage>
+@property (nonatomic, strong) NSString *signature;
+@property (nonatomic, strong) NSDictionary *extra;
 @end

@@ -1,5 +1,5 @@
 # What is it?
-[![Build Status](https://travis-ci.org/mogui/MDWamp.svg?branch=master)](https://travis-ci.org/mogui/MDWamp)
+[![Build Status](https://travis-ci.org/mogui/MDWamp.svg?branch=develop)](https://travis-ci.org/mogui/MDWamp)
 
 MDWamp is a client side objective-C implementation of the WebSocket subprotocol [WAMP][wamp_link] (v2).  
 
@@ -136,6 +136,26 @@ Enjoy :)
 
 
 ## Changes 
+
+### 2.2.0
+
+Implemented Stable Features of Advanced protocol
+
+- Transport
+    - RawSocket Transport (old spec - to be updated)
+    - LongPoll Transport (Doesn't make sense on mobile)
+- Publish & Subscribe
+    - Subscriber Black- and Whitelisting
+    - Publisher Exclusion 
+    - Publisher Identification 
+- Remote Procedure Calls
+    - Caller Identification
+    - Progressive Call Results
+    - Canceling Calls
+- Authentication
+    - TLS Certificate-based Authentication (SocketRocket)
+    - WAMP Challenge-Response Authentication
+    - One Time Token Authentication
 
 
 ### 2.1.0

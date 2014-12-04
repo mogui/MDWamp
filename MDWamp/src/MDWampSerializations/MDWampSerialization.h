@@ -1,8 +1,8 @@
 //
-//  MDWampResult.h
+//  MDWampSerialization.h
 //  MDWamp
 //
-//  Created by Niko Usai on 22/04/14.
+//  Created by Niko Usai on 09/03/14.
 //  Copyright (c) 2014 mogui.it. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,13 +19,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MDWampMessage.h"
 
-@interface MDWampResult : NSObject <MDWampMessage>
-@property (nonatomic, strong) NSNumber *request;
-@property (nonatomic, strong) NSString *callID;
-@property (nonatomic, strong) NSDictionary *details;
-@property (nonatomic, strong) NSArray *arguments;
-@property (nonatomic, strong) NSDictionary *argumentsKw;
-@property (nonatomic, strong) id result;
+@protocol MDWampSerialization <NSObject>
+
+- (id) pack:(NSArray*)arguments;
+- (NSArray*) unpack:(NSData *)data;
+
 @end

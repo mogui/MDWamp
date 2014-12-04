@@ -25,10 +25,9 @@
 FOUNDATION_EXPORT NSString *const kMDWampHello        ;
 FOUNDATION_EXPORT NSString *const kMDWampWelcome      ;
 FOUNDATION_EXPORT NSString *const kMDWampAbort        ;
-FOUNDATION_EXPORT NSString *const kMDWampChallange    ;
+FOUNDATION_EXPORT NSString *const kMDWampChallenge    ;
 FOUNDATION_EXPORT NSString *const kMDWampAuthenticate ;
 FOUNDATION_EXPORT NSString *const kMDWampGoodbye      ;
-FOUNDATION_EXPORT NSString *const kMDWampHeartbeat    ;
 FOUNDATION_EXPORT NSString *const kMDWampError        ;
 FOUNDATION_EXPORT NSString *const kMDWampPublish      ;
 FOUNDATION_EXPORT NSString *const kMDWampPublished    ;
@@ -75,6 +74,15 @@ FOUNDATION_EXPORT NSString *const kMDWampYield        ;
  *  @return Class string name
  */
 - (NSString *)nameFromCode:(NSNumber*)code;
+
+/**
+ *  Gives the protocol code for a class Name
+ *
+ *  @param NSString         class name
+ *
+ *  @return code
+ */
+- (NSNumber *)codeFromClassName:(NSString*)className;
 
 /**
  *  Gives the protocol code for a given object

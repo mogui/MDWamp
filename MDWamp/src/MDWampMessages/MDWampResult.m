@@ -1,5 +1,5 @@
 //
-//  MDWampInvocation.m
+//  MDWampResult.m
 //  MDWamp
 //
 //  Created by Niko Usai on 22/04/14.
@@ -18,20 +18,18 @@
 //  limitations under the License.
 //
 
-#import "MDWampInvocation.h"
+#import "MDWampResult.h"
 
-@implementation MDWampInvocation
+@implementation MDWampResult
 
 - (id)initWithPayload:(NSArray *)payload
 {
     self = [super init];
     if (self) {
         NSMutableArray *tmp = [payload mutableCopy];
-        // [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
-        
+        // [RESULT, CALL.Request|id, options|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
         self.request   = [tmp shift];
-        self.registration    = [tmp shift];
-        self.details        = [tmp shift];
+        self.options    = [tmp shift];
         if ([tmp count] > 0) self.arguments     = [tmp shift];
         if ([tmp count] > 0) self.argumentsKw   = [tmp shift];
     }
@@ -42,14 +40,27 @@
 {
     NSNumber *code = [[MDWampMessageFactory sharedFactory] codeFromObject:self];
     if (self.arguments && self.argumentsKw) {
-        return @[code, self.request, self.registration, self.details, self.arguments, self.argumentsKw ];
+        return @[code, self.request, self.options, self.arguments, self.argumentsKw ];
     } else if(self.arguments) {
-        return @[code, self.request, self.registration, self.details, self.arguments ];
+        return @[code, self.request, self.options, self.arguments ];
     } else if(self.argumentsKw) {
-        return @[code, self.request, self.registration, self.details, @[], self.argumentsKw ];
+        return @[code, self.request, self.options, @[], self.argumentsKw ];
     } else {
-        return @[code, self.request, self.registration, self.details];
+        return @[code, self.request, self.options];
     }
 }
 
+- (void)setResult:(id)result
+{
+    self.arguments = @[result];
+}
+
+- (id)result
+{
+    return self.arguments[0];
+}
+
+- (BOOL)progress {
+    return [self.options[@"progress"] boolValue];
+}
 @end

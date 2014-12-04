@@ -109,12 +109,18 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
 
 - (void)testChallangeCode
 {
-    self.payload = @[@4,  @{@"message": @"The realm does not exist."}, @"wamp.error.no_such_realm"];
+    makeMessage(MDWampChallenge, (@[@"simple", @{}]) );
+    testMarshall2(@4);
+    msgIntegrity(msg.authMethod, 0)
+    msgIntegrity(msg.extra, 1)
 }
 
 - (void)testAuthenticateCode
 {
-    self.payload = @[@5,  @{@"message": @"The realm does not exist."}, @"wamp.error.no_such_realm"];
+    makeMessage(MDWampAuthenticate, (@[@"76YASTFDa8s7das8d6", @{}]) );
+    testMarshall2(@5);
+    msgIntegrity(msg.signature, 0)
+    msgIntegrity(msg.extra, 1)
 }
 
 - (void)testGoodbye
@@ -129,10 +135,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     
     [self checkMarshalling:msg code:@6];}
 
-- (void)testHeartbitCode
-{
-    self.payload = @[@7,  @{@"message": @"The realm does not exist."}, @"wamp.error.no_such_realm"];
-}
+
 
 - (void)testError {
     self.payload = @[@48, @123456789, @{}, @"com.myapp.error.object_write_protected", @[@"Object is write protected"], @{@"severity": @3}];
@@ -265,7 +268,7 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     makeMessage(MDWampResult, (@[@7814135, @{}, @[], @{@"userid": @123, @"karma": @10}]));
     testMarshall2(@50);
     msgIntegrity(msg.request, 0);
-    msgIntegrity(msg.details, 1);
+    msgIntegrity(msg.options, 1);
     msgIntegrity(msg.arguments, 2);
     msgIntegrity(msg.argumentsKw, 3);
 }
@@ -288,4 +291,17 @@ XCTAssertNotNil(msg, @"Message Must not be nil"); \
     msgIntegrity(msg.argumentsKw, 3);
 }
 
+- (void) testCancel {
+    makeMessage(MDWampCancel, (@[@123019283, @{}]) );
+    testMarshall2(@49);
+    msgIntegrity(msg.request, 0)
+    msgIntegrity(msg.options, 1)
+}
+
+- (void) testInterrupt {
+    makeMessage(MDWampInterrupt, (@[@123019283, @{}]) );
+    testMarshall2(@69);
+    msgIntegrity(msg.request, 0)
+    msgIntegrity(msg.options, 1)
+}
 @end

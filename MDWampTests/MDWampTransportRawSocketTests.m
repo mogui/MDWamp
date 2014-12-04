@@ -45,7 +45,7 @@ typedef enum : NSUInteger {
     } else if (self.operation == TestClose) {
         [transport close];
     } else if (self.operation == TestMessage) {
-        NSString *helloMsg = @"[1,\"Realm1\",{\"roles\":{\"publisher\":{},\"subscriber\":{}}}]";
+        NSString *helloMsg = @"[1,\"realm1\",{\"roles\":{\"publisher\":{},\"subscriber\":{}}}]";
         NSData *d = [helloMsg dataUsingEncoding:NSUTF8StringEncoding];
         [transport send:d];
     } else if (self.operation == TestFail) {

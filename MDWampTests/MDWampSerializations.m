@@ -40,7 +40,7 @@
     ser = [[MDWampSerializationJSON alloc] init];
     NSArray *a = @[@1, @2];
     NSString *json = [ser pack:a];
-    XCTAssertEqualObjects(json, @"[1,2]", @"Must return correct json");
+    XCTAssertEqualObjects(json , @"[1,2]" , @"Must return correct json");
 }
 
 - (void)testUnpackJson

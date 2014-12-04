@@ -1,8 +1,8 @@
 //
-//  MDWampInvocation.h
+//  MDWampAuthenticate.m
 //  MDWamp
 //
-//  Created by Niko Usai on 22/04/14.
+//  Created by Niko Usai on 26/08/14.
 //  Copyright (c) 2014 mogui.it. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,16 +17,26 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+#import "MDWampAuthenticate.h"
 
-#import <Foundation/Foundation.h>
-#import "MDWampMessage.h"
+@implementation MDWampAuthenticate
 
-@interface MDWampInvocation : NSObject <MDWampMessage>
+- (id)initWithPayload:(NSArray *)payload
+{
+    self = [super init];
+    if (self) {
+        NSMutableArray *tmp = [payload mutableCopy];
+        // [AUTHENTICATE, Signature|string, Extra|dict]
+        self.signature    = [tmp shift];
+        self.extra    = [tmp shift];
+    }
+    return self;
+}
 
-@property (nonatomic, strong) NSNumber *request;
-@property (nonatomic, strong) NSNumber *registration;
-@property (nonatomic, strong) NSDictionary *details;
-@property (nonatomic, strong) NSArray *arguments;
-@property (nonatomic, strong) NSDictionary *argumentsKw;
+- (NSArray *)marshall
+{
+    NSNumber *code = [[MDWampMessageFactory sharedFactory] codeFromObject:self];
+    return @[code, self.signature, self.extra];
+}
 
 @end
