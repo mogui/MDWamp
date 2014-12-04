@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/mogui/MDWamp.git",
-    "tag": "2.1.1"
+    "tag": "2.2.0"
   },
   "source_files": "MDWamp/**/*.{h,m,c}",
   "platforms": {

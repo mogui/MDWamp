@@ -253,7 +253,6 @@
 		762A51E1195CB2B000A3B344 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		76414F511950C8E900788300 /* MDWampTransportdelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportdelegateMock.h; sourceTree = "<group>"; };
 		76414F521950C8E900788300 /* MDWampTransportdelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportdelegateMock.m; sourceTree = "<group>"; };
-		7641ADC519E43BBC002167E0 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		764374A1194E238D000F29A8 /* MDStackTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDStackTest.m; sourceTree = "<group>"; };
 		764F059D1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportRawSocketTests.m; sourceTree = "<group>"; };
 		764F05A31969B26D00EB1A8A /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
@@ -461,7 +460,6 @@
 				762A51DE195CB2B000A3B344 /* READMEv1.md */,
 				762A51DF195CB2B000A3B344 /* README.md */,
 				762A51E1195CB2B000A3B344 /* LICENSE */,
-				7641ADC519E43BBC002167E0 /* TODO.md */,
 				7657671119E6850F0008967E /* MDWamp.podspec.json */,
 				7691AA151A0D168C007FE84C /* config.json */,
 			);
