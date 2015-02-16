@@ -62,7 +62,7 @@ NSString * const kMDWampAuthMethodTicket      = @"ticket";
 }
 
 - (NSDictionary *)getHelloDetails {
-    NSMutableDictionary* d = [NSMutableDictionary dictionaryWithDictionary:@{ @"roles" : self.roles, @"authmetods" : self.authmethods }];
+    NSMutableDictionary* d = [NSMutableDictionary dictionaryWithDictionary:@{ @"roles" : self.roles, @"authmethods" : self.authmethods }];
     
     if (self.agent) {
         d[@"agent"] = self.agent;
