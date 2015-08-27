@@ -1,5 +1,9 @@
+develop [![Build Status](https://travis-ci.org/mogui/MDWamp.svg?branch=develop)](https://travis-ci.org/mogui/MDWamp)
+master [![Build Status](https://travis-ci.org/mogui/MDWamp.svg?branch=master)](https://travis-ci.org/mogui/MDWamp)
+
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 # What is it?
-[![Build Status](https://travis-ci.org/mogui/MDWamp.svg?branch=develop)](https://travis-ci.org/mogui/MDWamp)
 
 MDWamp is a client side objective-C implementation of the WebSocket subprotocol [WAMP][wamp_link] (v2).  
 

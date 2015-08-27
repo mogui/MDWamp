@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GCDAsyncSocket.h"
 #import "MDWampTransport.h"
 @interface MDWampTransportRawSocket : NSObject <MDWampTransport>
 - (id)initWithHost:(NSString*)host port:(NSInteger)port;
