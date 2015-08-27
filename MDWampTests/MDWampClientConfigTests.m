@@ -30,7 +30,7 @@
 
 - (void)testGetHelloDetails {
     // This is an example of a functional test case.
-    NSDictionary *d =  @{@"roles" : ROLES, @"agent" : AGENT, @"authmetods":@[]};
+    NSDictionary *d =  @{@"roles" : ROLES, @"agent" : AGENT, @"authmethods":@[]};
     NSDictionary *hello = [conf getHelloDetails];
     XCTAssertEqualObjects(d, hello, @"Not proper details dictionary returned");
 }

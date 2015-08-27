@@ -748,8 +748,8 @@
         opts[MDWampOption_exclude_me] = @NO;
     }
     
-    if(opts[MDWampOption_exclude_me] == nil && self.config.caller_identification){
-        opts[MDWampOption_exclude_me] = @YES;
+    if(opts[MDWampOption_disclose_me] == nil && self.config.caller_identification){
+        opts[MDWampOption_disclose_me] = @YES;
     }
     
     if(opts[MDWampOption_receive_progress] == nil && self.config.caller_progressive_result){
