@@ -102,8 +102,8 @@
 #pragma mark Utils
 - (NSNumber *) generateID
 {
-    unsigned int r = arc4random_uniform(exp2(32)-1);
-    return [NSNumber numberWithInt:r];
+    u_int32_t r = arc4random_uniform(exp2(32)-1);
+    return [NSNumber numberWithUnsignedInt:r];
 }
 
 - (void) cleanUp {
