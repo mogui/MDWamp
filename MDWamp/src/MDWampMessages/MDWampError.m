@@ -60,6 +60,12 @@
     if (self.details) {
         info = [self.details mutableCopy];
         [(NSMutableDictionary*)info setObject:self.error forKey:NSLocalizedDescriptionKey];
+        if (self.arguments) {
+            [(NSMutableDictionary*)info setObject:self.arguments forKey:@"args"];
+        }
+        if (self.argumentsKw) {
+            [(NSMutableDictionary*)info setObject:self.argumentsKw forKey:@"kwargs"];
+        }
     } else {
         info = @{NSLocalizedDescriptionKey: self.error};
     }
