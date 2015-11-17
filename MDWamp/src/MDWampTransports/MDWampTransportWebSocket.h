@@ -38,4 +38,12 @@ FOUNDATION_EXPORT NSString *const kMDWampProtocolWamp2msgpack;
  */
 - (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols;
 
+/**
+ * Request Cookies
+ * Sets the request cookies
+ *
+ * @param cookies cookies to be sent with the request (Array of NSHTTPCookie objects)
+ */
+- (void)setRequestCookies:(NSArray *)requestCookies;
+
 @end
