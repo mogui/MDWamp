@@ -49,6 +49,10 @@ NSString *const kMDWampProtocolWamp2msgpack = @"wamp.2.msgpack";
     return self;
 }
 
+- (void)setRequestCookies:(NSArray *)requestCookies {
+    self.socket.requestCookies = requestCookies;
+}
+
 - (void) open
 {
     [_socket open];
