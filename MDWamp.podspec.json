@@ -30,7 +30,7 @@
     "dependencies": {
         "CocoaAsyncSocket": [],
         "MPMessagePack": [],
-        "SocketRocket": []
+        "SocketRocket": ["~> 0.4.2"]
     },
     "authors": {
         "Niko Usai": "mogui83@gmail.com"
