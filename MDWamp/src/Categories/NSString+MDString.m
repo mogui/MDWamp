@@ -44,8 +44,7 @@
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
     
     CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
-
-    return [[NSData dataWithBytes:cHMAC length:CC_SHA1_DIGEST_LENGTH] base64Encoding];
+    return [[NSData dataWithBytes:cHMAC length:CC_SHA1_DIGEST_LENGTH] base64EncodedStringWithOptions:0];
 }
 
 
