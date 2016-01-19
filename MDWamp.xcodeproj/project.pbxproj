@@ -185,6 +185,7 @@
 		76AE16611A0C29940041016F /* XCTAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE16601A0C29940041016F /* XCTAsyncTestCase.m */; };
 		76CCC6F6185BD1F10056AB98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76CCC6EE185BD1F10056AB98 /* InfoPlist.strings */; };
 		76CCC6F7185BD1F10056AB98 /* MDWampClientDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CCC6F1185BD1F10056AB98 /* MDWampClientDelegateMock.m */; };
+		76D3E6B01C4E8CFC007F4A0B /* RELEASE in Resources */ = {isa = PBXBuildFile; fileRef = 76D3E6AF1C4E8CFC007F4A0B /* RELEASE */; };
 		76EF81DB18D1087000DFB13B /* MDWampSerializationMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF81DA18D1087000DFB13B /* MDWampSerializationMock.m */; };
 		76F5970F196894A60002773C /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 76F5970D196894A60002773C /* GCDAsyncSocket.h */; };
 		76F59710196894A60002773C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F5970E196894A60002773C /* GCDAsyncSocket.m */; };
@@ -397,6 +398,7 @@
 		76CCC6F1185BD1F10056AB98 /* MDWampClientDelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampClientDelegateMock.m; sourceTree = "<group>"; };
 		76CCC6F3185BD1F10056AB98 /* MDWampTestIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTestIncludes.h; sourceTree = "<group>"; };
 		76CCC6F4185BD1F10056AB98 /* MDWampTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MDWampTests-Info.plist"; sourceTree = "<group>"; };
+		76D3E6AF1C4E8CFC007F4A0B /* RELEASE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE; sourceTree = "<group>"; };
 		76EF81D218D1043700DFB13B /* MDWampTransportMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportMock.h; sourceTree = "<group>"; };
 		76EF81D318D1043700DFB13B /* MDWampTransportMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportMock.m; sourceTree = "<group>"; };
 		76EF81D918D1087000DFB13B /* MDWampSerializationMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSerializationMock.h; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 				762A51DF195CB2B000A3B344 /* README.md */,
 				762A51E1195CB2B000A3B344 /* LICENSE */,
 				7657671119E6850F0008967E /* MDWamp.podspec.json */,
+				76D3E6AF1C4E8CFC007F4A0B /* RELEASE */,
 				7691AA151A0D168C007FE84C /* config.json */,
 			);
 			sourceTree = "<group>";
@@ -926,6 +929,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76D3E6B01C4E8CFC007F4A0B /* RELEASE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

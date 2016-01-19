@@ -9,8 +9,8 @@
     "name": "MDWamp",
     "license": "Apache 2.0",
     "platforms": {
-        "osx": "10.7",
-        "ios": "6.1"
+        "osx": "10.8",
+        "ios": "7.1"
     },
     "source_files": "MDWamp/**/*.{h,m,c}",
     "ios": {
@@ -24,13 +24,13 @@
     "libraries": "icucore",
     "source": {
         "git": "https://github.com/mogui/MDWamp.git",
-        "tag": "2.2.1"
+        "tag": "2.2.2"
     },
-    "version": "2.2.1",
+    "version": "2.2.2",
     "dependencies": {
         "CocoaAsyncSocket": [],
         "MPMessagePack": [],
-        "SocketRocket": ["~> 0.4.2"]
+        "SocketRocket": []
     },
     "authors": {
         "Niko Usai": "mogui83@gmail.com"
