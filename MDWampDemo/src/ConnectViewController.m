@@ -11,6 +11,7 @@
 
 @interface ConnectViewController () <UITextFieldDelegate, MDWampClientDelegate>
 @property (assign) BOOL connected;
+@property (nonatomic) MDWamp *ws;
 @end
 
 @implementation ConnectViewController
@@ -18,6 +19,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    MDWampTransportWebSocket *transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:self.hostField.text] protocolVersions:@[kMDWampProtocolWamp2json]];
+    
+    // Test Raw socket
+    //        MDWampTransportRawSocket *transport = [[MDWampTransportRawSocket alloc] initWithHost:@"127.0.0.1" port:9000];
+    //        [transport setSerialization:kMDWampSerializationJSON];
+    //
+    _ws = [[MDWamp alloc] initWithTransport:transport realm:self.realmField.text delegate:self];
+    
 	// Do any additional setup after loading the view, typically from a nib.
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -42,18 +51,10 @@
 - (IBAction)connect:(id)sender {
     // CHECK empty fields
     if (!self.connected) {
-        MDWampTransportWebSocket *transport = [[MDWampTransportWebSocket alloc] initWithServer:[NSURL URLWithString:self.hostField.text] protocolVersions:@[kMDWampProtocolWamp2json]];
-
-// Test Raw socket
-//        MDWampTransportRawSocket *transport = [[MDWampTransportRawSocket alloc] initWithHost:@"127.0.0.1" port:9000];
-//        [transport setSerialization:kMDWampSerializationJSON];
-//        
-        MDWamp *ws = [[MDWamp alloc] initWithTransport:transport realm:self.realmField.text delegate:self];
-        [AppDel setWampConnection:ws];
-        [ws connect];
+        
+        [_ws connect];
     } else {
-        MDWamp *ws = [AppDel wampConnection];
-        [ws disconnect];
+        [_ws disconnect];
     }
 }
 
