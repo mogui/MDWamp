@@ -563,7 +563,7 @@
             // deferred challenge signing
             if (self.config && self.config.deferredWampCRASigningBlock) {
                 
-                self.config.deferredWampCRASigningBlock(challenge.extra[@"challenge"], ^(NSString *signature) {
+                self.config.deferredWampCRASigningBlock(challenge, ^(NSString *signature) {
                     // Sending auth message
                     MDWampAuthenticate *auth = [[MDWampAuthenticate alloc] initWithPayload:@[signature, @{}]];
                     [self sendMessage:auth];
