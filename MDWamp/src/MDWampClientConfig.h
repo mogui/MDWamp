@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MDWampChallenge.h"
 
 // ROles
 extern NSString* const kMDWampRolePublisher;
@@ -60,7 +61,7 @@ extern NSString* const kMDWampAuthMethodTicket;
  * in the block you do your processing to sign the challange (async if you need)
  * once getted the signature call
  */
-@property (nonatomic, strong) void (^deferredWampCRASigningBlock)( NSString *challange, void(^finishBLock)(NSString *signature) );
+@property (nonatomic, strong) void (^deferredWampCRASigningBlock)( MDWampChallenge *challange, void(^finishBLock)(NSString *signature) );
 
 #pragma mark Pub/Sub
 
