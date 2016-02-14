@@ -1,5 +1,4 @@
 {
-    "requires_arc": true,
     "osx": {
         "frameworks": [
             "CFNetwork",
@@ -8,11 +7,10 @@
     },
     "name": "MDWamp",
     "license": "Apache 2.0",
-    "platforms": {
-        "osx": "10.8",
-        "ios": "7.1"
+    "requires_arc": true,
+    "authors": {
+        "Niko Usai": "mogui83@gmail.com"
     },
-    "source_files": "MDWamp/**/*.{h,m,c}",
     "ios": {
         "frameworks": [
             "MobileCoreServices",
@@ -22,18 +20,20 @@
     },
     "summary": "A client side objective-C implementation of the WebSocket subprotocol WAMP",
     "libraries": "icucore",
+    "platforms": {
+        "osx": "10.8",
+        "ios": "7.1"
+    },
+    "version": "2.2.4",
     "source": {
         "git": "https://github.com/mogui/MDWamp.git",
-        "tag": "2.2.3"
+        "tag": "2.2.4"
     },
-    "version": "2.2.3",
     "dependencies": {
         "CocoaAsyncSocket": [],
         "MPMessagePack": [],
         "SocketRocket": []
     },
-    "authors": {
-        "Niko Usai": "mogui83@gmail.com"
-    },
+    "source_files": "MDWamp/**/*.{h,m,c}",
     "homepage": "http://github.com/mogui/MDWamp"
 }
