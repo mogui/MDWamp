@@ -128,10 +128,11 @@
     conf.authmethods = @[kMDWampAuthMethodCRA];
     conf.authid = @"guybrush";
     conf.sharedSecret = SECRET;
-    [conf setDeferredWampCRASigningBlock:^(NSString *challange, void(^finishBLock)(NSString *signature) ) {
+    
+    [conf setDeferredWampCRASigningBlock:^(MDWampChallenge *challange, void(^finishBLock)(NSString *signature) ) {
         // do something with challenge
         // call http service ....
-        NSString *sign = [challange substringToIndex:5];
+        NSString *sign = [challange.extra[@"challenge"] substringToIndex:5];
        // ... then call finish block
         finishBLock(sign);
     }];
