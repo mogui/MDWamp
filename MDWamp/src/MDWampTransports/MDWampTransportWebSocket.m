@@ -31,6 +31,7 @@ NSString *const kMDWampProtocolWamp2msgpack = @"wamp.2.msgpack";
 @property (nonatomic, strong) SRWebSocket *socket;
 @property (nonatomic, strong) NSArray *protocols;
 @property (nonatomic, strong) NSURL *request;
+@property (nonatomic) BOOL allowsUntrustedSSLCertificates;
 @end
 
 @implementation MDWampTransportWebSocket 
@@ -38,6 +39,7 @@ NSString *const kMDWampProtocolWamp2msgpack = @"wamp.2.msgpack";
 - (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols
 {
     self = [super init];
+    self.allowsUntrustedSSLCertificates = NO;
     if (self) {
         NSAssert([protocols count] > 0, @"Specify a valid WAMP protocol");
         
@@ -56,8 +58,7 @@ NSString *const kMDWampProtocolWamp2msgpack = @"wamp.2.msgpack";
 
 - (void) open
 {
-    NSLog(@"hello allow untrusted stuff");
-    self.socket = [[SRWebSocket alloc] initWithURL:_request protocols:_protocols allowsUntrustedSSLCertificates:YES];
+    self.socket = [[SRWebSocket alloc] initWithURL:_request protocols:_protocols allowsUntrustedSSLCertificates:self.allowsUntrustedSSLCertificates];
     [_socket setDelegate:self];
     [_socket open];
 }
@@ -67,6 +68,7 @@ NSString *const kMDWampProtocolWamp2msgpack = @"wamp.2.msgpack";
     [_socket close];
     self.socket = nil;
 }
+
 
 - (BOOL) isConnected
 {
