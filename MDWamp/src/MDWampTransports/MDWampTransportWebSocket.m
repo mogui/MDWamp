@@ -56,7 +56,8 @@ NSString *const kMDWampProtocolWamp2msgpack = @"wamp.2.msgpack";
 
 - (void) open
 {
-    self.socket = [[SRWebSocket alloc] initWithURL:_request protocols:_protocols];
+    NSLog(@"hello allow untrusted stuff");
+    self.socket = [[SRWebSocket alloc] initWithURL:_request protocols:_protocols allowsUntrustedSSLCertificates:YES];
     [_socket setDelegate:self];
     [_socket open];
 }
