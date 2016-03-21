@@ -39,12 +39,30 @@ NSString *const kMDWampProtocolWamp2msgpack = @"wamp.2.msgpack";
 - (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols
 {
     self = [super init];
-    self.allowsUntrustedSSLCertificates = NO;
+    
     if (self) {
         NSAssert([protocols count] > 0, @"Specify a valid WAMP protocol");
         
         NSAssert(([protocols containsObject:kMDWampProtocolWamp2json]
                   ||[protocols containsObject:kMDWampProtocolWamp2msgpack]), @"No valid WAMP protocol found");
+        self.request = request;
+        self.protocols = protocols;
+        
+    }
+    return self;
+}
+
+
+- (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols allowUntrustedSSLCertificates:(BOOL)allowsUntrustedSSLCertificates
+{
+    self = [super init];
+    
+    if (self) {
+        NSAssert([protocols count] > 0, @"Specify a valid WAMP protocol");
+        
+        NSAssert(([protocols containsObject:kMDWampProtocolWamp2json]
+                  ||[protocols containsObject:kMDWampProtocolWamp2msgpack]), @"No valid WAMP protocol found");
+        self.allowsUntrustedSSLCertificates = allowsUntrustedSSLCertificates;
         self.request = request;
         self.protocols = protocols;
         

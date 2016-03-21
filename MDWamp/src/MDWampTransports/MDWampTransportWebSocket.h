@@ -39,6 +39,19 @@ FOUNDATION_EXPORT NSString *const kMDWampProtocolWamp2msgpack;
 - (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols;
 
 /**
+ *  Default initializer
+ *  By restricting the array of protocol versions we force to use a given protocol
+ *  they are in the form of wamp, wamp.2.json, wamp.2.msgpack
+ *
+ *  @param request   request representing a server
+ *  
+ *  @param allowUntrustedSSLCertificates whether or not MDWamp shoudl care for SSL certificates
+ *
+ *  @return intsance of the transport
+ */
+- (id)initWithServer:(NSURL *)request protocolVersions:(NSArray *)protocols allowUntrustedSSLCertificates:(BOOL)allowsUntrustedSSLCertificates;
+
+/**
  * Request Cookies
  * Sets the request cookies
  *
