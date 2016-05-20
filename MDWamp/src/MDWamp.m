@@ -624,11 +624,15 @@
 #pragma mark -
 #pragma mark Pub/Sub
 - (void) subscribe:(NSString *)topic
+           options:(NSDictionary *)options
            onEvent:(void(^)(MDWampEvent *payload))eventBlock
             result:(void(^)(NSError *error))result
 {
     NSNumber *request = [self generateID];
-    MDWampSubscribe *subscribe = [[MDWampSubscribe alloc] initWithPayload:@[request, @{}, topic]];
+    if (options == nil) {
+        options = @{};
+    }
+    MDWampSubscribe *subscribe = [[MDWampSubscribe alloc] initWithPayload:@[request, options, topic]];
     
     // we have to wait Subscribed message before add event
     [self.subscriptionRequests setObject:@[result, eventBlock, topic] forKey:request];

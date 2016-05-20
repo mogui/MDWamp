@@ -117,6 +117,7 @@ typedef NS_ENUM(NSInteger, MDWampConnectionCloseCode) {
  *  @param eventBlock The Block invoked when an event on the topic is received
  */
 - (void) subscribe:(NSString *)topic
+           options:(NSDictionary *)options
            onEvent:(void(^)(MDWampEvent *payload))eventBlock
             result:(void(^)(NSError *error))result;
 
