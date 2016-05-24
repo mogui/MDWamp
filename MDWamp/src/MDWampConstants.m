@@ -18,3 +18,4 @@ NSString *const MDWampOption_receive_progress   = @"receive_progress";
 NSString *const MDWampOption_progress           = @"progress";
 NSString *const MDWampOption_exclude            = @"exclude";
 NSString *const MDWampOption_eligible           = @"eligible";
+NSString *const MDWampOption_match              = @"match";

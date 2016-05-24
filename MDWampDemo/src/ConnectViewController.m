@@ -11,7 +11,6 @@
 
 @interface ConnectViewController () <UITextFieldDelegate, MDWampClientDelegate>
 @property (assign) BOOL connected;
-@property (nonatomic) MDWamp *ws;
 @end
 
 @implementation ConnectViewController
@@ -25,7 +24,7 @@
     //        MDWampTransportRawSocket *transport = [[MDWampTransportRawSocket alloc] initWithHost:@"127.0.0.1" port:9000];
     //        [transport setSerialization:kMDWampSerializationJSON];
     //
-    _ws = [[MDWamp alloc] initWithTransport:transport realm:self.realmField.text delegate:self];
+    (AppDel).wampConnection = [[MDWamp alloc] initWithTransport:transport realm:self.realmField.text delegate:self];
     
 	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -52,9 +51,9 @@
     // CHECK empty fields
     if (!self.connected) {
         
-        [_ws connect];
+        [(AppDel).wampConnection connect];
     } else {
-        [_ws disconnect];
+        [(AppDel).wampConnection disconnect];
     }
 }
 

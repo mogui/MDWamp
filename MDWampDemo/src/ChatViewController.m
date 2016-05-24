@@ -22,7 +22,7 @@
     self.roomNameField.text = self.room;
     self.messages = [[NSMutableArray alloc] init];
     MDWamp *wamp = [AppDel wampConnection];
-    [wamp subscribe:[NSString stringWithFormat:@"com.mogui.%@", [self.room stringByReplacingOccurrencesOfString:@" " withString:@"-"]] onEvent:^(MDWampEvent *payload) {
+    [wamp subscribe:[NSString stringWithFormat:@"com.mogui.%@", [self.room stringByReplacingOccurrencesOfString:@" " withString:@"-"]] options:nil onEvent:^(MDWampEvent *payload) {
         if(payload.arguments && [payload.arguments count] > 0){
         
             // message arrives

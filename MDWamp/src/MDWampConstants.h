@@ -32,3 +32,4 @@ FOUNDATION_EXPORT NSString *const MDWampOption_receive_progress;
 FOUNDATION_EXPORT NSString *const MDWampOption_progress;
 FOUNDATION_EXPORT NSString *const MDWampOption_exclude;
 FOUNDATION_EXPORT NSString *const MDWampOption_eligible;
+FOUNDATION_EXPORT NSString *const MDWampOption_match;

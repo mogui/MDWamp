@@ -135,7 +135,7 @@
     [self waitForStatus:kXCTUnitWaitStatusSuccess timeout:0.5];
 }
 - (void)testSubscribeFails {
-    [_wamp subscribe:@"com.topic.x"  onEvent:^(id payload) {
+    [_wamp subscribe:@"com.topic.x" options:nil onEvent:^(id payload) {
         // nothing to do
     } result:^(NSError *error) {
         XCTAssertEqualObjects(error.localizedDescription, @"wamp.error.not_authorized", @"Must call error");
@@ -149,7 +149,7 @@
 }
 
 - (void)testSubscribe {
-    [_wamp subscribe:@"com.topic.x" onEvent:^(id payload) {
+    [_wamp subscribe:@"com.topic.x" options:nil onEvent:^(id payload) {
         // nothing to do
     } result:^(NSError *error) {
         XCTAssertNil(error, @"error must be nil");
@@ -166,7 +166,7 @@
 - (void)testUnsubscribe
 {
     
-    [_wamp subscribe:@"com.asder.x" onEvent:^(id payload) {
+    [_wamp subscribe:@"com.asder.x" options:nil onEvent:^(id payload) {
         // nothing
     } result:^(NSError *error) {
         
@@ -195,7 +195,7 @@
 
 - (void)testUnsubscribeFail
     {
-    [_wamp subscribe:@"com.asder.x" onEvent:^(id payload) {
+        [_wamp subscribe:@"com.asder.x" options:nil onEvent:^(id payload) {
         // nothing
     } result:^(NSError *error) {
         
@@ -286,7 +286,7 @@
     NSArray *eventPayload = @[@"foo"];
     __block MDWampSubscribed *subscribed = nil;
     
-    [_wamp subscribe:@"com.topic.x"  onEvent:^(MDWampEvent *payload) {
+    [_wamp subscribe:@"com.topic.x" options:nil onEvent:^(MDWampEvent *payload) {
         // nothing to do
         XCTAssertEqualObjects(payload.arguments, eventPayload, @"event received must be the same of event dispatched");
         [self notify:kXCTUnitWaitStatusSuccess];
