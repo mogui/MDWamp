@@ -19,7 +19,7 @@
 //
 
 #import "MDWampSerializationMsgpack.h"
-#import "MPMessagePack.h"
+#import <MPMessagePack/MPMessagePack.h>
 
 
 @implementation MDWampSerializationMsgpack

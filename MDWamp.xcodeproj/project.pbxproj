@@ -92,6 +92,14 @@
 		33133BD01CFF77C7003FCFC5 /* MDWampTransports.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B801CFF77C7003FCFC5 /* MDWampTransports.h */; };
 		33133BD11CFF77C7003FCFC5 /* MDWampTransportWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B811CFF77C7003FCFC5 /* MDWampTransportWebSocket.h */; };
 		33133BD21CFF77C7003FCFC5 /* MDWampTransportWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B821CFF77C7003FCFC5 /* MDWampTransportWebSocket.m */; };
+		33220B5F1CFF99EB00F3C3DA /* GHODictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33220B5D1CFF99EB00F3C3DA /* GHODictionary.framework */; };
+		33220B601CFF99EB00F3C3DA /* MPMessagePack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33220B5E1CFF99EB00F3C3DA /* MPMessagePack.framework */; };
+		33220B621CFF9A7C00F3C3DA /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33220B611CFF9A7C00F3C3DA /* CocoaAsyncSocket.framework */; };
+		33220B641CFF9B4500F3C3DA /* SocketRocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33220B631CFF9B4500F3C3DA /* SocketRocket.framework */; };
+		33220B691CFF9C1F00F3C3DA /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33220B651CFF9C1F00F3C3DA /* CocoaAsyncSocket.framework */; };
+		33220B6A1CFF9C1F00F3C3DA /* GHODictionary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33220B661CFF9C1F00F3C3DA /* GHODictionary.framework */; };
+		33220B6B1CFF9C1F00F3C3DA /* MPMessagePack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33220B671CFF9C1F00F3C3DA /* MPMessagePack.framework */; };
+		33220B6C1CFF9C1F00F3C3DA /* SocketRocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33220B681CFF9C1F00F3C3DA /* SocketRocket.framework */; };
 		336F57451CFF7A1600811E8B /* MDWamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B381CFF77C7003FCFC5 /* MDWamp.h */; };
 		336F57461CFF7A1A00811E8B /* MDWamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B391CFF77C7003FCFC5 /* MDWamp.m */; };
 		336F57471CFF7A1A00811E8B /* MDWampClientConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B3A1CFF77C7003FCFC5 /* MDWampClientConfig.h */; };
@@ -273,6 +281,14 @@
 		33133B801CFF77C7003FCFC5 /* MDWampTransports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransports.h; sourceTree = "<group>"; };
 		33133B811CFF77C7003FCFC5 /* MDWampTransportWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportWebSocket.h; sourceTree = "<group>"; };
 		33133B821CFF77C7003FCFC5 /* MDWampTransportWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportWebSocket.m; sourceTree = "<group>"; };
+		33220B5D1CFF99EB00F3C3DA /* GHODictionary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHODictionary.framework; path = "../Debug-iphonesimulator/GHODictionary.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		33220B5E1CFF99EB00F3C3DA /* MPMessagePack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MPMessagePack.framework; path = "../Debug-iphonesimulator/MPMessagePack.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		33220B611CFF9A7C00F3C3DA /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = "../../../../../../../../devel/MDWamp/Carthage/Checkouts/CocoaAsyncSocket/build/Debug-iphoneos/CocoaAsyncSocket.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		33220B631CFF9B4500F3C3DA /* SocketRocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketRocket.framework; path = "../../../../../../../../devel/MDWamp/Carthage/Checkouts/SocketRocket/build/Debug-iphoneos/SocketRocket.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		33220B651CFF9C1F00F3C3DA /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = ../../../../../../../../devel/MDWamp/Carthage/Checkouts/CocoaAsyncSocket/build/Debug/CocoaAsyncSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33220B661CFF9C1F00F3C3DA /* GHODictionary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHODictionary.framework; path = ../../../../../../../../devel/MDWamp/Carthage/Checkouts/GHODictionary/build/Debug/GHODictionary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33220B671CFF9C1F00F3C3DA /* MPMessagePack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MPMessagePack.framework; path = ../../../../../../../../devel/MDWamp/Carthage/Checkouts/MPMessagePack/build/Debug/MPMessagePack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33220B681CFF9C1F00F3C3DA /* SocketRocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketRocket.framework; path = ../../../../../../../../devel/MDWamp/Carthage/Checkouts/SocketRocket/build/Debug/SocketRocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		336F578E1CFF7B2D00811E8B /* MDWamp.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MDWamp.podspec; sourceTree = "<group>"; };
 		336F578F1CFF7B2D00811E8B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		336F57901CFF7B2D00811E8B /* MDWamp.podspec.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MDWamp.podspec.json; sourceTree = "<group>"; };
@@ -284,6 +300,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33220B641CFF9B4500F3C3DA /* SocketRocket.framework in Frameworks */,
+				33220B621CFF9A7C00F3C3DA /* CocoaAsyncSocket.framework in Frameworks */,
+				33220B5F1CFF99EB00F3C3DA /* GHODictionary.framework in Frameworks */,
+				33220B601CFF99EB00F3C3DA /* MPMessagePack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +319,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33220B691CFF9C1F00F3C3DA /* CocoaAsyncSocket.framework in Frameworks */,
+				33220B6A1CFF9C1F00F3C3DA /* GHODictionary.framework in Frameworks */,
+				33220B6B1CFF9C1F00F3C3DA /* MPMessagePack.framework in Frameworks */,
+				33220B6C1CFF9C1F00F3C3DA /* SocketRocket.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +343,7 @@
 				33133B2E1CFF77C7003FCFC5 /* Sources */,
 				33133AEB1CFF7598003FCFC5 /* MDWamp iOSTests */,
 				33133B071CFF7657003FCFC5 /* MDWamp Demo */,
+				336F57AA1CFF818100811E8B /* Frameworks */,
 				33133ADE1CFF7598003FCFC5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -496,6 +521,21 @@
 				336F57911CFF7B2D00811E8B /* README.md */,
 			);
 			name = Metadata;
+			sourceTree = "<group>";
+		};
+		336F57AA1CFF818100811E8B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				33220B651CFF9C1F00F3C3DA /* CocoaAsyncSocket.framework */,
+				33220B661CFF9C1F00F3C3DA /* GHODictionary.framework */,
+				33220B671CFF9C1F00F3C3DA /* MPMessagePack.framework */,
+				33220B681CFF9C1F00F3C3DA /* SocketRocket.framework */,
+				33220B631CFF9B4500F3C3DA /* SocketRocket.framework */,
+				33220B611CFF9A7C00F3C3DA /* CocoaAsyncSocket.framework */,
+				33220B5D1CFF99EB00F3C3DA /* GHODictionary.framework */,
+				33220B5E1CFF99EB00F3C3DA /* MPMessagePack.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -925,6 +965,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Submodules/MPMessagePack/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/CocoaAsyncSocket/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SocketRocket/build/Debug-iphoneos",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -941,7 +987,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Sources/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -983,6 +1029,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Submodules/MPMessagePack/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/CocoaAsyncSocket/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SocketRocket/build/Debug-iphoneos",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -993,9 +1045,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Sources/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-iOS";
 				PRODUCT_NAME = MDWamp;
 				SDKROOT = iphoneos;
@@ -1126,6 +1179,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/CocoaAsyncSocket/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/GHODictionary/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/MPMessagePack/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SocketRocket/build/Debug",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1144,7 +1204,7 @@
 				INFOPLIST_FILE = "Sources/Info-OSX.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-OSX";
@@ -1185,6 +1245,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/CocoaAsyncSocket/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/GHODictionary/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/MPMessagePack/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SocketRocket/build/Debug",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1197,7 +1264,7 @@
 				INFOPLIST_FILE = "Sources/Info-OSX.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-OSX";
 				PRODUCT_NAME = MDWamp;

@@ -19,7 +19,7 @@
 //
 
 #import "MDWampTransportWebSocket.h"
-#import "SRWebSocket.h"
+#import <SocketRocket/SRWebSocket.h>
 #import "NSMutableArray+MDStack.h"
 
 NSString *const kMDWampProtocolWamp2json    = @"wamp.2.json";

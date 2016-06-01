@@ -1,0 +1,12 @@
+[submodule "Carthage/Checkouts/GHODictionary"]
+	path = Carthage/Checkouts/GHODictionary
+	url = https://github.com/gabriel/GHODictionary.git
+[submodule "Carthage/Checkouts/MPMessagePack"]
+	path = Carthage/Checkouts/MPMessagePack
+	url = https://github.com/gabriel/MPMessagePack.git
+[submodule "Carthage/Checkouts/CocoaAsyncSocket"]
+	path = Carthage/Checkouts/CocoaAsyncSocket
+	url = https://github.com/robbiehanson/CocoaAsyncSocket.git
+[submodule "Carthage/Checkouts/SocketRocket"]
+	path = Carthage/Checkouts/SocketRocket
+	url = https://github.com/facebook/SocketRocket.git

@@ -17,6 +17,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+#import <Foundation/Foundation.h>
 
 //! Project version number for MDWamp iOS.
 FOUNDATION_EXPORT double MDWamp_VersionNumber;

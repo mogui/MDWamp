@@ -7,7 +7,7 @@
 //
 
 #import "MDWampTransportRawSocket.h"
-#import "GCDAsyncSocket.h"
+#import <CocoaAsyncSocket/GCDAsyncSocket.h>
 @interface MDWampTransportRawSocket () <GCDAsyncSocketDelegate>
 
 @property (nonatomic, strong) GCDAsyncSocket *socket;

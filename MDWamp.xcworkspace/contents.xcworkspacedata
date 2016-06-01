@@ -2,6 +2,18 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Carthage/Checkouts/SocketRocket/SocketRocket.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/CocoaAsyncSocket/CocoaAsyncSocket.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/GHODictionary/GHODictionary.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/MPMessagePack/MPMessagePack.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "container:MDWamp.xcodeproj">
    </FileRef>
 </Workspace>

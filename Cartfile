@@ -1,0 +1,3 @@
+github "gabriel/MPMessagePack"
+github "robbiehanson/CocoaAsyncSocket" "master"
+github "facebook/SocketRocket"
