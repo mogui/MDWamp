@@ -7,900 +7,696 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7604D70B185B499D0087773E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D70A185B499D0087773E /* Cocoa.framework */; };
-		7604D720185B499D0087773E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D71F185B499D0087773E /* XCTest.framework */; };
-		7604D721185B499E0087773E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D70A185B499D0087773E /* Cocoa.framework */; };
-		7604D724185B499E0087773E /* MDWamp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D707185B499D0087773E /* MDWamp.framework */; };
-		7604D767185B6B880087773E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D73A185B4A7B0087773E /* Foundation.framework */; };
-		760DA6FB18EB0A9E006EC89C /* MDWampMessageFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA6FA18EB0A9E006EC89C /* MDWampMessageFactoryTests.m */; };
-		760DA6FD18EB0E7D006EC89C /* MDWampMessagesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA6FC18EB0E7D006EC89C /* MDWampMessagesTests.m */; };
-		7619E69A18CF8E9F00B0209D /* MDWampTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7619E69918CF8E9F00B0209D /* MDWampTests.m */; };
-		76414F531950C8E900788300 /* MDWampTransportdelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76414F521950C8E900788300 /* MDWampTransportdelegateMock.m */; };
-		764374A2194E238D000F29A8 /* MDStackTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 764374A1194E238D000F29A8 /* MDStackTest.m */; };
-		764F059E1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 764F059D1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m */; };
-		764F05A61969B2A700EB1A8A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 764F05A51969B2A700EB1A8A /* Security.framework */; };
-		7657A3B7195F594D00F58BB4 /* libMDWamp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D766185B6B880087773E /* libMDWamp.a */; };
-		7657A3B8195F598200F58BB4 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7698B1F619522D1C0045D400 /* libicucore.dylib */; };
-		765BAF9C19E722C800EC580D /* cmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF8F19E722C800EC580D /* cmp.c */; };
-		765BAF9D19E722C800EC580D /* cmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF8F19E722C800EC580D /* cmp.c */; };
-		765BAF9E19E722C800EC580D /* cmp.h in Headers */ = {isa = PBXBuildFile; fileRef = 765BAF9019E722C800EC580D /* cmp.h */; };
-		765BAF9F19E722C800EC580D /* MPMessagePack.h in Headers */ = {isa = PBXBuildFile; fileRef = 765BAF9119E722C800EC580D /* MPMessagePack.h */; };
-		765BAFA019E722C800EC580D /* MPMessagePackReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 765BAF9219E722C800EC580D /* MPMessagePackReader.h */; };
-		765BAFA119E722C800EC580D /* MPMessagePackReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF9319E722C800EC580D /* MPMessagePackReader.m */; };
-		765BAFA219E722C800EC580D /* MPMessagePackReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF9319E722C800EC580D /* MPMessagePackReader.m */; };
-		765BAFA319E722C800EC580D /* MPMessagePackWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 765BAF9419E722C800EC580D /* MPMessagePackWriter.h */; };
-		765BAFA419E722C800EC580D /* MPMessagePackWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF9519E722C800EC580D /* MPMessagePackWriter.m */; };
-		765BAFA519E722C800EC580D /* MPMessagePackWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF9519E722C800EC580D /* MPMessagePackWriter.m */; };
-		765BAFA619E722C800EC580D /* MPOrderedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 765BAF9619E722C800EC580D /* MPOrderedDictionary.h */; };
-		765BAFA719E722C800EC580D /* MPOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF9719E722C800EC580D /* MPOrderedDictionary.m */; };
-		765BAFA819E722C800EC580D /* MPOrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF9719E722C800EC580D /* MPOrderedDictionary.m */; };
-		765BAFA919E722C800EC580D /* NSArray+MPMessagePack.h in Headers */ = {isa = PBXBuildFile; fileRef = 765BAF9819E722C800EC580D /* NSArray+MPMessagePack.h */; };
-		765BAFAA19E722C800EC580D /* NSArray+MPMessagePack.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF9919E722C800EC580D /* NSArray+MPMessagePack.m */; };
-		765BAFAB19E722C800EC580D /* NSArray+MPMessagePack.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF9919E722C800EC580D /* NSArray+MPMessagePack.m */; };
-		765BAFAC19E722C800EC580D /* NSDictionary+MPMessagePack.h in Headers */ = {isa = PBXBuildFile; fileRef = 765BAF9A19E722C800EC580D /* NSDictionary+MPMessagePack.h */; };
-		765BAFAD19E722C800EC580D /* NSDictionary+MPMessagePack.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF9B19E722C800EC580D /* NSDictionary+MPMessagePack.m */; };
-		765BAFAE19E722C800EC580D /* NSDictionary+MPMessagePack.m in Sources */ = {isa = PBXBuildFile; fileRef = 765BAF9B19E722C800EC580D /* NSDictionary+MPMessagePack.m */; };
-		765DD2D118E484D000D4C19F /* MDWampTransportMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF81D318D1043700DFB13B /* MDWampTransportMock.m */; };
-		766E10E719E6B4390083173B /* MDWampClientConfigTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E10E619E6B4390083173B /* MDWampClientConfigTests.m */; };
-		766E10ED19E6C1E00083173B /* MDWampAdvancedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 766E10EC19E6C1E00083173B /* MDWampAdvancedTests.m */; };
-		7673B7AF1A0FDA3F0072CDD3 /* MDWampTransportWebSocketTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7673B7AE1A0FDA3F0072CDD3 /* MDWampTransportWebSocketTests.m */; };
-		7698B1B41952278E0045D400 /* MDWampSerializations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7698B1B31952278E0045D400 /* MDWampSerializations.m */; };
-		76A34EF0195DED5400233B76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7604D73A185B4A7B0087773E /* Foundation.framework */; };
-		76A34EF1195DED5400233B76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7698B1BF19522AF80045D400 /* CoreGraphics.framework */; };
-		76A34EF3195DED5400233B76 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A34EF2195DED5400233B76 /* UIKit.framework */; };
-		76AE15751A0C21C50041016F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76AE15581A0C21C50041016F /* Main.storyboard */; };
-		76AE15761A0C21C50041016F /* broken_link-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 76AE155A1A0C21C50041016F /* broken_link-32.png */; };
-		76AE15771A0C21C50041016F /* collaboration.png in Resources */ = {isa = PBXBuildFile; fileRef = 76AE155B1A0C21C50041016F /* collaboration.png */; };
-		76AE15781A0C21C50041016F /* collaboration@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76AE155C1A0C21C50041016F /* collaboration@2x.png */; };
-		76AE15791A0C21C50041016F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76AE155D1A0C21C50041016F /* InfoPlist.strings */; };
-		76AE157A1A0C21C50041016F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76AE155F1A0C21C50041016F /* Images.xcassets */; };
-		76AE157B1A0C21C50041016F /* link-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 76AE15601A0C21C50041016F /* link-32.png */; };
-		76AE157C1A0C21C50041016F /* online-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 76AE15611A0C21C50041016F /* online-32.png */; };
-		76AE157D1A0C21C50041016F /* online-32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76AE15621A0C21C50041016F /* online-32@2x.png */; };
-		76AE157E1A0C21C50041016F /* run_command.png in Resources */ = {isa = PBXBuildFile; fileRef = 76AE15631A0C21C50041016F /* run_command.png */; };
-		76AE157F1A0C21C50041016F /* run_command@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76AE15641A0C21C50041016F /* run_command@2x.png */; };
-		76AE15801A0C21C50041016F /* save_as.png in Resources */ = {isa = PBXBuildFile; fileRef = 76AE15651A0C21C50041016F /* save_as.png */; };
-		76AE15811A0C21C50041016F /* save_as@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76AE15661A0C21C50041016F /* save_as@2x.png */; };
-		76AE15821A0C21C50041016F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15691A0C21C50041016F /* AppDelegate.m */; };
-		76AE15831A0C21C50041016F /* CallRPCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE156B1A0C21C50041016F /* CallRPCViewController.m */; };
-		76AE15841A0C21C50041016F /* ChatStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE156D1A0C21C50041016F /* ChatStartViewController.m */; };
-		76AE15851A0C21C50041016F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE156F1A0C21C50041016F /* ChatViewController.m */; };
-		76AE15861A0C21C50041016F /* ConnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15711A0C21C50041016F /* ConnectViewController.m */; };
-		76AE15871A0C21C50041016F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15721A0C21C50041016F /* main.m */; };
-		76AE15881A0C21C50041016F /* RegisterRPCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15741A0C21C50041016F /* RegisterRPCViewController.m */; };
-		76AE15931A0C23130041016F /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15911A0C23130041016F /* SRWebSocket.h */; };
-		76AE15941A0C23130041016F /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15921A0C23130041016F /* SRWebSocket.m */; };
-		76AE15951A0C23130041016F /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15921A0C23130041016F /* SRWebSocket.m */; };
-		76AE15EB1A0C24150041016F /* NSMutableArray+MDStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15981A0C24150041016F /* NSMutableArray+MDStack.h */; };
-		76AE15EC1A0C24150041016F /* NSMutableArray+MDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15991A0C24150041016F /* NSMutableArray+MDStack.m */; };
-		76AE15ED1A0C24150041016F /* NSMutableArray+MDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15991A0C24150041016F /* NSMutableArray+MDStack.m */; };
-		76AE15EE1A0C24150041016F /* NSString+MDString.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE159A1A0C24150041016F /* NSString+MDString.h */; };
-		76AE15EF1A0C24150041016F /* NSString+MDString.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE159B1A0C24150041016F /* NSString+MDString.m */; };
-		76AE15F01A0C24150041016F /* NSString+MDString.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE159B1A0C24150041016F /* NSString+MDString.m */; };
-		76AE15F11A0C24150041016F /* MDWamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE159C1A0C24150041016F /* MDWamp.h */; };
-		76AE15F21A0C24150041016F /* MDWamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE159D1A0C24150041016F /* MDWamp.m */; };
-		76AE15F31A0C24150041016F /* MDWamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE159D1A0C24150041016F /* MDWamp.m */; };
-		76AE15F41A0C24150041016F /* MDWampClientConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE159E1A0C24150041016F /* MDWampClientConfig.h */; };
-		76AE15F51A0C24150041016F /* MDWampClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE159F1A0C24150041016F /* MDWampClientConfig.m */; };
-		76AE15F61A0C24150041016F /* MDWampClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE159F1A0C24150041016F /* MDWampClientConfig.m */; };
-		76AE15F71A0C24150041016F /* MDWampClientDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15A01A0C24150041016F /* MDWampClientDelegate.h */; };
-		76AE15F81A0C24150041016F /* MDWampConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15A11A0C24150041016F /* MDWampConstants.h */; };
-		76AE15F91A0C24150041016F /* MDWampConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15A21A0C24150041016F /* MDWampConstants.m */; };
-		76AE15FA1A0C24150041016F /* MDWampConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15A21A0C24150041016F /* MDWampConstants.m */; };
-		76AE15FB1A0C24150041016F /* MDWampAbort.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15A41A0C24150041016F /* MDWampAbort.h */; };
-		76AE15FC1A0C24150041016F /* MDWampAbort.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15A51A0C24150041016F /* MDWampAbort.m */; };
-		76AE15FD1A0C24150041016F /* MDWampAbort.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15A51A0C24150041016F /* MDWampAbort.m */; };
-		76AE15FE1A0C24150041016F /* MDWampAuthenticate.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15A61A0C24150041016F /* MDWampAuthenticate.h */; };
-		76AE15FF1A0C24150041016F /* MDWampAuthenticate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15A71A0C24150041016F /* MDWampAuthenticate.m */; };
-		76AE16001A0C24150041016F /* MDWampAuthenticate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15A71A0C24150041016F /* MDWampAuthenticate.m */; };
-		76AE16011A0C24150041016F /* MDWampCall.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15A81A0C24150041016F /* MDWampCall.h */; };
-		76AE16021A0C24150041016F /* MDWampCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15A91A0C24150041016F /* MDWampCall.m */; };
-		76AE16031A0C24150041016F /* MDWampCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15A91A0C24150041016F /* MDWampCall.m */; };
-		76AE16041A0C24150041016F /* MDWampCancel.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15AA1A0C24150041016F /* MDWampCancel.h */; };
-		76AE16051A0C24150041016F /* MDWampCancel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15AB1A0C24150041016F /* MDWampCancel.m */; };
-		76AE16061A0C24150041016F /* MDWampCancel.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15AB1A0C24150041016F /* MDWampCancel.m */; };
-		76AE16071A0C24150041016F /* MDWampChallenge.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15AC1A0C24150041016F /* MDWampChallenge.h */; };
-		76AE16081A0C24150041016F /* MDWampChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15AD1A0C24150041016F /* MDWampChallenge.m */; };
-		76AE16091A0C24150041016F /* MDWampChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15AD1A0C24150041016F /* MDWampChallenge.m */; };
-		76AE160A1A0C24150041016F /* MDWampError.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15AE1A0C24150041016F /* MDWampError.h */; };
-		76AE160B1A0C24150041016F /* MDWampError.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15AF1A0C24150041016F /* MDWampError.m */; };
-		76AE160C1A0C24150041016F /* MDWampError.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15AF1A0C24150041016F /* MDWampError.m */; };
-		76AE160D1A0C24150041016F /* MDWampEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15B01A0C24150041016F /* MDWampEvent.h */; };
-		76AE160E1A0C24150041016F /* MDWampEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B11A0C24150041016F /* MDWampEvent.m */; };
-		76AE160F1A0C24150041016F /* MDWampEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B11A0C24150041016F /* MDWampEvent.m */; };
-		76AE16101A0C24150041016F /* MDWampGoodbye.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15B21A0C24150041016F /* MDWampGoodbye.h */; };
-		76AE16111A0C24150041016F /* MDWampGoodbye.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B31A0C24150041016F /* MDWampGoodbye.m */; };
-		76AE16121A0C24150041016F /* MDWampGoodbye.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B31A0C24150041016F /* MDWampGoodbye.m */; };
-		76AE16161A0C24150041016F /* MDWampHello.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15B61A0C24150041016F /* MDWampHello.h */; };
-		76AE16171A0C24150041016F /* MDWampHello.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B71A0C24150041016F /* MDWampHello.m */; };
-		76AE16181A0C24150041016F /* MDWampHello.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B71A0C24150041016F /* MDWampHello.m */; };
-		76AE16191A0C24150041016F /* MDWampInterrupt.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15B81A0C24150041016F /* MDWampInterrupt.h */; };
-		76AE161A1A0C24150041016F /* MDWampInterrupt.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B91A0C24150041016F /* MDWampInterrupt.m */; };
-		76AE161B1A0C24150041016F /* MDWampInterrupt.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15B91A0C24150041016F /* MDWampInterrupt.m */; };
-		76AE161C1A0C24150041016F /* MDWampInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15BA1A0C24150041016F /* MDWampInvocation.h */; };
-		76AE161D1A0C24150041016F /* MDWampInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15BB1A0C24150041016F /* MDWampInvocation.m */; };
-		76AE161E1A0C24150041016F /* MDWampInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15BB1A0C24150041016F /* MDWampInvocation.m */; };
-		76AE161F1A0C24150041016F /* MDWampMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15BC1A0C24150041016F /* MDWampMessage.h */; };
-		76AE16201A0C24150041016F /* MDWampMessageFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15BD1A0C24150041016F /* MDWampMessageFactory.h */; };
-		76AE16211A0C24150041016F /* MDWampMessageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15BE1A0C24150041016F /* MDWampMessageFactory.m */; };
-		76AE16221A0C24150041016F /* MDWampMessageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15BE1A0C24150041016F /* MDWampMessageFactory.m */; };
-		76AE16231A0C24150041016F /* MDWampMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15BF1A0C24150041016F /* MDWampMessages.h */; };
-		76AE16241A0C24150041016F /* MDWampPublish.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15C01A0C24150041016F /* MDWampPublish.h */; };
-		76AE16251A0C24150041016F /* MDWampPublish.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15C11A0C24150041016F /* MDWampPublish.m */; };
-		76AE16261A0C24150041016F /* MDWampPublish.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15C11A0C24150041016F /* MDWampPublish.m */; };
-		76AE16271A0C24150041016F /* MDWampPublished.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15C21A0C24150041016F /* MDWampPublished.h */; };
-		76AE16281A0C24150041016F /* MDWampPublished.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15C31A0C24150041016F /* MDWampPublished.m */; };
-		76AE16291A0C24150041016F /* MDWampPublished.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15C31A0C24150041016F /* MDWampPublished.m */; };
-		76AE162A1A0C24150041016F /* MDWampRegister.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15C41A0C24150041016F /* MDWampRegister.h */; };
-		76AE162B1A0C24150041016F /* MDWampRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15C51A0C24150041016F /* MDWampRegister.m */; };
-		76AE162C1A0C24150041016F /* MDWampRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15C51A0C24150041016F /* MDWampRegister.m */; };
-		76AE162D1A0C24150041016F /* MDWampRegistered.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15C61A0C24150041016F /* MDWampRegistered.h */; };
-		76AE162E1A0C24150041016F /* MDWampRegistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15C71A0C24150041016F /* MDWampRegistered.m */; };
-		76AE162F1A0C24150041016F /* MDWampRegistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15C71A0C24150041016F /* MDWampRegistered.m */; };
-		76AE16301A0C24150041016F /* MDWampResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15C81A0C24150041016F /* MDWampResult.h */; };
-		76AE16311A0C24150041016F /* MDWampResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15C91A0C24150041016F /* MDWampResult.m */; };
-		76AE16321A0C24150041016F /* MDWampResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15C91A0C24150041016F /* MDWampResult.m */; };
-		76AE16331A0C24150041016F /* MDWampSubscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15CA1A0C24150041016F /* MDWampSubscribe.h */; };
-		76AE16341A0C24150041016F /* MDWampSubscribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15CB1A0C24150041016F /* MDWampSubscribe.m */; };
-		76AE16351A0C24150041016F /* MDWampSubscribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15CB1A0C24150041016F /* MDWampSubscribe.m */; };
-		76AE16361A0C24150041016F /* MDWampSubscribed.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15CC1A0C24150041016F /* MDWampSubscribed.h */; };
-		76AE16371A0C24150041016F /* MDWampSubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15CD1A0C24150041016F /* MDWampSubscribed.m */; };
-		76AE16381A0C24150041016F /* MDWampSubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15CD1A0C24150041016F /* MDWampSubscribed.m */; };
-		76AE16391A0C24150041016F /* MDWampUnregister.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15CE1A0C24150041016F /* MDWampUnregister.h */; };
-		76AE163A1A0C24150041016F /* MDWampUnregister.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15CF1A0C24150041016F /* MDWampUnregister.m */; };
-		76AE163B1A0C24150041016F /* MDWampUnregister.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15CF1A0C24150041016F /* MDWampUnregister.m */; };
-		76AE163C1A0C24150041016F /* MDWampUnregistered.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15D01A0C24150041016F /* MDWampUnregistered.h */; };
-		76AE163D1A0C24150041016F /* MDWampUnregistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15D11A0C24150041016F /* MDWampUnregistered.m */; };
-		76AE163E1A0C24150041016F /* MDWampUnregistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15D11A0C24150041016F /* MDWampUnregistered.m */; };
-		76AE163F1A0C24150041016F /* MDWampUnsubscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15D21A0C24150041016F /* MDWampUnsubscribe.h */; };
-		76AE16401A0C24150041016F /* MDWampUnsubscribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15D31A0C24150041016F /* MDWampUnsubscribe.m */; };
-		76AE16411A0C24150041016F /* MDWampUnsubscribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15D31A0C24150041016F /* MDWampUnsubscribe.m */; };
-		76AE16421A0C24150041016F /* MDWampUnsubscribed.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15D41A0C24150041016F /* MDWampUnsubscribed.h */; };
-		76AE16431A0C24150041016F /* MDWampUnsubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15D51A0C24150041016F /* MDWampUnsubscribed.m */; };
-		76AE16441A0C24150041016F /* MDWampUnsubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15D51A0C24150041016F /* MDWampUnsubscribed.m */; };
-		76AE16451A0C24150041016F /* MDWampWelcome.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15D61A0C24150041016F /* MDWampWelcome.h */; };
-		76AE16461A0C24150041016F /* MDWampWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15D71A0C24150041016F /* MDWampWelcome.m */; };
-		76AE16471A0C24150041016F /* MDWampWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15D71A0C24150041016F /* MDWampWelcome.m */; };
-		76AE16481A0C24150041016F /* MDWampYield.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15D81A0C24150041016F /* MDWampYield.h */; };
-		76AE16491A0C24150041016F /* MDWampYield.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15D91A0C24150041016F /* MDWampYield.m */; };
-		76AE164A1A0C24150041016F /* MDWampYield.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15D91A0C24150041016F /* MDWampYield.m */; };
-		76AE164B1A0C24150041016F /* MDWampSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15DB1A0C24150041016F /* MDWampSerialization.h */; };
-		76AE164C1A0C24150041016F /* MDWampSerializationJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15DC1A0C24150041016F /* MDWampSerializationJSON.h */; };
-		76AE164D1A0C24150041016F /* MDWampSerializationJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15DD1A0C24150041016F /* MDWampSerializationJSON.m */; };
-		76AE164E1A0C24150041016F /* MDWampSerializationJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15DD1A0C24150041016F /* MDWampSerializationJSON.m */; };
-		76AE164F1A0C24150041016F /* MDWampSerializationMsgpack.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15DE1A0C24150041016F /* MDWampSerializationMsgpack.h */; };
-		76AE16501A0C24150041016F /* MDWampSerializationMsgpack.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15DF1A0C24150041016F /* MDWampSerializationMsgpack.m */; };
-		76AE16511A0C24150041016F /* MDWampSerializationMsgpack.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15DF1A0C24150041016F /* MDWampSerializationMsgpack.m */; };
-		76AE16521A0C24150041016F /* MDWampSerializations.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15E01A0C24150041016F /* MDWampSerializations.h */; };
-		76AE16531A0C24150041016F /* MDWampTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15E21A0C24150041016F /* MDWampTransport.h */; };
-		76AE16541A0C24150041016F /* MDWampTransportDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15E31A0C24150041016F /* MDWampTransportDelegate.h */; };
-		76AE16551A0C24150041016F /* MDWampTransportRawSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15E41A0C24150041016F /* MDWampTransportRawSocket.h */; };
-		76AE16561A0C24150041016F /* MDWampTransportRawSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15E51A0C24150041016F /* MDWampTransportRawSocket.m */; };
-		76AE16571A0C24150041016F /* MDWampTransportRawSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15E51A0C24150041016F /* MDWampTransportRawSocket.m */; };
-		76AE16581A0C24150041016F /* MDWampTransports.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15E61A0C24150041016F /* MDWampTransports.h */; };
-		76AE16591A0C24150041016F /* MDWampTransportWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15E71A0C24150041016F /* MDWampTransportWebSocket.h */; };
-		76AE165A1A0C24150041016F /* MDWampTransportWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15E81A0C24150041016F /* MDWampTransportWebSocket.m */; };
-		76AE165B1A0C24150041016F /* MDWampTransportWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE15E81A0C24150041016F /* MDWampTransportWebSocket.m */; };
-		76AE165C1A0C24150041016F /* MDWamp-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 76AE15E91A0C24150041016F /* MDWamp-Prefix.pch */; };
-		76AE16611A0C29940041016F /* XCTAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AE16601A0C29940041016F /* XCTAsyncTestCase.m */; };
-		76CCC6F6185BD1F10056AB98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 76CCC6EE185BD1F10056AB98 /* InfoPlist.strings */; };
-		76CCC6F7185BD1F10056AB98 /* MDWampClientDelegateMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CCC6F1185BD1F10056AB98 /* MDWampClientDelegateMock.m */; };
-		76EF81DB18D1087000DFB13B /* MDWampSerializationMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF81DA18D1087000DFB13B /* MDWampSerializationMock.m */; };
-		76F5970F196894A60002773C /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 76F5970D196894A60002773C /* GCDAsyncSocket.h */; };
-		76F59710196894A60002773C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F5970E196894A60002773C /* GCDAsyncSocket.m */; };
-		76F59711196894A60002773C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F5970E196894A60002773C /* GCDAsyncSocket.m */; };
+		33133AE81CFF7598003FCFC5 /* MDWamp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33133ADD1CFF7598003FCFC5 /* MDWamp.framework */; };
+		33133AED1CFF7598003FCFC5 /* MDWamp_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133AEC1CFF7598003FCFC5 /* MDWamp_iOSTests.m */; };
+		33133B0A1CFF7657003FCFC5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B091CFF7657003FCFC5 /* main.m */; };
+		33133B0D1CFF7657003FCFC5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B0C1CFF7657003FCFC5 /* AppDelegate.m */; };
+		33133B101CFF7657003FCFC5 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B0F1CFF7657003FCFC5 /* FirstViewController.m */; };
+		33133B131CFF7657003FCFC5 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B121CFF7657003FCFC5 /* SecondViewController.m */; };
+		33133B161CFF7657003FCFC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33133B141CFF7657003FCFC5 /* Main.storyboard */; };
+		33133B181CFF7657003FCFC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33133B171CFF7657003FCFC5 /* Assets.xcassets */; };
+		33133B1B1CFF7657003FCFC5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33133B191CFF7657003FCFC5 /* LaunchScreen.storyboard */; };
+		33133B831CFF77C7003FCFC5 /* NSMutableArray+MDStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B301CFF77C7003FCFC5 /* NSMutableArray+MDStack.h */; };
+		33133B841CFF77C7003FCFC5 /* NSMutableArray+MDStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B311CFF77C7003FCFC5 /* NSMutableArray+MDStack.m */; };
+		33133B851CFF77C7003FCFC5 /* NSString+MDString.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B321CFF77C7003FCFC5 /* NSString+MDString.h */; };
+		33133B861CFF77C7003FCFC5 /* NSString+MDString.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B331CFF77C7003FCFC5 /* NSString+MDString.m */; };
+		33133B8B1CFF77C7003FCFC5 /* MDWamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B381CFF77C7003FCFC5 /* MDWamp.h */; };
+		33133B8C1CFF77C7003FCFC5 /* MDWamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B391CFF77C7003FCFC5 /* MDWamp.m */; };
+		33133B8D1CFF77C7003FCFC5 /* MDWampClientConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B3A1CFF77C7003FCFC5 /* MDWampClientConfig.h */; };
+		33133B8E1CFF77C7003FCFC5 /* MDWampClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B3B1CFF77C7003FCFC5 /* MDWampClientConfig.m */; };
+		33133B8F1CFF77C7003FCFC5 /* MDWampClientDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B3C1CFF77C7003FCFC5 /* MDWampClientDelegate.h */; };
+		33133B901CFF77C7003FCFC5 /* MDWampConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B3D1CFF77C7003FCFC5 /* MDWampConstants.h */; };
+		33133B911CFF77C7003FCFC5 /* MDWampConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B3E1CFF77C7003FCFC5 /* MDWampConstants.m */; };
+		33133B921CFF77C7003FCFC5 /* MDWampAbort.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B401CFF77C7003FCFC5 /* MDWampAbort.h */; };
+		33133B931CFF77C7003FCFC5 /* MDWampAbort.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B411CFF77C7003FCFC5 /* MDWampAbort.m */; };
+		33133B941CFF77C7003FCFC5 /* MDWampAuthenticate.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B421CFF77C7003FCFC5 /* MDWampAuthenticate.h */; };
+		33133B951CFF77C7003FCFC5 /* MDWampAuthenticate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B431CFF77C7003FCFC5 /* MDWampAuthenticate.m */; };
+		33133B961CFF77C7003FCFC5 /* MDWampCall.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B441CFF77C7003FCFC5 /* MDWampCall.h */; };
+		33133B971CFF77C7003FCFC5 /* MDWampCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B451CFF77C7003FCFC5 /* MDWampCall.m */; };
+		33133B981CFF77C7003FCFC5 /* MDWampCancel.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B461CFF77C7003FCFC5 /* MDWampCancel.h */; };
+		33133B991CFF77C7003FCFC5 /* MDWampCancel.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B471CFF77C7003FCFC5 /* MDWampCancel.m */; };
+		33133B9A1CFF77C7003FCFC5 /* MDWampChallenge.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B481CFF77C7003FCFC5 /* MDWampChallenge.h */; };
+		33133B9B1CFF77C7003FCFC5 /* MDWampChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B491CFF77C7003FCFC5 /* MDWampChallenge.m */; };
+		33133B9C1CFF77C7003FCFC5 /* MDWampError.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B4A1CFF77C7003FCFC5 /* MDWampError.h */; };
+		33133B9D1CFF77C7003FCFC5 /* MDWampError.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B4B1CFF77C7003FCFC5 /* MDWampError.m */; };
+		33133B9E1CFF77C7003FCFC5 /* MDWampEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B4C1CFF77C7003FCFC5 /* MDWampEvent.h */; };
+		33133B9F1CFF77C7003FCFC5 /* MDWampEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B4D1CFF77C7003FCFC5 /* MDWampEvent.m */; };
+		33133BA01CFF77C7003FCFC5 /* MDWampGoodbye.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B4E1CFF77C7003FCFC5 /* MDWampGoodbye.h */; };
+		33133BA11CFF77C7003FCFC5 /* MDWampGoodbye.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B4F1CFF77C7003FCFC5 /* MDWampGoodbye.m */; };
+		33133BA21CFF77C7003FCFC5 /* MDWampHello.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B501CFF77C7003FCFC5 /* MDWampHello.h */; };
+		33133BA31CFF77C7003FCFC5 /* MDWampHello.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B511CFF77C7003FCFC5 /* MDWampHello.m */; };
+		33133BA41CFF77C7003FCFC5 /* MDWampInterrupt.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B521CFF77C7003FCFC5 /* MDWampInterrupt.h */; };
+		33133BA51CFF77C7003FCFC5 /* MDWampInterrupt.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B531CFF77C7003FCFC5 /* MDWampInterrupt.m */; };
+		33133BA61CFF77C7003FCFC5 /* MDWampInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B541CFF77C7003FCFC5 /* MDWampInvocation.h */; };
+		33133BA71CFF77C7003FCFC5 /* MDWampInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B551CFF77C7003FCFC5 /* MDWampInvocation.m */; };
+		33133BA81CFF77C7003FCFC5 /* MDWampMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B561CFF77C7003FCFC5 /* MDWampMessage.h */; };
+		33133BA91CFF77C7003FCFC5 /* MDWampMessageFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B571CFF77C7003FCFC5 /* MDWampMessageFactory.h */; };
+		33133BAA1CFF77C7003FCFC5 /* MDWampMessageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B581CFF77C7003FCFC5 /* MDWampMessageFactory.m */; };
+		33133BAB1CFF77C7003FCFC5 /* MDWampMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B591CFF77C7003FCFC5 /* MDWampMessages.h */; };
+		33133BAC1CFF77C7003FCFC5 /* MDWampPublish.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B5A1CFF77C7003FCFC5 /* MDWampPublish.h */; };
+		33133BAD1CFF77C7003FCFC5 /* MDWampPublish.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B5B1CFF77C7003FCFC5 /* MDWampPublish.m */; };
+		33133BAE1CFF77C7003FCFC5 /* MDWampPublished.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B5C1CFF77C7003FCFC5 /* MDWampPublished.h */; };
+		33133BAF1CFF77C7003FCFC5 /* MDWampPublished.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B5D1CFF77C7003FCFC5 /* MDWampPublished.m */; };
+		33133BB01CFF77C7003FCFC5 /* MDWampRegister.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B5E1CFF77C7003FCFC5 /* MDWampRegister.h */; };
+		33133BB11CFF77C7003FCFC5 /* MDWampRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B5F1CFF77C7003FCFC5 /* MDWampRegister.m */; };
+		33133BB21CFF77C7003FCFC5 /* MDWampRegistered.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B601CFF77C7003FCFC5 /* MDWampRegistered.h */; };
+		33133BB31CFF77C7003FCFC5 /* MDWampRegistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B611CFF77C7003FCFC5 /* MDWampRegistered.m */; };
+		33133BB41CFF77C7003FCFC5 /* MDWampResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B621CFF77C7003FCFC5 /* MDWampResult.h */; };
+		33133BB51CFF77C7003FCFC5 /* MDWampResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B631CFF77C7003FCFC5 /* MDWampResult.m */; };
+		33133BB61CFF77C7003FCFC5 /* MDWampSubscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B641CFF77C7003FCFC5 /* MDWampSubscribe.h */; };
+		33133BB71CFF77C7003FCFC5 /* MDWampSubscribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B651CFF77C7003FCFC5 /* MDWampSubscribe.m */; };
+		33133BB81CFF77C7003FCFC5 /* MDWampSubscribed.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B661CFF77C7003FCFC5 /* MDWampSubscribed.h */; };
+		33133BB91CFF77C7003FCFC5 /* MDWampSubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B671CFF77C7003FCFC5 /* MDWampSubscribed.m */; };
+		33133BBA1CFF77C7003FCFC5 /* MDWampUnregister.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B681CFF77C7003FCFC5 /* MDWampUnregister.h */; };
+		33133BBB1CFF77C7003FCFC5 /* MDWampUnregister.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B691CFF77C7003FCFC5 /* MDWampUnregister.m */; };
+		33133BBC1CFF77C7003FCFC5 /* MDWampUnregistered.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B6A1CFF77C7003FCFC5 /* MDWampUnregistered.h */; };
+		33133BBD1CFF77C7003FCFC5 /* MDWampUnregistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B6B1CFF77C7003FCFC5 /* MDWampUnregistered.m */; };
+		33133BBE1CFF77C7003FCFC5 /* MDWampUnsubscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B6C1CFF77C7003FCFC5 /* MDWampUnsubscribe.h */; };
+		33133BBF1CFF77C7003FCFC5 /* MDWampUnsubscribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B6D1CFF77C7003FCFC5 /* MDWampUnsubscribe.m */; };
+		33133BC01CFF77C7003FCFC5 /* MDWampUnsubscribed.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B6E1CFF77C7003FCFC5 /* MDWampUnsubscribed.h */; };
+		33133BC11CFF77C7003FCFC5 /* MDWampUnsubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B6F1CFF77C7003FCFC5 /* MDWampUnsubscribed.m */; };
+		33133BC21CFF77C7003FCFC5 /* MDWampWelcome.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B701CFF77C7003FCFC5 /* MDWampWelcome.h */; };
+		33133BC31CFF77C7003FCFC5 /* MDWampWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B711CFF77C7003FCFC5 /* MDWampWelcome.m */; };
+		33133BC41CFF77C7003FCFC5 /* MDWampYield.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B721CFF77C7003FCFC5 /* MDWampYield.h */; };
+		33133BC51CFF77C7003FCFC5 /* MDWampYield.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B731CFF77C7003FCFC5 /* MDWampYield.m */; };
+		33133BC61CFF77C7003FCFC5 /* MDWampSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B751CFF77C7003FCFC5 /* MDWampSerialization.h */; };
+		33133BC71CFF77C7003FCFC5 /* MDWampSerializationJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B761CFF77C7003FCFC5 /* MDWampSerializationJSON.h */; };
+		33133BC81CFF77C7003FCFC5 /* MDWampSerializationJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B771CFF77C7003FCFC5 /* MDWampSerializationJSON.m */; };
+		33133BC91CFF77C7003FCFC5 /* MDWampSerializationMsgpack.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B781CFF77C7003FCFC5 /* MDWampSerializationMsgpack.h */; };
+		33133BCA1CFF77C7003FCFC5 /* MDWampSerializationMsgpack.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B791CFF77C7003FCFC5 /* MDWampSerializationMsgpack.m */; };
+		33133BCB1CFF77C7003FCFC5 /* MDWampSerializations.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B7A1CFF77C7003FCFC5 /* MDWampSerializations.h */; };
+		33133BCC1CFF77C7003FCFC5 /* MDWampTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B7C1CFF77C7003FCFC5 /* MDWampTransport.h */; };
+		33133BCD1CFF77C7003FCFC5 /* MDWampTransportDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B7D1CFF77C7003FCFC5 /* MDWampTransportDelegate.h */; };
+		33133BCE1CFF77C7003FCFC5 /* MDWampTransportRawSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B7E1CFF77C7003FCFC5 /* MDWampTransportRawSocket.h */; };
+		33133BCF1CFF77C7003FCFC5 /* MDWampTransportRawSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B7F1CFF77C7003FCFC5 /* MDWampTransportRawSocket.m */; };
+		33133BD01CFF77C7003FCFC5 /* MDWampTransports.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B801CFF77C7003FCFC5 /* MDWampTransports.h */; };
+		33133BD11CFF77C7003FCFC5 /* MDWampTransportWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B811CFF77C7003FCFC5 /* MDWampTransportWebSocket.h */; };
+		33133BD21CFF77C7003FCFC5 /* MDWampTransportWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B821CFF77C7003FCFC5 /* MDWampTransportWebSocket.m */; };
+		336F57451CFF7A1600811E8B /* MDWamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B381CFF77C7003FCFC5 /* MDWamp.h */; };
+		336F57461CFF7A1A00811E8B /* MDWamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B391CFF77C7003FCFC5 /* MDWamp.m */; };
+		336F57471CFF7A1A00811E8B /* MDWampClientConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B3A1CFF77C7003FCFC5 /* MDWampClientConfig.h */; };
+		336F57481CFF7A1A00811E8B /* MDWampClientConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B3B1CFF77C7003FCFC5 /* MDWampClientConfig.m */; };
+		336F57491CFF7A1A00811E8B /* MDWampClientDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B3C1CFF77C7003FCFC5 /* MDWampClientDelegate.h */; };
+		336F574A1CFF7A1A00811E8B /* MDWampConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B3D1CFF77C7003FCFC5 /* MDWampConstants.h */; };
+		336F574B1CFF7A1A00811E8B /* MDWampConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B3E1CFF77C7003FCFC5 /* MDWampConstants.m */; };
+		336F574C1CFF7A2300811E8B /* MDWampAbort.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B401CFF77C7003FCFC5 /* MDWampAbort.h */; };
+		336F574D1CFF7A2300811E8B /* MDWampAbort.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B411CFF77C7003FCFC5 /* MDWampAbort.m */; };
+		336F574E1CFF7A2300811E8B /* MDWampAuthenticate.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B421CFF77C7003FCFC5 /* MDWampAuthenticate.h */; };
+		336F574F1CFF7A2300811E8B /* MDWampAuthenticate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B431CFF77C7003FCFC5 /* MDWampAuthenticate.m */; };
+		336F57501CFF7A2300811E8B /* MDWampCall.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B441CFF77C7003FCFC5 /* MDWampCall.h */; };
+		336F57511CFF7A2300811E8B /* MDWampCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B451CFF77C7003FCFC5 /* MDWampCall.m */; };
+		336F57521CFF7A2300811E8B /* MDWampCancel.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B461CFF77C7003FCFC5 /* MDWampCancel.h */; };
+		336F57531CFF7A2300811E8B /* MDWampCancel.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B471CFF77C7003FCFC5 /* MDWampCancel.m */; };
+		336F57541CFF7A2300811E8B /* MDWampChallenge.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B481CFF77C7003FCFC5 /* MDWampChallenge.h */; };
+		336F57551CFF7A2300811E8B /* MDWampChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B491CFF77C7003FCFC5 /* MDWampChallenge.m */; };
+		336F57561CFF7A2300811E8B /* MDWampError.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B4A1CFF77C7003FCFC5 /* MDWampError.h */; };
+		336F57571CFF7A2300811E8B /* MDWampError.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B4B1CFF77C7003FCFC5 /* MDWampError.m */; };
+		336F57581CFF7A2300811E8B /* MDWampEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B4C1CFF77C7003FCFC5 /* MDWampEvent.h */; };
+		336F57591CFF7A2300811E8B /* MDWampEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B4D1CFF77C7003FCFC5 /* MDWampEvent.m */; };
+		336F575A1CFF7A2300811E8B /* MDWampGoodbye.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B4E1CFF77C7003FCFC5 /* MDWampGoodbye.h */; };
+		336F575B1CFF7A2300811E8B /* MDWampGoodbye.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B4F1CFF77C7003FCFC5 /* MDWampGoodbye.m */; };
+		336F575C1CFF7A2300811E8B /* MDWampHello.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B501CFF77C7003FCFC5 /* MDWampHello.h */; };
+		336F575D1CFF7A2300811E8B /* MDWampHello.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B511CFF77C7003FCFC5 /* MDWampHello.m */; };
+		336F575E1CFF7A2300811E8B /* MDWampInterrupt.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B521CFF77C7003FCFC5 /* MDWampInterrupt.h */; };
+		336F575F1CFF7A2300811E8B /* MDWampInterrupt.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B531CFF77C7003FCFC5 /* MDWampInterrupt.m */; };
+		336F57601CFF7A2300811E8B /* MDWampInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B541CFF77C7003FCFC5 /* MDWampInvocation.h */; };
+		336F57611CFF7A2300811E8B /* MDWampInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B551CFF77C7003FCFC5 /* MDWampInvocation.m */; };
+		336F57621CFF7A2300811E8B /* MDWampMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B561CFF77C7003FCFC5 /* MDWampMessage.h */; };
+		336F57631CFF7A2300811E8B /* MDWampMessageFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B571CFF77C7003FCFC5 /* MDWampMessageFactory.h */; };
+		336F57641CFF7A2300811E8B /* MDWampMessageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B581CFF77C7003FCFC5 /* MDWampMessageFactory.m */; };
+		336F57651CFF7A2300811E8B /* MDWampMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B591CFF77C7003FCFC5 /* MDWampMessages.h */; };
+		336F57661CFF7A2300811E8B /* MDWampPublish.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B5A1CFF77C7003FCFC5 /* MDWampPublish.h */; };
+		336F57671CFF7A2300811E8B /* MDWampPublish.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B5B1CFF77C7003FCFC5 /* MDWampPublish.m */; };
+		336F57681CFF7A2300811E8B /* MDWampPublished.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B5C1CFF77C7003FCFC5 /* MDWampPublished.h */; };
+		336F57691CFF7A2300811E8B /* MDWampPublished.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B5D1CFF77C7003FCFC5 /* MDWampPublished.m */; };
+		336F576A1CFF7A2300811E8B /* MDWampRegister.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B5E1CFF77C7003FCFC5 /* MDWampRegister.h */; };
+		336F576B1CFF7A2300811E8B /* MDWampRegister.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B5F1CFF77C7003FCFC5 /* MDWampRegister.m */; };
+		336F576C1CFF7A2300811E8B /* MDWampRegistered.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B601CFF77C7003FCFC5 /* MDWampRegistered.h */; };
+		336F576D1CFF7A2300811E8B /* MDWampRegistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B611CFF77C7003FCFC5 /* MDWampRegistered.m */; };
+		336F576E1CFF7A2300811E8B /* MDWampResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B621CFF77C7003FCFC5 /* MDWampResult.h */; };
+		336F576F1CFF7A2300811E8B /* MDWampResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B631CFF77C7003FCFC5 /* MDWampResult.m */; };
+		336F57701CFF7A2300811E8B /* MDWampSubscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B641CFF77C7003FCFC5 /* MDWampSubscribe.h */; };
+		336F57711CFF7A2300811E8B /* MDWampSubscribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B651CFF77C7003FCFC5 /* MDWampSubscribe.m */; };
+		336F57721CFF7A2300811E8B /* MDWampSubscribed.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B661CFF77C7003FCFC5 /* MDWampSubscribed.h */; };
+		336F57731CFF7A2300811E8B /* MDWampSubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B671CFF77C7003FCFC5 /* MDWampSubscribed.m */; };
+		336F57741CFF7A2300811E8B /* MDWampUnregister.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B681CFF77C7003FCFC5 /* MDWampUnregister.h */; };
+		336F57751CFF7A2300811E8B /* MDWampUnregister.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B691CFF77C7003FCFC5 /* MDWampUnregister.m */; };
+		336F57761CFF7A2300811E8B /* MDWampUnregistered.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B6A1CFF77C7003FCFC5 /* MDWampUnregistered.h */; };
+		336F57771CFF7A2300811E8B /* MDWampUnregistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B6B1CFF77C7003FCFC5 /* MDWampUnregistered.m */; };
+		336F57781CFF7A2300811E8B /* MDWampUnsubscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B6C1CFF77C7003FCFC5 /* MDWampUnsubscribe.h */; };
+		336F57791CFF7A2300811E8B /* MDWampUnsubscribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B6D1CFF77C7003FCFC5 /* MDWampUnsubscribe.m */; };
+		336F577A1CFF7A2300811E8B /* MDWampUnsubscribed.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B6E1CFF77C7003FCFC5 /* MDWampUnsubscribed.h */; };
+		336F577B1CFF7A2300811E8B /* MDWampUnsubscribed.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B6F1CFF77C7003FCFC5 /* MDWampUnsubscribed.m */; };
+		336F577C1CFF7A2300811E8B /* MDWampWelcome.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B701CFF77C7003FCFC5 /* MDWampWelcome.h */; };
+		336F577D1CFF7A2300811E8B /* MDWampWelcome.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B711CFF77C7003FCFC5 /* MDWampWelcome.m */; };
+		336F577E1CFF7A2300811E8B /* MDWampYield.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B721CFF77C7003FCFC5 /* MDWampYield.h */; };
+		336F577F1CFF7A2300811E8B /* MDWampYield.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B731CFF77C7003FCFC5 /* MDWampYield.m */; };
+		336F57801CFF7A2C00811E8B /* MDWampSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B751CFF77C7003FCFC5 /* MDWampSerialization.h */; };
+		336F57811CFF7A2C00811E8B /* MDWampSerializationJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B761CFF77C7003FCFC5 /* MDWampSerializationJSON.h */; };
+		336F57821CFF7A2C00811E8B /* MDWampSerializationJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B771CFF77C7003FCFC5 /* MDWampSerializationJSON.m */; };
+		336F57831CFF7A2C00811E8B /* MDWampSerializationMsgpack.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B781CFF77C7003FCFC5 /* MDWampSerializationMsgpack.h */; };
+		336F57841CFF7A2C00811E8B /* MDWampSerializationMsgpack.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B791CFF77C7003FCFC5 /* MDWampSerializationMsgpack.m */; };
+		336F57851CFF7A2C00811E8B /* MDWampSerializations.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B7A1CFF77C7003FCFC5 /* MDWampSerializations.h */; };
+		336F57861CFF7A3100811E8B /* MDWampTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B7C1CFF77C7003FCFC5 /* MDWampTransport.h */; };
+		336F57871CFF7A3100811E8B /* MDWampTransportDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B7D1CFF77C7003FCFC5 /* MDWampTransportDelegate.h */; };
+		336F57881CFF7A3100811E8B /* MDWampTransportRawSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B7E1CFF77C7003FCFC5 /* MDWampTransportRawSocket.h */; };
+		336F57891CFF7A3100811E8B /* MDWampTransportRawSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B7F1CFF77C7003FCFC5 /* MDWampTransportRawSocket.m */; };
+		336F578A1CFF7A3100811E8B /* MDWampTransports.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B801CFF77C7003FCFC5 /* MDWampTransports.h */; };
+		336F578B1CFF7A3100811E8B /* MDWampTransportWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 33133B811CFF77C7003FCFC5 /* MDWampTransportWebSocket.h */; };
+		336F578C1CFF7A3100811E8B /* MDWampTransportWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 33133B821CFF77C7003FCFC5 /* MDWampTransportWebSocket.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7604D722185B499E0087773E /* PBXContainerItemProxy */ = {
+		33133AE91CFF7598003FCFC5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7604D6FE185B499D0087773E /* Project object */;
+			containerPortal = 33133AD21CFF751A003FCFC5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7604D706185B499D0087773E;
-			remoteInfo = MDWamp;
-		};
-		7657A3B5195F594800F58BB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7604D6FE185B499D0087773E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7604D765185B6B880087773E;
-			remoteInfo = libMDWamp;
+			remoteGlobalIDString = 33133ADC1CFF7598003FCFC5;
+			remoteInfo = "MDWamp iOS";
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		7604D764185B6B880087773E /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7646E534185BCEAB004990DD /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7646E536185BCF08004990DD /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		7604D707185B499D0087773E /* MDWamp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MDWamp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7604D70A185B499D0087773E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		7604D71E185B499D0087773E /* MDWampTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDWampTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7604D71F185B499D0087773E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		7604D73A185B4A7B0087773E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		7604D766185B6B880087773E /* libMDWamp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMDWamp.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		760DA6FA18EB0A9E006EC89C /* MDWampMessageFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampMessageFactoryTests.m; sourceTree = "<group>"; };
-		760DA6FC18EB0E7D006EC89C /* MDWampMessagesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampMessagesTests.m; sourceTree = "<group>"; };
-		7619E69918CF8E9F00B0209D /* MDWampTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTests.m; sourceTree = "<group>"; };
-		762A51DE195CB2B000A3B344 /* READMEv1.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = READMEv1.md; sourceTree = "<group>"; };
-		762A51DF195CB2B000A3B344 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		762A51E1195CB2B000A3B344 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		76414F511950C8E900788300 /* MDWampTransportdelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportdelegateMock.h; sourceTree = "<group>"; };
-		76414F521950C8E900788300 /* MDWampTransportdelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportdelegateMock.m; sourceTree = "<group>"; };
-		764374A1194E238D000F29A8 /* MDStackTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDStackTest.m; sourceTree = "<group>"; };
-		764F059D1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportRawSocketTests.m; sourceTree = "<group>"; };
-		764F05A31969B26D00EB1A8A /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
-		764F05A51969B2A700EB1A8A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		7657671119E6850F0008967E /* MDWamp.podspec.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MDWamp.podspec.json; sourceTree = "<group>"; };
-		765BAF8F19E722C800EC580D /* cmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cmp.c; path = MPMessagePack/cmp.c; sourceTree = "<group>"; };
-		765BAF9019E722C800EC580D /* cmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cmp.h; path = MPMessagePack/cmp.h; sourceTree = "<group>"; };
-		765BAF9119E722C800EC580D /* MPMessagePack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMessagePack.h; path = MPMessagePack/MPMessagePack.h; sourceTree = "<group>"; };
-		765BAF9219E722C800EC580D /* MPMessagePackReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMessagePackReader.h; path = MPMessagePack/MPMessagePackReader.h; sourceTree = "<group>"; };
-		765BAF9319E722C800EC580D /* MPMessagePackReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPMessagePackReader.m; path = MPMessagePack/MPMessagePackReader.m; sourceTree = "<group>"; };
-		765BAF9419E722C800EC580D /* MPMessagePackWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMessagePackWriter.h; path = MPMessagePack/MPMessagePackWriter.h; sourceTree = "<group>"; };
-		765BAF9519E722C800EC580D /* MPMessagePackWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPMessagePackWriter.m; path = MPMessagePack/MPMessagePackWriter.m; sourceTree = "<group>"; };
-		765BAF9619E722C800EC580D /* MPOrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPOrderedDictionary.h; path = MPMessagePack/MPOrderedDictionary.h; sourceTree = "<group>"; };
-		765BAF9719E722C800EC580D /* MPOrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPOrderedDictionary.m; path = MPMessagePack/MPOrderedDictionary.m; sourceTree = "<group>"; };
-		765BAF9819E722C800EC580D /* NSArray+MPMessagePack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+MPMessagePack.h"; path = "MPMessagePack/NSArray+MPMessagePack.h"; sourceTree = "<group>"; };
-		765BAF9919E722C800EC580D /* NSArray+MPMessagePack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+MPMessagePack.m"; path = "MPMessagePack/NSArray+MPMessagePack.m"; sourceTree = "<group>"; };
-		765BAF9A19E722C800EC580D /* NSDictionary+MPMessagePack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+MPMessagePack.h"; path = "MPMessagePack/NSDictionary+MPMessagePack.h"; sourceTree = "<group>"; };
-		765BAF9B19E722C800EC580D /* NSDictionary+MPMessagePack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+MPMessagePack.m"; path = "MPMessagePack/NSDictionary+MPMessagePack.m"; sourceTree = "<group>"; };
-		766E10E619E6B4390083173B /* MDWampClientConfigTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampClientConfigTests.m; sourceTree = "<group>"; };
-		766E10EC19E6C1E00083173B /* MDWampAdvancedTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampAdvancedTests.m; sourceTree = "<group>"; };
-		7673B7AE1A0FDA3F0072CDD3 /* MDWampTransportWebSocketTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportWebSocketTests.m; sourceTree = "<group>"; };
-		7691AA151A0D168C007FE84C /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = config.json; path = .crossbar/config.json; sourceTree = "<group>"; };
-		7698B1B31952278E0045D400 /* MDWampSerializations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSerializations.m; sourceTree = "<group>"; };
-		7698B1BF19522AF80045D400 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		7698B1F619522D1C0045D400 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libicucore.dylib; sourceTree = DEVELOPER_DIR; };
-		7698B1F819522D2B0045D400 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
-		7698B1FA19522D310045D400 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		76A34EEF195DED5400233B76 /* MDWampDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDWampDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		76A34EF2195DED5400233B76 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		76A34EF6195DED5400233B76 /* MDWampDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MDWampDemo-Info.plist"; sourceTree = "<group>"; };
-		76A34EFC195DED5400233B76 /* MDWampDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MDWampDemo-Prefix.pch"; sourceTree = "<group>"; };
-		76AE15591A0C21C50041016F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		76AE155A1A0C21C50041016F /* broken_link-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "broken_link-32.png"; sourceTree = "<group>"; };
-		76AE155B1A0C21C50041016F /* collaboration.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collaboration.png; sourceTree = "<group>"; };
-		76AE155C1A0C21C50041016F /* collaboration@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "collaboration@2x.png"; sourceTree = "<group>"; };
-		76AE155E1A0C21C50041016F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		76AE155F1A0C21C50041016F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		76AE15601A0C21C50041016F /* link-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "link-32.png"; sourceTree = "<group>"; };
-		76AE15611A0C21C50041016F /* online-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "online-32.png"; sourceTree = "<group>"; };
-		76AE15621A0C21C50041016F /* online-32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "online-32@2x.png"; sourceTree = "<group>"; };
-		76AE15631A0C21C50041016F /* run_command.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = run_command.png; sourceTree = "<group>"; };
-		76AE15641A0C21C50041016F /* run_command@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "run_command@2x.png"; sourceTree = "<group>"; };
-		76AE15651A0C21C50041016F /* save_as.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save_as.png; sourceTree = "<group>"; };
-		76AE15661A0C21C50041016F /* save_as@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "save_as@2x.png"; sourceTree = "<group>"; };
-		76AE15681A0C21C50041016F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		76AE15691A0C21C50041016F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		76AE156A1A0C21C50041016F /* CallRPCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallRPCViewController.h; sourceTree = "<group>"; };
-		76AE156B1A0C21C50041016F /* CallRPCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallRPCViewController.m; sourceTree = "<group>"; };
-		76AE156C1A0C21C50041016F /* ChatStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatStartViewController.h; sourceTree = "<group>"; };
-		76AE156D1A0C21C50041016F /* ChatStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatStartViewController.m; sourceTree = "<group>"; };
-		76AE156E1A0C21C50041016F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
-		76AE156F1A0C21C50041016F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
-		76AE15701A0C21C50041016F /* ConnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectViewController.h; sourceTree = "<group>"; };
-		76AE15711A0C21C50041016F /* ConnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectViewController.m; sourceTree = "<group>"; };
-		76AE15721A0C21C50041016F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		76AE15731A0C21C50041016F /* RegisterRPCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterRPCViewController.h; sourceTree = "<group>"; };
-		76AE15741A0C21C50041016F /* RegisterRPCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterRPCViewController.m; sourceTree = "<group>"; };
-		76AE15911A0C23130041016F /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SRWebSocket.h; path = External/SocketRocket/SocketRocket/SRWebSocket.h; sourceTree = "<group>"; };
-		76AE15921A0C23130041016F /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SRWebSocket.m; path = External/SocketRocket/SocketRocket/SRWebSocket.m; sourceTree = "<group>"; };
-		76AE15981A0C24150041016F /* NSMutableArray+MDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MDStack.h"; sourceTree = "<group>"; };
-		76AE15991A0C24150041016F /* NSMutableArray+MDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MDStack.m"; sourceTree = "<group>"; };
-		76AE159A1A0C24150041016F /* NSString+MDString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MDString.h"; sourceTree = "<group>"; };
-		76AE159B1A0C24150041016F /* NSString+MDString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MDString.m"; sourceTree = "<group>"; };
-		76AE159C1A0C24150041016F /* MDWamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWamp.h; sourceTree = "<group>"; };
-		76AE159D1A0C24150041016F /* MDWamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWamp.m; sourceTree = "<group>"; };
-		76AE159E1A0C24150041016F /* MDWampClientConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampClientConfig.h; sourceTree = "<group>"; };
-		76AE159F1A0C24150041016F /* MDWampClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampClientConfig.m; sourceTree = "<group>"; };
-		76AE15A01A0C24150041016F /* MDWampClientDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampClientDelegate.h; sourceTree = "<group>"; };
-		76AE15A11A0C24150041016F /* MDWampConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampConstants.h; sourceTree = "<group>"; };
-		76AE15A21A0C24150041016F /* MDWampConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampConstants.m; sourceTree = "<group>"; };
-		76AE15A41A0C24150041016F /* MDWampAbort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampAbort.h; sourceTree = "<group>"; };
-		76AE15A51A0C24150041016F /* MDWampAbort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampAbort.m; sourceTree = "<group>"; };
-		76AE15A61A0C24150041016F /* MDWampAuthenticate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampAuthenticate.h; sourceTree = "<group>"; };
-		76AE15A71A0C24150041016F /* MDWampAuthenticate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampAuthenticate.m; sourceTree = "<group>"; };
-		76AE15A81A0C24150041016F /* MDWampCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampCall.h; sourceTree = "<group>"; };
-		76AE15A91A0C24150041016F /* MDWampCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampCall.m; sourceTree = "<group>"; };
-		76AE15AA1A0C24150041016F /* MDWampCancel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampCancel.h; sourceTree = "<group>"; };
-		76AE15AB1A0C24150041016F /* MDWampCancel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampCancel.m; sourceTree = "<group>"; };
-		76AE15AC1A0C24150041016F /* MDWampChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampChallenge.h; sourceTree = "<group>"; };
-		76AE15AD1A0C24150041016F /* MDWampChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampChallenge.m; sourceTree = "<group>"; };
-		76AE15AE1A0C24150041016F /* MDWampError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampError.h; sourceTree = "<group>"; };
-		76AE15AF1A0C24150041016F /* MDWampError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampError.m; sourceTree = "<group>"; };
-		76AE15B01A0C24150041016F /* MDWampEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampEvent.h; sourceTree = "<group>"; };
-		76AE15B11A0C24150041016F /* MDWampEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampEvent.m; sourceTree = "<group>"; };
-		76AE15B21A0C24150041016F /* MDWampGoodbye.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampGoodbye.h; sourceTree = "<group>"; };
-		76AE15B31A0C24150041016F /* MDWampGoodbye.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampGoodbye.m; sourceTree = "<group>"; };
-		76AE15B61A0C24150041016F /* MDWampHello.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampHello.h; sourceTree = "<group>"; };
-		76AE15B71A0C24150041016F /* MDWampHello.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampHello.m; sourceTree = "<group>"; };
-		76AE15B81A0C24150041016F /* MDWampInterrupt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampInterrupt.h; sourceTree = "<group>"; };
-		76AE15B91A0C24150041016F /* MDWampInterrupt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampInterrupt.m; sourceTree = "<group>"; };
-		76AE15BA1A0C24150041016F /* MDWampInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampInvocation.h; sourceTree = "<group>"; };
-		76AE15BB1A0C24150041016F /* MDWampInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampInvocation.m; sourceTree = "<group>"; };
-		76AE15BC1A0C24150041016F /* MDWampMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampMessage.h; sourceTree = "<group>"; };
-		76AE15BD1A0C24150041016F /* MDWampMessageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampMessageFactory.h; sourceTree = "<group>"; };
-		76AE15BE1A0C24150041016F /* MDWampMessageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampMessageFactory.m; sourceTree = "<group>"; };
-		76AE15BF1A0C24150041016F /* MDWampMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampMessages.h; sourceTree = "<group>"; };
-		76AE15C01A0C24150041016F /* MDWampPublish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampPublish.h; sourceTree = "<group>"; };
-		76AE15C11A0C24150041016F /* MDWampPublish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampPublish.m; sourceTree = "<group>"; };
-		76AE15C21A0C24150041016F /* MDWampPublished.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampPublished.h; sourceTree = "<group>"; };
-		76AE15C31A0C24150041016F /* MDWampPublished.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampPublished.m; sourceTree = "<group>"; };
-		76AE15C41A0C24150041016F /* MDWampRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampRegister.h; sourceTree = "<group>"; };
-		76AE15C51A0C24150041016F /* MDWampRegister.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampRegister.m; sourceTree = "<group>"; };
-		76AE15C61A0C24150041016F /* MDWampRegistered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampRegistered.h; sourceTree = "<group>"; };
-		76AE15C71A0C24150041016F /* MDWampRegistered.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampRegistered.m; sourceTree = "<group>"; };
-		76AE15C81A0C24150041016F /* MDWampResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampResult.h; sourceTree = "<group>"; };
-		76AE15C91A0C24150041016F /* MDWampResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampResult.m; sourceTree = "<group>"; };
-		76AE15CA1A0C24150041016F /* MDWampSubscribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSubscribe.h; sourceTree = "<group>"; };
-		76AE15CB1A0C24150041016F /* MDWampSubscribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSubscribe.m; sourceTree = "<group>"; };
-		76AE15CC1A0C24150041016F /* MDWampSubscribed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSubscribed.h; sourceTree = "<group>"; };
-		76AE15CD1A0C24150041016F /* MDWampSubscribed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSubscribed.m; sourceTree = "<group>"; };
-		76AE15CE1A0C24150041016F /* MDWampUnregister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampUnregister.h; sourceTree = "<group>"; };
-		76AE15CF1A0C24150041016F /* MDWampUnregister.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampUnregister.m; sourceTree = "<group>"; };
-		76AE15D01A0C24150041016F /* MDWampUnregistered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampUnregistered.h; sourceTree = "<group>"; };
-		76AE15D11A0C24150041016F /* MDWampUnregistered.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampUnregistered.m; sourceTree = "<group>"; };
-		76AE15D21A0C24150041016F /* MDWampUnsubscribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampUnsubscribe.h; sourceTree = "<group>"; };
-		76AE15D31A0C24150041016F /* MDWampUnsubscribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampUnsubscribe.m; sourceTree = "<group>"; };
-		76AE15D41A0C24150041016F /* MDWampUnsubscribed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampUnsubscribed.h; sourceTree = "<group>"; };
-		76AE15D51A0C24150041016F /* MDWampUnsubscribed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampUnsubscribed.m; sourceTree = "<group>"; };
-		76AE15D61A0C24150041016F /* MDWampWelcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampWelcome.h; sourceTree = "<group>"; };
-		76AE15D71A0C24150041016F /* MDWampWelcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampWelcome.m; sourceTree = "<group>"; };
-		76AE15D81A0C24150041016F /* MDWampYield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampYield.h; sourceTree = "<group>"; };
-		76AE15D91A0C24150041016F /* MDWampYield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampYield.m; sourceTree = "<group>"; };
-		76AE15DB1A0C24150041016F /* MDWampSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSerialization.h; sourceTree = "<group>"; };
-		76AE15DC1A0C24150041016F /* MDWampSerializationJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSerializationJSON.h; sourceTree = "<group>"; };
-		76AE15DD1A0C24150041016F /* MDWampSerializationJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSerializationJSON.m; sourceTree = "<group>"; };
-		76AE15DE1A0C24150041016F /* MDWampSerializationMsgpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSerializationMsgpack.h; sourceTree = "<group>"; };
-		76AE15DF1A0C24150041016F /* MDWampSerializationMsgpack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSerializationMsgpack.m; sourceTree = "<group>"; };
-		76AE15E01A0C24150041016F /* MDWampSerializations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSerializations.h; sourceTree = "<group>"; };
-		76AE15E21A0C24150041016F /* MDWampTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransport.h; sourceTree = "<group>"; };
-		76AE15E31A0C24150041016F /* MDWampTransportDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportDelegate.h; sourceTree = "<group>"; };
-		76AE15E41A0C24150041016F /* MDWampTransportRawSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportRawSocket.h; sourceTree = "<group>"; };
-		76AE15E51A0C24150041016F /* MDWampTransportRawSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportRawSocket.m; sourceTree = "<group>"; };
-		76AE15E61A0C24150041016F /* MDWampTransports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransports.h; sourceTree = "<group>"; };
-		76AE15E71A0C24150041016F /* MDWampTransportWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportWebSocket.h; sourceTree = "<group>"; };
-		76AE15E81A0C24150041016F /* MDWampTransportWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportWebSocket.m; sourceTree = "<group>"; };
-		76AE15E91A0C24150041016F /* MDWamp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MDWamp-Prefix.pch"; sourceTree = "<group>"; };
-		76AE15EA1A0C24150041016F /* MDWamp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MDWamp-Info.plist"; sourceTree = "<group>"; };
-		76AE165F1A0C29940041016F /* XCTAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XCTAsyncTestCase.h; path = "External/xctest-additions/XCTAsyncTestCase.h"; sourceTree = "<group>"; };
-		76AE16601A0C29940041016F /* XCTAsyncTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XCTAsyncTestCase.m; path = "External/xctest-additions/XCTAsyncTestCase.m"; sourceTree = "<group>"; };
-		76CCC6EF185BD1F10056AB98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		76CCC6F0185BD1F10056AB98 /* MDWampClientDelegateMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampClientDelegateMock.h; sourceTree = "<group>"; };
-		76CCC6F1185BD1F10056AB98 /* MDWampClientDelegateMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampClientDelegateMock.m; sourceTree = "<group>"; };
-		76CCC6F3185BD1F10056AB98 /* MDWampTestIncludes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTestIncludes.h; sourceTree = "<group>"; };
-		76CCC6F4185BD1F10056AB98 /* MDWampTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MDWampTests-Info.plist"; sourceTree = "<group>"; };
-		76EF81D218D1043700DFB13B /* MDWampTransportMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportMock.h; sourceTree = "<group>"; };
-		76EF81D318D1043700DFB13B /* MDWampTransportMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportMock.m; sourceTree = "<group>"; };
-		76EF81D918D1087000DFB13B /* MDWampSerializationMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSerializationMock.h; sourceTree = "<group>"; };
-		76EF81DA18D1087000DFB13B /* MDWampSerializationMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSerializationMock.m; sourceTree = "<group>"; };
-		76F5970D196894A60002773C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = External/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.h; sourceTree = "<group>"; };
-		76F5970E196894A60002773C /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = External/CocoaAsyncSocket/Source/GCD/GCDAsyncSocket.m; sourceTree = "<group>"; };
+		33133ADD1CFF7598003FCFC5 /* MDWamp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MDWamp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33133AE71CFF7598003FCFC5 /* MDWamp iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MDWamp iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		33133AEC1CFF7598003FCFC5 /* MDWamp_iOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDWamp_iOSTests.m; sourceTree = "<group>"; };
+		33133AFA1CFF75B7003FCFC5 /* MDWamp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MDWamp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33133B061CFF7657003FCFC5 /* MDWamp Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MDWamp Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		33133B091CFF7657003FCFC5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		33133B0B1CFF7657003FCFC5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		33133B0C1CFF7657003FCFC5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		33133B0E1CFF7657003FCFC5 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		33133B0F1CFF7657003FCFC5 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		33133B111CFF7657003FCFC5 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		33133B121CFF7657003FCFC5 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		33133B151CFF7657003FCFC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		33133B171CFF7657003FCFC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		33133B1A1CFF7657003FCFC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		33133B1C1CFF7657003FCFC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33133B301CFF77C7003FCFC5 /* NSMutableArray+MDStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MDStack.h"; sourceTree = "<group>"; };
+		33133B311CFF77C7003FCFC5 /* NSMutableArray+MDStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MDStack.m"; sourceTree = "<group>"; };
+		33133B321CFF77C7003FCFC5 /* NSString+MDString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MDString.h"; sourceTree = "<group>"; };
+		33133B331CFF77C7003FCFC5 /* NSString+MDString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MDString.m"; sourceTree = "<group>"; };
+		33133B341CFF77C7003FCFC5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33133B351CFF77C7003FCFC5 /* Info-iOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
+		33133B361CFF77C7003FCFC5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33133B371CFF77C7003FCFC5 /* Info.OSX.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.OSX.plist; sourceTree = "<group>"; };
+		33133B381CFF77C7003FCFC5 /* MDWamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWamp.h; sourceTree = "<group>"; };
+		33133B391CFF77C7003FCFC5 /* MDWamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWamp.m; sourceTree = "<group>"; };
+		33133B3A1CFF77C7003FCFC5 /* MDWampClientConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampClientConfig.h; sourceTree = "<group>"; };
+		33133B3B1CFF77C7003FCFC5 /* MDWampClientConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampClientConfig.m; sourceTree = "<group>"; };
+		33133B3C1CFF77C7003FCFC5 /* MDWampClientDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampClientDelegate.h; sourceTree = "<group>"; };
+		33133B3D1CFF77C7003FCFC5 /* MDWampConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampConstants.h; sourceTree = "<group>"; };
+		33133B3E1CFF77C7003FCFC5 /* MDWampConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampConstants.m; sourceTree = "<group>"; };
+		33133B401CFF77C7003FCFC5 /* MDWampAbort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampAbort.h; sourceTree = "<group>"; };
+		33133B411CFF77C7003FCFC5 /* MDWampAbort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampAbort.m; sourceTree = "<group>"; };
+		33133B421CFF77C7003FCFC5 /* MDWampAuthenticate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampAuthenticate.h; sourceTree = "<group>"; };
+		33133B431CFF77C7003FCFC5 /* MDWampAuthenticate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampAuthenticate.m; sourceTree = "<group>"; };
+		33133B441CFF77C7003FCFC5 /* MDWampCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampCall.h; sourceTree = "<group>"; };
+		33133B451CFF77C7003FCFC5 /* MDWampCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampCall.m; sourceTree = "<group>"; };
+		33133B461CFF77C7003FCFC5 /* MDWampCancel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampCancel.h; sourceTree = "<group>"; };
+		33133B471CFF77C7003FCFC5 /* MDWampCancel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampCancel.m; sourceTree = "<group>"; };
+		33133B481CFF77C7003FCFC5 /* MDWampChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampChallenge.h; sourceTree = "<group>"; };
+		33133B491CFF77C7003FCFC5 /* MDWampChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampChallenge.m; sourceTree = "<group>"; };
+		33133B4A1CFF77C7003FCFC5 /* MDWampError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampError.h; sourceTree = "<group>"; };
+		33133B4B1CFF77C7003FCFC5 /* MDWampError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampError.m; sourceTree = "<group>"; };
+		33133B4C1CFF77C7003FCFC5 /* MDWampEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampEvent.h; sourceTree = "<group>"; };
+		33133B4D1CFF77C7003FCFC5 /* MDWampEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampEvent.m; sourceTree = "<group>"; };
+		33133B4E1CFF77C7003FCFC5 /* MDWampGoodbye.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampGoodbye.h; sourceTree = "<group>"; };
+		33133B4F1CFF77C7003FCFC5 /* MDWampGoodbye.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampGoodbye.m; sourceTree = "<group>"; };
+		33133B501CFF77C7003FCFC5 /* MDWampHello.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampHello.h; sourceTree = "<group>"; };
+		33133B511CFF77C7003FCFC5 /* MDWampHello.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampHello.m; sourceTree = "<group>"; };
+		33133B521CFF77C7003FCFC5 /* MDWampInterrupt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampInterrupt.h; sourceTree = "<group>"; };
+		33133B531CFF77C7003FCFC5 /* MDWampInterrupt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampInterrupt.m; sourceTree = "<group>"; };
+		33133B541CFF77C7003FCFC5 /* MDWampInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampInvocation.h; sourceTree = "<group>"; };
+		33133B551CFF77C7003FCFC5 /* MDWampInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampInvocation.m; sourceTree = "<group>"; };
+		33133B561CFF77C7003FCFC5 /* MDWampMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampMessage.h; sourceTree = "<group>"; };
+		33133B571CFF77C7003FCFC5 /* MDWampMessageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampMessageFactory.h; sourceTree = "<group>"; };
+		33133B581CFF77C7003FCFC5 /* MDWampMessageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampMessageFactory.m; sourceTree = "<group>"; };
+		33133B591CFF77C7003FCFC5 /* MDWampMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampMessages.h; sourceTree = "<group>"; };
+		33133B5A1CFF77C7003FCFC5 /* MDWampPublish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampPublish.h; sourceTree = "<group>"; };
+		33133B5B1CFF77C7003FCFC5 /* MDWampPublish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampPublish.m; sourceTree = "<group>"; };
+		33133B5C1CFF77C7003FCFC5 /* MDWampPublished.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampPublished.h; sourceTree = "<group>"; };
+		33133B5D1CFF77C7003FCFC5 /* MDWampPublished.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampPublished.m; sourceTree = "<group>"; };
+		33133B5E1CFF77C7003FCFC5 /* MDWampRegister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampRegister.h; sourceTree = "<group>"; };
+		33133B5F1CFF77C7003FCFC5 /* MDWampRegister.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampRegister.m; sourceTree = "<group>"; };
+		33133B601CFF77C7003FCFC5 /* MDWampRegistered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampRegistered.h; sourceTree = "<group>"; };
+		33133B611CFF77C7003FCFC5 /* MDWampRegistered.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampRegistered.m; sourceTree = "<group>"; };
+		33133B621CFF77C7003FCFC5 /* MDWampResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampResult.h; sourceTree = "<group>"; };
+		33133B631CFF77C7003FCFC5 /* MDWampResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampResult.m; sourceTree = "<group>"; };
+		33133B641CFF77C7003FCFC5 /* MDWampSubscribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSubscribe.h; sourceTree = "<group>"; };
+		33133B651CFF77C7003FCFC5 /* MDWampSubscribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSubscribe.m; sourceTree = "<group>"; };
+		33133B661CFF77C7003FCFC5 /* MDWampSubscribed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSubscribed.h; sourceTree = "<group>"; };
+		33133B671CFF77C7003FCFC5 /* MDWampSubscribed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSubscribed.m; sourceTree = "<group>"; };
+		33133B681CFF77C7003FCFC5 /* MDWampUnregister.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampUnregister.h; sourceTree = "<group>"; };
+		33133B691CFF77C7003FCFC5 /* MDWampUnregister.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampUnregister.m; sourceTree = "<group>"; };
+		33133B6A1CFF77C7003FCFC5 /* MDWampUnregistered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampUnregistered.h; sourceTree = "<group>"; };
+		33133B6B1CFF77C7003FCFC5 /* MDWampUnregistered.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampUnregistered.m; sourceTree = "<group>"; };
+		33133B6C1CFF77C7003FCFC5 /* MDWampUnsubscribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampUnsubscribe.h; sourceTree = "<group>"; };
+		33133B6D1CFF77C7003FCFC5 /* MDWampUnsubscribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampUnsubscribe.m; sourceTree = "<group>"; };
+		33133B6E1CFF77C7003FCFC5 /* MDWampUnsubscribed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampUnsubscribed.h; sourceTree = "<group>"; };
+		33133B6F1CFF77C7003FCFC5 /* MDWampUnsubscribed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampUnsubscribed.m; sourceTree = "<group>"; };
+		33133B701CFF77C7003FCFC5 /* MDWampWelcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampWelcome.h; sourceTree = "<group>"; };
+		33133B711CFF77C7003FCFC5 /* MDWampWelcome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampWelcome.m; sourceTree = "<group>"; };
+		33133B721CFF77C7003FCFC5 /* MDWampYield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampYield.h; sourceTree = "<group>"; };
+		33133B731CFF77C7003FCFC5 /* MDWampYield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampYield.m; sourceTree = "<group>"; };
+		33133B751CFF77C7003FCFC5 /* MDWampSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSerialization.h; sourceTree = "<group>"; };
+		33133B761CFF77C7003FCFC5 /* MDWampSerializationJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSerializationJSON.h; sourceTree = "<group>"; };
+		33133B771CFF77C7003FCFC5 /* MDWampSerializationJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSerializationJSON.m; sourceTree = "<group>"; };
+		33133B781CFF77C7003FCFC5 /* MDWampSerializationMsgpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSerializationMsgpack.h; sourceTree = "<group>"; };
+		33133B791CFF77C7003FCFC5 /* MDWampSerializationMsgpack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampSerializationMsgpack.m; sourceTree = "<group>"; };
+		33133B7A1CFF77C7003FCFC5 /* MDWampSerializations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampSerializations.h; sourceTree = "<group>"; };
+		33133B7C1CFF77C7003FCFC5 /* MDWampTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransport.h; sourceTree = "<group>"; };
+		33133B7D1CFF77C7003FCFC5 /* MDWampTransportDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportDelegate.h; sourceTree = "<group>"; };
+		33133B7E1CFF77C7003FCFC5 /* MDWampTransportRawSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportRawSocket.h; sourceTree = "<group>"; };
+		33133B7F1CFF77C7003FCFC5 /* MDWampTransportRawSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportRawSocket.m; sourceTree = "<group>"; };
+		33133B801CFF77C7003FCFC5 /* MDWampTransports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransports.h; sourceTree = "<group>"; };
+		33133B811CFF77C7003FCFC5 /* MDWampTransportWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDWampTransportWebSocket.h; sourceTree = "<group>"; };
+		33133B821CFF77C7003FCFC5 /* MDWampTransportWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDWampTransportWebSocket.m; sourceTree = "<group>"; };
+		336F578E1CFF7B2D00811E8B /* MDWamp.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MDWamp.podspec; sourceTree = "<group>"; };
+		336F578F1CFF7B2D00811E8B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		336F57901CFF7B2D00811E8B /* MDWamp.podspec.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MDWamp.podspec.json; sourceTree = "<group>"; };
+		336F57911CFF7B2D00811E8B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		7604D703185B499D0087773E /* Frameworks */ = {
+		33133AD91CFF7598003FCFC5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				764F05A61969B2A700EB1A8A /* Security.framework in Frameworks */,
-				7604D70B185B499D0087773E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7604D71B185B499D0087773E /* Frameworks */ = {
+		33133AE41CFF7598003FCFC5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7604D721185B499E0087773E /* Cocoa.framework in Frameworks */,
-				7604D724185B499E0087773E /* MDWamp.framework in Frameworks */,
-				7604D720185B499D0087773E /* XCTest.framework in Frameworks */,
+				33133AE81CFF7598003FCFC5 /* MDWamp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7604D763185B6B880087773E /* Frameworks */ = {
+		33133AF61CFF75B7003FCFC5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7604D767185B6B880087773E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		76A34EEC195DED5400233B76 /* Frameworks */ = {
+		33133B031CFF7657003FCFC5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7657A3B8195F598200F58BB4 /* libicucore.dylib in Frameworks */,
-				7657A3B7195F594D00F58BB4 /* libMDWamp.a in Frameworks */,
-				76A34EF1195DED5400233B76 /* CoreGraphics.framework in Frameworks */,
-				76A34EF3195DED5400233B76 /* UIKit.framework in Frameworks */,
-				76A34EF0195DED5400233B76 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7604D6FD185B499D0087773E = {
+		33133AD11CFF751A003FCFC5 = {
 			isa = PBXGroup;
 			children = (
-				76FD803B185BB3C800D1B5C0 /* MDWamp */,
-				76ABE18919688CB500C68911 /* Libraries */,
-				76CCC6ED185BD1F10056AB98 /* MDWampTests */,
-				76A34EF4195DED5400233B76 /* MDWampDemo */,
-				7604D709185B499D0087773E /* Frameworks */,
-				7604D708185B499D0087773E /* Products */,
-				762A51DE195CB2B000A3B344 /* READMEv1.md */,
-				762A51DF195CB2B000A3B344 /* README.md */,
-				762A51E1195CB2B000A3B344 /* LICENSE */,
-				7657671119E6850F0008967E /* MDWamp.podspec.json */,
-				7691AA151A0D168C007FE84C /* config.json */,
+				336F578D1CFF7B2100811E8B /* Metadata */,
+				33133B2E1CFF77C7003FCFC5 /* Sources */,
+				33133AEB1CFF7598003FCFC5 /* MDWamp iOSTests */,
+				33133B071CFF7657003FCFC5 /* MDWamp Demo */,
+				33133ADE1CFF7598003FCFC5 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		7604D708185B499D0087773E /* Products */ = {
+		33133ADE1CFF7598003FCFC5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7604D707185B499D0087773E /* MDWamp.framework */,
-				7604D71E185B499D0087773E /* MDWampTests.xctest */,
-				7604D766185B6B880087773E /* libMDWamp.a */,
-				76A34EEF195DED5400233B76 /* MDWampDemo.app */,
+				33133ADD1CFF7598003FCFC5 /* MDWamp.framework */,
+				33133AE71CFF7598003FCFC5 /* MDWamp iOSTests.xctest */,
+				33133AFA1CFF75B7003FCFC5 /* MDWamp.framework */,
+				33133B061CFF7657003FCFC5 /* MDWamp Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7604D709185B499D0087773E /* Frameworks */ = {
+		33133AEB1CFF7598003FCFC5 /* MDWamp iOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				764F05A51969B2A700EB1A8A /* Security.framework */,
-				764F05A31969B26D00EB1A8A /* libssl.dylib */,
-				7698B1F619522D1C0045D400 /* libicucore.dylib */,
-				7698B1FA19522D310045D400 /* Security.framework */,
-				7698B1F819522D2B0045D400 /* CFNetwork.framework */,
-				7604D70A185B499D0087773E /* Cocoa.framework */,
-				7604D71F185B499D0087773E /* XCTest.framework */,
-				7604D73A185B4A7B0087773E /* Foundation.framework */,
-				7698B1BF19522AF80045D400 /* CoreGraphics.framework */,
-				76A34EF2195DED5400233B76 /* UIKit.framework */,
+				33133B361CFF77C7003FCFC5 /* Info.plist */,
+				33133AEC1CFF7598003FCFC5 /* MDWamp_iOSTests.m */,
 			);
-			name = Frameworks;
+			path = "MDWamp iOSTests";
 			sourceTree = "<group>";
 		};
-		765BAF8E19E722C800EC580D /* MPMessagePack */ = {
+		33133B071CFF7657003FCFC5 /* MDWamp Demo */ = {
 			isa = PBXGroup;
 			children = (
-				765BAF8F19E722C800EC580D /* cmp.c */,
-				765BAF9019E722C800EC580D /* cmp.h */,
-				765BAF9119E722C800EC580D /* MPMessagePack.h */,
-				765BAF9219E722C800EC580D /* MPMessagePackReader.h */,
-				765BAF9319E722C800EC580D /* MPMessagePackReader.m */,
-				765BAF9419E722C800EC580D /* MPMessagePackWriter.h */,
-				765BAF9519E722C800EC580D /* MPMessagePackWriter.m */,
-				765BAF9619E722C800EC580D /* MPOrderedDictionary.h */,
-				765BAF9719E722C800EC580D /* MPOrderedDictionary.m */,
-				765BAF9819E722C800EC580D /* NSArray+MPMessagePack.h */,
-				765BAF9919E722C800EC580D /* NSArray+MPMessagePack.m */,
-				765BAF9A19E722C800EC580D /* NSDictionary+MPMessagePack.h */,
-				765BAF9B19E722C800EC580D /* NSDictionary+MPMessagePack.m */,
+				33133B341CFF77C7003FCFC5 /* Info.plist */,
+				33133B0B1CFF7657003FCFC5 /* AppDelegate.h */,
+				33133B0C1CFF7657003FCFC5 /* AppDelegate.m */,
+				33133B0E1CFF7657003FCFC5 /* FirstViewController.h */,
+				33133B0F1CFF7657003FCFC5 /* FirstViewController.m */,
+				33133B111CFF7657003FCFC5 /* SecondViewController.h */,
+				33133B121CFF7657003FCFC5 /* SecondViewController.m */,
+				33133B141CFF7657003FCFC5 /* Main.storyboard */,
+				33133B171CFF7657003FCFC5 /* Assets.xcassets */,
+				33133B191CFF7657003FCFC5 /* LaunchScreen.storyboard */,
+				33133B1C1CFF7657003FCFC5 /* Info.plist */,
+				33133B081CFF7657003FCFC5 /* Supporting Files */,
 			);
-			name = MPMessagePack;
-			path = External/MPMessagePack;
+			path = "MDWamp Demo";
 			sourceTree = "<group>";
 		};
-		76A34EF4195DED5400233B76 /* MDWampDemo */ = {
+		33133B081CFF7657003FCFC5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				76AE15571A0C21C50041016F /* resources */,
-				76AE15671A0C21C50041016F /* src */,
-				76A34EF5195DED5400233B76 /* Supporting Files */,
-			);
-			path = MDWampDemo;
-			sourceTree = "<group>";
-		};
-		76A34EF5195DED5400233B76 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				76A34EF6195DED5400233B76 /* MDWampDemo-Info.plist */,
-				76A34EFC195DED5400233B76 /* MDWampDemo-Prefix.pch */,
+				33133B091CFF7657003FCFC5 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		76ABE18919688CB500C68911 /* Libraries */ = {
+		33133B2E1CFF77C7003FCFC5 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				76AE165F1A0C29940041016F /* XCTAsyncTestCase.h */,
-				76AE16601A0C29940041016F /* XCTAsyncTestCase.m */,
-				76AE15911A0C23130041016F /* SRWebSocket.h */,
-				76AE15921A0C23130041016F /* SRWebSocket.m */,
-				765BAF8E19E722C800EC580D /* MPMessagePack */,
-				76F5970D196894A60002773C /* GCDAsyncSocket.h */,
-				76F5970E196894A60002773C /* GCDAsyncSocket.m */,
+				33133B2F1CFF77C7003FCFC5 /* Categories */,
+				33133B351CFF77C7003FCFC5 /* Info-iOS.plist */,
+				33133B371CFF77C7003FCFC5 /* Info.OSX.plist */,
+				33133B381CFF77C7003FCFC5 /* MDWamp.h */,
+				33133B391CFF77C7003FCFC5 /* MDWamp.m */,
+				33133B3A1CFF77C7003FCFC5 /* MDWampClientConfig.h */,
+				33133B3B1CFF77C7003FCFC5 /* MDWampClientConfig.m */,
+				33133B3C1CFF77C7003FCFC5 /* MDWampClientDelegate.h */,
+				33133B3D1CFF77C7003FCFC5 /* MDWampConstants.h */,
+				33133B3E1CFF77C7003FCFC5 /* MDWampConstants.m */,
+				33133B3F1CFF77C7003FCFC5 /* MDWampMessages */,
+				33133B741CFF77C7003FCFC5 /* MDWampSerializations */,
+				33133B7B1CFF77C7003FCFC5 /* MDWampTransports */,
 			);
-			name = Libraries;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		76AE15571A0C21C50041016F /* resources */ = {
+		33133B2F1CFF77C7003FCFC5 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				76AE15581A0C21C50041016F /* Main.storyboard */,
-				76AE155A1A0C21C50041016F /* broken_link-32.png */,
-				76AE155B1A0C21C50041016F /* collaboration.png */,
-				76AE155C1A0C21C50041016F /* collaboration@2x.png */,
-				76AE155D1A0C21C50041016F /* InfoPlist.strings */,
-				76AE155F1A0C21C50041016F /* Images.xcassets */,
-				76AE15601A0C21C50041016F /* link-32.png */,
-				76AE15611A0C21C50041016F /* online-32.png */,
-				76AE15621A0C21C50041016F /* online-32@2x.png */,
-				76AE15631A0C21C50041016F /* run_command.png */,
-				76AE15641A0C21C50041016F /* run_command@2x.png */,
-				76AE15651A0C21C50041016F /* save_as.png */,
-				76AE15661A0C21C50041016F /* save_as@2x.png */,
-			);
-			path = resources;
-			sourceTree = "<group>";
-		};
-		76AE15671A0C21C50041016F /* src */ = {
-			isa = PBXGroup;
-			children = (
-				76AE15681A0C21C50041016F /* AppDelegate.h */,
-				76AE15691A0C21C50041016F /* AppDelegate.m */,
-				76AE156A1A0C21C50041016F /* CallRPCViewController.h */,
-				76AE156B1A0C21C50041016F /* CallRPCViewController.m */,
-				76AE156C1A0C21C50041016F /* ChatStartViewController.h */,
-				76AE156D1A0C21C50041016F /* ChatStartViewController.m */,
-				76AE156E1A0C21C50041016F /* ChatViewController.h */,
-				76AE156F1A0C21C50041016F /* ChatViewController.m */,
-				76AE15701A0C21C50041016F /* ConnectViewController.h */,
-				76AE15711A0C21C50041016F /* ConnectViewController.m */,
-				76AE15721A0C21C50041016F /* main.m */,
-				76AE15731A0C21C50041016F /* RegisterRPCViewController.h */,
-				76AE15741A0C21C50041016F /* RegisterRPCViewController.m */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		76AE15961A0C24150041016F /* src */ = {
-			isa = PBXGroup;
-			children = (
-				76AE15971A0C24150041016F /* Categories */,
-				76AE159C1A0C24150041016F /* MDWamp.h */,
-				76AE159D1A0C24150041016F /* MDWamp.m */,
-				76AE159E1A0C24150041016F /* MDWampClientConfig.h */,
-				76AE159F1A0C24150041016F /* MDWampClientConfig.m */,
-				76AE15A01A0C24150041016F /* MDWampClientDelegate.h */,
-				76AE15A11A0C24150041016F /* MDWampConstants.h */,
-				76AE15A21A0C24150041016F /* MDWampConstants.m */,
-				76AE15A31A0C24150041016F /* MDWampMessages */,
-				76AE15DA1A0C24150041016F /* MDWampSerializations */,
-				76AE15E11A0C24150041016F /* MDWampTransports */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		76AE15971A0C24150041016F /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				76AE15981A0C24150041016F /* NSMutableArray+MDStack.h */,
-				76AE15991A0C24150041016F /* NSMutableArray+MDStack.m */,
-				76AE159A1A0C24150041016F /* NSString+MDString.h */,
-				76AE159B1A0C24150041016F /* NSString+MDString.m */,
+				33133B301CFF77C7003FCFC5 /* NSMutableArray+MDStack.h */,
+				33133B311CFF77C7003FCFC5 /* NSMutableArray+MDStack.m */,
+				33133B321CFF77C7003FCFC5 /* NSString+MDString.h */,
+				33133B331CFF77C7003FCFC5 /* NSString+MDString.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		76AE15A31A0C24150041016F /* MDWampMessages */ = {
+		33133B3F1CFF77C7003FCFC5 /* MDWampMessages */ = {
 			isa = PBXGroup;
 			children = (
-				76AE15A41A0C24150041016F /* MDWampAbort.h */,
-				76AE15A51A0C24150041016F /* MDWampAbort.m */,
-				76AE15A61A0C24150041016F /* MDWampAuthenticate.h */,
-				76AE15A71A0C24150041016F /* MDWampAuthenticate.m */,
-				76AE15A81A0C24150041016F /* MDWampCall.h */,
-				76AE15A91A0C24150041016F /* MDWampCall.m */,
-				76AE15AA1A0C24150041016F /* MDWampCancel.h */,
-				76AE15AB1A0C24150041016F /* MDWampCancel.m */,
-				76AE15AC1A0C24150041016F /* MDWampChallenge.h */,
-				76AE15AD1A0C24150041016F /* MDWampChallenge.m */,
-				76AE15AE1A0C24150041016F /* MDWampError.h */,
-				76AE15AF1A0C24150041016F /* MDWampError.m */,
-				76AE15B01A0C24150041016F /* MDWampEvent.h */,
-				76AE15B11A0C24150041016F /* MDWampEvent.m */,
-				76AE15B21A0C24150041016F /* MDWampGoodbye.h */,
-				76AE15B31A0C24150041016F /* MDWampGoodbye.m */,
-				76AE15B61A0C24150041016F /* MDWampHello.h */,
-				76AE15B71A0C24150041016F /* MDWampHello.m */,
-				76AE15B81A0C24150041016F /* MDWampInterrupt.h */,
-				76AE15B91A0C24150041016F /* MDWampInterrupt.m */,
-				76AE15BA1A0C24150041016F /* MDWampInvocation.h */,
-				76AE15BB1A0C24150041016F /* MDWampInvocation.m */,
-				76AE15BC1A0C24150041016F /* MDWampMessage.h */,
-				76AE15BD1A0C24150041016F /* MDWampMessageFactory.h */,
-				76AE15BE1A0C24150041016F /* MDWampMessageFactory.m */,
-				76AE15BF1A0C24150041016F /* MDWampMessages.h */,
-				76AE15C01A0C24150041016F /* MDWampPublish.h */,
-				76AE15C11A0C24150041016F /* MDWampPublish.m */,
-				76AE15C21A0C24150041016F /* MDWampPublished.h */,
-				76AE15C31A0C24150041016F /* MDWampPublished.m */,
-				76AE15C41A0C24150041016F /* MDWampRegister.h */,
-				76AE15C51A0C24150041016F /* MDWampRegister.m */,
-				76AE15C61A0C24150041016F /* MDWampRegistered.h */,
-				76AE15C71A0C24150041016F /* MDWampRegistered.m */,
-				76AE15C81A0C24150041016F /* MDWampResult.h */,
-				76AE15C91A0C24150041016F /* MDWampResult.m */,
-				76AE15CA1A0C24150041016F /* MDWampSubscribe.h */,
-				76AE15CB1A0C24150041016F /* MDWampSubscribe.m */,
-				76AE15CC1A0C24150041016F /* MDWampSubscribed.h */,
-				76AE15CD1A0C24150041016F /* MDWampSubscribed.m */,
-				76AE15CE1A0C24150041016F /* MDWampUnregister.h */,
-				76AE15CF1A0C24150041016F /* MDWampUnregister.m */,
-				76AE15D01A0C24150041016F /* MDWampUnregistered.h */,
-				76AE15D11A0C24150041016F /* MDWampUnregistered.m */,
-				76AE15D21A0C24150041016F /* MDWampUnsubscribe.h */,
-				76AE15D31A0C24150041016F /* MDWampUnsubscribe.m */,
-				76AE15D41A0C24150041016F /* MDWampUnsubscribed.h */,
-				76AE15D51A0C24150041016F /* MDWampUnsubscribed.m */,
-				76AE15D61A0C24150041016F /* MDWampWelcome.h */,
-				76AE15D71A0C24150041016F /* MDWampWelcome.m */,
-				76AE15D81A0C24150041016F /* MDWampYield.h */,
-				76AE15D91A0C24150041016F /* MDWampYield.m */,
+				33133B401CFF77C7003FCFC5 /* MDWampAbort.h */,
+				33133B411CFF77C7003FCFC5 /* MDWampAbort.m */,
+				33133B421CFF77C7003FCFC5 /* MDWampAuthenticate.h */,
+				33133B431CFF77C7003FCFC5 /* MDWampAuthenticate.m */,
+				33133B441CFF77C7003FCFC5 /* MDWampCall.h */,
+				33133B451CFF77C7003FCFC5 /* MDWampCall.m */,
+				33133B461CFF77C7003FCFC5 /* MDWampCancel.h */,
+				33133B471CFF77C7003FCFC5 /* MDWampCancel.m */,
+				33133B481CFF77C7003FCFC5 /* MDWampChallenge.h */,
+				33133B491CFF77C7003FCFC5 /* MDWampChallenge.m */,
+				33133B4A1CFF77C7003FCFC5 /* MDWampError.h */,
+				33133B4B1CFF77C7003FCFC5 /* MDWampError.m */,
+				33133B4C1CFF77C7003FCFC5 /* MDWampEvent.h */,
+				33133B4D1CFF77C7003FCFC5 /* MDWampEvent.m */,
+				33133B4E1CFF77C7003FCFC5 /* MDWampGoodbye.h */,
+				33133B4F1CFF77C7003FCFC5 /* MDWampGoodbye.m */,
+				33133B501CFF77C7003FCFC5 /* MDWampHello.h */,
+				33133B511CFF77C7003FCFC5 /* MDWampHello.m */,
+				33133B521CFF77C7003FCFC5 /* MDWampInterrupt.h */,
+				33133B531CFF77C7003FCFC5 /* MDWampInterrupt.m */,
+				33133B541CFF77C7003FCFC5 /* MDWampInvocation.h */,
+				33133B551CFF77C7003FCFC5 /* MDWampInvocation.m */,
+				33133B561CFF77C7003FCFC5 /* MDWampMessage.h */,
+				33133B571CFF77C7003FCFC5 /* MDWampMessageFactory.h */,
+				33133B581CFF77C7003FCFC5 /* MDWampMessageFactory.m */,
+				33133B591CFF77C7003FCFC5 /* MDWampMessages.h */,
+				33133B5A1CFF77C7003FCFC5 /* MDWampPublish.h */,
+				33133B5B1CFF77C7003FCFC5 /* MDWampPublish.m */,
+				33133B5C1CFF77C7003FCFC5 /* MDWampPublished.h */,
+				33133B5D1CFF77C7003FCFC5 /* MDWampPublished.m */,
+				33133B5E1CFF77C7003FCFC5 /* MDWampRegister.h */,
+				33133B5F1CFF77C7003FCFC5 /* MDWampRegister.m */,
+				33133B601CFF77C7003FCFC5 /* MDWampRegistered.h */,
+				33133B611CFF77C7003FCFC5 /* MDWampRegistered.m */,
+				33133B621CFF77C7003FCFC5 /* MDWampResult.h */,
+				33133B631CFF77C7003FCFC5 /* MDWampResult.m */,
+				33133B641CFF77C7003FCFC5 /* MDWampSubscribe.h */,
+				33133B651CFF77C7003FCFC5 /* MDWampSubscribe.m */,
+				33133B661CFF77C7003FCFC5 /* MDWampSubscribed.h */,
+				33133B671CFF77C7003FCFC5 /* MDWampSubscribed.m */,
+				33133B681CFF77C7003FCFC5 /* MDWampUnregister.h */,
+				33133B691CFF77C7003FCFC5 /* MDWampUnregister.m */,
+				33133B6A1CFF77C7003FCFC5 /* MDWampUnregistered.h */,
+				33133B6B1CFF77C7003FCFC5 /* MDWampUnregistered.m */,
+				33133B6C1CFF77C7003FCFC5 /* MDWampUnsubscribe.h */,
+				33133B6D1CFF77C7003FCFC5 /* MDWampUnsubscribe.m */,
+				33133B6E1CFF77C7003FCFC5 /* MDWampUnsubscribed.h */,
+				33133B6F1CFF77C7003FCFC5 /* MDWampUnsubscribed.m */,
+				33133B701CFF77C7003FCFC5 /* MDWampWelcome.h */,
+				33133B711CFF77C7003FCFC5 /* MDWampWelcome.m */,
+				33133B721CFF77C7003FCFC5 /* MDWampYield.h */,
+				33133B731CFF77C7003FCFC5 /* MDWampYield.m */,
 			);
 			path = MDWampMessages;
 			sourceTree = "<group>";
 		};
-		76AE15DA1A0C24150041016F /* MDWampSerializations */ = {
+		33133B741CFF77C7003FCFC5 /* MDWampSerializations */ = {
 			isa = PBXGroup;
 			children = (
-				76AE15DB1A0C24150041016F /* MDWampSerialization.h */,
-				76AE15DC1A0C24150041016F /* MDWampSerializationJSON.h */,
-				76AE15DD1A0C24150041016F /* MDWampSerializationJSON.m */,
-				76AE15DE1A0C24150041016F /* MDWampSerializationMsgpack.h */,
-				76AE15DF1A0C24150041016F /* MDWampSerializationMsgpack.m */,
-				76AE15E01A0C24150041016F /* MDWampSerializations.h */,
+				33133B751CFF77C7003FCFC5 /* MDWampSerialization.h */,
+				33133B761CFF77C7003FCFC5 /* MDWampSerializationJSON.h */,
+				33133B771CFF77C7003FCFC5 /* MDWampSerializationJSON.m */,
+				33133B781CFF77C7003FCFC5 /* MDWampSerializationMsgpack.h */,
+				33133B791CFF77C7003FCFC5 /* MDWampSerializationMsgpack.m */,
+				33133B7A1CFF77C7003FCFC5 /* MDWampSerializations.h */,
 			);
 			path = MDWampSerializations;
 			sourceTree = "<group>";
 		};
-		76AE15E11A0C24150041016F /* MDWampTransports */ = {
+		33133B7B1CFF77C7003FCFC5 /* MDWampTransports */ = {
 			isa = PBXGroup;
 			children = (
-				76AE15E21A0C24150041016F /* MDWampTransport.h */,
-				76AE15E31A0C24150041016F /* MDWampTransportDelegate.h */,
-				76AE15E41A0C24150041016F /* MDWampTransportRawSocket.h */,
-				76AE15E51A0C24150041016F /* MDWampTransportRawSocket.m */,
-				76AE15E61A0C24150041016F /* MDWampTransports.h */,
-				76AE15E71A0C24150041016F /* MDWampTransportWebSocket.h */,
-				76AE15E81A0C24150041016F /* MDWampTransportWebSocket.m */,
+				33133B7C1CFF77C7003FCFC5 /* MDWampTransport.h */,
+				33133B7D1CFF77C7003FCFC5 /* MDWampTransportDelegate.h */,
+				33133B7E1CFF77C7003FCFC5 /* MDWampTransportRawSocket.h */,
+				33133B7F1CFF77C7003FCFC5 /* MDWampTransportRawSocket.m */,
+				33133B801CFF77C7003FCFC5 /* MDWampTransports.h */,
+				33133B811CFF77C7003FCFC5 /* MDWampTransportWebSocket.h */,
+				33133B821CFF77C7003FCFC5 /* MDWampTransportWebSocket.m */,
 			);
 			path = MDWampTransports;
 			sourceTree = "<group>";
 		};
-		76CCC6ED185BD1F10056AB98 /* MDWampTests */ = {
+		336F578D1CFF7B2100811E8B /* Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				7673B7AE1A0FDA3F0072CDD3 /* MDWampTransportWebSocketTests.m */,
-				76CCC6EE185BD1F10056AB98 /* InfoPlist.strings */,
-				76CCC6F4185BD1F10056AB98 /* MDWampTests-Info.plist */,
-				76CCC6FB185BD2210056AB98 /* Mock */,
-				76CCC6F3185BD1F10056AB98 /* MDWampTestIncludes.h */,
-				760DA6FA18EB0A9E006EC89C /* MDWampMessageFactoryTests.m */,
-				760DA6FC18EB0E7D006EC89C /* MDWampMessagesTests.m */,
-				7619E69918CF8E9F00B0209D /* MDWampTests.m */,
-				766E10EC19E6C1E00083173B /* MDWampAdvancedTests.m */,
-				764374A1194E238D000F29A8 /* MDStackTest.m */,
-				764F059D1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m */,
-				7698B1B31952278E0045D400 /* MDWampSerializations.m */,
-				766E10E619E6B4390083173B /* MDWampClientConfigTests.m */,
+				336F578E1CFF7B2D00811E8B /* MDWamp.podspec */,
+				336F578F1CFF7B2D00811E8B /* LICENSE */,
+				336F57901CFF7B2D00811E8B /* MDWamp.podspec.json */,
+				336F57911CFF7B2D00811E8B /* README.md */,
 			);
-			path = MDWampTests;
-			sourceTree = "<group>";
-		};
-		76CCC6FB185BD2210056AB98 /* Mock */ = {
-			isa = PBXGroup;
-			children = (
-				76CCC6F0185BD1F10056AB98 /* MDWampClientDelegateMock.h */,
-				76CCC6F1185BD1F10056AB98 /* MDWampClientDelegateMock.m */,
-				76EF81D218D1043700DFB13B /* MDWampTransportMock.h */,
-				76EF81D318D1043700DFB13B /* MDWampTransportMock.m */,
-				76EF81D918D1087000DFB13B /* MDWampSerializationMock.h */,
-				76EF81DA18D1087000DFB13B /* MDWampSerializationMock.m */,
-				76414F511950C8E900788300 /* MDWampTransportdelegateMock.h */,
-				76414F521950C8E900788300 /* MDWampTransportdelegateMock.m */,
-			);
-			name = Mock;
-			sourceTree = "<group>";
-		};
-		76FD803B185BB3C800D1B5C0 /* MDWamp */ = {
-			isa = PBXGroup;
-			children = (
-				76AE15961A0C24150041016F /* src */,
-				76AE15E91A0C24150041016F /* MDWamp-Prefix.pch */,
-				76AE15EA1A0C24150041016F /* MDWamp-Info.plist */,
-			);
-			path = MDWamp;
+			name = Metadata;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		7604D704185B499D0087773E /* Headers */ = {
+		33133ADA1CFF7598003FCFC5 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76AE15EB1A0C24150041016F /* NSMutableArray+MDStack.h in Headers */,
-				76AE16041A0C24150041016F /* MDWampCancel.h in Headers */,
-				76AE16421A0C24150041016F /* MDWampUnsubscribed.h in Headers */,
-				76AE160A1A0C24150041016F /* MDWampError.h in Headers */,
-				76AE16161A0C24150041016F /* MDWampHello.h in Headers */,
-				76AE162D1A0C24150041016F /* MDWampRegistered.h in Headers */,
-				76AE16521A0C24150041016F /* MDWampSerializations.h in Headers */,
-				76AE15FB1A0C24150041016F /* MDWampAbort.h in Headers */,
-				765BAFAC19E722C800EC580D /* NSDictionary+MPMessagePack.h in Headers */,
-				76AE16071A0C24150041016F /* MDWampChallenge.h in Headers */,
-				765BAFA919E722C800EC580D /* NSArray+MPMessagePack.h in Headers */,
-				76AE16191A0C24150041016F /* MDWampInterrupt.h in Headers */,
-				76AE16301A0C24150041016F /* MDWampResult.h in Headers */,
-				76AE16361A0C24150041016F /* MDWampSubscribed.h in Headers */,
-				76AE160D1A0C24150041016F /* MDWampEvent.h in Headers */,
-				76F5970F196894A60002773C /* GCDAsyncSocket.h in Headers */,
-				76AE16391A0C24150041016F /* MDWampUnregister.h in Headers */,
-				76AE15FE1A0C24150041016F /* MDWampAuthenticate.h in Headers */,
-				76AE16011A0C24150041016F /* MDWampCall.h in Headers */,
-				76AE16271A0C24150041016F /* MDWampPublished.h in Headers */,
-				76AE164B1A0C24150041016F /* MDWampSerialization.h in Headers */,
-				76AE16101A0C24150041016F /* MDWampGoodbye.h in Headers */,
-				76AE16201A0C24150041016F /* MDWampMessageFactory.h in Headers */,
-				76AE163F1A0C24150041016F /* MDWampUnsubscribe.h in Headers */,
-				76AE15F71A0C24150041016F /* MDWampClientDelegate.h in Headers */,
-				76AE15F11A0C24150041016F /* MDWamp.h in Headers */,
-				76AE16531A0C24150041016F /* MDWampTransport.h in Headers */,
-				76AE163C1A0C24150041016F /* MDWampUnregistered.h in Headers */,
-				76AE16541A0C24150041016F /* MDWampTransportDelegate.h in Headers */,
-				76AE164F1A0C24150041016F /* MDWampSerializationMsgpack.h in Headers */,
-				76AE161F1A0C24150041016F /* MDWampMessage.h in Headers */,
-				76AE16231A0C24150041016F /* MDWampMessages.h in Headers */,
-				76AE15EE1A0C24150041016F /* NSString+MDString.h in Headers */,
-				765BAFA619E722C800EC580D /* MPOrderedDictionary.h in Headers */,
-				765BAF9F19E722C800EC580D /* MPMessagePack.h in Headers */,
-				76AE16481A0C24150041016F /* MDWampYield.h in Headers */,
-				76AE162A1A0C24150041016F /* MDWampRegister.h in Headers */,
-				76AE15F81A0C24150041016F /* MDWampConstants.h in Headers */,
-				76AE16591A0C24150041016F /* MDWampTransportWebSocket.h in Headers */,
-				76AE16551A0C24150041016F /* MDWampTransportRawSocket.h in Headers */,
-				76AE16581A0C24150041016F /* MDWampTransports.h in Headers */,
-				76AE164C1A0C24150041016F /* MDWampSerializationJSON.h in Headers */,
-				76AE161C1A0C24150041016F /* MDWampInvocation.h in Headers */,
-				76AE16241A0C24150041016F /* MDWampPublish.h in Headers */,
-				76AE15931A0C23130041016F /* SRWebSocket.h in Headers */,
-				76AE165C1A0C24150041016F /* MDWamp-Prefix.pch in Headers */,
-				76AE16451A0C24150041016F /* MDWampWelcome.h in Headers */,
-				765BAF9E19E722C800EC580D /* cmp.h in Headers */,
-				765BAFA319E722C800EC580D /* MPMessagePackWriter.h in Headers */,
-				765BAFA019E722C800EC580D /* MPMessagePackReader.h in Headers */,
-				76AE15F41A0C24150041016F /* MDWampClientConfig.h in Headers */,
-				76AE16331A0C24150041016F /* MDWampSubscribe.h in Headers */,
+				33133BA41CFF77C7003FCFC5 /* MDWampInterrupt.h in Headers */,
+				33133BBA1CFF77C7003FCFC5 /* MDWampUnregister.h in Headers */,
+				33133B961CFF77C7003FCFC5 /* MDWampCall.h in Headers */,
+				33133BA61CFF77C7003FCFC5 /* MDWampInvocation.h in Headers */,
+				33133BCE1CFF77C7003FCFC5 /* MDWampTransportRawSocket.h in Headers */,
+				33133BA01CFF77C7003FCFC5 /* MDWampGoodbye.h in Headers */,
+				33133BD01CFF77C7003FCFC5 /* MDWampTransports.h in Headers */,
+				33133B8B1CFF77C7003FCFC5 /* MDWamp.h in Headers */,
+				33133BA81CFF77C7003FCFC5 /* MDWampMessage.h in Headers */,
+				33133BB21CFF77C7003FCFC5 /* MDWampRegistered.h in Headers */,
+				33133B9C1CFF77C7003FCFC5 /* MDWampError.h in Headers */,
+				33133BD11CFF77C7003FCFC5 /* MDWampTransportWebSocket.h in Headers */,
+				33133B921CFF77C7003FCFC5 /* MDWampAbort.h in Headers */,
+				33133B831CFF77C7003FCFC5 /* NSMutableArray+MDStack.h in Headers */,
+				33133B941CFF77C7003FCFC5 /* MDWampAuthenticate.h in Headers */,
+				33133B8F1CFF77C7003FCFC5 /* MDWampClientDelegate.h in Headers */,
+				33133BA91CFF77C7003FCFC5 /* MDWampMessageFactory.h in Headers */,
+				33133BC21CFF77C7003FCFC5 /* MDWampWelcome.h in Headers */,
+				33133BAC1CFF77C7003FCFC5 /* MDWampPublish.h in Headers */,
+				33133B981CFF77C7003FCFC5 /* MDWampCancel.h in Headers */,
+				33133B851CFF77C7003FCFC5 /* NSString+MDString.h in Headers */,
+				33133BB81CFF77C7003FCFC5 /* MDWampSubscribed.h in Headers */,
+				33133B9A1CFF77C7003FCFC5 /* MDWampChallenge.h in Headers */,
+				33133BBC1CFF77C7003FCFC5 /* MDWampUnregistered.h in Headers */,
+				33133BCD1CFF77C7003FCFC5 /* MDWampTransportDelegate.h in Headers */,
+				33133BB61CFF77C7003FCFC5 /* MDWampSubscribe.h in Headers */,
+				33133BAB1CFF77C7003FCFC5 /* MDWampMessages.h in Headers */,
+				33133BB01CFF77C7003FCFC5 /* MDWampRegister.h in Headers */,
+				33133BAE1CFF77C7003FCFC5 /* MDWampPublished.h in Headers */,
+				33133BC71CFF77C7003FCFC5 /* MDWampSerializationJSON.h in Headers */,
+				33133B901CFF77C7003FCFC5 /* MDWampConstants.h in Headers */,
+				33133BC01CFF77C7003FCFC5 /* MDWampUnsubscribed.h in Headers */,
+				33133BC91CFF77C7003FCFC5 /* MDWampSerializationMsgpack.h in Headers */,
+				33133BCB1CFF77C7003FCFC5 /* MDWampSerializations.h in Headers */,
+				33133B8D1CFF77C7003FCFC5 /* MDWampClientConfig.h in Headers */,
+				33133BBE1CFF77C7003FCFC5 /* MDWampUnsubscribe.h in Headers */,
+				33133BC61CFF77C7003FCFC5 /* MDWampSerialization.h in Headers */,
+				33133BA21CFF77C7003FCFC5 /* MDWampHello.h in Headers */,
+				33133BC41CFF77C7003FCFC5 /* MDWampYield.h in Headers */,
+				33133BCC1CFF77C7003FCFC5 /* MDWampTransport.h in Headers */,
+				33133BB41CFF77C7003FCFC5 /* MDWampResult.h in Headers */,
+				33133B9E1CFF77C7003FCFC5 /* MDWampEvent.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33133AF71CFF75B7003FCFC5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				336F57741CFF7A2300811E8B /* MDWampUnregister.h in Headers */,
+				336F57621CFF7A2300811E8B /* MDWampMessage.h in Headers */,
+				336F577E1CFF7A2300811E8B /* MDWampYield.h in Headers */,
+				336F57521CFF7A2300811E8B /* MDWampCancel.h in Headers */,
+				336F575C1CFF7A2300811E8B /* MDWampHello.h in Headers */,
+				336F57451CFF7A1600811E8B /* MDWamp.h in Headers */,
+				336F577C1CFF7A2300811E8B /* MDWampWelcome.h in Headers */,
+				336F577A1CFF7A2300811E8B /* MDWampUnsubscribed.h in Headers */,
+				336F57541CFF7A2300811E8B /* MDWampChallenge.h in Headers */,
+				336F57661CFF7A2300811E8B /* MDWampPublish.h in Headers */,
+				336F57881CFF7A3100811E8B /* MDWampTransportRawSocket.h in Headers */,
+				336F57851CFF7A2C00811E8B /* MDWampSerializations.h in Headers */,
+				336F57501CFF7A2300811E8B /* MDWampCall.h in Headers */,
+				336F57651CFF7A2300811E8B /* MDWampMessages.h in Headers */,
+				336F575A1CFF7A2300811E8B /* MDWampGoodbye.h in Headers */,
+				336F578A1CFF7A3100811E8B /* MDWampTransports.h in Headers */,
+				336F57681CFF7A2300811E8B /* MDWampPublished.h in Headers */,
+				336F57721CFF7A2300811E8B /* MDWampSubscribed.h in Headers */,
+				336F57801CFF7A2C00811E8B /* MDWampSerialization.h in Headers */,
+				336F574C1CFF7A2300811E8B /* MDWampAbort.h in Headers */,
+				336F576E1CFF7A2300811E8B /* MDWampResult.h in Headers */,
+				336F576A1CFF7A2300811E8B /* MDWampRegister.h in Headers */,
+				336F57811CFF7A2C00811E8B /* MDWampSerializationJSON.h in Headers */,
+				336F57471CFF7A1A00811E8B /* MDWampClientConfig.h in Headers */,
+				336F57761CFF7A2300811E8B /* MDWampUnregistered.h in Headers */,
+				336F57831CFF7A2C00811E8B /* MDWampSerializationMsgpack.h in Headers */,
+				336F578B1CFF7A3100811E8B /* MDWampTransportWebSocket.h in Headers */,
+				336F575E1CFF7A2300811E8B /* MDWampInterrupt.h in Headers */,
+				336F574E1CFF7A2300811E8B /* MDWampAuthenticate.h in Headers */,
+				336F57861CFF7A3100811E8B /* MDWampTransport.h in Headers */,
+				336F57581CFF7A2300811E8B /* MDWampEvent.h in Headers */,
+				336F57781CFF7A2300811E8B /* MDWampUnsubscribe.h in Headers */,
+				336F576C1CFF7A2300811E8B /* MDWampRegistered.h in Headers */,
+				336F57871CFF7A3100811E8B /* MDWampTransportDelegate.h in Headers */,
+				336F574A1CFF7A1A00811E8B /* MDWampConstants.h in Headers */,
+				336F57491CFF7A1A00811E8B /* MDWampClientDelegate.h in Headers */,
+				336F57631CFF7A2300811E8B /* MDWampMessageFactory.h in Headers */,
+				336F57561CFF7A2300811E8B /* MDWampError.h in Headers */,
+				336F57601CFF7A2300811E8B /* MDWampInvocation.h in Headers */,
+				336F57701CFF7A2300811E8B /* MDWampSubscribe.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		7604D706185B499D0087773E /* MDWamp */ = {
+		33133ADC1CFF7598003FCFC5 /* MDWamp iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7604D72F185B499E0087773E /* Build configuration list for PBXNativeTarget "MDWamp" */;
+			buildConfigurationList = 33133AEF1CFF7598003FCFC5 /* Build configuration list for PBXNativeTarget "MDWamp iOS" */;
 			buildPhases = (
-				7604D702185B499D0087773E /* Sources */,
-				7604D703185B499D0087773E /* Frameworks */,
-				7604D704185B499D0087773E /* Headers */,
-				7604D705185B499D0087773E /* Resources */,
-				7646E534185BCEAB004990DD /* CopyFiles */,
-				76D8AE40194BA6E1003C0CEE /* ShellScript */,
+				33133AD81CFF7598003FCFC5 /* Sources */,
+				33133AD91CFF7598003FCFC5 /* Frameworks */,
+				33133ADA1CFF7598003FCFC5 /* Headers */,
+				33133ADB1CFF7598003FCFC5 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = MDWamp;
-			productName = MDWamp;
-			productReference = 7604D707185B499D0087773E /* MDWamp.framework */;
+			name = "MDWamp iOS";
+			productName = "MDWamp iOS";
+			productReference = 33133ADD1CFF7598003FCFC5 /* MDWamp.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		7604D71D185B499D0087773E /* MDWampTests */ = {
+		33133AE61CFF7598003FCFC5 /* MDWamp iOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7604D732185B499E0087773E /* Build configuration list for PBXNativeTarget "MDWampTests" */;
+			buildConfigurationList = 33133AF21CFF7598003FCFC5 /* Build configuration list for PBXNativeTarget "MDWamp iOSTests" */;
 			buildPhases = (
-				7604D71A185B499D0087773E /* Sources */,
-				7604D71B185B499D0087773E /* Frameworks */,
-				7604D71C185B499D0087773E /* Resources */,
-				7646E536185BCF08004990DD /* CopyFiles */,
+				33133AE31CFF7598003FCFC5 /* Sources */,
+				33133AE41CFF7598003FCFC5 /* Frameworks */,
+				33133AE51CFF7598003FCFC5 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				7604D723185B499E0087773E /* PBXTargetDependency */,
+				33133AEA1CFF7598003FCFC5 /* PBXTargetDependency */,
 			);
-			name = MDWampTests;
-			productName = MDWampTests;
-			productReference = 7604D71E185B499D0087773E /* MDWampTests.xctest */;
+			name = "MDWamp iOSTests";
+			productName = "MDWamp iOSTests";
+			productReference = 33133AE71CFF7598003FCFC5 /* MDWamp iOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		7604D765185B6B880087773E /* libMDWamp */ = {
+		33133AF91CFF75B7003FCFC5 /* MDWamp OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7604D782185B6B880087773E /* Build configuration list for PBXNativeTarget "libMDWamp" */;
+			buildConfigurationList = 33133AFF1CFF75B7003FCFC5 /* Build configuration list for PBXNativeTarget "MDWamp OSX" */;
 			buildPhases = (
-				7604D762185B6B880087773E /* Sources */,
-				7604D763185B6B880087773E /* Frameworks */,
-				7604D764185B6B880087773E /* CopyFiles */,
+				33133AF51CFF75B7003FCFC5 /* Sources */,
+				33133AF61CFF75B7003FCFC5 /* Frameworks */,
+				33133AF71CFF75B7003FCFC5 /* Headers */,
+				33133AF81CFF75B7003FCFC5 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = libMDWamp;
-			productName = libMDWamp;
-			productReference = 7604D766185B6B880087773E /* libMDWamp.a */;
-			productType = "com.apple.product-type.library.static";
+			name = "MDWamp OSX";
+			productName = "MDWamp OSX";
+			productReference = 33133AFA1CFF75B7003FCFC5 /* MDWamp.framework */;
+			productType = "com.apple.product-type.framework";
 		};
-		76A34EEE195DED5400233B76 /* MDWampDemo */ = {
+		33133B051CFF7657003FCFC5 /* MDWamp Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 76A34F1D195DED5400233B76 /* Build configuration list for PBXNativeTarget "MDWampDemo" */;
+			buildConfigurationList = 33133B281CFF7658003FCFC5 /* Build configuration list for PBXNativeTarget "MDWamp Demo" */;
 			buildPhases = (
-				76A34EEB195DED5400233B76 /* Sources */,
-				76A34EEC195DED5400233B76 /* Frameworks */,
-				76A34EED195DED5400233B76 /* Resources */,
+				33133B021CFF7657003FCFC5 /* Sources */,
+				33133B031CFF7657003FCFC5 /* Frameworks */,
+				33133B041CFF7657003FCFC5 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				7657A3B6195F594800F58BB4 /* PBXTargetDependency */,
 			);
-			name = MDWampDemo;
-			productName = MDWampDemo;
-			productReference = 76A34EEF195DED5400233B76 /* MDWampDemo.app */;
+			name = "MDWamp Demo";
+			productName = "MDWamp Demo";
+			productReference = 33133B061CFF7657003FCFC5 /* MDWamp Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		7604D6FE185B499D0087773E /* Project object */ = {
+		33133AD21CFF751A003FCFC5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
-				ORGANIZATIONNAME = mogui.it;
+				LastUpgradeCheck = 0730;
 				TargetAttributes = {
-					7604D71D185B499D0087773E = {
-						TestTargetID = 7604D706185B499D0087773E;
+					33133ADC1CFF7598003FCFC5 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7ZVA8A38DQ;
+					};
+					33133AE61CFF7598003FCFC5 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7ZVA8A38DQ;
+					};
+					33133AF91CFF75B7003FCFC5 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					33133B051CFF7657003FCFC5 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7ZVA8A38DQ;
 					};
 				};
 			};
-			buildConfigurationList = 7604D701185B499D0087773E /* Build configuration list for PBXProject "MDWamp" */;
+			buildConfigurationList = 33133AD51CFF751A003FCFC5 /* Build configuration list for PBXProject "MDWamp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -908,256 +704,207 @@
 				en,
 				Base,
 			);
-			mainGroup = 7604D6FD185B499D0087773E;
-			productRefGroup = 7604D708185B499D0087773E /* Products */;
+			mainGroup = 33133AD11CFF751A003FCFC5;
+			productRefGroup = 33133ADE1CFF7598003FCFC5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7604D706185B499D0087773E /* MDWamp */,
-				7604D71D185B499D0087773E /* MDWampTests */,
-				7604D765185B6B880087773E /* libMDWamp */,
-				76A34EEE195DED5400233B76 /* MDWampDemo */,
+				33133ADC1CFF7598003FCFC5 /* MDWamp iOS */,
+				33133AE61CFF7598003FCFC5 /* MDWamp iOSTests */,
+				33133AF91CFF75B7003FCFC5 /* MDWamp OSX */,
+				33133B051CFF7657003FCFC5 /* MDWamp Demo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		7604D705185B499D0087773E /* Resources */ = {
+		33133ADB1CFF7598003FCFC5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7604D71C185B499D0087773E /* Resources */ = {
+		33133AE51CFF7598003FCFC5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76CCC6F6185BD1F10056AB98 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		76A34EED195DED5400233B76 /* Resources */ = {
+		33133AF81CFF75B7003FCFC5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76AE15801A0C21C50041016F /* save_as.png in Resources */,
-				76AE15791A0C21C50041016F /* InfoPlist.strings in Resources */,
-				76AE15751A0C21C50041016F /* Main.storyboard in Resources */,
-				76AE15761A0C21C50041016F /* broken_link-32.png in Resources */,
-				76AE157B1A0C21C50041016F /* link-32.png in Resources */,
-				76AE157E1A0C21C50041016F /* run_command.png in Resources */,
-				76AE15771A0C21C50041016F /* collaboration.png in Resources */,
-				76AE157A1A0C21C50041016F /* Images.xcassets in Resources */,
-				76AE157F1A0C21C50041016F /* run_command@2x.png in Resources */,
-				76AE157D1A0C21C50041016F /* online-32@2x.png in Resources */,
-				76AE15781A0C21C50041016F /* collaboration@2x.png in Resources */,
-				76AE157C1A0C21C50041016F /* online-32.png in Resources */,
-				76AE15811A0C21C50041016F /* save_as@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33133B041CFF7657003FCFC5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33133B1B1CFF7657003FCFC5 /* LaunchScreen.storyboard in Resources */,
+				33133B181CFF7657003FCFC5 /* Assets.xcassets in Resources */,
+				33133B161CFF7657003FCFC5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		76D8AE40194BA6E1003C0CEE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "/bin/sh ";
-			shellScript = XcodeCoverage/exportenv.sh;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		7604D702185B499D0087773E /* Sources */ = {
+		33133AD81CFF7598003FCFC5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76AE160E1A0C24150041016F /* MDWampEvent.m in Sources */,
-				76AE16401A0C24150041016F /* MDWampUnsubscribe.m in Sources */,
-				76AE16461A0C24150041016F /* MDWampWelcome.m in Sources */,
-				765BAFAD19E722C800EC580D /* NSDictionary+MPMessagePack.m in Sources */,
-				76AE16051A0C24150041016F /* MDWampCancel.m in Sources */,
-				765BAFA119E722C800EC580D /* MPMessagePackReader.m in Sources */,
-				76AE161D1A0C24150041016F /* MDWampInvocation.m in Sources */,
-				76AE15FC1A0C24150041016F /* MDWampAbort.m in Sources */,
-				76AE16251A0C24150041016F /* MDWampPublish.m in Sources */,
-				76AE160B1A0C24150041016F /* MDWampError.m in Sources */,
-				76AE15F51A0C24150041016F /* MDWampClientConfig.m in Sources */,
-				76AE161A1A0C24150041016F /* MDWampInterrupt.m in Sources */,
-				76AE16081A0C24150041016F /* MDWampChallenge.m in Sources */,
-				76AE163A1A0C24150041016F /* MDWampUnregister.m in Sources */,
-				76AE162E1A0C24150041016F /* MDWampRegistered.m in Sources */,
-				76F59710196894A60002773C /* GCDAsyncSocket.m in Sources */,
-				76AE162B1A0C24150041016F /* MDWampRegister.m in Sources */,
-				76AE16491A0C24150041016F /* MDWampYield.m in Sources */,
-				76AE15EF1A0C24150041016F /* NSString+MDString.m in Sources */,
-				76AE16111A0C24150041016F /* MDWampGoodbye.m in Sources */,
-				765BAFAA19E722C800EC580D /* NSArray+MPMessagePack.m in Sources */,
-				765BAF9C19E722C800EC580D /* cmp.c in Sources */,
-				76AE16431A0C24150041016F /* MDWampUnsubscribed.m in Sources */,
-				76AE16501A0C24150041016F /* MDWampSerializationMsgpack.m in Sources */,
-				76AE15EC1A0C24150041016F /* NSMutableArray+MDStack.m in Sources */,
-				76AE16021A0C24150041016F /* MDWampCall.m in Sources */,
-				76AE16341A0C24150041016F /* MDWampSubscribe.m in Sources */,
-				76AE16281A0C24150041016F /* MDWampPublished.m in Sources */,
-				76AE165A1A0C24150041016F /* MDWampTransportWebSocket.m in Sources */,
-				765BAFA719E722C800EC580D /* MPOrderedDictionary.m in Sources */,
-				76AE16561A0C24150041016F /* MDWampTransportRawSocket.m in Sources */,
-				76AE16171A0C24150041016F /* MDWampHello.m in Sources */,
-				76AE16371A0C24150041016F /* MDWampSubscribed.m in Sources */,
-				76AE15FF1A0C24150041016F /* MDWampAuthenticate.m in Sources */,
-				76AE15F91A0C24150041016F /* MDWampConstants.m in Sources */,
-				76AE163D1A0C24150041016F /* MDWampUnregistered.m in Sources */,
-				76AE164D1A0C24150041016F /* MDWampSerializationJSON.m in Sources */,
-				765BAFA419E722C800EC580D /* MPMessagePackWriter.m in Sources */,
-				76AE15941A0C23130041016F /* SRWebSocket.m in Sources */,
-				76AE16211A0C24150041016F /* MDWampMessageFactory.m in Sources */,
-				76AE15F21A0C24150041016F /* MDWamp.m in Sources */,
-				76AE16311A0C24150041016F /* MDWampResult.m in Sources */,
+				33133B841CFF77C7003FCFC5 /* NSMutableArray+MDStack.m in Sources */,
+				33133BCA1CFF77C7003FCFC5 /* MDWampSerializationMsgpack.m in Sources */,
+				33133BA11CFF77C7003FCFC5 /* MDWampGoodbye.m in Sources */,
+				33133BB11CFF77C7003FCFC5 /* MDWampRegister.m in Sources */,
+				33133B971CFF77C7003FCFC5 /* MDWampCall.m in Sources */,
+				33133BCF1CFF77C7003FCFC5 /* MDWampTransportRawSocket.m in Sources */,
+				33133B861CFF77C7003FCFC5 /* NSString+MDString.m in Sources */,
+				33133BC51CFF77C7003FCFC5 /* MDWampYield.m in Sources */,
+				33133BC81CFF77C7003FCFC5 /* MDWampSerializationJSON.m in Sources */,
+				33133BB31CFF77C7003FCFC5 /* MDWampRegistered.m in Sources */,
+				33133BC11CFF77C7003FCFC5 /* MDWampUnsubscribed.m in Sources */,
+				33133BD21CFF77C7003FCFC5 /* MDWampTransportWebSocket.m in Sources */,
+				33133B931CFF77C7003FCFC5 /* MDWampAbort.m in Sources */,
+				33133B8E1CFF77C7003FCFC5 /* MDWampClientConfig.m in Sources */,
+				33133BC31CFF77C7003FCFC5 /* MDWampWelcome.m in Sources */,
+				33133BA31CFF77C7003FCFC5 /* MDWampHello.m in Sources */,
+				33133BB91CFF77C7003FCFC5 /* MDWampSubscribed.m in Sources */,
+				33133B8C1CFF77C7003FCFC5 /* MDWamp.m in Sources */,
+				33133B911CFF77C7003FCFC5 /* MDWampConstants.m in Sources */,
+				33133BB71CFF77C7003FCFC5 /* MDWampSubscribe.m in Sources */,
+				33133BBB1CFF77C7003FCFC5 /* MDWampUnregister.m in Sources */,
+				33133B951CFF77C7003FCFC5 /* MDWampAuthenticate.m in Sources */,
+				33133BA51CFF77C7003FCFC5 /* MDWampInterrupt.m in Sources */,
+				33133B9F1CFF77C7003FCFC5 /* MDWampEvent.m in Sources */,
+				33133BB51CFF77C7003FCFC5 /* MDWampResult.m in Sources */,
+				33133B991CFF77C7003FCFC5 /* MDWampCancel.m in Sources */,
+				33133BBF1CFF77C7003FCFC5 /* MDWampUnsubscribe.m in Sources */,
+				33133BAF1CFF77C7003FCFC5 /* MDWampPublished.m in Sources */,
+				33133BBD1CFF77C7003FCFC5 /* MDWampUnregistered.m in Sources */,
+				33133BA71CFF77C7003FCFC5 /* MDWampInvocation.m in Sources */,
+				33133B9B1CFF77C7003FCFC5 /* MDWampChallenge.m in Sources */,
+				33133BAD1CFF77C7003FCFC5 /* MDWampPublish.m in Sources */,
+				33133B9D1CFF77C7003FCFC5 /* MDWampError.m in Sources */,
+				33133BAA1CFF77C7003FCFC5 /* MDWampMessageFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7604D71A185B499D0087773E /* Sources */ = {
+		33133AE31CFF7598003FCFC5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				765DD2D118E484D000D4C19F /* MDWampTransportMock.m in Sources */,
-				760DA6FD18EB0E7D006EC89C /* MDWampMessagesTests.m in Sources */,
-				76AE16611A0C29940041016F /* XCTAsyncTestCase.m in Sources */,
-				766E10E719E6B4390083173B /* MDWampClientConfigTests.m in Sources */,
-				7619E69A18CF8E9F00B0209D /* MDWampTests.m in Sources */,
-				764F059E1969AE7B00EB1A8A /* MDWampTransportRawSocketTests.m in Sources */,
-				76EF81DB18D1087000DFB13B /* MDWampSerializationMock.m in Sources */,
-				760DA6FB18EB0A9E006EC89C /* MDWampMessageFactoryTests.m in Sources */,
-				76414F531950C8E900788300 /* MDWampTransportdelegateMock.m in Sources */,
-				76CCC6F7185BD1F10056AB98 /* MDWampClientDelegateMock.m in Sources */,
-				7698B1B41952278E0045D400 /* MDWampSerializations.m in Sources */,
-				766E10ED19E6C1E00083173B /* MDWampAdvancedTests.m in Sources */,
-				764374A2194E238D000F29A8 /* MDStackTest.m in Sources */,
-				7673B7AF1A0FDA3F0072CDD3 /* MDWampTransportWebSocketTests.m in Sources */,
+				33133AED1CFF7598003FCFC5 /* MDWamp_iOSTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7604D762185B6B880087773E /* Sources */ = {
+		33133AF51CFF75B7003FCFC5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76AE160F1A0C24150041016F /* MDWampEvent.m in Sources */,
-				76AE16411A0C24150041016F /* MDWampUnsubscribe.m in Sources */,
-				76AE16471A0C24150041016F /* MDWampWelcome.m in Sources */,
-				765BAFAE19E722C800EC580D /* NSDictionary+MPMessagePack.m in Sources */,
-				76AE16061A0C24150041016F /* MDWampCancel.m in Sources */,
-				765BAFA219E722C800EC580D /* MPMessagePackReader.m in Sources */,
-				76AE161E1A0C24150041016F /* MDWampInvocation.m in Sources */,
-				76AE15FD1A0C24150041016F /* MDWampAbort.m in Sources */,
-				76AE16261A0C24150041016F /* MDWampPublish.m in Sources */,
-				76AE160C1A0C24150041016F /* MDWampError.m in Sources */,
-				76AE15F61A0C24150041016F /* MDWampClientConfig.m in Sources */,
-				76AE161B1A0C24150041016F /* MDWampInterrupt.m in Sources */,
-				76AE16091A0C24150041016F /* MDWampChallenge.m in Sources */,
-				76AE163B1A0C24150041016F /* MDWampUnregister.m in Sources */,
-				76AE162F1A0C24150041016F /* MDWampRegistered.m in Sources */,
-				76F59711196894A60002773C /* GCDAsyncSocket.m in Sources */,
-				76AE162C1A0C24150041016F /* MDWampRegister.m in Sources */,
-				76AE164A1A0C24150041016F /* MDWampYield.m in Sources */,
-				76AE15F01A0C24150041016F /* NSString+MDString.m in Sources */,
-				76AE16121A0C24150041016F /* MDWampGoodbye.m in Sources */,
-				765BAFAB19E722C800EC580D /* NSArray+MPMessagePack.m in Sources */,
-				765BAF9D19E722C800EC580D /* cmp.c in Sources */,
-				76AE16441A0C24150041016F /* MDWampUnsubscribed.m in Sources */,
-				76AE16511A0C24150041016F /* MDWampSerializationMsgpack.m in Sources */,
-				76AE15ED1A0C24150041016F /* NSMutableArray+MDStack.m in Sources */,
-				76AE16031A0C24150041016F /* MDWampCall.m in Sources */,
-				76AE16351A0C24150041016F /* MDWampSubscribe.m in Sources */,
-				76AE16291A0C24150041016F /* MDWampPublished.m in Sources */,
-				76AE165B1A0C24150041016F /* MDWampTransportWebSocket.m in Sources */,
-				765BAFA819E722C800EC580D /* MPOrderedDictionary.m in Sources */,
-				76AE16571A0C24150041016F /* MDWampTransportRawSocket.m in Sources */,
-				76AE16181A0C24150041016F /* MDWampHello.m in Sources */,
-				76AE16381A0C24150041016F /* MDWampSubscribed.m in Sources */,
-				76AE16001A0C24150041016F /* MDWampAuthenticate.m in Sources */,
-				76AE15FA1A0C24150041016F /* MDWampConstants.m in Sources */,
-				76AE163E1A0C24150041016F /* MDWampUnregistered.m in Sources */,
-				76AE164E1A0C24150041016F /* MDWampSerializationJSON.m in Sources */,
-				765BAFA519E722C800EC580D /* MPMessagePackWriter.m in Sources */,
-				76AE15951A0C23130041016F /* SRWebSocket.m in Sources */,
-				76AE16221A0C24150041016F /* MDWampMessageFactory.m in Sources */,
-				76AE15F31A0C24150041016F /* MDWamp.m in Sources */,
-				76AE16321A0C24150041016F /* MDWampResult.m in Sources */,
+				336F57691CFF7A2300811E8B /* MDWampPublished.m in Sources */,
+				336F57891CFF7A3100811E8B /* MDWampTransportRawSocket.m in Sources */,
+				336F57591CFF7A2300811E8B /* MDWampEvent.m in Sources */,
+				336F577D1CFF7A2300811E8B /* MDWampWelcome.m in Sources */,
+				336F57641CFF7A2300811E8B /* MDWampMessageFactory.m in Sources */,
+				336F574F1CFF7A2300811E8B /* MDWampAuthenticate.m in Sources */,
+				336F575D1CFF7A2300811E8B /* MDWampHello.m in Sources */,
+				336F57711CFF7A2300811E8B /* MDWampSubscribe.m in Sources */,
+				336F57511CFF7A2300811E8B /* MDWampCall.m in Sources */,
+				336F576B1CFF7A2300811E8B /* MDWampRegister.m in Sources */,
+				336F575F1CFF7A2300811E8B /* MDWampInterrupt.m in Sources */,
+				336F57821CFF7A2C00811E8B /* MDWampSerializationJSON.m in Sources */,
+				336F574B1CFF7A1A00811E8B /* MDWampConstants.m in Sources */,
+				336F577B1CFF7A2300811E8B /* MDWampUnsubscribed.m in Sources */,
+				336F57841CFF7A2C00811E8B /* MDWampSerializationMsgpack.m in Sources */,
+				336F578C1CFF7A3100811E8B /* MDWampTransportWebSocket.m in Sources */,
+				336F57791CFF7A2300811E8B /* MDWampUnsubscribe.m in Sources */,
+				336F57671CFF7A2300811E8B /* MDWampPublish.m in Sources */,
+				336F576F1CFF7A2300811E8B /* MDWampResult.m in Sources */,
+				336F57531CFF7A2300811E8B /* MDWampCancel.m in Sources */,
+				336F57751CFF7A2300811E8B /* MDWampUnregister.m in Sources */,
+				336F57771CFF7A2300811E8B /* MDWampUnregistered.m in Sources */,
+				336F57731CFF7A2300811E8B /* MDWampSubscribed.m in Sources */,
+				336F576D1CFF7A2300811E8B /* MDWampRegistered.m in Sources */,
+				336F57481CFF7A1A00811E8B /* MDWampClientConfig.m in Sources */,
+				336F57571CFF7A2300811E8B /* MDWampError.m in Sources */,
+				336F57551CFF7A2300811E8B /* MDWampChallenge.m in Sources */,
+				336F574D1CFF7A2300811E8B /* MDWampAbort.m in Sources */,
+				336F57611CFF7A2300811E8B /* MDWampInvocation.m in Sources */,
+				336F577F1CFF7A2300811E8B /* MDWampYield.m in Sources */,
+				336F575B1CFF7A2300811E8B /* MDWampGoodbye.m in Sources */,
+				336F57461CFF7A1A00811E8B /* MDWamp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		76A34EEB195DED5400233B76 /* Sources */ = {
+		33133B021CFF7657003FCFC5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76AE15871A0C21C50041016F /* main.m in Sources */,
-				76AE15841A0C21C50041016F /* ChatStartViewController.m in Sources */,
-				76AE15851A0C21C50041016F /* ChatViewController.m in Sources */,
-				76AE15821A0C21C50041016F /* AppDelegate.m in Sources */,
-				76AE15861A0C21C50041016F /* ConnectViewController.m in Sources */,
-				76AE15881A0C21C50041016F /* RegisterRPCViewController.m in Sources */,
-				76AE15831A0C21C50041016F /* CallRPCViewController.m in Sources */,
+				33133B131CFF7657003FCFC5 /* SecondViewController.m in Sources */,
+				33133B0D1CFF7657003FCFC5 /* AppDelegate.m in Sources */,
+				33133B101CFF7657003FCFC5 /* FirstViewController.m in Sources */,
+				33133B0A1CFF7657003FCFC5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7604D723185B499E0087773E /* PBXTargetDependency */ = {
+		33133AEA1CFF7598003FCFC5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7604D706185B499D0087773E /* MDWamp */;
-			targetProxy = 7604D722185B499E0087773E /* PBXContainerItemProxy */;
-		};
-		7657A3B6195F594800F58BB4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7604D765185B6B880087773E /* libMDWamp */;
-			targetProxy = 7657A3B5195F594800F58BB4 /* PBXContainerItemProxy */;
+			target = 33133ADC1CFF7598003FCFC5 /* MDWamp iOS */;
+			targetProxy = 33133AE91CFF7598003FCFC5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		76AE15581A0C21C50041016F /* Main.storyboard */ = {
+		33133B141CFF7657003FCFC5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				76AE15591A0C21C50041016F /* Base */,
+				33133B151CFF7657003FCFC5 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		76AE155D1A0C21C50041016F /* InfoPlist.strings */ = {
+		33133B191CFF7657003FCFC5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				76AE155E1A0C21C50041016F /* en */,
+				33133B1A1CFF7657003FCFC5 /* Base */,
 			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		76CCC6EE185BD1F10056AB98 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				76CCC6EF185BD1F10056AB98 /* en */,
-			);
-			name = InfoPlist.strings;
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		7604D72D185B499E0087773E /* Debug */ = {
+		33133AD61CFF751A003FCFC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+			};
+			name = Debug;
+		};
+		33133AD71CFF751A003FCFC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+			};
+			name = Release;
+		};
+		33133AF01CFF7598003FCFC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1166,11 +913,21 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1179,22 +936,33 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				INFOPLIST_FILE = "Sources/Info-iOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-iOS";
+				PRODUCT_NAME = MDWamp;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		7604D72E185B499E0087773E /* Release */ = {
+		33133AF11CFF7598003FCFC5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1203,285 +971,386 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				INFOPLIST_FILE = "Sources/Info-iOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-iOS";
+				PRODUCT_NAME = MDWamp;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		33133AF31CFF7598003FCFC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "MDWamp iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		33133AF41CFF7598003FCFC5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "MDWamp iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		33133B001CFF75B7003FCFC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Sources/Info-OSX.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-OSX";
+				PRODUCT_NAME = MDWamp;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
-		7604D730185B499E0087773E /* Debug */ = {
+		33133B011CFF75B7003FCFC5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_VERSION = A;
-				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MDWamp/MDWamp-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/**",
-				);
-				INFOPLIST_FILE = "MDWamp/MDWamp-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = MDWamp;
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Debug;
-		};
-		7604D731185B499E0087773E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MDWamp/MDWamp-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/**",
-				);
-				INFOPLIST_FILE = "MDWamp/MDWamp-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = MDWamp;
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Release;
-		};
-		7604D733185B499E0087773E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MDWamp.framework/Versions/A/MDWamp";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MDWamp/MDWamp-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/**",
-				);
-				INFOPLIST_FILE = "MDWampTests/MDWampTests-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		7604D734185B499E0087773E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MDWamp.framework/Versions/A/MDWamp";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MDWamp/MDWamp-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/**",
-				);
-				INFOPLIST_FILE = "MDWampTests/MDWampTests-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
-		7604D783185B6B880087773E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DSTROOT = /tmp/libMDWamp.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MDWamp/MDWamp-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/**",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = MDWamp;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		7604D784185B6B880087773E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DSTROOT = /tmp/libMDWamp.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MDWamp/MDWamp-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/**",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = MDWamp;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		76A34F1E195DED5400233B76 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MDWampDemo/MDWampDemo-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "MDWampDemo/MDWampDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.mdwamp.${PRODUCT_NAME:rfc1034identifier}";
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Sources/Info-OSX.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-OSX";
+				PRODUCT_NAME = MDWamp;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		33133B291CFF7658003FCFC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "MDWamp Demo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				WRAPPER_EXTENSION = app;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
-		76A34F1F195DED5400233B76 /* Release */ = {
+		33133B2A1CFF7658003FCFC5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MDWampDemo/MDWampDemo-Prefix.pch";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "MDWampDemo/MDWampDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.mdwamp.${PRODUCT_NAME:rfc1034identifier}";
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "MDWamp Demo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.mogui.MDWamp-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7604D701185B499D0087773E /* Build configuration list for PBXProject "MDWamp" */ = {
+		33133AD51CFF751A003FCFC5 /* Build configuration list for PBXProject "MDWamp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7604D72D185B499E0087773E /* Debug */,
-				7604D72E185B499E0087773E /* Release */,
+				33133AD61CFF751A003FCFC5 /* Debug */,
+				33133AD71CFF751A003FCFC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7604D72F185B499E0087773E /* Build configuration list for PBXNativeTarget "MDWamp" */ = {
+		33133AEF1CFF7598003FCFC5 /* Build configuration list for PBXNativeTarget "MDWamp iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7604D730185B499E0087773E /* Debug */,
-				7604D731185B499E0087773E /* Release */,
+				33133AF01CFF7598003FCFC5 /* Debug */,
+				33133AF11CFF7598003FCFC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7604D732185B499E0087773E /* Build configuration list for PBXNativeTarget "MDWampTests" */ = {
+		33133AF21CFF7598003FCFC5 /* Build configuration list for PBXNativeTarget "MDWamp iOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7604D733185B499E0087773E /* Debug */,
-				7604D734185B499E0087773E /* Release */,
+				33133AF31CFF7598003FCFC5 /* Debug */,
+				33133AF41CFF7598003FCFC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7604D782185B6B880087773E /* Build configuration list for PBXNativeTarget "libMDWamp" */ = {
+		33133AFF1CFF75B7003FCFC5 /* Build configuration list for PBXNativeTarget "MDWamp OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7604D783185B6B880087773E /* Debug */,
-				7604D784185B6B880087773E /* Release */,
+				33133B001CFF75B7003FCFC5 /* Debug */,
+				33133B011CFF75B7003FCFC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		76A34F1D195DED5400233B76 /* Build configuration list for PBXNativeTarget "MDWampDemo" */ = {
+		33133B281CFF7658003FCFC5 /* Build configuration list for PBXNativeTarget "MDWamp Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				76A34F1E195DED5400233B76 /* Debug */,
-				76A34F1F195DED5400233B76 /* Release */,
+				33133B291CFF7658003FCFC5 /* Debug */,
+				33133B2A1CFF7658003FCFC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 7604D6FE185B499D0087773E /* Project object */;
+	rootObject = 33133AD21CFF751A003FCFC5 /* Project object */;
 }
