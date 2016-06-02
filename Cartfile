@@ -1,0 +1,3 @@
+github "robbiehanson/CocoaAsyncSocket" "master"
+github "facebook/SocketRocket"
+github "mogui/MPMessagePack" "develop"
