@@ -13,7 +13,7 @@ lane :test do
     )
 end
 
-lane :bump do  |lane, options|
+lane :bump do  |options|
     increment_version_number(
         bump_type: options[:bump],        
         xcodeproj: 'MDWamp.xcodeproj'
@@ -21,7 +21,7 @@ lane :bump do  |lane, options|
     version = get_version_number(xcodeproj: "MDWamp.xcodeproj")
     version_bump_podspec(path: "MDWamp.podspec", version_number: version)
     git_commit(
-        path: ["Sources/Info-OSX.plist", "Sources/Info-iOS.plist", "MdWamp Demo/Info.plist", "MdWamp iOSTests/Info.plist"],
+        path: ["Sources/Info-OSX.plist", "Sources/Info-iOS.plist", "MDWamp Demo/Info.plist", "MDWamp iOSTests/Info.plist", "MDWamp.podspec"],
         message: changelog_from_git_commits
     )
     add_git_tag(

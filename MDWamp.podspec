@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MDWamp"
-  s.version      = "2.2.4"
+  s.version      = "2.2.5"
   s.summary      = "A client side objective-C implementation of the WebSocket subprotocol WAMP"
   s.description  = <<-DESC
 MDWamp is a client side objective-C implementation of the WebSocket subprotocol [WAMP][wamp_link] (v2).  
