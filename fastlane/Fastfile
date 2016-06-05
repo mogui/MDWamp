@@ -1,3 +1,27 @@
-lane: cocoapods do
-	sh ''
+lane :test do
+    carthage(
+        command: "update",
+        use_submodules: true,
+        no_build: true,
+        verbose: true,
+        platform: "Mac,iOS"
+    )
+    scan(
+        workspace: "MDWamp.xcworkspace",
+        scheme: "MDWamp iOS",
+        clean: true
+    )
+end
+
+lane :bump do
+    ensure_git_status_clean
+    increment_version_number(
+        bump_type: "minor",                # specify specific version number (optional, omitting it increments patch version number)
+        xcodeproj: './path/to/MyApp.xcodeproj'
+    )
+    commit_version_bump
+end
+
+lane :check do
+    pod_lib_lint(allow_warnings: true, verbose: true)
 end

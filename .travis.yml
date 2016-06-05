@@ -1,3 +1,5 @@
 language: objective-c
 xcode_project: MDWamp.xcodeproj
-xcode_scheme: MDWamp
+xcode_scheme: MDWamp iOS
+script:
+  - fastlane test
