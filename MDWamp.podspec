@@ -25,8 +25,7 @@ With this library and with a server [implementation of WAMP protocol][wamp_impl]
   s.osx.deployment_target = "10.9"
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"
-  #s.source       = { :git => "https://github.com/mogui/MDWamp.git", :tag => "#{s.version}" }
-  s.source       = { :git => "https://github.com/mogui/MDWamp.git", :branch => "develop" }
+  s.source       = { :git => "https://github.com/mogui/MDWamp.git", :tag => "#{s.version}" }
   s.source_files  = "Sources/**/*.{h,m,c}",
   s.ios.frameworks = "MobileCoreServices", "CFNetwork", "Security"
   s.osx.frameworks = "CFNetwork", "Security"

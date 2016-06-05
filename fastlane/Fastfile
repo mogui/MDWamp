@@ -13,13 +13,20 @@ lane :test do
     )
 end
 
-lane :bump do
-    ensure_git_status_clean
+lane :bump do  |lane, options|
     increment_version_number(
-        bump_type: "minor",                # specify specific version number (optional, omitting it increments patch version number)
-        xcodeproj: './path/to/MyApp.xcodeproj'
+        bump_type: options[:bump],        
+        xcodeproj: 'MDWamp.xcodeproj'
     )
-    commit_version_bump
+    version = get_version_number(xcodeproj: "MDWamp.xcodeproj")
+    version_bump_podspec(path: "MDWamp.podspec", version_number: version)
+    git_commit(
+        path: ["Sources/Info-OSX.plist", "Sources/Info-iOS.plist", "MdWamp Demo/Info.plist", "MdWamp iOSTests/Info.plist"],
+        message: changelog_from_git_commits
+    )
+    add_git_tag(
+        tag: get_version_number(xcodeproj: "MDWamp.xcodeproj")
+    )
 end
 
 lane :check do
