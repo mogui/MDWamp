@@ -202,14 +202,14 @@ Implemented Stable Features of Advanced protocol
 Copyright © 2012 Niko Usai. See LICENSE for details.   
 WAMP is trademark of [Tavendo GmbH][tavendo].
 
-[wamp_link]: http://wamp.ws/
-[wamp_impl]: http://wamp.ws/implementations
-[cocoapods]: http://cocoapods.org/
+[wamp_link]: http://wamp-proto.org/
+[wamp_impl]: http://wamp-proto.org/implementations
+[cocoapods]: https://cocoapods.org/
 [luke]: https://github.com/lukeredpath
 [ios_fake_framework_link]: https://github.com/kstenerud/iOS-Universal-Framework
-[lib_pusher]: https://github.com/lukeredpath/libPusher
-[socket_rocket]: https://github.com/square/SocketRocket
-[downpage]: http://github.com/mogui/MDWamp/downloads]
-[faq]: http://wamp.ws/faq#rpc
-[tavendo]: http://www.tavendo.de/
+[lib_pusher]: https://github.com/pusher/libPusher
+[socket_rocket]: https://github.com/facebook/SocketRocket
+[downpage]: https://github.com/mogui/MDWamp/downloads]
+[faq]: http://wamp-proto.org/faq
+[tavendo]: http://tavendo.com/
 [staticlibpost]: http://blog.mogui.it/iOS-3rd-packaging.html
