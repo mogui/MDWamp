@@ -123,6 +123,8 @@
 
 - (void) connect
 {
+    _explicitSessionClose = NO;
+
     [self.transport open];
 }
 
